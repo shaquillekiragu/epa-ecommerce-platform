@@ -24,7 +24,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the rest
-            'name' => 'advanced-rest',
+            'name' => 'session-rest',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

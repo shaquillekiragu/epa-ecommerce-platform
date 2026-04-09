@@ -1,11 +1,11 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
+    "name": "ecommerce-platform",
+    "description": "EPA Project E-Commerce Platform",
     "keywords": [
-        "yii2",
-        "framework",
-        "advanced",
-        "project template"
+        "EPA",
+        "Project",
+        "E-Commerce",
+        "Platform"
     ],
     "homepage": "https://www.yiiframework.com/",
     "type": "project",
