@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace api\controllers;
 
 use common\models\LoginForm;
 use Yii;
@@ -64,6 +64,16 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    // /**
+    //  * Displays error page.
+    //  *
+    //  * @return string
+    //  */
+    // public function actionError()
+    // {
+    //     return $this->render('error');
+    // }
 
     /**
      * Login action.

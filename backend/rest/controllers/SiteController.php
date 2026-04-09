@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace rest\controllers;
 
 use common\models\LoginForm;
 use Yii;
