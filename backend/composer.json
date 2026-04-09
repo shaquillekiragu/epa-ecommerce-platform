@@ -35,13 +35,17 @@
                 "common/tests/",
                 "common/tests/_support"
             ],
-            "backend\\tests\\": [
-                "backend/tests/",
-                "backend/tests/_support"
+            "api\\tests\\": [
+                "api/tests/",
+                "api/tests/_support"
             ],
-            "frontend\\tests\\": [
-                "frontend/tests/",
-                "frontend/tests/_support"
+            "rest\\tests\\": [
+                "rest/tests/",
+                "rest/tests/_support"
+            ],
+            "superadmin\\tests\\": [
+                "superadmin/tests/",
+                "superadmin/tests/_support"
             ]
         }
     },

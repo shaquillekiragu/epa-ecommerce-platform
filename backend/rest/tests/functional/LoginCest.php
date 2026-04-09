@@ -1,8 +1,8 @@
 <?php
 
-namespace backend\tests\functional;
+namespace rest\tests\functional;
 
-use backend\tests\FunctionalTester;
+use rest\tests\FunctionalTester;
 use common\fixtures\UserFixture;
 
 /**
