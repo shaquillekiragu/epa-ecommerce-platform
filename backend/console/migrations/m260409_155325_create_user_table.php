@@ -18,26 +18,27 @@ class m260409_155325_create_user_table extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-
-            'role' => "ENUM('customer','merchant') NOT NULL",
-
-            'first_name' => $this->string(255)->notNull(),
-            'middle_names' => $this->string(255)->null(),
-            'last_name' => $this->string(255)->notNull(),
-            'email' => $this->string(255)->notNull(),
-            'hashed_password' => $this->string(255)->notNull(),
-            'date_of_birth' => $this->date()->notNull(),
-            'country' => $this->string(255)->notNull(),
-            'mobile_number' => $this->string(20)->notNull(),
-
-            'is_account_active' => $this->boolean()->notNull()->defaultValue(true),
-            'deleted_at' => $this->timestamp()->null(),
-
-            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
-            'created_by' => $this->integer()->null(), // see note above
-            'last_updated_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-            'last_updated_by' => $this->integer()->null(), // see note above
         ], $tableOptions);
+
+        $this->addColumn('{{%user}}', 'role', 'enum("customer", "merchant") NOT NULL DEFAULT "customer"');
+        $this->addColumn('{{%user}}', 'first_name', 'varchar(255) NOT NULL');
+        $this->addColumn('{{%user}}', 'middle_names', 'varchar(255) NULL');
+        $this->addColumn('{{%user}}', 'last_name', 'varchar(255) NOT NULL');
+
+        $this->addColumn('{{%user}}', 'email', 'varchar(255) NOT NULL');
+        $this->addColumn('{{%user}}', 'hashed_password', 'varchar(255) NOT NULL');
+        $this->addColumn('{{%user}}', 'date_of_birth', 'date NOT NULL');
+        $this->addColumn('{{%user}}', 'country', 'varchar(255) NOT NULL');
+        $this->addColumn('{{%user}}', 'mobile_number', 'varchar(20) NOT NULL');
+
+        $this->addColumn('{{%user}}', 'is_account_active', 'boolean NOT NULL DEFAULT true');
+        $this->addColumn('{{%user}}', 'deleted_at', 'timestamp NULL');
+
+        // Self-referencing audit fields: nullable so the first user can be inserted
+        $this->addColumn('{{%user}}', 'created_at', 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP');
+        $this->addColumn('{{%user}}', 'created_by', 'int NULL');
+        $this->addColumn('{{%user}}', 'last_updated_at', 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP');
+        $this->addColumn('{{%user}}', 'last_updated_by', 'int NULL');
 
         $this->createIndex('idx_user_email_unique', '{{%user}}', 'email', true);
 
