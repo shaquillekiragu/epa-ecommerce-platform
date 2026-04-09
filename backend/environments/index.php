@@ -29,41 +29,71 @@
  * ];
  * ```
  */
+
 return [
-    'Development' => [
-        'path' => 'dev',
+    'Local' => [
+        'path' => 'local',
         'setWritable' => [
-            'backend/runtime',
-            'backend/web/assets',
+            'api/runtime',
+            'api/web/assets',
             'console/runtime',
-            'frontend/runtime',
-            'frontend/web/assets',
+            'rest/runtime',
+            'rest/web/assets',
+            'superadmin/runtime',
+            'superadmin/web/assets',
         ],
         'setExecutable' => [
             'yii',
             'yii_test',
         ],
         'setCookieValidationKey' => [
-            'backend/config/main-local.php',
-            'common/config/codeception-local.php',
-            'frontend/config/main-local.php',
+            'api/config/main-local.php',
+            'common/config/main-local.php',
+            'rest/config/main-local.php',
+            'superadmin/config/main-local.php',
+        ],
+    ],
+    'Staging' => [
+        'path' => 'staging',
+        'setWritable' => [
+            'api/runtime',
+            'api/web/assets',
+            'console/runtime',
+            'rest/runtime',
+            'rest/web/assets',
+            'superadmin/runtime',
+            'superadmin/web/assets',
+        ],
+        'setExecutable' => [
+            'yii',
+            'yii_test',
+        ],
+        'setCookieValidationKey' => [
+            'api/config/main-local.php',
+            'common/config/main-local.php',
+            'rest/config/main-local.php',
+            'superadmin/config/main-local.php',
         ],
     ],
     'Production' => [
-        'path' => 'prod',
+        'path' => 'production',
         'setWritable' => [
-            'backend/runtime',
-            'backend/web/assets',
+            'api/runtime',
+            'api/web/assets',
             'console/runtime',
-            'frontend/runtime',
-            'frontend/web/assets',
+            'rest/runtime',
+            'rest/web/assets',
+            'superadmin/runtime',
+            'superadmin/web/assets',
         ],
         'setExecutable' => [
             'yii',
         ],
         'setCookieValidationKey' => [
-            'backend/config/main-local.php',
-            'frontend/config/main-local.php',
+            'api/config/main-local.php',
+            'common/config/main-local.php',
+            'rest/config/main-local.php',
+            'superadmin/config/main-local.php',
         ],
     ],
 ];
