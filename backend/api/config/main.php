@@ -12,7 +12,16 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'v1' => [
+            'class' => 'api\modules\v1\Module',
+            'modules' => [
+                'auth' => ['class' => 'api\modules\v1\auth\Module'],
+                'customer' => ['class' => 'api\modules\v1\customer\Module'],
+                'merchant' => ['class' => 'api\modules\v1\merchant\Module'],
+            ],
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-api',
