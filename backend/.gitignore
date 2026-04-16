@@ -34,9 +34,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-# vagrant runtime
-/.vagrant
-
 # ignore generated files
 /*/web/index.php
 /*/frontend/web/index-test.php
