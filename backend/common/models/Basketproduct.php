@@ -10,7 +10,7 @@ class Basketproduct extends BaseModel
 
     public static function tableName()
     {
-        return 'basket_product';
+        return '{{%basket_product}}';
     }
 
     public function rules()
@@ -23,25 +23,14 @@ class Basketproduct extends BaseModel
                         'product_id',
                         'basket_id',
                         'quantity',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'integer'
-                ],
-                [
-                    [
-                        'created_at',
-                        'last_updated_at',
-                    ],
-                    'safe'
                 ],
                 [
                     [
                         'product_id',
                         'basket_id',
                         'quantity',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],

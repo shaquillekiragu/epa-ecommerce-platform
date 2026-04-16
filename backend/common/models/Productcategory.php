@@ -10,7 +10,7 @@ class Productcategory extends BaseModel
 
     public static function tableName()
     {
-        return 'product_category';
+        return '{{%product_category}}';
     }
 
     public function rules()
@@ -29,24 +29,8 @@ class Productcategory extends BaseModel
                 ],
                 [
                     [
-                        'created_by',
-                        'last_updated_by',
-                    ],
-                    'integer'
-                ],
-                [
-                    [
-                        'created_at',
-                        'last_updated_at',
-                    ],
-                    'safe'
-                ],
-                [
-                    [
                         'category_name',
                         'description',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],

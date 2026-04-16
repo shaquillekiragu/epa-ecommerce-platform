@@ -11,18 +11,14 @@ class BaseModel extends ActiveRecord
         return array_merge(
             parent::rules(),
             [
-                // [
-                //     [
-                //         'id'
-                //     ],
-                //     'integer'
-                // ],
-                // [
-                //     [
-                //         'id',
-                //     ],
-                //     'required'
-                // ],
+                [
+                    [
+                        'id',
+                        'created_by',
+                        'last_updated_by'
+                    ],
+                    'integer'
+                ],
                 [
                     [
                         'created_at',
@@ -30,19 +26,10 @@ class BaseModel extends ActiveRecord
                     ],
                     'safe'
                 ],
-                [
-                    [
-                        'created_by',
-                        'last_updated_by'
-                    ],
-                    'integer'
-                ],
             ]
         );
     }
 
-    // all the common columns should be here
-    // rules
     // attributes
     // search functionality - for relevant models
     // beforeSave - set created_at only on creation - set created_by using logged-in user - look at docs - look at types

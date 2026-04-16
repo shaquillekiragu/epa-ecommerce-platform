@@ -10,7 +10,7 @@ class Product extends BaseModel
 
     public static function tableName()
     {
-        return 'product';
+        return '{{%product}}';
     }
 
     public function rules()
@@ -24,8 +24,6 @@ class Product extends BaseModel
                         'product_category_id',
                         'number_in_stock',
                         'weight_in_grams',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'integer'
                 ],
@@ -58,13 +56,6 @@ class Product extends BaseModel
                 ],
                 [
                     [
-                        'created_at',
-                        'last_updated_at',
-                    ],
-                    'safe'
-                ],
-                [
-                    [
                         'store_id',
                         'product_name',
                         'product_category_id',
@@ -73,8 +64,6 @@ class Product extends BaseModel
                         'sku_code',
                         'weight_in_grams',
                         'thumbnail',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],

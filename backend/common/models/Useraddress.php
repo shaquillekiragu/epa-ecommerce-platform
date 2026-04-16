@@ -10,7 +10,7 @@ class Useraddress extends BaseModel
 
     public static function tableName()
     {
-        return 'user_address';
+        return '{{%user_address}}';
     }
 
     public function rules()
@@ -22,24 +22,13 @@ class Useraddress extends BaseModel
                     [
                         'user_id',
                         'address_id',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'integer'
                 ],
                 [
                     [
-                        'created_at',
-                        'last_updated_at',
-                    ],
-                    'safe'
-                ],
-                [
-                    [
                         'user_id',
                         'address_id',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],

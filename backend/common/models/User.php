@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use common\models\BaseModel;
 use yii\web\IdentityInterface;
 
 /**
@@ -23,7 +23,7 @@ use yii\web\IdentityInterface;
  * @property int $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends BaseModel implements IdentityInterface
 {
     public const STATUS_DELETED = 0;
     public const STATUS_INACTIVE = 9;
@@ -51,10 +51,90 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function rules()
     {
-        return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-        ];
+        return array_merge(
+            parent::rules(),
+            [
+                // [
+                //     [
+                //         'status'
+                //     ],
+                //     'default',
+                //     'value' => self::STATUS_INACTIVE
+                // ],
+                // [
+                //     [
+                //         'status'
+                //     ],
+                //     'in',
+                //     'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]
+                // ],
+                [
+                    [
+                        'role'
+                    ],
+                    'default',
+                    'value' => 'customer'
+                ],
+                [
+                    [
+                        'role'
+                    ],
+                    'in',
+                    'range' => ['customer', 'merchant']
+                ],
+                [
+                    [
+                        'first_name',
+                        'middle_names',
+                        'last_name',
+                        'email',
+                        'hashed_password',
+                        'country',
+                    ],
+                    'string',
+                    'max' => 255
+                ],
+                [
+                    [
+                        'mobile_number'
+                    ],
+                    'string',
+                    'max' => 20
+                ],
+                [
+                    [
+                        'date_of_birth'
+                    ],
+                    'date'
+                ],
+                [
+                    [
+                        'is_account_active'
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
+                        'deleted_at'
+                    ],
+                    'safe'
+                ],
+                [
+                    [
+                        'role',
+                        'first_name',
+                        'last_name',
+                        'email',
+                        'hashed_password',
+                        'date_of_birth',
+                        'country',
+                        'mobile_number',
+                        'is_account_active',
+                    ],
+                    'required'
+                ],
+            ]
+        );
     }
 
     /**

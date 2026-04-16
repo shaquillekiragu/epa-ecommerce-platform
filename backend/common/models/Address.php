@@ -10,7 +10,7 @@ class Address extends BaseModel
 
     public static function tableName()
     {
-        return 'address';
+        return '{{%address}}';
     }
 
     public function rules()
@@ -45,8 +45,6 @@ class Address extends BaseModel
                         'city',
                         'country',
                         'post_code',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],

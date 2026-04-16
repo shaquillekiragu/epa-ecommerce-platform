@@ -10,7 +10,7 @@ class Order extends BaseModel
 
     public static function tableName()
     {
-        return 'order';
+        return '{{%order}}';
     }
 
     public function rules()
@@ -23,16 +23,12 @@ class Order extends BaseModel
                         'customer_id',
                         'store_id',
                         'price_total',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'integer'
                 ],
                 [
                     [
                         'order_datetime',
-                        'created_at',
-                        'last_updated_at',
                     ],
                     'safe'
                 ],
@@ -58,8 +54,6 @@ class Order extends BaseModel
                         'price_total',
                         'order_datetime',
                         'status',
-                        'created_by',
-                        'last_updated_by',
                     ],
                     'required'
                 ],
