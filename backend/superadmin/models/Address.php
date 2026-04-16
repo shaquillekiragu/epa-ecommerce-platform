@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Address as CommonAddress;
+use common\models\Address as CommonAddress;
 
-class Address extends CommonAddress {
-
+class Address extends CommonAddress
+{
 }

@@ -2,6 +2,7 @@
 
 namespace api\controllers;
 
-class UseraddressController {
-	public $model_class = "common\models\Useraddress";
+class UseraddressController
+{
+    public $model_class = "common\models\Useraddress";
 }

@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Store as CommonStore;
+use common\models\Store as CommonStore;
 
-class Store extends CommonStore {
-
+class Store extends CommonStore
+{
 }

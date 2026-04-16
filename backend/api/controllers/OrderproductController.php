@@ -2,6 +2,7 @@
 
 namespace api\controllers;
 
-class OrderproductController {
-	public $model_class = "common\models\Orderproduct";
+class OrderproductController
+{
+    public $model_class = "common\models\Orderproduct";
 }

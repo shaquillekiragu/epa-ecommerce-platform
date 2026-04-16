@@ -4,5 +4,6 @@ namespace api\models;
 
 use common\models\Basket as CommonBasket;
 
-class Basket extends CommonBasket {
+class Basket extends CommonBasket
+{
 }

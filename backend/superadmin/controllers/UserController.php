@@ -6,6 +6,5 @@ use yii\rest\ActiveController;
 
 class UserController extends ActiveController
 {
-	public $modelClass = 'superadmin\models\User';
+    public $modelClass = 'superadmin\models\User';
 }
-

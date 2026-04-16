@@ -6,6 +6,5 @@ use yii\rest\ActiveController;
 
 class ProductController extends ActiveController
 {
-	public $modelClass = 'superadmin\models\Product';
+    public $modelClass = 'superadmin\models\Product';
 }
-

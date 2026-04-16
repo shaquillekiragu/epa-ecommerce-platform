@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Productcategory as CommonProductcategory;
+use common\models\Productcategory as CommonProductcategory;
 
-class Productcategory extends CommonProductcategory {
-
+class Productcategory extends CommonProductcategory
+{
 }

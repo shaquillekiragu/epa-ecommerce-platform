@@ -52,4 +52,3 @@ class m260409_163060_create_order_table extends Migration
         $this->dropTable('{{%order}}');
     }
 }
-

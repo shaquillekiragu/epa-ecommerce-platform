@@ -48,4 +48,3 @@ class m260409_163010_create_store_table extends Migration
         $this->dropTable('{{%store}}');
     }
 }
-

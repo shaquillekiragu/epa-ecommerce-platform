@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Order as CommonOrder;
+use common\models\Order as CommonOrder;
 
-class Order extends CommonOrder {
-
+class Order extends CommonOrder
+{
 }

@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Useraddress as CommonUseraddress;
+use common\models\Useraddress as CommonUseraddress;
 
-class Useraddress extends CommonUseraddress {
-
+class Useraddress extends CommonUseraddress
+{
 }

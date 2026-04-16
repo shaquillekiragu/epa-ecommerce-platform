@@ -48,4 +48,3 @@ class m260409_163000_create_user_address_table extends Migration
         $this->dropTable('{{%user_address}}');
     }
 }
-

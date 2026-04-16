@@ -6,6 +6,5 @@ use yii\rest\ActiveController;
 
 class AddressController extends ActiveController
 {
-	public $modelClass = 'superadmin\models\Address';
+    public $modelClass = 'superadmin\models\Address';
 }
-

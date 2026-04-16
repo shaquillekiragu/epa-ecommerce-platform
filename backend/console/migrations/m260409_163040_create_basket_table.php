@@ -45,4 +45,3 @@ class m260409_163040_create_basket_table extends Migration
         $this->dropTable('{{%basket}}');
     }
 }
-

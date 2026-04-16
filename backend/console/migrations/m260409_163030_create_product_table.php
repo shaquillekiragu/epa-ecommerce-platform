@@ -57,4 +57,3 @@ class m260409_163030_create_product_table extends Migration
         $this->dropTable('{{%product}}');
     }
 }
-

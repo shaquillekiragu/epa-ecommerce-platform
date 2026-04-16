@@ -2,8 +2,8 @@
 
 namespace superadmin\models;
 
-use \common\models\Basketproduct as CommonBasketproduct;
+use common\models\Basketproduct as CommonBasketproduct;
 
-class Basketproduct extends CommonBasketproduct {
-
+class Basketproduct extends CommonBasketproduct
+{
 }
