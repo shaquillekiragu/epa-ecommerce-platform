@@ -1,5 +1,5 @@
 {
-    "name": "ecommerce-platform",
+    "name": "epa/ecommerce-platform",
     "description": "EPA Project E-Commerce Platform",
     "keywords": [
         "EPA",
@@ -27,7 +27,8 @@
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",
-        "yiisoft/yii2-faker": "~2.0.0"
+        "yiisoft/yii2-faker": "~2.0.0",
+        "friendsofphp/php-cs-fixer": "^3.95"
     },
     "autoload-dev": {
         "psr-4": {
