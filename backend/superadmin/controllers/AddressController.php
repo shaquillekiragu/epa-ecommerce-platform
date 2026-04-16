@@ -2,9 +2,7 @@
 
 namespace superadmin\controllers;
 
-use yii\rest\ActiveController;
-
-class AddressController extends ActiveController
+class AddressController extends _SuperadminController
 {
     public $modelClass = 'superadmin\models\Address';
 }

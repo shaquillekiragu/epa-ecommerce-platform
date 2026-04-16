@@ -2,9 +2,7 @@
 
 namespace superadmin\controllers;
 
-use yii\rest\ActiveController;
-
-class UserController extends ActiveController
+class UserController extends _SuperadminController
 {
     public $modelClass = 'superadmin\models\User';
 }

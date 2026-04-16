@@ -2,9 +2,7 @@
 
 namespace superadmin\controllers;
 
-use yii\rest\ActiveController;
-
-class OrderproductController extends ActiveController
+class OrderproductController extends _SuperadminController
 {
     public $modelClass = 'superadmin\models\Orderproduct';
 }

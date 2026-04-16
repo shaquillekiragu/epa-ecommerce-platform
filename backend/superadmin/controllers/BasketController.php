@@ -2,9 +2,7 @@
 
 namespace superadmin\controllers;
 
-use yii\rest\ActiveController;
-
-class BasketController extends ActiveController
+class BasketController extends _SuperadminController
 {
     public $modelClass = 'superadmin\models\Basket';
 }
