@@ -2,6 +2,12 @@
 
 namespace common\models;
 
-class Order {
+use \common\models\BaseModel;
+
+class Order extends BaseModel {
 	public $order_id_list;
+
+	public static function tableName() {
+		return 'order';
+	}
 }
