@@ -52,6 +52,16 @@ class Address extends BaseModel
         );
     }
 
-    // attribute labels method
-    // beforeValidate for audit columns
+    public function attributeLabels()
+    {
+        return [
+            'address_type' => 'Address Type',
+            'building_number' => 'Building No.',
+            'street_name' => 'Street Name',
+            'city' => 'City',
+            'region' => 'Region',
+            'country' => 'Country',
+            'post_code' => 'Post Code',
+        ];
+    }
 }

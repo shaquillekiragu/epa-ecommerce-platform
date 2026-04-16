@@ -43,4 +43,12 @@ class Useraddress extends BaseModel
             ]
         );
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'user_id' => 'User ID',
+            'address_id' => 'Address ID',
+        ];
+    }
 }

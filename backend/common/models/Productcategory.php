@@ -43,4 +43,13 @@ class Productcategory extends BaseModel
             ]
         );
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'category_name' => 'Category Name',
+            'description' => 'Description',
+            'thumbnail' => 'Thumbnail',
+        ];
+    }
 }

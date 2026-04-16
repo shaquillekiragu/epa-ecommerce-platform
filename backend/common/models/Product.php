@@ -76,4 +76,19 @@ class Product extends BaseModel
             ]
         );
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'store_id' => 'Store ID',
+            'product_name' => 'Product Name',
+            'product_category_id' => 'Product Category ID',
+            'price_in_gbp' => 'Price (GBP)',
+            'number_in_stock' => 'Stock Quantity',
+            'sku_code' => 'SKU Code',
+            'weight_in_grams' => 'Weight (g)',
+            'thumbnail' => 'Thumbnail',
+            'is_live' => 'Is Live',
+        ];
+    }
 }

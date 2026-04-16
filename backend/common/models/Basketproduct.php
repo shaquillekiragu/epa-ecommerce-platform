@@ -45,4 +45,13 @@ class Basketproduct extends BaseModel
             ]
         );
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'basket_id' => 'Basket ID',
+            'product_id' => 'Product id',
+            'quantity' => 'Item Quantity',
+        ];
+    }
 }

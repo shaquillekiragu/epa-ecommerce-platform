@@ -137,6 +137,23 @@ class User extends BaseModel implements IdentityInterface
         );
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'role' => 'User Role',
+            'first_name' => 'First Name',
+            'middle_names' => 'Middle Name(s)',
+            'last_name' => 'Last Name',
+            'email' => 'Email',
+            'hashed_password' => 'Password',
+            'date_of_birth' => 'Date of Birth',
+            'country' => 'Country',
+            'mobile_number' => 'Mobile Number',
+            'is_account_active' => 'Account Activity Status',
+            'deleted_at' => 'Deleted At',
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
