@@ -2,8 +2,10 @@
 
 namespace superadmin\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
 use yii\filters\AccessControl;
+use yii\web\HttpException;
 
 class _SuperadminController extends ActiveController
 {
@@ -30,6 +32,14 @@ class _SuperadminController extends ActiveController
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action)
+    {
+        if (!Yii::$app->user->isGuest && !$this>checkAdminAccess()) {
+            $this->redirectNonAdminUser();
+        }
+        return parent::beforeAction($action);
     }
 }
 
