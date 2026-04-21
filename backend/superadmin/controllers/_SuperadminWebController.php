@@ -9,33 +9,33 @@ use yii\web\ForbiddenHttpException;
 
 class _SuperadminWebController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'denyCallback' => [$this, 'handleUnauthorisedUser'],
-                'rules' => [
-                    // [
-                    //     'actions' => [
-                    //         'index',
-                    //         'view',
-                    //         'create',
-                    //         'update',
-                    //         'delete',
-                    //     ],
-                    //     'allow' => true,
-                    //     'roles' => ['superadmin'],
-                    // ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => fn () => Yii::$app->user->can('superadmin'),
-                    ],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'access' => [
+    //             'class' => AccessControl::class,
+    //             'denyCallback' => [$this, 'handleUnauthorisedUser'],
+    //             'rules' => [
+    //                 // [
+    //                 //     'actions' => [
+    //                 //         'index',
+    //                 //         'view',
+    //                 //         'create',
+    //                 //         'update',
+    //                 //         'delete',
+    //                 //     ],
+    //                 //     'allow' => true,
+    //                 //     'roles' => ['superadmin'],
+    //                 // ],
+    //                 [
+    //                     'allow' => true,
+    //                     'roles' => ['@'],
+    //                     'matchCallback' => fn () => Yii::$app->user->can('superadmin'),
+    //                 ],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     public function handleUnauthorisedUser()
     {
@@ -47,3 +47,4 @@ class _SuperadminWebController extends Controller
 }
 
 // research yii's in-built role functionality - auth item, assignment - allows you to define roles - ranked roles
+// disable rbac for now - until you ensure admin views are visable
