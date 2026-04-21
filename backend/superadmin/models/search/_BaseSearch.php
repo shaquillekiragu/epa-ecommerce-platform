@@ -15,5 +15,20 @@ use yii\data\ActiveDataProvider;
 
 abstract class _BaseSearch extends Model
 {
+	public function search(array $params): ActiveDataProvider
+	{
+        $query = ($this->model_class)::find();
+        $provider = new ActiveDataProvider(['query' => $query]);
 
+        $this->load($params);
+
+        if (!$this->validate()) {
+			return $provider;
+		}
+
+        $this->applyFilters($query);
+        return $provider;
+    }
+
+    abstract protected function applyFilters($query): void;
 }
