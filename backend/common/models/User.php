@@ -306,4 +306,9 @@ class User extends BaseModel implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function getUserAge()
+    {
+        return (new \DateTime($this->date_of_birth))->diff(new \DateTime('today'))->y;
+    }
 }

@@ -60,8 +60,16 @@ class Address extends BaseModel
             'street_name' => 'Street Name',
             'city' => 'City',
             'region' => 'Region',
-            'country' => 'Country',
             'post_code' => 'Post Code',
+            'country' => 'Country',
         ];
+    }
+
+    public function getFullAddress()
+    {
+        if ($this->region){
+            return "$this->building_number $this->street_name, $this->city, $this->region, $this->post_code, $this->country";
+        }
+        return "$this->building_number $this->street_name, $this->city, $this->post_code, $this->country";
     }
 }
