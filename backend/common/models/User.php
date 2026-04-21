@@ -307,6 +307,16 @@ class User extends BaseModel implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    //
+
+    public function getFullName()
+    {
+        if ($this->middle_names){
+            return "$this->first_name $this->middle_names $this->last_name";
+        }
+        return "$this->first_name $this->last_name";
+    }
+
     public function getUserAge()
     {
         return (new \DateTime($this->date_of_birth))->diff(new \DateTime('today'))->y;

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\BaseModel;
+use common\models\User;
 
 class Basket extends BaseModel
 {
@@ -42,5 +43,15 @@ class Basket extends BaseModel
             'customer_id' => 'Customer ID',
             'price_total' => 'Basket Price Total',
         ];
+    }
+
+    public function getCustomerName()
+    {
+        $customer = User::findOne($this->customer_id);
+        if (!$customer) {
+            return null;
+        }
+
+        return $customer->fullName;
     }
 }
