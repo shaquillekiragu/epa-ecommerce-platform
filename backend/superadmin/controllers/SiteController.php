@@ -2,8 +2,8 @@
 
 namespace superadmin\controllers;
 
-use common\models\LoginForm;
 use Yii;
+use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -31,6 +31,7 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => fn () => Yii::$app->user->can('superadmin'),
                     ],
                 ],
             ],
