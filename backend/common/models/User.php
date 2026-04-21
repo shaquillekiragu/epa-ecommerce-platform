@@ -13,7 +13,7 @@ use yii\web\IdentityInterface;
  *
  * @property int $id
  * @property string $username
- * @property string $password_hash
+ * @property string $hashed_password
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
@@ -171,17 +171,6 @@ class User extends BaseModel implements IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
-    }
-
-    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
@@ -262,7 +251,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($password, $this->hashed_password);
     }
 
     /**
@@ -272,7 +261,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->hashed_password = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
