@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class BasketController extends _SuperadminController
+use superadmin\models\Basket;
+use superadmin\models\search\BasketSearch;
+
+class BasketController extends CrudController
 {
-    public $modelClass = 'superadmin\models\Basket';
+    public $model_class = Basket::class;
+    public $search_model_class = BasketSearch::class;
 }

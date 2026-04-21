@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class StoreController extends _SuperadminController
+use superadmin\models\Store;
+use superadmin\models\search\StoreSearch;
+
+class StoreController extends CrudController
 {
-    public $modelClass = 'superadmin\models\Store';
+    public $model_class = Store::class;
+    public $search_model_class = StoreSearch::class;
 }

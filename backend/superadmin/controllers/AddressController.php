@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class AddressController extends _SuperadminController
+use superadmin\models\Address;
+use superadmin\models\search\AddressSearch;
+
+class AddressController extends CrudController
 {
-    public $modelClass = 'superadmin\models\Address';
+    public $model_class = Address::class;
+    public $search_model_class = AddressSearch::class;
 }

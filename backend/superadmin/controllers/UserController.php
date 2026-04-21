@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class UserController extends _SuperadminController
+use superadmin\models\User;
+use superadmin\models\search\UserSearch;
+
+class UserController extends CrudController
 {
-    public $modelClass = 'superadmin\models\User';
+    public $model_class = User::class;
+    public $search_model_class = UserSearch::class;
 }

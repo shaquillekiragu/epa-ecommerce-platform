@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class OrderController extends _SuperadminController
+use superadmin\models\Order;
+use superadmin\models\search\OrderSearch;
+
+class OrderController extends CrudController
 {
-    public $modelClass = 'superadmin\models\Order';
+    public $model_class = Order::class;
+    public $search_model_class = OrderSearch::class;
 }

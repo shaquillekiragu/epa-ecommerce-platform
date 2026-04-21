@@ -2,7 +2,11 @@
 
 namespace superadmin\controllers;
 
-class ProductcategoryController extends _SuperadminController
+use superadmin\models\Productcategory;
+use superadmin\models\search\ProductcategorySearch;
+
+class ProductcategoryController extends CrudController
 {
-    public $modelClass = 'superadmin\models\Productcategory';
+    public $model_class = Productcategory::class;
+    public $search_model_class = ProductcategorySearch::class;
 }
