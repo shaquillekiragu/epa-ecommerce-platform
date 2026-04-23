@@ -64,9 +64,9 @@ $linked_data_entities = [
 
 ?>
 
-<div class="site-index">
+<main class="site-index">
     <div class="py-4 mb-5">
-        <div class="p-4 p-md-5 rounded-3 bg-light border">
+        <section class="p-4 p-md-5 rounded-3 bg-light border">
             <div class="row align-items-center g-4">
                 <div class="col-12 col-lg-8">
                     <h1 class="display-6 mb-2">Superadmin Dashboard</h1>
@@ -83,13 +83,13 @@ $linked_data_entities = [
                     ) ?>
                 </div>
             </div>
-        </div>
+        </section>
 
         <h3 class="mt-5">Data Entities</h3>
 
-        <div class="row g-3 mt-3">
+        <section class="row g-3 mt-3">
             <?php foreach($data_entities as $entity) { ?>
-                <div class="col-12 col-md-6 col-xl-3">
+                <article class="col-12 col-md-6 col-xl-3">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="fw-semibold"><?= $entity['title'] ?></div>
@@ -97,15 +97,15 @@ $linked_data_entities = [
                             <?= Html::a('View ' . strtolower($entity['title']), ['/' . $entity['url_param'] . '/index'], ['class' => 'btn btn-outline-primary btn-sm']) ?>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php } ?>
-        </div>
+        </section>
 
         <h3 class="mt-5">Linked Data Entities</h3>
 
-        <div class="row g-3 mt-3">
+        <section class="row g-3 mt-3">
             <?php foreach($linked_data_entities as $entity) { ?>
-                <div class="col-12 col-md-6 col-xl-3">
+                <article class="col-12 col-md-6 col-xl-3">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="fw-semibold"><?= $entity['title'] ?></div>
@@ -113,8 +113,8 @@ $linked_data_entities = [
                             <?= Html::a('View ' . strtolower($entity['title']), ['/' . $entity['url_param'] . '/index'], ['class' => 'btn btn-outline-primary btn-sm']) ?>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php } ?>
-        </div>
+        </section>
     </div>
-</div>
+</main>
