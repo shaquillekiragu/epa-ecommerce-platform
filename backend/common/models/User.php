@@ -259,8 +259,6 @@ class User extends BaseModel
     //     $this->password_reset_token = null;
     // }
 
-    //
-
     public function getFullName()
     {
         if ($this->middle_names){
