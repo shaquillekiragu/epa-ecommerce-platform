@@ -13,6 +13,7 @@ return [
     'controllerNamespace' => 'superadmin\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    // 'defaultRoute' => '/admin-panel',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-superadmin',
@@ -42,6 +43,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '' => 'admin-panel/index',
                 'user' => 'user/index',
                 'order' => 'order/index',
                 'product' => 'product/index',

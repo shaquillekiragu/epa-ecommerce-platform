@@ -21,10 +21,17 @@ class AdminPanelController extends _SuperadminWebController
             // 'pagination' => ['pageSize' => 50],
         ]);
 
-        return $this->render('@superadmin/views/admin-panel/index', [
-            'data_provider' => $data_provider,
-            'model_class' => $model_class,
-        ]);
+        try {
+            return $this->render('index', [
+                'data_provider' => $data_provider,
+                'model_class' => $model_class,
+            ]);
+        } catch (\Throwable $th) {
+            return $this->render('@superadmin/views/_shared/index', [
+                'data_provider' => $data_provider,
+                'model_class' => $model_class,
+            ]);
+        }
     }
 
     public function actionView($id)
