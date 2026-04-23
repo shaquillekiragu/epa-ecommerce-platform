@@ -4,7 +4,7 @@ namespace superadmin\controllers;
 
 use superadmin\models\User;
 
-class AdminPanelController extends _SuperadminWebController
+class DashboardController extends _SuperadminWebController
 {
     /** @var class-string<\yii\db\ActiveRecord> */
     public $model_class;
