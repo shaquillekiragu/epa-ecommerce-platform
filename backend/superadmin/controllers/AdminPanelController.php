@@ -18,16 +18,13 @@ class AdminPanelController extends _SuperadminWebController
 
         $data_provider = new \yii\data\ActiveDataProvider([
             'query' => $model_class::find(),
-            'pagination' => ['pageSize' => 50],
+            // 'pagination' => ['pageSize' => 50],
         ]);
 
         return $this->render('@superadmin/views/admin-panel/index', [
             'data_provider' => $data_provider,
             'model_class' => $model_class,
-
         ]);
-
-        // return 'Hello world!';
     }
 
     public function actionView($id)

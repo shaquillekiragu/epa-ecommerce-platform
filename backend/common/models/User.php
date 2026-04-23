@@ -24,7 +24,7 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  */
 
-class User extends BaseModel implements IdentityInterface
+class User extends BaseModel
 {
     // public const STATUS_DELETED = 0;
     // public const STATUS_INACTIVE = 9;
