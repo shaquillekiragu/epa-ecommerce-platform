@@ -75,14 +75,6 @@ $linked_data_entities = [
                         Manage platform data and operations. Use the Admin Panel to view records and perform CRUD actions.
                     </p>
                 </div>
-
-                <div class="col-12 col-lg-4 text-lg-end">
-                    <?= Html::a(
-                        'Open Admin Panel',
-                        ['/admin-panel/index'],
-                        ['class' => 'btn btn-primary btn-lg w-100 w-lg-auto']
-                    ) ?>
-                </div>
             </div>
         </section>
 

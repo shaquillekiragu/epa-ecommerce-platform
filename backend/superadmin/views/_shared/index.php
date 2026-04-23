@@ -12,7 +12,6 @@ $model = new $model_class();
 echo GridView::widget([
     'dataProvider' => $data_provider,
     'columns' => array_merge(
-        [['class' => SerialColumn::class]],
         $model->attributes(), // shows all DB columns
         [['class' => ActionColumn::class]]
     ),
