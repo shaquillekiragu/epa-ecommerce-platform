@@ -5,16 +5,6 @@ services:
   api:
     build: api
     ports:
-      - 22080:80
-    volumes:
-      # Re-use local composer cache via host-volume
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      # Mount source-code for development
-      - ./:/app
-
-  rest:
-    build: rest
-    ports:
       - 21080:80
     volumes:
       # Re-use local composer cache via host-volume
@@ -46,4 +36,3 @@ services:
   #    - POSTGRES_DB=ecom_platform_db
   #    - POSTGRES_USER=ecom_platform
   #    - POSTGRES_PASSWORD=secret
-  
