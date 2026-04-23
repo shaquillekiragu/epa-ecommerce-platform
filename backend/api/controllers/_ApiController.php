@@ -2,6 +2,6 @@
 
 namespace api\controllers;
 
-class ApiController
+class _ApiController
 {
 }
