@@ -54,15 +54,18 @@ class Address extends BaseModel
 
     public function attributeLabels()
     {
-        return [
-            'address_type' => 'Address Type',
-            'building_number' => 'Building No.',
-            'street_name' => 'Street Name',
-            'city' => 'City',
-            'region' => 'Region',
-            'post_code' => 'Post Code',
-            'country' => 'Country',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'address_type' => 'Address Type',
+                'building_number' => 'Building No.',
+                'street_name' => 'Street Name',
+                'city' => 'City',
+                'region' => 'Region',
+                'post_code' => 'Post Code',
+                'country' => 'Country',
+            ]
+        );
     }
 
     public function getFullAddress()

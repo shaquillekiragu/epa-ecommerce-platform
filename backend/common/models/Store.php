@@ -58,10 +58,13 @@ class Store extends BaseModel
 
     public function attributeLabels()
     {
-        return [
-            'store_name' => 'Store Name',
-            'store_description' => 'Store Description',
-            'merchant_id' => 'Merchant ID',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'store_name' => 'Store Name',
+                'store_description' => 'Store Description',
+                'merchant_id' => 'Merchant ID',
+            ]
+        );
     }
 }

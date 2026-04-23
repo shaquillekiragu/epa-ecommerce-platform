@@ -39,10 +39,13 @@ class Basket extends BaseModel
 
     public function attributeLabels()
     {
-        return [
-            'customer_id' => 'Customer ID',
-            'price_total' => 'Basket Price Total',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'customer_id' => 'Customer ID',
+                'price_total' => 'Basket Price Total',
+            ]
+        );
     }
 
     public function getCustomerName()

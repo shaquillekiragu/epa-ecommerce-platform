@@ -63,12 +63,15 @@ class Order extends BaseModel
 
     public function attributeLabels()
     {
-        return [
-            'customer_id' => 'Customer ID',
-            'store_id' => 'Store ID',
-            'price_total' => 'Order Price Total',
-            'order_datetime' => 'Order Date & Time',
-            'status' => 'Order Status',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'customer_id' => 'Customer ID',
+                'store_id' => 'Store ID',
+                'price_total' => 'Order Price Total',
+                'order_datetime' => 'Order Date & Time',
+                'status' => 'Order Status',
+            ]
+        );
     }
 }

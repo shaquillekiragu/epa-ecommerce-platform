@@ -55,11 +55,14 @@ class Orderproduct extends BaseModel
 
     public function attributeLabels()
     {
-        return [
-            'order_id' => 'Order ID',
-            'product_id' => 'Product ID',
-            'price_at_purchase_in_gbp' => 'Price at Purchase (GBP)',
-            'quantity' => 'Item Quantity',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'order_id' => 'Order ID',
+                'product_id' => 'Product ID',
+                'price_at_purchase_in_gbp' => 'Price at Purchase (GBP)',
+                'quantity' => 'Item Quantity',
+            ]
+        );
     }
 }

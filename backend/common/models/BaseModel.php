@@ -30,7 +30,16 @@ class BaseModel extends ActiveRecord
         );
     }
 
-    // attributes
-    // search functionality - for relevant models
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'created_by' => 'Created By',
+            'created_at' => 'Created At',
+            'last_updated_by' => 'Last Updated By',
+            'last_updated_at' => 'Last Updated At',
+        ];
+    }
+
     // beforeSave - set created_at only on creation - set created_by using logged-in user - look at docs - look at types
 }
