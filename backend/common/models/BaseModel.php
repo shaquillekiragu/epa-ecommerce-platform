@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 
 class BaseModel extends ActiveRecord
 {
-    public function rules(): array
+    public function rules()
     {
         return array_merge(
             parent::rules(),
