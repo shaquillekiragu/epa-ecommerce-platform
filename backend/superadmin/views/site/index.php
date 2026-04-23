@@ -2,52 +2,119 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+use yii\bootstrap5\Html;
+
+$this->title = 'Superadmin Dashboard';
+
+$data_entities = [
+    [
+        'title' => 'Users',
+        'subtitle' => 'Accounts and roles',
+        'url_param' => 'user',
+    ],
+    [
+        'title' => 'Orders',
+        'subtitle' => 'Purchases and status',
+        'url_param' => 'order',
+    ],
+    [
+        'title' => 'Products',
+        'subtitle' => 'Catalogue and stock',
+        'url_param' => 'product',
+    ],
+    [
+        'title' => 'Product Categories',
+        'subtitle' => 'Catalogue categories',
+        'url_param' => 'productcategory',
+    ],
+    [
+        'title' => 'Stores',
+        'subtitle' => 'Merchants and stores',
+        'url_param' => 'store',
+    ],
+    [
+        'title' => 'Baskets',
+        'subtitle' => 'Customers\' open baskets',
+        'url_param' => 'basket',
+    ],
+    [
+        'title' => 'Addresses',
+        'subtitle' => 'Billing and shipping',
+        'url_param' => 'address',
+    ],
+];
+
+$linked_data_entities = [
+    [
+        'title' => 'Order-Products',
+        'subtitle' => 'Order line items',
+        'url_param' => 'orderproduct',
+    ],
+    [
+        'title' => 'Basket-Products',
+        'subtitle' => 'Basket line items',
+        'url_param' => 'basketproduct',
+    ],
+    [
+        'title' => 'User-Addresses',
+        'subtitle' => 'User ↔ address links',
+        'url_param' => 'useraddress',
+    ],
+];
+
 ?>
+
 <div class="site-index">
+    <div class="py-4 mb-5">
+        <div class="p-4 p-md-5 rounded-3 bg-light border">
+            <div class="row align-items-center g-4">
+                <div class="col-12 col-lg-8">
+                    <h1 class="display-6 mb-2">Superadmin Dashboard</h1>
+                    <p class="lead mb-0">
+                        Manage platform data and operations. Use the Admin Panel to view records and perform CRUD actions.
+                    </p>
+                </div>
 
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                <div class="col-12 col-lg-4 text-lg-end">
+                    <?= Html::a(
+                        'Open Admin Panel',
+                        ['/admin-panel/index'],
+                        ['class' => 'btn btn-primary btn-lg w-100 w-lg-auto']
+                    ) ?>
+                </div>
             </div>
         </div>
 
+        <h3 class="mt-5">Data Entities</h3>
+
+        <div class="row g-3 mt-3">
+            <?php foreach($data_entities as $entity) { ?>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="fw-semibold"><?= $entity['title'] ?></div>
+                            <div class="text-muted small mb-3"><?= $entity['subtitle'] ?></div>
+                            <?= Html::a('View ' . strtolower($entity['title']), ['/' . $entity['url_param'] . '/index'], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+
+        <h3 class="mt-5">Linked Data Entities</h3>
+
+        <div class="row g-3 mt-3">
+            <?php foreach($linked_data_entities as $entity) { ?>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="fw-semibold"><?= $entity['title'] ?></div>
+                            <div class="text-muted small mb-3"><?= $entity['subtitle'] ?></div>
+                            <?= Html::a('View ' . strtolower($entity['title']), ['/' . $entity['url_param'] . '/index'], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 </div>
