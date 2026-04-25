@@ -67,8 +67,6 @@ class SeedController extends Controller
         }
     }
 
-    // you can create another function here to handle 'undo actions' like 'actionClearUserTable'
-
     private function buildUsers(int $count, string $prefix): array
     {
         $users = [
@@ -465,5 +463,3 @@ class SeedController extends Controller
 
 // find a use the yii progress bar functionality - or echo progress stages eg 'Adding users...'
 // pass a number into this function to see a number
-// you can switch between debug mode or deploy mode (one will show the echoes and one won't)
-// php yii seed/seed-user 0 (1 is debug mode)
