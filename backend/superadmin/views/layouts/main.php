@@ -65,10 +65,10 @@ NavBar::end();
 
         $is_page_site_index = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
 
-        if (empty($links) && $is_page_site_index) {
-            $links[] = ['label' => 'Home'];
-        } else if (empty($links)) {
-            $links[] = ['label' => 'Home', 'url' => ['/']];
+        if ($is_page_site_index) {
+            array_unshift($links, 'Home');
+        } else {
+            array_unshift($links, ['label' => 'Home', 'url' => ['/site/index']]);
         }
         ?>
 

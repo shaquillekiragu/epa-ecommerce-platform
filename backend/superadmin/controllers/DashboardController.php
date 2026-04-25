@@ -16,9 +16,7 @@ class DashboardController extends _SuperadminWebController
         $model_class = $this->model_class ?? User::class;
         $plural_label = Inflector::pluralize(Inflector::camel2words((new \ReflectionClass($model_class))->getShortName()));
 
-        $this->view->params['breadcrumbs'] = [
-            $plural_label,
-        ];
+        $this->view->params['breadcrumbs'][] = $plural_label;
 
         $data_provider = new ActiveDataProvider([
             'query' => $model_class::find(),
@@ -51,10 +49,8 @@ class DashboardController extends _SuperadminWebController
             throw new \yii\web\NotFoundHttpException('Record not found.');
         }
 
-        $this->view->params['breadcrumbs'] = [
-            ['label' => $plural_label, 'url' => ['index']],
-            'View > ' . $model->id,
-        ];
+        $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => 'index'];
+        $this->view->params['breadcrumbs'][] = 'View > ' . $model->id;
         
         $data_provider = new ActiveDataProvider([
             'query' => $model_class::find()->where([$primary_key => (int) $id]),

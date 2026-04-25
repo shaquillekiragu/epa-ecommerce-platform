@@ -64,6 +64,11 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+/* breadcrumbs */
+.breadcrumb a:hover {
+    cursor: pointer;
+}
+
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding-top: 7px;
