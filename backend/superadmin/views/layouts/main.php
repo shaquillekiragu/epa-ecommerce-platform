@@ -60,15 +60,29 @@ NavBar::end();
 
 <main role="main" class="shrink-0">
     <div class="container">
+        <?php
+        $links = $this->params['breadcrumbs'] ?? [];
+
+        $is_page_site_index = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
+
+        if (empty($links) && $is_page_site_index) {
+            $links[] = ['label' => 'Home'];
+        } else if (empty($links)) {
+            $links[] = ['label' => 'Home', 'url' => ['/']];
+        }
+        ?>
+
         <?= Breadcrumbs::widget([
-            'links' => $this->params['breadcrumbs'] ?? [],
+            'homeLink' => false,
+            'links' => $links,
             'options' => [
-                'class' => 'breadcrumb mt-3',
+                'class' => 'breadcrumb mt-3 fs-5',
                 'style' => "--bs-breadcrumb-divider: ' > ';"
             ],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        ]); ?>
+
+        <?= Alert::widget(); ?>
+        <?= $content; ?>
     </div>
 </main>
 
