@@ -61,8 +61,12 @@ NavBar::end();
 <main role="main" class="shrink-0">
     <div class="container">
         <?= Breadcrumbs::widget([
-        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-    ]) ?>
+            'links' => $this->params['breadcrumbs'] ?? [],
+            'options' => [
+                'class' => 'breadcrumb mt-3',
+                'style' => "--bs-breadcrumb-divider: ' > ';"
+            ],
+        ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
