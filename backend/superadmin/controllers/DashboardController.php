@@ -2,6 +2,7 @@
 
 namespace superadmin\controllers;
 
+use yii\data\ActiveDataProvider;
 use superadmin\models\User;
 
 class DashboardController extends _SuperadminWebController
@@ -16,9 +17,9 @@ class DashboardController extends _SuperadminWebController
     {
         $model_class = $this->model_class ?? User::class;
 
-        $data_provider = new \yii\data\ActiveDataProvider([
+        $data_provider = new ActiveDataProvider([
             'query' => $model_class::find(),
-            // 'pagination' => ['pageSize' => 50],
+            'pagination' => ['pageSize' => 50],
         ]);
 
         try {
@@ -36,7 +37,33 @@ class DashboardController extends _SuperadminWebController
 
     public function actionView($id)
     {
-        
+        $model_class = $this->model_class ?? User::class;
+        $primary_key = $model_class::primaryKey()[0] ?? 'id';
+
+        $model = $model_class::findOne([$primary_key => (int) $id]);
+
+        if (!$model) {
+            throw new \yii\web\NotFoundHttpException('Record not found.');
+        }
+
+        $data_provider = new ActiveDataProvider([
+            'query' => $model_class::find()->where([$primary_key => (int) $id]),
+            'pagination' => ['pageSize' => 50],
+        ]);
+
+        try {
+            return $this->render('view', [
+                'data_provider' => $data_provider,
+                'model' => $model,
+                'model_class' => $model_class,
+            ]);
+        } catch (\Throwable $th) {
+            return $this->render('@superadmin/views/_shared/view', [
+                'data_provider' => $data_provider,
+                'model' => $model,
+                'model_class' => $model_class,
+            ]);
+        }
     }
 
     public function actionCreate()
