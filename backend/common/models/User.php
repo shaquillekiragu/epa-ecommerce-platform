@@ -115,7 +115,7 @@ class User extends BaseModel
                 ],
                 [
                     [
-                        'deleted_at'
+                        'deactivated_at'
                     ],
                     'safe'
                 ],
@@ -154,7 +154,7 @@ class User extends BaseModel
                 'country' => 'Country',
                 'mobile_number' => 'Mobile Number',
                 'is_account_active' => 'Account Activity Status',
-                'deleted_at' => 'Deleted At',
+                'deactivated_at' => 'Deactivated At',
                 'allow_update' => 'Allow Update',
                 'allow_delete' => 'Allow Delete',
             ]
