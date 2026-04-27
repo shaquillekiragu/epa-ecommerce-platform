@@ -73,8 +73,8 @@ class Address extends BaseModel
                 'region' => 'Region',
                 'post_code' => 'Post Code',
                 'country' => 'Country',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }

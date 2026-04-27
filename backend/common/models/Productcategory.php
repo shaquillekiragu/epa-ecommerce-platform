@@ -61,8 +61,8 @@ class Productcategory extends BaseModel
                 'category_name' => 'Category Name',
                 'description' => 'Description',
                 'thumbnail' => 'Thumbnail',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }

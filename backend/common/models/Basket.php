@@ -53,8 +53,8 @@ class Basket extends BaseModel
             [
                 'customer_id' => 'Customer ID',
                 'price_total' => 'Basket Price Total',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }

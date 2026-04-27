@@ -101,8 +101,8 @@ class Product extends BaseModel
                 'weight_in_grams' => 'Weight (g)',
                 'thumbnail' => 'Thumbnail',
                 'is_active' => 'Is Active',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }

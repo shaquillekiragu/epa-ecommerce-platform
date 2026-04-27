@@ -80,8 +80,8 @@ class Order extends BaseModel
                 'price_total' => 'Order Price Total',
                 'order_datetime' => 'Order Date & Time',
                 'status' => 'Order Status',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }

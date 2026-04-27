@@ -153,10 +153,10 @@ class User extends BaseModel
                 'date_of_birth' => 'Date of Birth',
                 'country' => 'Country',
                 'mobile_number' => 'Mobile Number',
-                'is_active' => 'Account Activity Status',
+                'is_active' => 'Active Status',
                 'deactivated_at' => 'Deactivated At',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
+                'allow_update' => 'Allow Updates',
+                'allow_delete' => 'Allow Deletion',
             ]
         );
     }
