@@ -42,6 +42,7 @@ $dropdown_options = [
 	'address_type' => [
 		'shipping' => 'Shipping',
 		'billing' => 'Billing',
+		'both' => 'Both',
 	],
 	'status' => [
 		'pending_payment' => 'Pending payment',

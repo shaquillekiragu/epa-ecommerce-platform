@@ -23,7 +23,7 @@ class Address extends BaseModel
                         'address_type',
                     ],
                     'in',
-                    'range' => ['shipping', 'billing']
+                    'range' => ['shipping', 'billing', 'both']
                 ],
                 [
                     [
