@@ -35,7 +35,7 @@ class m260416_000003_seed_random_superadmin_user extends Migration
             'date_of_birth' => '1990-01-01',
             'country' => 'GB',
             'mobile_number' => '07000000000',
-            'is_account_active' => 1,
+            'is_active' => 1,
             'deactivated_at' => null,
             'created_by' => null,
             'last_updated_by' => null,

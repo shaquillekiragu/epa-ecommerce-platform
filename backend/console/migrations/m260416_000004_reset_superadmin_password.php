@@ -40,7 +40,7 @@ class m260416_000004_reset_superadmin_password extends Migration
             '{{%user}}',
             [
                 'hashed_password' => $newHash,
-                'is_account_active' => 1,
+                'is_active' => 1,
                 'deactivated_at' => null,
             ],
             ['id' => $userId]

@@ -29,7 +29,7 @@ class m260409_163030_create_product_table extends Migration
         $this->addColumn('{{%product}}', 'sku_code', 'varchar(64) NOT NULL');
         $this->addColumn('{{%product}}', 'weight_in_grams', 'int NOT NULL');
         $this->addColumn('{{%product}}', 'thumbnail', 'varchar(255) NOT NULL');
-        $this->addColumn('{{%product}}', 'is_live', 'boolean NOT NULL DEFAULT true');
+        $this->addColumn('{{%product}}', 'is_active', 'boolean NOT NULL DEFAULT true');
 
         $this->addColumn('{{%product}}', 'created_at', 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP');
         $this->addColumn('{{%product}}', 'created_by', 'int NOT NULL');

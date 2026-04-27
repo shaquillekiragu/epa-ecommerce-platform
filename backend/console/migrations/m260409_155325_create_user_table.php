@@ -31,7 +31,7 @@ class m260409_155325_create_user_table extends Migration
         $this->addColumn('{{%user}}', 'country', 'varchar(255) NOT NULL');
         $this->addColumn('{{%user}}', 'mobile_number', 'varchar(20) NOT NULL');
 
-        $this->addColumn('{{%user}}', 'is_account_active', 'boolean NOT NULL DEFAULT true');
+        $this->addColumn('{{%user}}', 'is_active', 'boolean NOT NULL DEFAULT true');
         $this->addColumn('{{%user}}', 'deactivated_at', 'timestamp NULL');
 
         // Self-referencing audit fields: nullable so the first user can be inserted
