@@ -7,12 +7,36 @@ use yii\helpers\Url;
 
 $model = new $model_class();
 
+$mask_secret_for_display = static function (?string $value): ?string {
+    if ($value === null || $value === '') {
+        return $value;
+    }
+
+    return '****************';
+};
+
+$columns = $model->attributes();
+
+foreach ($columns as $i => $column) {
+    if ($column !== 'hashed_password') {
+        continue;
+    }
+
+    $columns[$i] = [
+        'attribute' => 'hashed_password',
+        'label' => $model->getAttributeLabel('hashed_password'),
+        'value' => static fn ($row_model) => $mask_secret_for_display($row_model->hashed_password ?? null),
+    ];
+    break;
+}
+
 ?>
 
 <main class="my-5 pe-4">
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $data_provider,
+            'filterModel' => $search_model,
 
             'tableOptions' => ['class' => 'table table-striped table-bordered table-hover'],
 
@@ -24,7 +48,7 @@ $model = new $model_class();
             },
 
             'columns' => array_merge(
-                $model->attributes(),
+                $columns,
                 [[
                     'class' => ActionColumn::class,
                     'template' => '{view} {update} {delete}',

@@ -28,8 +28,35 @@ use yii\helpers\Html;
 		); ?>
 	</section>
 
+	<?php
+	
+	$mask_secret_for_display = static function (?string $value): ?string {
+		if ($value === null || $value === '') {
+			return $value;
+		}
+
+		return '****************';
+	};
+
+	$attributes = $model->attributes();
+
+	foreach ($attributes as $i => $attribute) {
+		if ($attribute !== 'hashed_password') {
+			continue;
+		}
+
+		$attributes[$i] = [
+			'attribute' => 'hashed_password',
+			'label' => $model->getAttributeLabel('hashed_password'),
+			'value' => $mask_secret_for_display($model->hashed_password ?? null),
+		];
+		break;
+	}
+	
+	?>
+
 	<?= DetailView::widget([
 		'model' => $model,
-		'attributes' => $model->attributes(),
+		'attributes' => $attributes,
 	]); ?>
 </main>
