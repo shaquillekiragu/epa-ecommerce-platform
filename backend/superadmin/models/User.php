@@ -6,5 +6,5 @@ use common\models\User as CommonUser;
 
 class User extends CommonUser
 {
-	// filter by: role, country, is_account_active
+    // filter by: role, country, is_active
 }

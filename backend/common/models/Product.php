@@ -35,7 +35,7 @@ class Product extends BaseModel
                 ],
                 [
                     [
-                        'is_live',
+                        'is_active',
                     ],
                     'boolean'
                 ],
@@ -71,6 +71,7 @@ class Product extends BaseModel
                         'sku_code',
                         'weight_in_grams',
                         'thumbnail',
+                        'is_active',
                         'allow_update',
                         'allow_delete',
                     ],
@@ -99,7 +100,7 @@ class Product extends BaseModel
                 'sku_code' => 'SKU Code',
                 'weight_in_grams' => 'Weight (g)',
                 'thumbnail' => 'Thumbnail',
-                'is_live' => 'Is Live',
+                'is_active' => 'Is Active',
                 'allow_update' => 'Allow Update',
                 'allow_delete' => 'Allow Delete',
             ]

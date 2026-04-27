@@ -102,7 +102,7 @@ class User extends BaseModel
                 ],
                 [
                     [
-                        'is_account_active'
+                        'is_active'
                     ],
                     'boolean'
                 ],
@@ -129,7 +129,7 @@ class User extends BaseModel
                         'date_of_birth',
                         'country',
                         'mobile_number',
-                        'is_account_active',
+                        'is_active',
                         'allow_update',
                         'allow_delete',
                     ],
@@ -153,7 +153,7 @@ class User extends BaseModel
                 'date_of_birth' => 'Date of Birth',
                 'country' => 'Country',
                 'mobile_number' => 'Mobile Number',
-                'is_account_active' => 'Account Activity Status',
+                'is_active' => 'Account Activity Status',
                 'deactivated_at' => 'Deactivated At',
                 'allow_update' => 'Allow Update',
                 'allow_delete' => 'Allow Delete',
