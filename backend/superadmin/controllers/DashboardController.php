@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Inflector;
 use yii\web\NotFoundHttpException;
 use yii\web\MethodNotAllowedHttpException;
+use yii\web\ForbiddenHttpException;
 use superadmin\models\User;
 
 class DashboardController extends _SuperadminWebController
@@ -43,6 +44,7 @@ class DashboardController extends _SuperadminWebController
     public function actionView($id)
     {
         $model_class = $this->model_class ?? User::class;
+
         $short_name = (new \ReflectionClass($model_class))->getShortName();
         $plural_label = Inflector::pluralize(Inflector::camel2words($short_name));
         $singular_url = '/' . Inflector::camel2id($short_name);
@@ -102,12 +104,16 @@ class DashboardController extends _SuperadminWebController
         }
 
         $model_class = $this->model_class ?? User::class;
-        $primary_key = $model_class::primaryKey()[0] ?? 'id';
 
+        $primary_key = $model_class::primaryKey()[0] ?? 'id';
         $model = $model_class::findOne([$primary_key => (int) $id]);
 
         if (!$model) {
             throw new NotFoundHttpException('Record not found.');
+        }
+
+        if ($model->hasAttribute('allow_delete') && $model->allow_delete === false) {
+            throw new ForbiddenHttpException('Deletion is not allowed for this record.');
         }
 
         $model->delete();
