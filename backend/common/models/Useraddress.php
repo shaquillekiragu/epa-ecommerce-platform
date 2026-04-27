@@ -27,17 +27,8 @@ class Useraddress extends BaseModel
                 ],
                 [
                     [
-                        'allow_update',
-                        'allow_delete',
-                    ],
-                    'boolean'
-                ],
-                [
-                    [
                         'user_id',
                         'address_id',
-                        'allow_update',
-                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -60,8 +51,6 @@ class Useraddress extends BaseModel
             [
                 'user_id' => 'User ID',
                 'address_id' => 'Address ID',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
             ]
         );
     }

@@ -28,18 +28,9 @@ class Basketproduct extends BaseModel
                 ],
                 [
                     [
-                        'allow_update',
-                        'allow_delete',
-                    ],
-                    'boolean'
-                ],
-                [
-                    [
                         'product_id',
                         'basket_id',
                         'quantity',
-                        'allow_update',
-                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -63,8 +54,6 @@ class Basketproduct extends BaseModel
                 'basket_id' => 'Basket ID',
                 'product_id' => 'Product id',
                 'quantity' => 'Item Quantity',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
             ]
         );
     }

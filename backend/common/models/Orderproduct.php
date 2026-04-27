@@ -34,19 +34,10 @@ class Orderproduct extends BaseModel
                 ],
                 [
                     [
-                        'allow_update',
-                        'allow_delete',
-                    ],
-                    'boolean'
-                ],
-                [
-                    [
                         'product_id',
                         'order_id',
                         'price_at_purchase_in_gbp',
                         'quantity',
-                        'allow_update',
-                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -71,8 +62,6 @@ class Orderproduct extends BaseModel
                 'product_id' => 'Product ID',
                 'price_at_purchase_in_gbp' => 'Price at Purchase (GBP)',
                 'quantity' => 'Item Quantity',
-                'allow_update' => 'Allow Update',
-                'allow_delete' => 'Allow Delete',
             ]
         );
     }
