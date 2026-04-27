@@ -9,6 +9,4 @@ class StoreSearch extends _BaseSearch
 	protected string $model_class = Store::class;
 
 	// search by: store_name
-	// filter by: N/A
-	// sort by: store_name
 }

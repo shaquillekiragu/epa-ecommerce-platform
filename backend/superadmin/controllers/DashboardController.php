@@ -80,12 +80,19 @@ class DashboardController extends _SuperadminWebController
 
     public function actionCreate()
     {
-        
+        // new Model()
+        // handle validation of data on user submission, then redirect
+        // then redirect to the rendered the view
+        // if the user clicks submit and validation fails, show red fields in the same form view - check if Yii does this
     }
 
     public function actionUpdate($id)
     {
-        
+        // is it a POST request? then load
+        // find the model
+        // handle validation of data on user submission
+        // then redirect to the rendered the view
+        // if the user clicks submit and validation fails, show red fields in the same form view - check if Yii does this
     }
 
     public function actionDelete($id)
@@ -108,6 +115,10 @@ class DashboardController extends _SuperadminWebController
         Yii::$app->session->setFlash('success', 'Record deleted.');
 
         return $this->redirect(['index']);
+
+        // add a Yii confirmation popup
+        // add SQL functionality (ON CASCADE)
+        // keep this here, override if necessary in spcecifc controllers
     }
 }
 
