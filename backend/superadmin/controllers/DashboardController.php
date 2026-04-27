@@ -90,8 +90,22 @@ class DashboardController extends _SuperadminWebController
 
     public function actionUpdate($id)
     {
-        // is it a POST request? then load
-        // find the model
+        $model_class = $this->model_class ?? User::class;
+
+        $primary_key = $model_class::primaryKey()[0] ?? 'id';
+        $model = $model_class::findOne([$primary_key => (int) $id]);
+        
+        if (!$model) {
+            throw new \yii\web\NotFoundHttpException('Record not found.');
+        }
+
+        $model->load(Yii::$app->request->post());
+
+        $data_provider = new ActiveDataProvider([
+            'query' => $model_class::find()->update(),
+            'pagination' => ['pageSize' => 50],
+        ]);
+
         // handle validation of data on user submission
         // then redirect to the rendered the view
         // if the user clicks submit and validation fails, show red fields in the same form view - check if Yii does this
@@ -121,9 +135,5 @@ class DashboardController extends _SuperadminWebController
         Yii::$app->session->setFlash('success', 'Record deleted.');
 
         return $this->redirect(['index']);
-
-        // add a Yii confirmation popup
-        // add SQL functionality (ON CASCADE)
-        // keep this here, override if necessary in spcecifc controllers
     }
 }
