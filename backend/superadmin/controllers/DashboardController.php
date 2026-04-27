@@ -53,7 +53,7 @@ class DashboardController extends _SuperadminWebController
         $model = $model_class::findOne([$primary_key => (int) $id]);
         
         if (!$model) {
-            throw new \yii\web\NotFoundHttpException('Record not found.');
+            throw new NotFoundHttpException('Record not found.');
         }
 
         $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => $singular_url];
