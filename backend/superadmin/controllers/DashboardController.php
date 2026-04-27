@@ -2,8 +2,11 @@
 
 namespace superadmin\controllers;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Inflector;
+use yii\web\NotFoundHttpException;
+use yii\web\MethodNotAllowedHttpException;
 use superadmin\models\User;
 
 class DashboardController extends _SuperadminWebController
@@ -87,7 +90,24 @@ class DashboardController extends _SuperadminWebController
 
     public function actionDelete($id)
     {
-        
+        if (!Yii::$app->request->isPost) {
+            throw new MethodNotAllowedHttpException('Delete must be a POST request.');
+        }
+
+        $model_class = $this->model_class ?? User::class;
+        $primary_key = $model_class::primaryKey()[0] ?? 'id';
+
+        $model = $model_class::findOne([$primary_key => (int) $id]);
+
+        if (!$model) {
+            throw new NotFoundHttpException('Record not found.');
+        }
+
+        $model->delete();
+
+        Yii::$app->session->setFlash('success', 'Record deleted.');
+
+        return $this->redirect(['index']);
     }
 }
 
