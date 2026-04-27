@@ -63,8 +63,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // $this->view->params['breadcrumbs'] = [];
-
         return $this->render('index');
     }
 
