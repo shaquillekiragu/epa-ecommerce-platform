@@ -11,7 +11,7 @@ use yii\db\Query;
 
 class SeedController extends Controller
 {
-    public function actionSeedUserAndAddress(int $debug = 0, int $batch_size = 25, int $count = 10, $seed = null)
+    public function actionSeedUserAndAddress(int $debug = 1, int $batch_size = 25, int $count = 10, $seed = null)
     {
         $db = Yii::$app->db;
 
