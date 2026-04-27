@@ -98,7 +98,8 @@ class User extends BaseModel
                     [
                         'date_of_birth'
                     ],
-                    'date'
+                    'date',
+                    'format' => 'php:Y-m-d',
                 ],
                 [
                     [
