@@ -41,7 +41,7 @@ class m260416_000004_reset_superadmin_password extends Migration
             [
                 'hashed_password' => $newHash,
                 'is_account_active' => 1,
-                'deleted_at' => null,
+                'deactivated_at' => null,
             ],
             ['id' => $userId]
         );
