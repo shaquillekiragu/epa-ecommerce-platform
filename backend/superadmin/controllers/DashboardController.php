@@ -40,7 +40,9 @@ class DashboardController extends _SuperadminWebController
     public function actionView($id)
     {
         $model_class = $this->model_class ?? User::class;
-        $plural_label = Inflector::pluralize(Inflector::camel2words((new \ReflectionClass($model_class))->getShortName()));
+        $short_name = (new \ReflectionClass($model_class))->getShortName();
+        $plural_label = Inflector::pluralize(Inflector::camel2words($short_name));
+        $singular_url = '/' . Inflector::camel2id($short_name);
 
         $primary_key = $model_class::primaryKey()[0] ?? 'id';
         $model = $model_class::findOne([$primary_key => (int) $id]);
@@ -49,7 +51,7 @@ class DashboardController extends _SuperadminWebController
             throw new \yii\web\NotFoundHttpException('Record not found.');
         }
 
-        $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => 'index'];
+        $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => $singular_url];
         $this->view->params['breadcrumbs'][] = 'View > ' . $model->id;
         
         $data_provider = new ActiveDataProvider([
