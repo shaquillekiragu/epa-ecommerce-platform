@@ -36,7 +36,7 @@ foreach ($columns as $i => $column) {
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $data_provider,
-            'filterModel' => $search_model,
+            'filterModel' => $filter_model,
 
             'tableOptions' => ['class' => 'table table-striped table-bordered table-hover'],
 

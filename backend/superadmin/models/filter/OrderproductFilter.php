@@ -1,12 +1,10 @@
 <?php
 
-namespace superadmin\models\search;
+namespace superadmin\models\filter;
 
 use superadmin\models\Orderproduct;
 
-class OrderproductSearch extends _BaseSearch
+class OrderproductFilter extends _BaseFilter
 {
 	protected string $model_class = Orderproduct::class;
-
-	// search by: N/A
 }

@@ -1,12 +1,10 @@
 <?php
 
-namespace superadmin\models\search;
+namespace superadmin\models\filter;
 
 use superadmin\models\Basketproduct;
 
-class BasketproductSearch extends _BaseSearch
+class BasketproductFilter extends _BaseFilter
 {
 	protected string $model_class = Basketproduct::class;
-
-	// search by: N/A
 }

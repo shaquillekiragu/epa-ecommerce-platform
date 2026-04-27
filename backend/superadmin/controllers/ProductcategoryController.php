@@ -3,10 +3,10 @@
 namespace superadmin\controllers;
 
 use superadmin\models\Productcategory;
-use superadmin\models\search\ProductcategorySearch;
+use superadmin\models\filter\ProductcategoryFilter;
 
 class ProductcategoryController extends DashboardController
 {
     public $model_class = Productcategory::class;
-    public $search_model_class = ProductcategorySearch::class;
+    public $filter_model_class = ProductcategoryFilter::class;
 }

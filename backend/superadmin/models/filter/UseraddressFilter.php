@@ -1,12 +1,10 @@
 <?php
 
-namespace superadmin\models\search;
+namespace superadmin\models\filter;
 
 use superadmin\models\Useraddress;
 
-class UseraddressSearch extends _BaseSearch
+class UseraddressFilter extends _BaseFilter
 {
 	protected string $model_class = Useraddress::class;
-
-	// search by: N/A
 }

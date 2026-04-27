@@ -3,10 +3,10 @@
 namespace superadmin\controllers;
 
 use superadmin\models\Store;
-use superadmin\models\search\StoreSearch;
+use superadmin\models\filter\StoreFilter;
 
 class StoreController extends DashboardController
 {
     public $model_class = Store::class;
-    public $search_model_class = StoreSearch::class;
+    public $filter_model_class = StoreFilter::class;
 }

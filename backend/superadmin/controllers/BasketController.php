@@ -3,10 +3,10 @@
 namespace superadmin\controllers;
 
 use superadmin\models\Basket;
-use superadmin\models\search\BasketSearch;
+use superadmin\models\filter\BasketFilter;
 
 class BasketController extends DashboardController
 {
     public $model_class = Basket::class;
-    public $search_model_class = BasketSearch::class;
+    public $filter_model_class = BasketFilter::class;
 }
