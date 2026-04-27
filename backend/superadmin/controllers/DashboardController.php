@@ -82,10 +82,26 @@ class DashboardController extends _SuperadminWebController
 
     public function actionCreate()
     {
-        // new Model()
-        // handle validation of data on user submission, then redirect
-        // then redirect to the rendered the view
-        // if the user clicks submit and validation fails, show red fields in the same form view - check if Yii does this
+        $model_class = $this->model_class ?? User::class;
+
+        $short_name = (new \ReflectionClass($model_class))->getShortName();
+        $plural_label = Inflector::pluralize(Inflector::camel2words($short_name));
+        $singular_url = '/' . Inflector::camel2id($short_name);
+
+        $model = new $model_class();
+
+        $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => $singular_url];
+        $this->view->params['breadcrumbs'][] = 'Create';
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Record created.');
+            return $this->redirect(['view', 'id' => $model->getPrimaryKey()]);
+        }
+
+        return $this->render('@superadmin/views/_shared/create', [
+            'model' => $model,
+            'model_class' => $model_class,
+        ]);
     }
 
     public function actionUpdate($id)
