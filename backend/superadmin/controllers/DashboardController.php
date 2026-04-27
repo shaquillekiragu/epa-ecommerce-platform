@@ -121,6 +121,3 @@ class DashboardController extends _SuperadminWebController
         // keep this here, override if necessary in spcecifc controllers
     }
 }
-
-// consider separating/overriding crud view
-// create markdown files breaking down plans and steps
