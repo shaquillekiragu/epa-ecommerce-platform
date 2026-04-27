@@ -92,23 +92,33 @@ class DashboardController extends _SuperadminWebController
     {
         $model_class = $this->model_class ?? User::class;
 
+        $short_name = (new \ReflectionClass($model_class))->getShortName();
+        $plural_label = Inflector::pluralize(Inflector::camel2words($short_name));
+        $singular_url = '/' . Inflector::camel2id($short_name);
+
         $primary_key = $model_class::primaryKey()[0] ?? 'id';
         $model = $model_class::findOne([$primary_key => (int) $id]);
         
         if (!$model) {
-            throw new \yii\web\NotFoundHttpException('Record not found.');
+            throw new NotFoundHttpException('Record not found.');
         }
 
-        $model->load(Yii::$app->request->post());
+        if ($model->hasAttribute('allow_update') && $model->allow_update === false) {
+            throw new ForbiddenHttpException('Updating is not allowed for this record.');
+        }
 
-        $data_provider = new ActiveDataProvider([
-            'query' => $model_class::find()->update(),
-            'pagination' => ['pageSize' => 50],
+        $this->view->params['breadcrumbs'][] = ['label' => $plural_label, 'url' => $singular_url];
+        $this->view->params['breadcrumbs'][] = 'Update > ' . $model->id;
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Record updated.');
+            return $this->redirect(['view', 'id' => $model->getPrimaryKey()]);
+        }
+
+        return $this->render('@superadmin/views/_shared/update', [
+            'model' => $model,
+            'model_class' => $model_class,
         ]);
-
-        // handle validation of data on user submission
-        // then redirect to the rendered the view
-        // if the user clicks submit and validation fails, show red fields in the same form view - check if Yii does this
     }
 
     public function actionDelete($id)
