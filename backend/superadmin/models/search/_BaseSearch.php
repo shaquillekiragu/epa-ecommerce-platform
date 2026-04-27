@@ -30,5 +30,5 @@ abstract class _BaseSearch extends Model
         return $provider;
     }
 
-    abstract protected function applyFilters($query): void;
+    // abstract protected function applyFilters($query): void;
 }
