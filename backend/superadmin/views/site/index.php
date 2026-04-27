@@ -70,7 +70,7 @@ $linked_data_entities = [
                 <div class="col-12 col-lg-8">
                     <h1 class="display-6 mb-2">Superadmin Dashboard</h1>
                     <p class="lead mb-0">
-                        Manage platform data and operations. Use the Admin Panel to view records and perform CRUD actions.
+                        Manage platform data and operations. Use this Dashboard to view database records and perform CRUD actions.
                     </p>
                 </div>
             </div>
