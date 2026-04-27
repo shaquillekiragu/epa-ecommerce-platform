@@ -29,8 +29,17 @@ class Productcategory extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'category_name',
                         'description',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -52,6 +61,8 @@ class Productcategory extends BaseModel
                 'category_name' => 'Category Name',
                 'description' => 'Description',
                 'thumbnail' => 'Thumbnail',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }

@@ -28,8 +28,17 @@ class Basket extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'customer_id',
                         'price_total',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -44,6 +53,8 @@ class Basket extends BaseModel
             [
                 'customer_id' => 'Customer ID',
                 'price_total' => 'Basket Price Total',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }

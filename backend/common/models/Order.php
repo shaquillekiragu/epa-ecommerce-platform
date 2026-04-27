@@ -34,6 +34,13 @@ class Order extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'status',
                     ],
                     'in',
@@ -54,6 +61,8 @@ class Order extends BaseModel
                         'price_total',
                         'order_datetime',
                         'status',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -71,6 +80,8 @@ class Order extends BaseModel
                 'price_total' => 'Order Price Total',
                 'order_datetime' => 'Order Date & Time',
                 'status' => 'Order Status',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }

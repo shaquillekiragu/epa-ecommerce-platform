@@ -34,9 +34,18 @@ class Store extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'store_name',
                         'store_description',
                         'merchant_id',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -64,6 +73,8 @@ class Store extends BaseModel
                 'store_name' => 'Store Name',
                 'store_description' => 'Store Description',
                 'merchant_id' => 'Merchant ID',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }

@@ -41,6 +41,13 @@ class Product extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'product_name',
                         'thumbnail',
                     ],
@@ -64,6 +71,8 @@ class Product extends BaseModel
                         'sku_code',
                         'weight_in_grams',
                         'thumbnail',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -91,6 +100,8 @@ class Product extends BaseModel
                 'weight_in_grams' => 'Weight (g)',
                 'thumbnail' => 'Thumbnail',
                 'is_live' => 'Is Live',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }

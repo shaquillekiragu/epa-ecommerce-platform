@@ -108,6 +108,13 @@ class User extends BaseModel
                 ],
                 [
                     [
+                        'allow_update',
+                        'allow_delete',
+                    ],
+                    'boolean'
+                ],
+                [
+                    [
                         'deleted_at'
                     ],
                     'safe'
@@ -123,6 +130,8 @@ class User extends BaseModel
                         'country',
                         'mobile_number',
                         'is_account_active',
+                        'allow_update',
+                        'allow_delete',
                     ],
                     'required'
                 ],
@@ -146,6 +155,8 @@ class User extends BaseModel
                 'mobile_number' => 'Mobile Number',
                 'is_account_active' => 'Account Activity Status',
                 'deleted_at' => 'Deleted At',
+                'allow_update' => 'Allow Update',
+                'allow_delete' => 'Allow Delete',
             ]
         );
     }
