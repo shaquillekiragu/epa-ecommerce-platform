@@ -68,6 +68,10 @@ $action_column = [[
 ?>
 
 <main class="my-5 pe-4">
+    <article class="d-flex justify-content-end">
+        <?= Html::a('Create +', ['create'], ['class' => 'btn btn-outline-success']); ?>
+    </article>
+
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $data_provider,
