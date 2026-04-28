@@ -52,9 +52,20 @@ class Basketproduct extends BaseModel
             parent::attributeLabels(),
             [
                 'basket_id' => 'Basket ID',
-                'product_id' => 'Product id',
+                'product_id' => 'Product ID',
                 'quantity' => 'Item Quantity',
+                'basketProductPrice' => 'Price (GBP)'
             ]
         );
+    }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    public function getBasketProductPrice()
+    {
+        return $this->product->price_in_gbp;
     }
 }
