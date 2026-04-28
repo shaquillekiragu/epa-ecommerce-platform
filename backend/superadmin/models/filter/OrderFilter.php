@@ -7,4 +7,6 @@ use superadmin\models\Order;
 class OrderFilter extends _BaseFilter
 {
 	protected string $model_class = Order::class;
+
+	// filter by: store_name, status
 }

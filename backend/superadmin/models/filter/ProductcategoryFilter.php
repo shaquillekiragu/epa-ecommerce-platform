@@ -7,4 +7,6 @@ use superadmin\models\Productcategory;
 class ProductcategoryFilter extends _BaseFilter
 {
 	protected string $model_class = Productcategory::class;
+
+	// filter by: N/A
 }

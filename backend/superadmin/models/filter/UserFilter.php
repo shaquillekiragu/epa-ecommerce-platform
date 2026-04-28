@@ -7,4 +7,6 @@ use superadmin\models\User;
 class UserFilter extends _BaseFilter
 {
 	protected string $model_class = User::class;
+
+    // filter by: role, country, is_active
 }
