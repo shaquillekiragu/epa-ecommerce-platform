@@ -52,20 +52,6 @@ $action_column = [[
     'buttonOptions' => ['class' => ''],
 
     'buttons' => [
-        // 'delete' => function ($url, $model, $key) {
-        //     return Html::a(
-        //         'Delete',
-        //         $url,
-        //         [
-        //             'class' => 'btn btn-sm btn-outline-danger',
-        //             'onclick' => "if (typeof event !== 'undefined' && event) { event.stopPropagation(); }",
-        //             'data' => [
-        //                 'confirm' => 'Are you sure you want to delete this record?',
-        //                 'method' => 'post',
-        //             ],
-        //         ]
-        //     );
-        // },
         'view' => function ($url) {
             return Html::a('View', $url, [
                 'class' => 'btn btn-sm btn-outline-primary',
