@@ -22,9 +22,14 @@ class Order extends BaseModel
                     [
                         'customer_id',
                         'store_id',
-                        'price_total',
                     ],
                     'integer'
+                ],
+                [
+                    [
+                        'price_total',
+                    ],
+                    'number'
                 ],
                 [
                     [
@@ -77,7 +82,7 @@ class Order extends BaseModel
             [
                 'customer_id' => 'Customer ID',
                 'store_id' => 'Store ID',
-                'price_total' => 'Order Price Total',
+                'price_total' => 'Order Price Total (GBP)',
                 'order_datetime' => 'Order Date & Time',
                 'status' => 'Order Status',
                 'allow_update' => 'Allow Updates',

@@ -22,9 +22,14 @@ class Basket extends BaseModel
                 [
                     [
                         'customer_id',
-                        'price_total',
                     ],
                     'integer'
+                ],
+                [
+                    [
+                        'price_total',
+                    ],
+                    'number'
                 ],
                 [
                     [
@@ -52,7 +57,7 @@ class Basket extends BaseModel
             parent::attributeLabels(),
             [
                 'customer_id' => 'Customer ID',
-                'price_total' => 'Basket Price Total',
+                'price_total' => 'Basket Price Total (GBP)',
                 'allow_update' => 'Allow Updates',
                 'allow_delete' => 'Allow Deletion',
             ]

@@ -76,7 +76,7 @@ final class BasketSeeder extends BaseSeeder
             Console::endProgress();
 
             // Update price_total now that basket_product rows are known
-            $totals_by_basket_id = $this->calculateBasketTotalsInPennies($basket_products, $products);
+            $totals_by_basket_id = $this->calculateBasketTotalsInGbp($basket_products, $products);
             foreach ($totals_by_basket_id as $basket_id => $price_total) {
                 $this->db->createCommand()
                     ->update('{{%basket}}', ['price_total' => $price_total], ['id' => $basket_id])
@@ -144,9 +144,9 @@ final class BasketSeeder extends BaseSeeder
     /**
      * @param array $basket_products rows containing basket_id, product_id, quantity
      * @param array $products rows of ['id' => int, 'price_in_gbp' => float]
-     * @return array<int,int> basket_id => price_total (integer pennies)
+     * @return array<int,float> basket_id => price_total (GBP)
      */
-    private function calculateBasketTotalsInPennies(array $basket_products, array $products): array
+    private function calculateBasketTotalsInGbp(array $basket_products, array $products): array
     {
         $price_by_product_id = [];
         foreach ($products as $p) {
@@ -160,14 +160,15 @@ final class BasketSeeder extends BaseSeeder
             $qty = (int) $row['quantity'];
 
             $unit = $price_by_product_id[$product_id] ?? 0.0;
-            $line_pennies = (int) round($unit * 100) * $qty;
+            $line_total = $unit * $qty;
 
             if (!isset($totals[$basket_id])) {
-                $totals[$basket_id] = 0;
+                $totals[$basket_id] = 0.0;
             }
-            $totals[$basket_id] += $line_pennies;
+            $totals[$basket_id] += $line_total;
         }
 
+        // Currency display can round at presentation time; keep float precision here.
         return $totals;
     }
 }

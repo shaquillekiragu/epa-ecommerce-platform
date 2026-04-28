@@ -88,7 +88,7 @@ final class OrderSeeder extends BaseSeeder
             );
             Console::endProgress();
 
-            $totals_by_order_id = $this->calculateOrderTotalsInPennies($order_products);
+            $totals_by_order_id = $this->calculateOrderTotalsInGbp($order_products);
             foreach ($totals_by_order_id as $order_id => $price_total) {
                 $this->db->createCommand()
                     ->update('{{%order}}', ['price_total' => $price_total], ['id' => $order_id])
@@ -184,7 +184,7 @@ final class OrderSeeder extends BaseSeeder
         return $rows;
     }
 
-    private function calculateOrderTotalsInPennies(array $order_products): array
+    private function calculateOrderTotalsInGbp(array $order_products): array
     {
         $totals = [];
 
@@ -193,12 +193,12 @@ final class OrderSeeder extends BaseSeeder
             $qty = (int) $row['quantity'];
             $price = (float) $row['price_at_purchase_in_gbp'];
 
-            $line_pennies = (int) round($price * 100) * $qty;
+            $line_total = $price * $qty;
 
             if (!isset($totals[$order_id])) {
-                $totals[$order_id] = 0;
+                $totals[$order_id] = 0.0;
             }
-            $totals[$order_id] += $line_pennies;
+            $totals[$order_id] += $line_total;
         }
 
         return $totals;
