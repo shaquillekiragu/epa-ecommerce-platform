@@ -30,13 +30,48 @@ foreach ($columns as $i => $column) {
     break;
 }
 
+$action_column = [[
+    'class' => ActionColumn::class,
+    'template' => '{view} {update} {delete}',
+
+    'urlCreator' => function ($action, $model) {
+        $pk = $model->getPrimaryKey();
+        return Url::to([$action, 'id' => $pk]);
+    },
+
+    'contentOptions' => ['class' => 'd-flex gap-2'],
+    'buttonOptions' => ['class' => ''],
+
+    'buttons' => [
+        'delete' => function ($url, $model, $key) {
+            return Html::a(
+                'Delete',
+                $url,
+                [
+                    'class' => 'btn btn-sm btn-outline-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this record?',
+                        'method' => 'post',
+                    ],
+                ]
+            );
+        },
+        'view' => function ($url) {
+            return Html::a('View', $url, ['class' => 'btn btn-sm btn-outline-primary']);
+        },
+        'update' => function ($url) {
+            return Html::a('Update', $url, ['class' => 'btn btn-sm btn-outline-warning']);
+        },
+    ],
+]];
+
 ?>
 
 <main class="my-5 pe-4">
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $data_provider,
-            'filterModel' => $filter_model,
+            // 'filterModel' => $filter_model,
 
             'tableOptions' => ['class' => 'table table-striped table-bordered table-hover'],
 
@@ -49,40 +84,7 @@ foreach ($columns as $i => $column) {
 
             'columns' => array_merge(
                 $columns,
-                [[
-                    'class' => ActionColumn::class,
-                    'template' => '{view} {update} {delete}',
-
-                    'urlCreator' => function ($action, $model) {
-                        $pk = $model->getPrimaryKey();
-                        return Url::to([$action, 'id' => $pk]);
-                    },
-
-                    'contentOptions' => ['class' => 'd-flex gap-2'],
-                    'buttonOptions' => ['class' => ''],
-
-                    'buttons' => [
-                        'delete' => function ($url, $model, $key) {
-                            return Html::a(
-                                'Delete',
-                                $url,
-                                [
-                                    'class' => 'btn btn-sm btn-outline-danger',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this record?',
-                                        'method' => 'post',
-                                    ],
-                                ]
-                            );
-                        },
-                        'view' => function ($url) {
-                            return Html::a('View', $url, ['class' => 'btn btn-sm btn-outline-primary']);
-                        },
-                        'update' => function ($url) {
-                            return Html::a('Update', $url, ['class' => 'btn btn-sm btn-outline-warning']);
-                        },
-                    ],
-                ]],
+                $action_column
             ),
         ]); ?>
     </div>
