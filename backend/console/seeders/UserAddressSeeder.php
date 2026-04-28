@@ -6,44 +6,45 @@ use yii\helpers\Console;
 
 final class UserAddressSeeder extends BaseSeeder
 {
-    public function seed(int $debug = 1, int $batchSize = 25, int $count = 10): void
+    public function seed(int $debug = 1, int $batch_size = 25, int $count = 10): void
     {
         if ($count < 10) {
             throw new \InvalidArgumentException('This seeder currently expects $count >= 10 because linkups reference indices 0..9.');
         }
 
-        $users = $this->buildUsers($count, $this->seedRunPrefix);
+        $actor_id = $this->getSuperadminUserId();
+        if ($actor_id === null) {
+            throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
+        }
+
+        $users = $this->buildUsers($count, $this->seed_run_prefix);
         $users = $this->hashAllPasswords($users);
-        $batchedUsers = array_chunk($users, $batchSize);
+        $users = $this->applyAuditActor($users, $actor_id);
+        $batched_users = array_chunk($users, $batch_size);
 
         $addresses = $this->buildAddresses($count);
-        $userAddresses = $this->buildUserAddresses();
+        $user_addresses = $this->buildUserAddresses();
 
         $tx = $this->db->beginTransaction();
 
         try {
-            $userIds = $this->insertData($batchedUsers, 'user', true);
+            $user_ids = $this->insertData($batched_users, 'user', true);
 
-            $actorId = $this->getSuperadminUserId();
-            if ($actorId === null) {
-                throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
-            }
+            $addresses_with_audit = $this->applyAuditActor($addresses, $actor_id);
+            $batched_addresses = array_chunk($addresses_with_audit, $batch_size);
+            $address_ids = $this->insertData($batched_addresses, 'address', true);
 
-            $addressesWithAudit = $this->applyAuditActor($addresses, $actorId);
-            $batchedAddresses = array_chunk($addressesWithAudit, $batchSize);
-            $addressIds = $this->insertData($batchedAddresses, 'address', true);
-
-            $userAddressRows = $this->mapUserAddressLinkups($userAddresses, $userIds, $addressIds, $actorId);
-            $batchedUserAddress = array_chunk($userAddressRows, $batchSize);
-            $this->insertData($batchedUserAddress, 'user_address', false);
+            $user_address_rows = $this->mapUserAddressLinkups($user_addresses, $user_ids, $address_ids, $actor_id);
+            $batched_user_address = array_chunk($user_address_rows, $batch_size);
+            $this->insertData($batched_user_address, 'user_address', false);
 
             $tx->commit();
 
             if ($debug === 1) {
                 Console::output('Seed complete:');
-                Console::output('- users inserted: ' . count($userIds));
-                Console::output('- addresses inserted: ' . count($addressIds));
-                Console::output('- user_address linkups inserted: ' . count($userAddressRows));
+                Console::output('- users inserted: ' . count($user_ids));
+                Console::output('- addresses inserted: ' . count($address_ids));
+                Console::output('- user_address linkups inserted: ' . count($user_address_rows));
             }
         } catch (\Throwable $e) {
             $tx->rollBack();
@@ -405,20 +406,20 @@ final class UserAddressSeeder extends BaseSeeder
         ];
     }
 
-    private function mapUserAddressLinkups(array $linkupGroups, array $userIds, array $addressIds, int $actorId): array
+    private function mapUserAddressLinkups(array $linkup_groups, array $user_ids, array $address_ids, int $actor_id): array
     {
         $rows = [];
 
-        foreach ($linkupGroups as $group) {
+        foreach ($linkup_groups as $group) {
             foreach ($group as $link) {
-                $userIdx = $link['user_idx'];
-                $addressIdx = $link['address_idx'];
+                $user_idx = $link['user_idx'];
+                $address_idx = $link['address_idx'];
 
                 $rows[] = [
-                    'user_id' => $userIds[$userIdx],
-                    'address_id' => $addressIds[$addressIdx],
-                    'created_by' => $actorId,
-                    'last_updated_by' => $actorId,
+                    'user_id' => $user_ids[$user_idx],
+                    'address_id' => $address_ids[$address_idx],
+                    'created_by' => $actor_id,
+                    'last_updated_by' => $actor_id,
                 ];
             }
         }

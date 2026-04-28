@@ -9,7 +9,7 @@ use yii\db\Query;
 abstract class BaseSeeder
 {
     protected Connection $db;
-    protected string $seedRunPrefix;
+    protected string $seed_run_prefix;
 
     public function __construct(Connection $db, ?int $seed = null)
     {
@@ -19,36 +19,31 @@ abstract class BaseSeeder
             mt_srand($seed);
         }
 
-        $this->seedRunPrefix = 'seed_' . date('Ymd_His') . '_';
+        $this->seed_run_prefix = 'seed_' . date('Ymd_His') . '_';
     }
 
-    protected function insertData(array $batchedArray, string $dbTableName, bool $returnIds = false): array
+    protected function insertData(array $batched_array, string $db_table_name, bool $return_ids = false): array
     {
-        $idList = [];
+        $id_list = [];
 
-        foreach ($batchedArray as $batch) {
+        foreach ($batched_array as $batch) {
             foreach ($batch as $row) {
-                $this->db->createCommand()->insert("{{%{$dbTableName}}}", $row)->execute();
+                $this->db->createCommand()->insert("{{%{$db_table_name}}}", $row)->execute();
 
-                if ($returnIds) {
-                    $idList[] = (int) $this->db->getLastInsertID();
+                if ($return_ids) {
+                    $id_list[] = (int) $this->db->getLastInsertID();
                 }
             }
         }
 
-        return $idList;
+        return $id_list;
     }
 
-    protected function applyAuditActor(array $rows, int $actorId): array
+    protected function applyAuditActor(array $rows, int $actor_id): array
     {
         foreach ($rows as $i => $row) {
-            if (array_key_exists('created_by', $row)) {
-                $rows[$i]['created_by'] = $actorId;
-            }
-
-            if (array_key_exists('last_updated_by', $row)) {
-                $rows[$i]['last_updated_by'] = $actorId;
-            }
+            $rows[$i]['created_by'] = $actor_id;
+            $rows[$i]['last_updated_by'] = $actor_id;
         }
 
         return $rows;
@@ -56,14 +51,14 @@ abstract class BaseSeeder
 
     protected function getSuperadminUserId(): ?int
     {
-        $userId = (new Query())
+        $user_id = (new Query())
             ->select(['user_id'])
             ->from('{{%auth_assignment}}')
             ->where(['item_name' => 'superadmin'])
             ->orderBy(['created_at' => SORT_ASC, 'user_id' => SORT_ASC])
             ->scalar($this->db);
 
-        return $userId !== false ? (int) $userId : null;
+        return $user_id !== false ? (int) $user_id : null;
     }
 
     protected function hashAllPasswords(array $users): array
