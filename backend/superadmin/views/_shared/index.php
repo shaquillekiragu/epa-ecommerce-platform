@@ -65,12 +65,17 @@ $action_column = [[
     ],
 ]];
 
+$no_creation = ['basketproduct', 'orderproduct', 'useraddress'];
+$model_short_name = strtolower((new \ReflectionClass($model_class))->getShortName());
+
 ?>
 
 <main class="my-5 pe-4">
-    <article class="d-flex justify-content-end">
-        <?= Html::a('Create +', ['create'], ['class' => 'btn btn-outline-success']); ?>
-    </article>
+    <?php if (!in_array($model_short_name, $no_creation, true)) { ?>
+        <article class="d-flex justify-content-end">
+            <?= Html::a('Create +', ['create'], ['class' => 'btn btn-outline-success']); ?>
+        </article>
+    <?php } ?>
 
     <div class="table-responsive">
         <?= GridView::widget([

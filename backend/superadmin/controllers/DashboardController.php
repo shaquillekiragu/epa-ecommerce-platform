@@ -9,6 +9,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\ForbiddenHttpException;
 use superadmin\models\User;
+use superadmin\models\Basketproduct;
+use superadmin\models\Orderproduct;
+use superadmin\models\Useraddress;
 
 class DashboardController extends _SuperadminWebController
 {
@@ -95,6 +98,11 @@ class DashboardController extends _SuperadminWebController
     public function actionCreate()
     {
         $model_class = $this->model_class ?? User::class;
+        $no_creation = $model_class === Basketproduct::class || $model_class === Orderproduct::class || $model_class === Useraddress::class;
+
+        if ($no_creation) {
+            throw new ForbiddenHttpException('Data creation is not allowed for this table.');
+        }
 
         $short_name = (new \ReflectionClass($model_class))->getShortName();
         $plural_label = Inflector::pluralize(Inflector::camel2words($short_name));
