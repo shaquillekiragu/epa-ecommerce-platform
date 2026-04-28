@@ -8,7 +8,6 @@ use yii\db\ActiveQuery;
 
 abstract class _BaseFilter extends Model
 {
-    /** @var class-string<\yii\db\ActiveRecord> */
     protected string $model_class;
 
     private array $_values = [];

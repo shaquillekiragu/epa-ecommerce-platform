@@ -25,9 +25,11 @@ class DashboardController extends _SuperadminWebController
         $this->view->params['breadcrumbs'][] = $plural_label;
 
         $filter_model = null;
+
         if ($filter_model_class) {
             $filter_model = new $filter_model_class();
             $data_provider = $filter_model->search(Yii::$app->request->queryParams);
+            //
         } else {
             $data_provider = new ActiveDataProvider([
                 'query' => $model_class::find(),
