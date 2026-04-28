@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\BaseModel;
+use yii\db\ActiveQuery;
 
 class Product extends BaseModel
 {
@@ -95,6 +96,7 @@ class Product extends BaseModel
                 'store_id' => 'Store ID',
                 'product_name' => 'Product Name',
                 'product_category_id' => 'Product Category ID',
+                'productCategoryName' => 'Product Category',
                 'price_in_gbp' => 'Price (GBP)',
                 'number_in_stock' => 'Stock Quantity',
                 'sku_code' => 'SKU Code',
@@ -105,5 +107,15 @@ class Product extends BaseModel
                 'allow_delete' => 'Allow Deletion',
             ]
         );
+    }
+
+    public function getProductCategory(): ActiveQuery
+    {
+        return $this->hasOne(Productcategory::class, ['id' => 'product_category_id']);
+    }
+
+    public function getProductCategoryName(): ?string
+    {
+        return $this->productCategory->category_name ?? null;
     }
 }

@@ -18,6 +18,15 @@ $mask_secret_for_display = static function (?string $value): ?string {
 $columns = $model->attributes();
 
 foreach ($columns as $i => $column) {
+    if ($column === 'product_category_id' && method_exists($model, 'getProductCategoryName')) {
+        $columns[$i] = [
+            'attribute' => 'product_category_id',
+            'label' => $model->getAttributeLabel('productCategoryName'),
+            'value' => static fn ($row_model) => $row_model->productCategoryName ?? $row_model->product_category_id,
+        ];
+        continue;
+    }
+
     if ($column !== 'hashed_password') {
         continue;
     }
