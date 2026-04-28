@@ -14,10 +14,7 @@ final class CatalogSeeder extends BaseSeeder
      */
     public function seed(int $debug = 1, int $batch_size = 25, int $count = 10): void
     {
-        $actor_id = $this->getSuperadminUserId();
-        if ($actor_id === null) {
-            throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
-        }
+        $actor_id = $this->ensureSuperadminUserId();
 
         $merchant_ids = (new Query())
             ->select(['id'])
@@ -36,14 +33,54 @@ final class CatalogSeeder extends BaseSeeder
         $tx = $this->db->beginTransaction();
 
         try {
-            $store_ids = $this->insertData(array_chunk($stores, $batch_size), 'store', true);
-            $category_ids = $this->insertData(array_chunk($categories, $batch_size), 'product_category', true);
+            Console::output('Seeding stores...');
+            $stores_done = 0;
+            $stores_total = count($stores);
+            Console::startProgress(0, $stores_total);
+            $store_ids = $this->insertDataWithCallback(
+                array_chunk($stores, $batch_size),
+                'store',
+                true,
+                static function () use (&$stores_done, $stores_total): void {
+                    $stores_done++;
+                    Console::updateProgress($stores_done, $stores_total);
+                }
+            );
+            Console::endProgress();
+
+            Console::output('Seeding product categories...');
+            $categories_done = 0;
+            $categories_total = count($categories);
+            Console::startProgress(0, $categories_total);
+            $category_ids = $this->insertDataWithCallback(
+                array_chunk($categories, $batch_size),
+                'product_category',
+                true,
+                static function () use (&$categories_done, $categories_total): void {
+                    $categories_done++;
+                    Console::updateProgress($categories_done, $categories_total);
+                }
+            );
+            Console::endProgress();
 
             $products = $this->applyAuditActor(
                 $this->buildProducts($count, $store_ids, $category_ids, $this->seed_run_prefix),
                 $actor_id
             );
-            $product_ids = $this->insertData(array_chunk($products, $batch_size), 'product', true);
+            Console::output('Seeding products...');
+            $products_done = 0;
+            $products_total = count($products);
+            Console::startProgress(0, $products_total);
+            $product_ids = $this->insertDataWithCallback(
+                array_chunk($products, $batch_size),
+                'product',
+                true,
+                static function () use (&$products_done, $products_total): void {
+                    $products_done++;
+                    Console::updateProgress($products_done, $products_total);
+                }
+            );
+            Console::endProgress();
 
             $tx->commit();
 

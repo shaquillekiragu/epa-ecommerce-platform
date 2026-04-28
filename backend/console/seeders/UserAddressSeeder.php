@@ -12,10 +12,7 @@ final class UserAddressSeeder extends BaseSeeder
             throw new \InvalidArgumentException('This seeder currently expects $count >= 10 because linkups reference indices 0..9.');
         }
 
-        $actor_id = $this->getSuperadminUserId();
-        if ($actor_id === null) {
-            throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
-        }
+        $actor_id = $this->ensureSuperadminUserId();
 
         $users = $this->buildUsers($count, $this->seed_run_prefix);
         $users = $this->hashAllPasswords($users);
@@ -28,15 +25,54 @@ final class UserAddressSeeder extends BaseSeeder
         $tx = $this->db->beginTransaction();
 
         try {
-            $user_ids = $this->insertData($batched_users, 'user', true);
+            Console::output('Seeding users...');
+            $users_done = 0;
+            $users_total = count($users);
+            Console::startProgress(0, $users_total);
+            $user_ids = $this->insertDataWithCallback(
+                $batched_users,
+                'user',
+                true,
+                static function () use (&$users_done, $users_total): void {
+                    $users_done++;
+                    Console::updateProgress($users_done, $users_total);
+                }
+            );
+            Console::endProgress();
 
             $addresses_with_audit = $this->applyAuditActor($addresses, $actor_id);
             $batched_addresses = array_chunk($addresses_with_audit, $batch_size);
-            $address_ids = $this->insertData($batched_addresses, 'address', true);
+            Console::output('Seeding addresses...');
+            $addresses_done = 0;
+            $addresses_total = count($addresses_with_audit);
+            Console::startProgress(0, $addresses_total);
+            $address_ids = $this->insertDataWithCallback(
+                $batched_addresses,
+                'address',
+                true,
+                static function () use (&$addresses_done, $addresses_total): void {
+                    $addresses_done++;
+                    Console::updateProgress($addresses_done, $addresses_total);
+                }
+            );
+            Console::endProgress();
 
             $user_address_rows = $this->mapUserAddressLinkups($user_addresses, $user_ids, $address_ids, $actor_id);
             $batched_user_address = array_chunk($user_address_rows, $batch_size);
-            $this->insertData($batched_user_address, 'user_address', false);
+            Console::output('Seeding user_address linkups...');
+            $linkups_done = 0;
+            $linkups_total = count($user_address_rows);
+            Console::startProgress(0, $linkups_total);
+            $this->insertDataWithCallback(
+                $batched_user_address,
+                'user_address',
+                false,
+                static function () use (&$linkups_done, $linkups_total): void {
+                    $linkups_done++;
+                    Console::updateProgress($linkups_done, $linkups_total);
+                }
+            );
+            Console::endProgress();
 
             $tx->commit();
 

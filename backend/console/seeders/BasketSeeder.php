@@ -14,11 +14,7 @@ final class BasketSeeder extends BaseSeeder
      */
     public function seed(int $debug = 1, int $batch_size = 25, int $count = 10): void
     {
-        $actor_id = $this->getSuperadminUserId();
-
-        if ($actor_id === null) {
-            throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
-        }
+        $actor_id = $this->ensureSuperadminUserId();
 
         $customer_ids = (new Query())
             ->select(['id'])
@@ -45,13 +41,39 @@ final class BasketSeeder extends BaseSeeder
 
         try {
             $baskets = $this->applyAuditActor($this->buildBaskets($count, $customer_ids), $actor_id);
-            $basket_ids = $this->insertData(array_chunk($baskets, $batch_size), 'basket', true);
+            Console::output('Seeding baskets...');
+            $baskets_done = 0;
+            $baskets_total = count($baskets);
+            Console::startProgress(0, $baskets_total);
+            $basket_ids = $this->insertDataWithCallback(
+                array_chunk($baskets, $batch_size),
+                'basket',
+                true,
+                static function () use (&$baskets_done, $baskets_total): void {
+                    $baskets_done++;
+                    Console::updateProgress($baskets_done, $baskets_total);
+                }
+            );
+            Console::endProgress();
 
             $basket_products = $this->applyAuditActor(
                 $this->buildBasketProducts($basket_ids, $products),
                 $actor_id
             );
-            $basket_product_ids = $this->insertData(array_chunk($basket_products, $batch_size), 'basket_product', true);
+            Console::output('Seeding basket_product linkups...');
+            $basket_products_done = 0;
+            $basket_products_total = count($basket_products);
+            Console::startProgress(0, $basket_products_total);
+            $basket_product_ids = $this->insertDataWithCallback(
+                array_chunk($basket_products, $batch_size),
+                'basket_product',
+                true,
+                static function () use (&$basket_products_done, $basket_products_total): void {
+                    $basket_products_done++;
+                    Console::updateProgress($basket_products_done, $basket_products_total);
+                }
+            );
+            Console::endProgress();
 
             // Update price_total now that basket_product rows are known
             $totals_by_basket_id = $this->calculateBasketTotalsInPennies($basket_products, $products);

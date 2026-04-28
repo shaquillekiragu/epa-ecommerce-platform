@@ -14,11 +14,7 @@ final class OrderSeeder extends BaseSeeder
      */
     public function seed(int $debug = 1, int $batch_size = 25, int $count = 10): void
     {
-        $actor_id = $this->getSuperadminUserId();
-
-        if ($actor_id === null) {
-            throw new \RuntimeException('No RBAC assignment found for role "superadmin". Seed/assign a superadmin user first.');
-        }
+        $actor_id = $this->ensureSuperadminUserId();
 
         $customer_ids = (new Query())
             ->select(['id'])
@@ -58,15 +54,40 @@ final class OrderSeeder extends BaseSeeder
                 $this->buildOrders($count, $customer_ids, $store_ids),
                 $actor_id
             );
-            $order_ids = $this->insertData(array_chunk($orders, $batch_size), 'order', true);
+            Console::output('Seeding orders...');
+            $orders_done = 0;
+            $orders_total = count($orders);
+            Console::startProgress(0, $orders_total);
+            $order_ids = $this->insertDataWithCallback(
+                array_chunk($orders, $batch_size),
+                'order',
+                true,
+                static function () use (&$orders_done, $orders_total): void {
+                    $orders_done++;
+                    Console::updateProgress($orders_done, $orders_total);
+                }
+            );
+            Console::endProgress();
 
             $order_products = $this->applyAuditActor(
                 $this->buildOrderProducts($order_ids, $orders, $products),
                 $actor_id
             );
-            $order_product_ids = $this->insertData(array_chunk($order_products, $batch_size), 'order_product', true);
+            Console::output('Seeding order_product linkups...');
+            $order_products_done = 0;
+            $order_products_total = count($order_products);
+            Console::startProgress(0, $order_products_total);
+            $order_product_ids = $this->insertDataWithCallback(
+                array_chunk($order_products, $batch_size),
+                'order_product',
+                true,
+                static function () use (&$order_products_done, $order_products_total): void {
+                    $order_products_done++;
+                    Console::updateProgress($order_products_done, $order_products_total);
+                }
+            );
+            Console::endProgress();
 
-            // Update order.price_total based on order_product lines
             $totals_by_order_id = $this->calculateOrderTotalsInPennies($order_products);
             foreach ($totals_by_order_id as $order_id => $price_total) {
                 $this->db->createCommand()
@@ -106,7 +127,7 @@ final class OrderSeeder extends BaseSeeder
             $rows[] = [
                 'customer_id' => (int) $customer_ids[$i % count($customer_ids)],
                 'store_id' => (int) $store_ids[$i % count($store_ids)],
-                'price_total' => 0, // updated after order_product insert
+                'price_total' => 0,
                 'order_datetime' => date('Y-m-d H:i:s', $now - ($i * 86400)),
                 'status' => $statuses[$i % count($statuses)],
                 'allow_update' => 1,
@@ -119,12 +140,6 @@ final class OrderSeeder extends BaseSeeder
         return $rows;
     }
 
-    /**
-     * Builds order_product lines; selects products and uses current price as purchase price.
-     *
-     * @param array $orders same order rows used for insert (used for store_id selection)
-     * @param array $products rows of ['id' => int, 'store_id' => int, 'price_in_gbp' => float]
-     */
     private function buildOrderProducts(array $order_ids, array $orders, array $products): array
     {
         $rows = [];
@@ -169,9 +184,6 @@ final class OrderSeeder extends BaseSeeder
         return $rows;
     }
 
-    /**
-     * @return array<int,int> order_id => price_total (integer pennies)
-     */
     private function calculateOrderTotalsInPennies(array $order_products): array
     {
         $totals = [];
