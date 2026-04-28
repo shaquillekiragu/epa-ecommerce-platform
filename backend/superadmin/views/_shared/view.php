@@ -12,14 +12,14 @@ use yii\helpers\Html;
 		<?= Html::a(
 			'Update',
 			['update', 'id' => $pk],
-			['class' => 'btn btn-lg btn-outline-warning']
+			['class' => 'btn btn btn-outline-warning']
 		); ?>
 
 		<?= Html::a(
 			'Delete',
 			['delete', 'id' => $pk],
 			[
-				'class' => 'btn btn-lg btn-outline-danger',
+				'class' => 'btn btn btn-outline-danger',
 				'data' => [
 					'confirm' => 'Are you sure you want to delete this record?',
 					'method' => 'post',
