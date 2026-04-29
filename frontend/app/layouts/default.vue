@@ -1,5 +1,5 @@
 <template>
-	<AppHeader />
+	<AppHeaderComponent />
 	<slot />
-	<AppFooter />
+	<AppFooterComponent />
 </template>
