@@ -1,45 +1,15 @@
 <template>
 	<div class="flex-1 w-full relative">
-		<!-- Bento Grid Style Hero Images -->
 		<div class="grid grid-cols-2 gap-4 h-100">
-			<div class="col-span-1 row-span-2 rounded-xl overflow-hidden relative group">
-				<img
-					:alt="card0Alt"
-					class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-					data-alt="High-end red running shoe floating against a dark background with dramatic studio lighting and sharp details"
-					:src="card0Src"
-				/>
-				<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-				<div class="absolute bottom-4 left-4 text-white">
-					<span class="font-label-md text-label-md block">{{ card0Label }}</span>
-				</div>
-			</div>
-
-			<div class="col-span-1 row-span-1 rounded-xl overflow-hidden relative group">
-				<img
-					:alt="card1Alt"
-					class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-					data-alt="Sleek white over-ear premium headphones resting on a minimalist concrete surface with soft natural light"
-					:src="card1Src"
-				/>
-				<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-				<div class="absolute bottom-4 left-4 text-white">
-					<span class="font-label-md text-label-md block">{{ card1Label }}</span>
-				</div>
-			</div>
-
-			<div class="col-span-1 row-span-1 rounded-xl overflow-hidden relative group">
-				<img
-					:alt="card2Alt"
-					class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-					data-alt="Close up of a classic silver mechanical watch face with intricate details against a dark tailored suit sleeve"
-					:src="card2Src"
-				/>
-				<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-				<div class="absolute bottom-4 left-4 text-white">
-					<span class="font-label-md text-label-md block">{{ card2Label }}</span>
-				</div>
-			</div>
+			<CardComponent
+				v-for="(card, idx) in sliced_cards"
+				:key="card?.id ?? idx"
+				:card="card ?? null"
+				:fallback_label="fallback[idx]?.name ?? ''"
+				:fallback_src="fallback[idx]?.src ?? ''"
+				:data_alt="dataAlt[idx] ?? ''"
+				:is_first_large="idx === 0"
+			/>
 		</div>
 	</div>
 </template>
@@ -49,7 +19,7 @@ import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
 
-const { cards, is_large } = defineProps({
+const props = defineProps({
 	cards: {
 		type: Array as PropType<ProductCard[]>,
 		required: true,
@@ -76,23 +46,12 @@ const fallback = [
 	},
 ] as const
 
-const sliced_cards: ProductCard[] = cards.slice(0, 3)
+const sliced_cards = computed(() => props.cards.slice(0, 3))
 
-const getCard = (index: 0 | 1 | 2): ProductCard | null => {
-	const value = sliced_cards[index]
-	return value && typeof value === 'object' ? value : null
-}
-
-const card0Label = computed(() => getCard(0)?.name ?? fallback[0].name)
-const card1Label = computed(() => getCard(1)?.name ?? fallback[1].name)
-const card2Label = computed(() => getCard(2)?.name ?? fallback[2].name)
-
-const card0Alt = computed(() => getCard(0)?.name ?? fallback[0].name)
-const card1Alt = computed(() => getCard(1)?.name ?? fallback[1].name)
-const card2Alt = computed(() => getCard(2)?.name ?? fallback[2].name)
-
-const card0Src = computed(() => getCard(0)?.thumbnail || fallback[0].src)
-const card1Src = computed(() => getCard(1)?.thumbnail || fallback[1].src)
-const card2Src = computed(() => getCard(2)?.thumbnail || fallback[2].src)
+const dataAlt = [
+	'High-end red running shoe floating against a dark background with dramatic studio lighting and sharp details',
+	'Sleek white over-ear premium headphones resting on a minimalist concrete surface with soft natural light',
+	'Close up of a classic silver mechanical watch face with intricate details against a dark tailored suit sleeve',
+] as const
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <section class="w-full max-w-[1280px] mx-auto px-6 py-16">
+    <section class="w-full max-w-320 mx-auto px-6 py-16">
         <div class="flex items-end justify-between mb-8">
             <div>
                 <h2 class="font-headline-lg text-headline-lg text-on-surface">Curated Categories</h2>
@@ -7,11 +7,11 @@
                     across domains.</p>
             </div>
             <a class="font-label-md text-label-md text-primary flex items-center gap-1 hover:underline" href="#">
-                View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                View All <span class="material-symbols-outlined text-lg">arrow_forward</span>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[500px]">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-125">
             <!-- Category 1: Electronics (Large) -->
             <a class="md:col-span-2 relative rounded-xl overflow-hidden group bg-surface-container-highest border border-surface-variant"
                 href="#">
