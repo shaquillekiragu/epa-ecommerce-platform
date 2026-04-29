@@ -68,7 +68,7 @@ NavBar::end();
         if ($is_page_site_index) {
             array_unshift($links, 'Home');
         } else {
-            array_unshift($links, ['label' => 'Home', 'url' => ['/site/index']]);
+            array_unshift($links, ['label' => 'Home', 'url' => ['/']]);
         }
         ?>
 
