@@ -8,13 +8,6 @@
 					:data-alt="data_alt"
 					:src="src"
 				/>
-				<button
-					class="absolute top-3 right-3 h-8 w-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-on-surface hover:text-error transition-colors"
-				>
-					<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;"
-						>favorite</span
-					>
-				</button>
 			</div>
 			<div class="p-4">
 				<div class="flex items-start justify-between gap-2">
