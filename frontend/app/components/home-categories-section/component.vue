@@ -7,9 +7,9 @@
 					Explore our finest selections across domains.
 				</p>
 			</div>
-			<a class="font-label-md text-label-md text-primary flex items-center gap-1 hover:underline" href="#">
+			<NuxtLink class="font-label-md text-label-md text-primary flex items-center gap-1 hover:underline" to="#">
 				View All <span class="material-symbols-outlined text-lg">arrow_forward</span>
-			</a>
+			</NuxtLink>
 		</div>
 
 		<TriCardComponent :cards="cards" :is_section_large="true" />

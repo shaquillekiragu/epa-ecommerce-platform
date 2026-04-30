@@ -1,5 +1,5 @@
 <template>
-    <a :href="url" class="border px-6 py-3 transition-colors" :class="is_dark === true ? 'bg-black text-white' : 'bg-transparent text-black'">{{ text }}</a>
+    <NuxtLink :to="url" class="border px-6 py-3 transition duration-200 hover:scale-[1.02]" :class="is_dark === true ? 'bg-black text-white' : 'bg-transparent text-black'">{{ text }}</NuxtLink>
 </template>
 
 <script setup lang="ts">
