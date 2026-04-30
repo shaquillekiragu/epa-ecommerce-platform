@@ -97,6 +97,7 @@ class Product extends BaseModel
                 'product_name' => 'Product Name',
                 'product_category_id' => 'Product Category ID',
                 'productCategoryName' => 'Product Category',
+                'description' => 'Description',
                 'price_in_gbp' => 'Price (GBP)',
                 'number_in_stock' => 'Stock Quantity',
                 'sku_code' => 'SKU Code',
