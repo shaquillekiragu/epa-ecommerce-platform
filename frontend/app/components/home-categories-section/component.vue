@@ -12,14 +12,14 @@
 			</a>
 		</div>
 
-		<TriCardComponent :cards="card_array" :is_large="false" />
+		<TriCardComponent :cards="cards" :is_section_large="true" />
 	</section>
 </template>
 
 <script setup lang="ts">
 import type { ProductCategory } from '~/types/product-category'
 
-const card_array: ProductCategory[] = [
+const cards: ProductCategory[] = [
 	{
 		id: 1,
 		category_name: 'High-Fidelity Electronics',

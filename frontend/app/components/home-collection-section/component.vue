@@ -12,12 +12,12 @@
                 </p>
 
                 <div class="flex gap-4 mt-2">
-                    <LinkButtonComponent text="Shop Now" url="#" :is_dark="true" />
-                    <LinkButtonComponent text="Explore Collections" url="#" :is_dark="false" />
+                    <LinkButtonComponent text="Shop Now" url="/catalogue" :is_dark="true" />
+                    <LinkButtonComponent text="Explore Collections" url="/catalogue" :is_dark="false" />
                 </div>
             </div>
 
-            <TriCardComponent :cards="cards" :is_large="false" />
+            <TriCardComponent :cards="cards" :is_section_large="false" />
         </div>
     </section>
 </template>
