@@ -18,10 +18,13 @@
 import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
+import type { ProductCategory } from '~/types/product-category'
+
+type CardItem = ProductCard | ProductCategory
 
 const props = defineProps({
 	card: {
-		type: Object as PropType<ProductCard | null>,
+		type: Object as PropType<CardItem | null>,
 		default: null,
 	},
 	href: {
@@ -54,8 +57,20 @@ const props = defineProps({
 	},
 })
 
-const label = computed(() => props.card?.name ?? props.fallback_label)
-const alt = computed(() => props.card?.name ?? props.fallback_label)
+const getCardLabel = (card: CardItem | null): string | null => {
+	if (!card) {
+		return null
+	}
+
+	if ('name' in card) {
+		return card.name
+	}
+	
+	return card.category_name
+}
+
+const label = computed(() => getCardLabel(props.card) ?? props.fallback_label)
+const alt = computed(() => getCardLabel(props.card) ?? props.fallback_label)
 const src = computed(() => props.card?.thumbnail || props.fallback_src)
 const dataAlt = computed(() => props.data_alt)
 

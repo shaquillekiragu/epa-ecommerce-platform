@@ -23,22 +23,22 @@
 </template>
 
 <script setup lang="ts">
-import type { ProductCard } from '~/types/product';
+import type { ProductCategory } from '~/types/product-category';
 
-const cards: ProductCard[] = [
+const cards: ProductCategory[] = [
     {
         'id': 1,
-        'name': 'Sneakers',
+        'category_name': 'Sneakers',
         'thumbnail': ''
     },
     {
         'id': 2,
-        'name': 'Audio',
+        'category_name': 'Audio',
         'thumbnail': ''
     },
     {
         'id': 3,
-        'name': 'Watches',
+        'category_name': 'Watches',
         'thumbnail': ''
     },
 ]

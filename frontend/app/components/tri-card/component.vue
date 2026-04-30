@@ -19,10 +19,14 @@
 import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
+import type { ProductCategory } from '~/types/product-category'
+import CardComponent from '../card/component.vue'
+
+type CardItem = ProductCard | ProductCategory
 
 const props = defineProps({
 	cards: {
-		type: Array as PropType<ProductCard[]>,
+		type: Array as PropType<CardItem[]>,
 		required: true,
 		default: () => [],
 	},
