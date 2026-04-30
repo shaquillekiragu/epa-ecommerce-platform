@@ -1,9 +1,9 @@
 <template>
-	<component
-		:is="tag"
+	<NuxtLink
+		v-if="is_internal_link"
 		class="relative rounded-xl overflow-hidden group hover:!cursor-pointer"
 		:class="wrapper_class"
-		:href="resolved_href"
+		:to="resolved_url"
 	>
 		<img
 			:alt="label"
@@ -15,7 +15,40 @@
 		<div :class="content_class">
 			<span :class="title_class">{{ label }}</span>
 		</div>
-	</component>
+	</NuxtLink>
+
+	<a
+		v-else-if="is_external_link"
+		class="relative rounded-xl overflow-hidden group hover:!cursor-pointer"
+		:class="wrapper_class"
+		:href="resolved_url"
+		rel="noopener noreferrer"
+		target="_blank"
+	>
+		<img
+			:alt="label"
+			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+			:data-alt="data_alt"
+			:src="src"
+		/>
+		<div :class="overlay_class"></div>
+		<div :class="content_class">
+			<span :class="title_class">{{ label }}</span>
+		</div>
+	</a>
+	
+	<div v-else class="relative rounded-xl overflow-hidden group hover:!cursor-pointer" :class="wrapper_class">
+		<img
+			:alt="label"
+			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+			:data-alt="data_alt"
+			:src="src"
+		/>
+		<div :class="overlay_class"></div>
+		<div :class="content_class">
+			<span :class="title_class">{{ label }}</span>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -53,14 +86,15 @@ const {
 const label = computed(() => ('name' in card ? card.name : card.category_name))
 const src = computed(() => card.thumbnail)
 
-const resolved_href = computed(() => {
+const resolved_url = computed(() => {
 	if ('product_url' in card) {
 		return card.product_url
 	}
-	return undefined
+	return ''
 })
 
-const tag = computed(() => (resolved_href.value ? 'a' : 'div'))
+const is_external_link = computed(() => /^https?:\/\//i.test(resolved_url.value))
+const is_internal_link = computed(() => Boolean(resolved_url.value) && !is_external_link.value)
 
 const wrapper_class = computed(() => {
 	if (variant === 'list') {
