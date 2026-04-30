@@ -1,7 +1,6 @@
 <template>
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Product Card 1 -->
-        <div
+        <!-- <div
             class="bg-white border border-surface-variant rounded-lg overflow-hidden group hover:shadow-sm transition-shadow">
             <div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
                 <img alt="Smart Watch"
@@ -25,7 +24,6 @@
             </div>
         </div>
 
-        <!-- Product Card 2 -->
         <div
             class="bg-white border border-surface-variant rounded-lg overflow-hidden group hover:shadow-sm transition-shadow">
             <div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
@@ -51,7 +49,6 @@
             </div>
         </div>
 
-        <!-- Product Card 3 -->
         <div
             class="bg-white border border-surface-variant rounded-lg overflow-hidden group hover:shadow-sm transition-shadow">
             <div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
@@ -80,7 +77,6 @@
             </div>
         </div>
 
-        <!-- Product Card 4 -->
         <div
             class="bg-white border border-surface-variant rounded-lg overflow-hidden group hover:shadow-sm transition-shadow">
             <div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
@@ -104,7 +100,7 @@
                 </div>
                 <p class="font-body-md text-body-md text-sm text-on-surface-variant mt-1">Home Decor</p>
             </div>
-        </div>
+        </div> -->
 
         <CardComponent v-for="card in cards" :card="card" />
     </section>
