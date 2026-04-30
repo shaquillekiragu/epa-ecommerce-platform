@@ -1,13 +1,11 @@
 <template>
 	<div class="flex-1 w-full relative">
-		<div class="grid grid-cols-2 gap-4 h-100">
+		<div class="grid grid-cols-2 gap-4" :class="grid_height_class">
 			<CardComponent
-				v-for="(card, idx) in sliced_cards"
-				:key="card?.id ?? idx"
-				:card="card ?? null"
-				:fallback_label="fallback[idx]?.name ?? ''"
-				:fallback_src="fallback[idx]?.src ?? ''"
-				:data_alt="dataAlt[idx] ?? ''"
+				v-for="(card, idx) in normalized_cards"
+				:key="card.id"
+				:card="card"
+				:data_alt="data_alt[idx] ?? ''"
 				:is_first_large="idx === 0"
 				variant="tri"
 			/>
@@ -20,11 +18,10 @@ import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
-import CardComponent from '../card/component.vue'
 
-type CardItem = ProductCard | ProductCategory
+type CardItem = ProductCard | ProductCategory;
 
-const props = defineProps({
+const { cards, is_large } = defineProps({
 	cards: {
 		type: Array as PropType<CardItem[]>,
 		required: true,
@@ -35,6 +32,8 @@ const props = defineProps({
 		required: true
 	}
 })
+
+const grid_height_class = computed(() => (is_large ? 'h-125' : 'h-100'))
 
 const fallback = [
 	{
@@ -51,9 +50,19 @@ const fallback = [
 	},
 ] as const
 
-const sliced_cards = computed(() => props.cards.slice(0, 3))
+const normalized_cards = computed<CardItem[]>(() => {
+	const incoming = cards.slice(0, 3)
+	return [0, 1, 2].map((idx) => incoming[idx] ?? {
+		id: -(idx + 1),
+		name: fallback[idx]?.name ?? '',
+		product_category_name: '',
+		price_in_gbp: 0,
+		thumbnail: fallback[idx]?.src ?? '',
+		product_url: '#',
+	})
+})
 
-const dataAlt = [
+const data_alt = [
 	'High-end red running shoe floating against a dark background with dramatic studio lighting and sharp details',
 	'Sleek white over-ear premium headphones resting on a minimalist concrete surface with soft natural light',
 	'Close up of a classic silver mechanical watch face with intricate details against a dark tailored suit sleeve',
