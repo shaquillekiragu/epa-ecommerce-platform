@@ -1,6 +1,6 @@
 <template>
     <section class="w-full border-b overflow-hidden">
-        <div class="max-w-320 mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12">
+        <div class="max-w-7xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12">
 
             <div class="flex flex-col flex-1 gap-6 z-10">
                 <p class="uppercase font-medium opacity-60">New Collection</p>

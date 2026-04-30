@@ -9,6 +9,7 @@
 				:fallback_src="fallback[idx]?.src ?? ''"
 				:data_alt="dataAlt[idx] ?? ''"
 				:is_first_large="idx === 0"
+				variant="tri"
 			/>
 		</div>
 	</div>
