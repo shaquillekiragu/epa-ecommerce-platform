@@ -1,54 +1,46 @@
 <template>
-	<NuxtLink
-		v-if="is_internal_link"
-		class="relative rounded-xl overflow-hidden group hover:!cursor-pointer"
-		:class="wrapper_class"
-		:to="resolved_url"
-	>
-		<img
-			:alt="label"
-			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-			:data-alt="data_alt"
-			:src="src"
-		/>
-		<div :class="overlay_class"></div>
-		<div :class="content_class">
-			<span :class="title_class">{{ label }}</span>
-		</div>
+	<NuxtLink class="group hover:cursor-pointer! transition" :class="wrapper_class" :to="resolved_url">
+		<template v-if="variant === 'list'">
+			<div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
+				<img
+					:alt="label"
+					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+					:data-alt="data_alt"
+					:src="src"
+				/>
+				<button
+					class="absolute top-3 right-3 h-8 w-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-on-surface hover:text-error transition-colors"
+				>
+					<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;"
+						>favorite</span
+					>
+				</button>
+			</div>
+			<div class="p-4">
+				<div class="flex items-start justify-between gap-2">
+					<h4 class="font-headline-md text-headline-md text-base text-on-surface line-clamp-2 leading-tight">
+						{{ label }}
+					</h4>
+					<span class="font-body-lg text-body-lg font-bold text-primary whitespace-nowrap">{{
+						price_label
+					}}</span>
+				</div>
+				<p class="font-body-md text-body-md text-sm text-on-surface-variant mt-1">{{ category_label }}</p>
+			</div>
+		</template>
+		<template v-else>
+			<img
+				:alt="label"
+				class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+				:data-alt="data_alt"
+				:src="src"
+			/>
+			<div :class="overlay_class"></div>
+			<div :class="content_class">
+				<span :class="title_class">{{ label }}</span>
+			</div>
+		</template>
 	</NuxtLink>
-
-	<a
-		v-else-if="is_external_link"
-		class="relative rounded-xl overflow-hidden group hover:!cursor-pointer"
-		:class="wrapper_class"
-		:href="resolved_url"
-		rel="noopener noreferrer"
-		target="_blank"
-	>
-		<img
-			:alt="label"
-			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-			:data-alt="data_alt"
-			:src="src"
-		/>
-		<div :class="overlay_class"></div>
-		<div :class="content_class">
-			<span :class="title_class">{{ label }}</span>
-		</div>
-	</a>
-	
-	<div v-else class="relative rounded-xl overflow-hidden group hover:!cursor-pointer" :class="wrapper_class">
-		<img
-			:alt="label"
-			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-			:data-alt="data_alt"
-			:src="src"
-		/>
-		<div :class="overlay_class"></div>
-		<div :class="content_class">
-			<span :class="title_class">{{ label }}</span>
-		</div>
-	</div>
 </template>
 
 <script setup lang="ts">
@@ -85,57 +77,50 @@ const {
 
 const label = computed(() => ('name' in card ? card.name : card.category_name))
 const src = computed(() => card.thumbnail)
+const price_label = computed(() => ('price_in_gbp' in card ? `£${card.price_in_gbp}` : ''))
+const category_label = computed(() =>
+	'product_category_name' in card ? card.product_category_name : '',
+)
 
 const resolved_url = computed(() => {
 	if ('product_url' in card) {
 		return card.product_url
 	}
-	return ''
+	return card.products_by_category_url
 })
-
-const is_external_link = computed(() => /^https?:\/\//i.test(resolved_url.value))
-const is_internal_link = computed(() => Boolean(resolved_url.value) && !is_external_link.value)
 
 const wrapper_class = computed(() => {
 	if (variant === 'list') {
-		return is_first_large
-			? 'md:col-span-2 bg-surface-container-highest border border-surface-variant'
-			: 'flex-1 bg-surface-container-highest border border-surface-variant'
+		return 'bg-white border border-surface-variant rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
 	}
 
 	return is_first_large
-		? 'col-span-1 row-span-2'
-		: 'col-span-1 row-span-1'
+		? 'col-span-1 row-span-2 relative rounded-xl overflow-hidden'
+		: 'col-span-1 row-span-1 relative rounded-xl overflow-hidden'
 })
 
 const overlay_class = computed(() => {
-	if (variant === 'list') {
-		return is_first_large
-			? 'absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors'
-			: 'absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors'
+	if (variant === 'tri') {
+		return 'absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'
 	}
 
-	return 'absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'
+	return ''
 })
 
 const content_class = computed(() => {
-	if (variant === 'list') {
-		return is_first_large
-			? 'absolute bottom-0 left-0 p-8 w-full bg-gradient-to-t from-black/80 to-transparent text-white'
-			: 'absolute bottom-0 left-0 p-6 w-full bg-gradient-to-t from-black/70 to-transparent text-white'
+	if (variant === 'tri') {
+		return 'absolute bottom-4 left-4 text-white'
 	}
 
-	return 'absolute bottom-4 left-4 text-white'
+	return ''
 })
 
 const title_class = computed(() => {
-	if (variant === 'list') {
-		return is_first_large
-			? 'font-headline-md text-headline-md text-white mb-2 block'
-			: 'font-headline-md text-headline-md text-white block'
+	if (variant === 'tri') {
+		return 'font-label-md text-label-md block'
 	}
 
-	return 'font-label-md text-label-md block'
+	return ''
 })
 
 </script>

@@ -102,7 +102,7 @@
             </div>
         </div> -->
 
-        <CardComponent v-for="card in cards" :card="card" />
+        <CardComponent v-for="card in cards" :key="card.id" :card="card" variant="list" />
     </section>
 </template>
 
