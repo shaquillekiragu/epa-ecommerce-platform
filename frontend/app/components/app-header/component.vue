@@ -3,7 +3,7 @@
 		class="bg-white dark:bg-slate-900 docked full-width top-0 z-50 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky">
 		<div class="flex items-center justify-between w-full px-6 h-16 max-w-[1280px] mx-auto">
 			<!-- Brand -->
-			<NuxtLink class="text-xl font-extrabold tracking-tighter text-slate-900 dark:text-white" to="#">
+			<NuxtLink class="text-xl font-extrabold tracking-tighter text-slate-900 dark:text-white" to="/">
 				LuxCommerce
 			</NuxtLink>
 

@@ -19,7 +19,7 @@ import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
 
-type CardItem = ProductCard | ProductCategory;
+type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 
 const { cards, is_section_large } = defineProps({
 	cards: {
