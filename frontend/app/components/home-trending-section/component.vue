@@ -8,7 +8,7 @@
                 </p>
             </div>
 
-            <CardListComponent />
+            <CardListComponent :cards="cards" />
 
             <div class="mt-12 flex justify-center">
                 <LinkButtonComponent text="Load More Products" url="#" :is_dark="false" class="px-8" />
@@ -20,21 +20,5 @@
 <script setup lang="ts">
 import type { ProductCard } from '~/types/product';
 
-const cards: ProductCard[] = [
-    {
-        'id': 1,
-        'name': 'Sneakers',
-        'thumbnail': ''
-    },
-    {
-        'id': 2,
-        'name': 'Audio',
-        'thumbnail': ''
-    },
-    {
-        'id': 3,
-        'name': 'Watches',
-        'thumbnail': ''
-    },
-]
+const cards: ProductCard[] = []
 </script>

@@ -105,17 +105,20 @@
                 <p class="font-body-md text-body-md text-sm text-on-surface-variant mt-1">Home Decor</p>
             </div>
         </div>
+
+        <CardComponent v-for="card in cards" :card="card" />
     </section>
 </template>
 
 <script setup lang="ts">
 import type { ProductCard } from '~/types/product';
 
-const props = defineProps({
+const { cards } = defineProps({
 	cards: {
 		type: Array as PropType<ProductCard[]>,
 		required: true,
 		default: () => [],
 	},
 })
+
 </script>
