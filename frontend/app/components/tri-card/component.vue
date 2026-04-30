@@ -21,19 +21,19 @@ import type { ProductCategory } from '~/types/product-category'
 
 type CardItem = ProductCard | ProductCategory;
 
-const { cards, is_large } = defineProps({
+const { cards, is_section_large } = defineProps({
 	cards: {
 		type: Array as PropType<CardItem[]>,
 		required: true,
 		default: () => [],
 	},
-	is_large: {
+	is_section_large: {
 		type: Boolean,
 		required: true
 	}
 })
 
-const grid_height_class = computed(() => (is_large ? 'h-125' : 'h-100'))
+const grid_height_class = computed(() => (is_section_large ? 'h-125' : 'h-100'))
 
 const fallback = [
 	{

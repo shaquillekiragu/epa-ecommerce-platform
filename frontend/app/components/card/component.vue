@@ -1,5 +1,10 @@
 <template>
-	<component :is="tag" class="hover:!cursor-pointer" :class="wrapper_class" :href="resolved_href">
+	<component
+		:is="tag"
+		class="relative rounded-xl overflow-hidden group hover:!cursor-pointer"
+		:class="wrapper_class"
+		:href="resolved_href"
+	>
 		<img
 			:alt="label"
 			class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -19,7 +24,7 @@ import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
 
-type CardItem = ProductCard | ProductCategory
+type CardItem = ProductCard | ProductCategory;
 
 const {
 	card,
@@ -60,13 +65,13 @@ const tag = computed(() => (resolved_href.value ? 'a' : 'div'))
 const wrapper_class = computed(() => {
 	if (variant === 'list') {
 		return is_first_large
-			? 'md:col-span-2 relative rounded-xl overflow-hidden group bg-surface-container-highest border border-surface-variant'
-			: 'flex-1 relative rounded-xl overflow-hidden group bg-surface-container-highest border border-surface-variant'
+			? 'md:col-span-2 bg-surface-container-highest border border-surface-variant'
+			: 'flex-1 bg-surface-container-highest border border-surface-variant'
 	}
 
 	return is_first_large
-		? 'col-span-1 row-span-2 rounded-xl overflow-hidden relative group'
-		: 'col-span-1 row-span-1 rounded-xl overflow-hidden relative group'
+		? 'col-span-1 row-span-2'
+		: 'col-span-1 row-span-1'
 })
 
 const overlay_class = computed(() => {
