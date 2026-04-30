@@ -11,7 +11,7 @@
             <CardListComponent :cards="cards" />
 
             <div class="mt-12 flex justify-center">
-                <LinkButtonComponent text="Load More Products" url="#" :is_dark="false" class="px-8" />
+                <LinkButtonComponent text="Load More Products" url="/catalogue" :is_dark="false" class="px-8" />
             </div>
         </div>
     </section>
