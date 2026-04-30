@@ -12,7 +12,7 @@
 			</a>
 		</div>
 
-		<TriCardSectionComponent :cards="card_array" :is_large="false" />
+		<TriCardComponent :cards="card_array" :is_large="false" />
 	</section>
 </template>
 

@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <TriCardSectionComponent :cards="cards" :is_large="false" />
+            <TriCardComponent :cards="cards" :is_large="false" />
         </div>
     </section>
 </template>
