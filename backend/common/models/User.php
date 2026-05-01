@@ -284,3 +284,16 @@ class User extends BaseModel
         return (new \DateTime($this->date_of_birth))->diff(new \DateTime('today'))->y;
     }
 }
+
+// Model today: role customer|merchant, profile + hashed_password, is_active, deactivated_at, email unique in DB; Identity/password helpers largely commented; LoginForm still references findByUsername/validatePassword.
+
+// Recommended business logic:
+
+// Registration / password: Hash on write; do not trust raw hashed_password from clients; password strength policy.
+// Email: Normalize (trim, lowercase); uniqueness; optional verification if tokens are added.
+// Activation: Toggling is_active should set/clear deactivated_at; block login when inactive.
+// Role changes: Restrict customer → merchant to superadmin (not self-service API); use api/superadmin scenarios for mass-assignment.
+// DOB / age: Validate date range; harden getUserAge() against invalid dates.
+// PII: Limit fields in API serializers (often API layer, not AR).
+
+// Leave child models empty — use api\models\User / superadmin\models\User for scenarios (e.g. forbid role escalation from API).

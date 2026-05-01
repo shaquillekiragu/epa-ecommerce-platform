@@ -79,3 +79,13 @@ class Store extends BaseModel
         );
     }
 }
+
+// Model today: merchant_id, store_name unique, store_description also unique (unusual for a description).
+
+// Recommended business logic:
+
+// Ownership: merchant_id should reference a user with role merchant (FK ensures row exists, not role).
+// Uniqueness: Prefer unique (merchant_id, store_name) over global unique store_description; align rules + migration when ready.
+// Authorization: Only owning merchant or superadmin may update; enforce in controllers/services + RBAC.
+
+// Leave child models empty — use api\models\Store / superadmin\models\Store for scenario-based mass-assignment if merchant vs admin differ.

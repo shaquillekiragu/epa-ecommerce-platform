@@ -67,3 +67,13 @@ class Productcategory extends BaseModel
         );
     }
 }
+
+// Model today: category_name, description, thumbnail; category_name globally unique; allow_* flags.
+
+// Recommended business logic:
+
+// Naming: Trim/normalize category_name; decide uniqueness global vs per-store if categories become store-scoped.
+// Thumbnail: Validate URL or storage key if uploads are added.
+// Deletes: Deleting/deactivating categories must account for products still referencing them (restrict, cascade, or archive).
+
+// Leave child models empty — use superadmin\models\Productcategory / api\models\Productcategory for read vs write scenarios.

@@ -74,3 +74,13 @@ class Basket extends BaseModel
         return $customer->fullName;
     }
 }
+
+// Model today: customer_id, price_total required; getCustomerName uses fullName on User (getter is getFullName — verify magic property).
+
+// Recommended business logic:
+
+// Totals: Derive price_total from Basketproduct lines; do not trust client-submitted totals; recalc after line changes.
+// Ownership: Optionally one open basket per customer — enforce via unique constraint or app check.
+// Currency: Keep aligned with product/order (GBP).
+
+// Leave child models empty — use api\models\Basket for customer-only rules (e.g. cannot set customer_id to another user).

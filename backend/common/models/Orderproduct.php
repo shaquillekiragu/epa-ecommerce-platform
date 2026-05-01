@@ -66,3 +66,13 @@ class Orderproduct extends BaseModel
         );
     }
 }
+
+// Model today: Unique (order_id, product_id); price_at_purchase_in_gbp snapshots line price.
+
+// Recommended business logic:
+
+// Quantity: Same as basket lines; ≥ 1.
+// Price integrity: Freeze price_at_purchase_in_gbp at checkout from product/promotions; validate at creation, not on later reads.
+// Immutability: No edits after order paid except superadmin correction with trail.
+
+// Leave child models empty — use api\models\Orderproduct for read-only customer exposure if needed.

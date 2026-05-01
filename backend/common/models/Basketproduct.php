@@ -69,3 +69,14 @@ class Basketproduct extends BaseModel
         return $this->product->price_in_gbp;
     }
 }
+
+// Model today: Unique (basket_id, product_id); basketProductPrice reads live product.price_in_gbp (not snapshotted).
+
+// Recommended business logic:
+
+// Quantity: Integer ≥ 1 (or ≥ 0 with delete-on-zero).
+// Eligibility: Product must be is_active, sufficient stock, and fit store policy (single-store vs multi-store basket).
+// Price snapshot: Decide unit price at add-to-basket vs always current price; avoid silent total changes if prices move.
+// Recalc: Update parent Basket.price_total after any line change.
+
+// Leave child models empty — use api\models\Basketproduct for caps, rate limits, etc.

@@ -87,3 +87,13 @@ class Address extends BaseModel
         return "$this->building_number $this->street_name, $this->city, $this->post_code, $this->country";
     }
 }
+
+// Model today: address_type shipping|billing|both; structured lines; getFullAddress helper; allow_* flags.
+
+// Recommended business logic:
+
+// Normalization: Trim fields; optional postcode/country validation per region.
+// Type rules: Clarify behaviour when address_type is both vs separate rows.
+// Immutability: If address is tied to historical orders, prefer new address row (versioning) over mutating shared rows.
+
+// Leave child models empty — use api\models\Address / superadmin\models\Address for customer vs admin scenarios.

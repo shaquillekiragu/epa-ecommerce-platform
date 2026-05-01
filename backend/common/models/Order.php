@@ -91,3 +91,15 @@ class Order extends BaseModel
         );
     }
 }
+
+// Model today: customer_id, store_id, price_total, order_datetime, status enum; allow_* flags.
+
+// Recommended business logic:
+
+// Status machine: Allow only legal transitions (e.g. pending_payment → paid); centralize in model or domain service.
+// Immutability: After paid/shipped restrict field changes; financial fields immutable except admin correction with audit.
+// Totals: price_total should match sum of Orderproduct lines (+ tax/shipping when added).
+// Timestamps: Set order_datetime on create if omitted; document timezone policy.
+// Cancellation / refund: Define stock restoration and payment linkage when those flows exist.
+
+// Leave child models empty — use api\models\Order for customer-scoped reads; superadmin\models\Order for admin overrides with logging in services.

@@ -55,3 +55,13 @@ class Useraddress extends BaseModel
         );
     }
 }
+
+// Model today: Join user_id ↔ address_id; unique (user_id, address_id).
+
+// Recommended business logic:
+
+// Ownership: Ensure address is not linked in conflicting ways without rules (e.g. shared address rows).
+// Default address: If you add default shipping, enforce one-per-user in app logic (not in current schema).
+// Cascade: Define behaviour on user delete (orphan addresses vs cascade).
+
+// Leave child models empty — use api\models\Useraddress / superadmin\models\Useraddress for scenario splits.
