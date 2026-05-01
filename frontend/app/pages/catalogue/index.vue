@@ -94,7 +94,7 @@
 				</div>
 			</div>
 
-			<CardListComponent :cards="products" :has_limit="false" layout="portrait" variant="product" />
+			<CardListComponent :cards="products" :has_limit="false" layout="portrait" variant="catalogue-product" />
 			
 			<!-- Grid -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-grid_gutter">

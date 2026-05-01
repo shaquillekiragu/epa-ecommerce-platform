@@ -9,7 +9,7 @@
         </article>
 
         <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <CardListComponent :cards="cards" :has_limit="true" layout="portrait" variant="product" />
+            <CardListComponent :cards="cards" :has_limit="true" layout="portrait" variant="trending-product" />
         </section>
 
         <LinkButtonComponent text="Load More Products" url="/catalogue" :is_dark="false" class="mt-12 px-8" />
