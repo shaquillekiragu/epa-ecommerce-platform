@@ -1,6 +1,7 @@
 export interface ProductCard {
     id: number;
     name: string;
+    slug: string;
     product_category_name: string;
     price_in_gbp: number;
     thumbnail: string;

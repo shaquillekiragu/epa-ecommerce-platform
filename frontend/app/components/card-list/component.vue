@@ -55,6 +55,7 @@ const normalized_cards = computed<CardItem[]>(() => {
 	return [0, 1, 2, 3].map((idx) => incoming[idx] ?? {
 		id: -(idx + 1),
 		name: fallback[idx]?.name ?? '',
+		slug: '',
 		product_category_name: '',
 		price_in_gbp: 0,
 		thumbnail: fallback[idx]?.src ?? '',
