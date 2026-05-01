@@ -116,7 +116,7 @@ const {
     }
 })
 
-const label = computed(() => ('name' in card ? card.name : card.category_name))
+const label = computed(() => card.name)
 const src = computed(() => card.thumbnail)
 const description = computed(() => 'description' in card ? card.description : '')
 

@@ -128,7 +128,7 @@ final class OrderSeeder extends BaseSeeder
                 'customer_id' => (int) $customer_ids[$i % count($customer_ids)],
                 'store_id' => (int) $store_ids[$i % count($store_ids)],
                 'price_total' => 0,
-                'order_datetime' => date('Y-m-d H:i:s', $now - ($i * 86400)),
+                'placed_at' => date('Y-m-d H:i:s', $now - ($i * 86400)),
                 'status' => $statuses[$i % count($statuses)],
                 'allow_update' => 1,
                 'allow_delete' => 1,

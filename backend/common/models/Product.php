@@ -51,7 +51,7 @@ class Product extends BaseModel
                 ],
                 [
                     [
-                        'product_name',
+                        'name',
                         'thumbnail',
                         'seo_title',
                         'slug',
@@ -69,7 +69,7 @@ class Product extends BaseModel
                 [
                     [
                         'store_id',
-                        'product_name',
+                        'name',
                         'product_category_id',
                         'price_in_gbp',
                         'number_in_stock',
@@ -84,7 +84,7 @@ class Product extends BaseModel
                 ],
                 [
                     [
-                        'product_name'
+                        'name'
                     ],
                     'unique'
                 ],
@@ -99,7 +99,7 @@ class Product extends BaseModel
             return false;
         }
 
-        $name = trim((string)$this->product_name);
+        $name = trim((string)$this->name);
         $sku_code = trim((string)$this->sku_code);
 
         $this->seo_title = $name !== '' ? mb_substr($name, 0, 255) : null;
@@ -116,7 +116,7 @@ class Product extends BaseModel
             parent::attributeLabels(),
             [
                 'store_id' => 'Store ID',
-                'product_name' => 'Product Name',
+                'name' => 'Product Name',
                 'slug' => 'Slug',
                 'product_category_id' => 'Product Category ID',
                 'productCategoryName' => 'Product Category',
@@ -141,13 +141,13 @@ class Product extends BaseModel
 
     public function getProductCategoryName(): ?string
     {
-        return $this->productCategory->category_name ?? null;
+        return $this->productCategory->name ?? null;
     }
 
     
 }
 
-// Model today: Pricing, stock, SKU, is_active, joins to store/category; beforeValidate always overwrites seo_title and slug from product_name + sku_code.
+// Model today: Pricing, stock, SKU, is_active, joins to store/category; beforeValidate always overwrites seo_title and slug from name + sku_code.
 
 // Recommended business logic:
 

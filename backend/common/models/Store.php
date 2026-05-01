@@ -20,8 +20,8 @@ class Store extends BaseModel
             [
                 [
                     [
-                        'store_name',
-                        'store_description',
+                        'name',
+                        'description',
                     ],
                     'string',
                     'max' => 255
@@ -41,8 +41,8 @@ class Store extends BaseModel
                 ],
                 [
                     [
-                        'store_name',
-                        'store_description',
+                        'name',
+                        'description',
                         'merchant_id',
                         'allow_update',
                         'allow_delete',
@@ -51,13 +51,13 @@ class Store extends BaseModel
                 ],
                 [
                     [
-                        'store_name'
+                        'name'
                     ],
                     'unique'
                 ],
                 [
                     [
-                        'store_description'
+                        'description'
                     ],
                     'unique'
                 ],
@@ -70,8 +70,8 @@ class Store extends BaseModel
         return array_merge(
             parent::attributeLabels(),
             [
-                'store_name' => 'Store Name',
-                'store_description' => 'Store Description',
+                'name' => 'Store Name',
+                'description' => 'Store Description',
                 'merchant_id' => 'Merchant ID',
                 'allow_update' => 'Allow Updates',
                 'allow_delete' => 'Allow Deletion',
@@ -80,12 +80,12 @@ class Store extends BaseModel
     }
 }
 
-// Model today: merchant_id, store_name unique, store_description also unique (unusual for a description).
+// Model today: merchant_id, name unique, description also unique (unusual for a description).
 
 // Recommended business logic:
 
 // Ownership: merchant_id should reference a user with role merchant (FK ensures row exists, not role).
-// Uniqueness: Prefer unique (merchant_id, store_name) over global unique store_description; align rules + migration when ready.
+// Uniqueness: Prefer unique (merchant_id, name) over global unique description; align rules + migration when ready.
 // Authorization: Only owning merchant or superadmin may update; enforce in controllers/services + RBAC.
 
 // Leave child models empty — use api\models\Store / superadmin\models\Store for scenario-based mass-assignment if merchant vs admin differ.

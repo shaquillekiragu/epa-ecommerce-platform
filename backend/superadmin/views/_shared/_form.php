@@ -8,7 +8,7 @@ $attributes = $model->attributes();
 $skip_fields = [
 	'id',
 	'deactivated_at',
-	'order_datetime',
+	'placed_at',
 
 	'created_at',
 	'created_by',
@@ -72,7 +72,6 @@ $decimal_fields = [
 
 $textarea_fields = [
 	'description',
-	'store_description',
 ];
 
 $password_fields = [

@@ -20,7 +20,7 @@ class Productcategory extends BaseModel
             [
                 [
                     [
-                        'category_name',
+                        'name',
                         'description',
                         'thumbnail',
                     ],
@@ -36,7 +36,7 @@ class Productcategory extends BaseModel
                 ],
                 [
                     [
-                        'category_name',
+                        'name',
                         'description',
                         'allow_update',
                         'allow_delete',
@@ -45,7 +45,7 @@ class Productcategory extends BaseModel
                 ],
                 [
                     [
-                        'category_name'
+                        'name'
                     ],
                     'unique'
                 ],
@@ -58,7 +58,7 @@ class Productcategory extends BaseModel
         return array_merge(
             parent::attributeLabels(),
             [
-                'category_name' => 'Category Name',
+                'name' => 'Category Name',
                 'description' => 'Description',
                 'thumbnail' => 'Thumbnail',
                 'allow_update' => 'Allow Updates',
@@ -68,11 +68,11 @@ class Productcategory extends BaseModel
     }
 }
 
-// Model today: category_name, description, thumbnail; category_name globally unique; allow_* flags.
+// Model today: name, description, thumbnail; name globally unique; allow_* flags.
 
 // Recommended business logic:
 
-// Naming: Trim/normalize category_name; decide uniqueness global vs per-store if categories become store-scoped.
+// Naming: Trim/normalize name; decide uniqueness global vs per-store if categories become store-scoped.
 // Thumbnail: Validate URL or storage key if uploads are added.
 // Deletes: Deleting/deactivating categories must account for products still referencing them (restrict, cascade, or archive).
 
