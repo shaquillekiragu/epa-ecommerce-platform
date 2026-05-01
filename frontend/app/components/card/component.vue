@@ -1,5 +1,5 @@
 <template>
-	<NuxtLink class="group hover:cursor-pointer! transition" :class="wrapper_class" :to="resolved_url">
+	<NuxtLink class="group hover:cursor-pointer! transition" :class="[wrapper_class, has_border]" :to="resolved_url">
 		<template v-if="layout === 'portrait'">
 			<div class="relative aspect-4/5 overflow-hidden">
 				<img
@@ -24,7 +24,7 @@
 				<p class="text-sm mt-1">{{ category_label }}</p>
 			</div>
 			
-			<div v-if="variant === 'catalogue-product'" class="flex flex-col gap-1">
+			<div v-if="variant === 'catalogue-product'" class="flex flex-col gap-1 p-4">
 				<h4 class="line-clamp-2 leading-tight">
 					{{ label }}
 				</h4>
@@ -50,7 +50,7 @@
 				:src="src"
 			/>
 
-			<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+			<div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
 			<div class="absolute bottom-4 left-4 text-white">
 				<span class="font-label-md text-label-md block">{{ label }}</span>
@@ -70,7 +70,7 @@
 
 			<div :class="overlay_class"></div>
 
-			<div :class="content_class">
+			<div :class="[content_class, variant === 'default' ? 'text-xl' : 'text-lg']" >
 				<span :class="title_class">{{ label }}</span>
 			</div>
 		</template>
@@ -117,12 +117,15 @@ const {
 
 const label = computed(() => ('name' in card ? card.name : card.category_name))
 const src = computed(() => card.thumbnail)
-const price_label = computed(() => ('price_in_gbp' in card ? `£${card.price_in_gbp}` : ''))
+const price_label = computed(() => { return 'price_in_gbp' in card ? `£${card.price_in_gbp}` : '' })
+const description = computed(() => 'description' in card ? card.description : '')
+
 const category_label = computed(() =>
 	'product_category_name' in card ? card.product_category_name : '',
 )
-const description = computed(() =>
-	'description' in card ? card.description : '',
+
+const has_border = computed(() =>
+	variant === 'trending-product' || variant === 'catalogue-product' ? 'border border-slate-400' : ''
 )
 
 const resolved_url = computed(() => {
@@ -134,7 +137,7 @@ const resolved_url = computed(() => {
 
 const wrapper_class = computed(() => {
 	if (layout === 'portrait') {
-		return 'bg-white border border-surface-layout rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
+		return 'bg-white rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
 	}
 
 	if (layout === 'landscape') {
@@ -150,17 +153,13 @@ const overlay_class = computed(() => {
 	if (layout === 'tri') {
 		return 'absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'
 	}
-
 	return ''
 })
 
 const content_class = computed(() => {
 	if (layout === 'tri') {
-		return variant === 'default'
-		? 'text-xl font-medium absolute bottom-4 left-4 text-white'
-		: 'text-lg font-medium absolute bottom-4 left-4 text-white'
+		'text-lg font-medium absolute bottom-4 left-4 text-white'
 	}
-
 	return ''
 })
 
@@ -168,7 +167,6 @@ const title_class = computed(() => {
 	if (layout === 'tri') {
 		return 'font-label-md text-label-md block'
 	}
-
 	return ''
 })
 
