@@ -1,5 +1,5 @@
 <template>
-    <CardComponent v-for="card in displayed_cards" :key="card.id" :card="card" variant="list" />
+    <CardComponent v-for="card in displayed_cards" :key="card.id" :card="card" :variant="variant" />
 </template>
 
 <script setup lang="ts">
@@ -7,10 +7,11 @@ import { computed } from 'vue'
 import type { PropType } from 'vue'
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
+import type { CardVariant } from '~/types/card-variant'
 
 type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 
-const { cards, has_limit } = defineProps({
+const { cards, has_limit, variant } = defineProps({
 	cards: {
 		type: Array as PropType<CardItem[]>,
 		required: true,
@@ -18,6 +19,10 @@ const { cards, has_limit } = defineProps({
 	},
     has_limit: {
         type: Boolean,
+        required: true,
+    },
+    variant: {
+        type: String as PropType<CardVariant>,
         required: true,
     }
 })

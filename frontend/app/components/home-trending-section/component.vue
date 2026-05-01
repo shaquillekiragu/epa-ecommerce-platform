@@ -8,7 +8,7 @@
         </article>
 
         <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <CardListComponent :cards="cards" :has_limit="true" />
+            <CardListComponent :cards="cards" :has_limit="true" variant="portrait" />
         </section>
 
         <LinkButtonComponent text="Load More Products" url="/catalogue" :is_dark="false" class="mt-12 px-8" />

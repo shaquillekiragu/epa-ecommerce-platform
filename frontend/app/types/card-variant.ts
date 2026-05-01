@@ -1,0 +1,1 @@
+export type CardVariant = 'tri' | 'portrait' | 'landscape';

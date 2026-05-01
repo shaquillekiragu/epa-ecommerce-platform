@@ -1,6 +1,6 @@
 <template>
 	<NuxtLink class="group hover:cursor-pointer! transition" :class="wrapper_class" :to="resolved_url">
-		<template v-if="variant === 'list'">
+		<template v-if="variant === 'portrait'">
 			<div class="relative aspect-4/5 bg-surface-container-lowest overflow-hidden">
 				<img
 					:alt="label"
@@ -41,6 +41,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { PropType } from 'vue'
+import type { CardVariant } from '~/types/card-variant';
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
 
@@ -65,9 +66,9 @@ const {
 		default: false,
 	},
 	variant: {
-		type: String as PropType<'tri' | 'list'>,
-		default: 'tri',
-	},
+        type: String as PropType<CardVariant>,
+        required: true,
+    }
 })
 
 const label = computed(() => ('name' in card ? card.name : card.category_name))
@@ -85,7 +86,7 @@ const resolved_url = computed(() => {
 })
 
 const wrapper_class = computed(() => {
-	if (variant === 'list') {
+	if (variant === 'portrait') {
 		return 'bg-white border border-surface-variant rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
 	}
 
