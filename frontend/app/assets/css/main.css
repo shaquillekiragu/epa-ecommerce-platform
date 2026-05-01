@@ -74,7 +74,7 @@ h6 {
 }
 
 /* Component Styles */
-.btn {
+/* .btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -106,7 +106,7 @@ h6 {
 }
 
 /* Card Style */
-.card {
+/* .card {
 	background-color: var(--color-surface-container-lowest);
 	border: 1px solid var(--color-outline-variant);
 	border-radius: var(--radius-md);
@@ -115,14 +115,14 @@ h6 {
 }
 
 /* Layout Utilities */
-.container {
+/*.container {
 	max-width: 1280px;
 	margin: 0 auto;
 	padding: 0 1.5rem;
 }
 
 /* Status Indicators */
-.badge {
+/*.badge {
 	padding: 0.25rem 0.5rem;
 	border-radius: 9999px;
 	font-size: var(--font-size-xs);
@@ -138,7 +138,7 @@ h6 {
 .badge-error {
 	background-color: #fee2e2;
 	color: var(--color-error);
-}
+} */
 
 .material-symbols-outlined {
 	font-family: 'Material Symbols Outlined';
