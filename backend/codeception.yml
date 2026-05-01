@@ -2,7 +2,6 @@
 include:
     - common
     - api
-    - rest
     - superadmin
 paths:
     output: console/runtime/output
