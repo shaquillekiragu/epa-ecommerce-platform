@@ -37,7 +37,7 @@
 						{{ price_label }}
 					</span>
 
-					<ButtonActionComponent text="Add" url="/basket" button_type="submit" :is_dark="true" class="px-3 py-1" @click.stop.prevent />
+					<ButtonActionComponent text="Add" url="/basket" button_type="submit" :is_dark="true" icon="i-ic:baseline-add-shopping-cart" class="px-3 py-1" @click.stop.prevent />
 				</div>
 			</div>
 		</template>
