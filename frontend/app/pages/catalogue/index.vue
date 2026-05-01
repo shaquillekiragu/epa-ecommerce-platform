@@ -94,8 +94,11 @@
 				</div>
 			</div>
 
+			<CardListComponent :cards="products" :has_limit="false" />
+			
 			<!-- Grid -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-grid_gutter">
+
 				<!-- Product Card 1 -->
 				<div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
@@ -123,7 +126,7 @@
 				</div>
 
 				<!-- Product Card 2 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="High-end over-ear studio headphones resting on a dark sleek surface with dramatic lighting"
@@ -146,9 +149,10 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
+
 				<!-- Product Card 3 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Minimalist ceramic pour-over coffee maker set on a light wood kitchen counter"
@@ -171,9 +175,10 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
+
 				<!-- Product Card 4 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Vintage style instant camera resting on a colorful patterned fabric with soft natural light"
@@ -196,9 +201,10 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
+
 				<!-- Product Card 5 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Vibrant red athletic running shoe suspended mid-air against a stark dark background"
@@ -221,9 +227,10 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
+
 				<!-- Product Card 6 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Modern white smart speaker sitting on a wooden shelf beside a small green succulent plant"
@@ -246,8 +253,9 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
+
 			<!-- Pagination (Simple implementation for design) -->
 			<div class="mt-lg flex justify-center items-center space-x-2">
 				<button

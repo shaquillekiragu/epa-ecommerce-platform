@@ -1,7 +1,7 @@
 <template>
 	<NuxtLink class="group hover:cursor-pointer! transition" :class="wrapper_class" :to="resolved_url">
 		<template v-if="variant === 'list'">
-			<div class="relative aspect-[4/5] bg-surface-container-lowest overflow-hidden">
+			<div class="relative aspect-4/5 bg-surface-container-lowest overflow-hidden">
 				<img
 					:alt="label"
 					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -9,6 +9,7 @@
 					:src="src"
 				/>
 			</div>
+
 			<div class="p-4">
 				<div class="flex items-start justify-between gap-2">
 					<h4 class="font-headline-md text-headline-md text-base text-on-surface line-clamp-2 leading-tight">
@@ -28,6 +29,7 @@
 				:data-alt="data_alt"
 				:src="src"
 			/>
+
 			<div :class="overlay_class"></div>
 			<div :class="content_class">
 				<span :class="title_class">{{ label }}</span>

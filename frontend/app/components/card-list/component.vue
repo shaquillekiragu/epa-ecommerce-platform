@@ -1,7 +1,5 @@
 <template>
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <CardComponent v-for="card in displayed_cards" :key="card.id" :card="card" variant="list" />
-    </section>
+    <CardComponent v-for="card in displayed_cards" :key="card.id" :card="card" variant="list" />
 </template>
 
 <script setup lang="ts">

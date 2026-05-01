@@ -1,16 +1,18 @@
 <template>
-	<section class="w-full max-w-7xl mx-auto px-6 py-16">
-		<div class="flex items-end justify-between mb-8">
-			<div>
-				<h2 class="font-headline-lg text-headline-lg text-on-surface">Curated Categories</h2>
-				<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+	<section class="w-full max-w-7xl px-6 py-16">
+		<article class="flex justify-between items-end mb-8">
+			<div class="">
+				<h2 class="text-4xl font-medium">Curated Categories</h2>
+				<p class="opacity-75 mt-2">
 					Explore our finest selections across domains.
 				</p>
 			</div>
-			<NuxtLink class="font-label-md text-label-md text-primary flex items-center gap-1 hover:underline" to="#">
-				View All <span class="material-symbols-outlined text-lg">arrow_forward</span>
+
+			<NuxtLink class="flex items-center gap-1 font-semibold hover:underline" to="/categories">
+				View All
+				<!-- <span class="material-symbols-outlined text-lg">arrow_forward</span> -->
 			</NuxtLink>
-		</div>
+		</article>
 
 		<TriCardComponent :cards="cards" :is_section_large="true" />
 	</section>

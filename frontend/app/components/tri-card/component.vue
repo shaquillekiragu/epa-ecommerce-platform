@@ -1,5 +1,5 @@
 <template>
-	<div class="flex-1 w-full relative">
+	<section class="w-full relative flex-1">
 		<div class="grid grid-cols-2 gap-4" :class="grid_height_class">
 			<CardComponent
 				v-for="(card, idx) in normalized_cards"
@@ -10,7 +10,7 @@
 				variant="tri"
 			/>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script setup lang="ts">
