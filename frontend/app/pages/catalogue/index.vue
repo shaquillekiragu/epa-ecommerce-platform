@@ -43,8 +43,8 @@ const page = ref(1)
 const items_per_page = 5
 
 const paged_products = computed(() => {
-  const start = (page.value - 1) * items_per_page
-  return products.slice(start, start + items_per_page)
+	const start = (page.value - 1) * items_per_page
+	return products.slice(start, start + items_per_page)
 })
 
 </script>
