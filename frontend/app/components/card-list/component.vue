@@ -27,7 +27,7 @@ const { cards, has_limit, layout, variant } = defineProps({
     },
     variant: {
         type: String as PropType<CardVariant>,
-        required: true,
+        default: 'default'
     }
 })
 

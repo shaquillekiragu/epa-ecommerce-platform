@@ -10,7 +10,7 @@
 				/>
 			</div>
 
-			<div class="p-4">
+			<div v-if="variant === 'trending-product'" class="p-4">
 				<div class="flex justify-between gap-2">
 					<h4 class="line-clamp-2 leading-tight">
 						{{ label }}
@@ -114,7 +114,9 @@ const overlay_class = computed(() => {
 
 const content_class = computed(() => {
 	if (layout === 'tri') {
-		return 'absolute bottom-4 left-4 text-white'
+		return variant === 'default'
+		? 'text-xl font-medium absolute bottom-4 left-4 text-white'
+		: 'text-lg font-medium absolute bottom-4 left-4 text-white'
 	}
 
 	return ''

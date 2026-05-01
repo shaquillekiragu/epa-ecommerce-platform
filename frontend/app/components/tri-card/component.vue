@@ -8,6 +8,7 @@
 				:data_alt="data_alt[idx] ?? ''"
 				:is_first_large="idx === 0"
 				layout="tri"
+				:variant="variant"
 			/>
 		</div>
 	</section>
@@ -16,12 +17,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { PropType } from 'vue'
+import type { CardVariant } from '~/types/card-component';
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
 
 type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 
-const { cards, is_section_large } = defineProps({
+const { cards, is_section_large, variant } = defineProps({
 	cards: {
 		type: Array as PropType<CardItem[]>,
 		required: true,
@@ -30,6 +32,10 @@ const { cards, is_section_large } = defineProps({
 	is_section_large: {
 		type: Boolean,
 		required: true
+	},
+	variant: {
+		type: String as PropType<CardVariant>,
+		default: 'default'
 	}
 })
 
