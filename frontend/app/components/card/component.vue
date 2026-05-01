@@ -16,12 +16,30 @@
 						{{ label }}
 					</h4>
 
-					<span class="font-bold whitespace-nowrap">{{
-						price_label
-					}}</span>
+					<span class="font-bold whitespace-nowrap">
+						{{ price_label }}
+					</span>
 				</div>
 
 				<p class="text-sm mt-1">{{ category_label }}</p>
+
+			</div>
+			
+			<div v-if="variant === 'catalogue-product'" class="flex flex-col gap-1">
+				<h4 class="line-clamp-2 leading-tight">
+					{{ label }}
+				</h4>
+
+				<p class="text-sm">{{ category_label }}</p>
+				<p class="truncate">{{ description }}</p>
+
+				<div class="">
+					<span class="font-bold whitespace-nowrap">
+						{{ price_label }}
+					</span>
+
+					<button class="bg-black text-white">Add</button>
+				</div>
 			</div>
 		</template>
 
@@ -76,7 +94,7 @@ const {
     },
 	variant: {
         type: String as PropType<CardVariant>,
-        default: 'product-category',
+        default: 'default'
     }
 })
 
@@ -85,6 +103,9 @@ const src = computed(() => card.thumbnail)
 const price_label = computed(() => ('price_in_gbp' in card ? `£${card.price_in_gbp}` : ''))
 const category_label = computed(() =>
 	'product_category_name' in card ? card.product_category_name : '',
+)
+const description = computed(() =>
+	'description' in card ? card.description : '',
 )
 
 const resolved_url = computed(() => {

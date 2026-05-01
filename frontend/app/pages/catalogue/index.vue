@@ -1,5 +1,5 @@
 <template>
-	<main class="grow w-full max-w-7xl mx-auto px-md py-lg flex flex-col md:flex-row gap-lg">
+	<main class="w-screen flex flex-1 px-24 py-16">
 		<!-- Sidebar Filters -->
 		<aside class="w-full md:w-64 shrink-0">
 			<div class="sticky top-24">
@@ -72,9 +72,9 @@
 		</aside>
 
 		<!-- Product Grid Area -->
-		<section class="grow flex flex-col">
+		<section class="grow flex flex-col gap-10 px-12">
 			<!-- Toolbar -->
-			<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-md gap-4">
+			<article class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-md gap-4">
 				<h1 class="font-headline-lg text-headline-lg text-on-surface">Premium Collection</h1>
 				<div class="flex items-center gap-4 w-full sm:w-auto">
 					<div class="relative w-full sm:w-64">
@@ -92,15 +92,14 @@
 						<option>Newest Arrivals</option>
 					</select>
 				</div>
-			</div>
+			</article>
 
-			<CardListComponent :cards="products" :has_limit="false" layout="portrait" variant="catalogue-product" />
-			
 			<!-- Grid -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-grid_gutter">
+			<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+				<CardListComponent :cards="products" :has_limit="false" layout="portrait" variant="catalogue-product" />
 
 				<!-- Product Card 1 -->
-				<div
+				<!-- <div
 					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Minimalist smart watch with a clean white face and grey band on a plain background"
@@ -123,7 +122,7 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 				<!-- Product Card 2 -->
 				<!-- <div
@@ -254,10 +253,10 @@
 						</div>
 					</div>
 				</div> -->
-			</div>
+			</section>
 
 			<!-- Pagination (Simple implementation for design) -->
-			<div class="mt-lg flex justify-center items-center space-x-2">
+			<article class="flex justify-center items-center space-x-2 mt-6">
 				<button
 					class="px-4 py-2 border border-outline-layout rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors disabled:opacity-50"
 					disabled>Previous</button>
@@ -269,7 +268,7 @@
 					class="w-10 h-10 flex items-center justify-center border border-outline-layout text-on-surface hover:bg-surface-container-highest rounded-DEFAULT font-label-md text-label-md transition-colors">3</button>
 				<button
 					class="px-4 py-2 border border-outline-layout rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors">Next</button>
-			</div>
+			</article>
 		</section>
 	</main>
 </template>

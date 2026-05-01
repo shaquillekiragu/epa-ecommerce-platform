@@ -8,8 +8,8 @@
             </p>
         </article>
 
-        <section class="w-full grid lg:grid-cols-2 gap-10">
-            <CardListComponent :cards="cards" :has_limit="false" layout="landscape" variant="product-category" />
+        <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <CardListComponent :cards="cards" :has_limit="false" layout="landscape" variant="default" />
         </section>
     </main>
 </template>
