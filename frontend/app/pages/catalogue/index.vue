@@ -1,7 +1,7 @@
 <template>
-	<main class="flex-grow w-full max-w-7xl mx-auto px-md py-lg flex flex-col md:flex-row gap-lg">
+	<main class="grow w-full max-w-7xl mx-auto px-md py-lg flex flex-col md:flex-row gap-lg">
 		<!-- Sidebar Filters -->
-		<aside class="w-full md:w-64 flex-shrink-0">
+		<aside class="w-full md:w-64 shrink-0">
 			<div class="sticky top-24">
 				<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Filters</h2>
 				<div class="space-y-md">
@@ -72,7 +72,7 @@
 		</aside>
 
 		<!-- Product Grid Area -->
-		<section class="flex-grow flex flex-col">
+		<section class="grow flex flex-col">
 			<!-- Toolbar -->
 			<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-md gap-4">
 				<h1 class="font-headline-lg text-headline-lg text-on-surface">Premium Collection</h1>
@@ -94,7 +94,7 @@
 				</div>
 			</div>
 
-			<CardListComponent :cards="products" :has_limit="false" />
+			<CardListComponent :cards="products" :has_limit="false" variant="portrait" />
 			
 			<!-- Grid -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-grid_gutter">
@@ -108,10 +108,10 @@
 							data-alt="Minimalist smart watch with a clean white face and grey band on a plain background"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQyyzuyPMo8Bju05LvbZVbO3ZfqLtfx673f6HTYbr1SSbDCQOHgoj_JFIJwNgl5MIEUCNR9qpDMm1VXiB4uhHtDE_rPR__NdAYvVqXiiDwUtYPzNQ17rqyZkfNfw2cTk4Ee4iJJjjFNLY04fI-uC83_lw1-cZZNSrIhpuchzdTrvw1eKKG4FQcIGVA9fxf-U2UczdkmBvWI11uBvR1IvhzHFUmlzvW0rR1c-zEh-e7GltOUEt_UhhgKQ2jePH3IagEp2vLl0zGyl-r" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Chronograph
 							Smartwatch</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">Sleek,
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">Sleek,
 							minimalist design with advanced health tracking features.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -134,10 +134,10 @@
 							data-alt="High-end over-ear studio headphones resting on a dark sleek surface with dramatic lighting"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6g4Q5jZ-O9UP18dFdVUXlg-oygmNWEbD-jgvJyPF0m447xLG0A7iTz0IjpbqfhJyqms55JGxOovd60eKKfH2oD3zDzPA6TbcnvH9V_TH0R7Rkk35DrEZ3SC7NX48s0NLdAiUKnSMcXsfgJ0W7cVh0Wbjmi1WDaWX_t5nI4o7JXvzs7Wz9ye3744PGBq39E9-8sjHNGjVqGjeAg7-stwv-G1J_vbs2f-JA8kTls1YgkAFinIanqD510RejJpMyXWchpbBAjYn1OLG7" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Aura Studio
 							Headphones</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">Active
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">Active
 							noise cancellation with studio-grade sound reproduction.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -160,10 +160,10 @@
 							data-alt="Minimalist ceramic pour-over coffee maker set on a light wood kitchen counter"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzXGnXhpG9OzkZmpZz-B73aGTXl1iNy1fKSLWuKaqWRCRvbPtzKORyRSNQf9ayl93z_wosLPt1qg7kXzTsSCgDXINK8mZLbXfe8IccIRbkRe_tX5NPEQA-_8f-F0NOVFrqUi3QLG2j5A1vtPtkwW_fJa5u1nt95zkI8ha-hHMnF7vfPzuez2bh9aKytMTqwJDXYAMcsVW_IqRm-MfMTFnk1rtfFGxNOVJRqg-i-SfQ_-wl952-4-p5qRbncJf6vVtVH3-KmQOvhNa5" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Artisan
 							Pour-Over Set</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
 							Hand-crafted ceramic set for the perfect morning brew ritual.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -186,10 +186,10 @@
 							data-alt="Vintage style instant camera resting on a colorful patterned fabric with soft natural light"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuA50OmyAKcg-1jOCo-NetkshDh_mmriA1RsStiBj1IJALJI86RY3Vm142_0LQByng0lGPfuho7GAMvfFLKfHTr5u-fFyz0swvy_4iDyMkNEjCAEytHD5gzWc4lXgVrWcNirVuPggYxfs7YVSawNtCXJtiUnURQnzJIxoj2b7EjiJLhCHpcKJZ4IayKSg-uol6vFeyYxi3zJWhIvuyI0WI5YumNtEM6xZ_vYBV5NeKzlSXOvfZq8n_Sj0IsYXoWv_lSu0UBn5D2sz3Tf" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Retro Instant
 							Camera</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
 							Capture memories instantly with classic vintage styling.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -212,10 +212,10 @@
 							data-alt="Vibrant red athletic running shoe suspended mid-air against a stark dark background"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuBanppMpZkWX00vOfTnPdov10Llx78bqqHkOuzZSrSLX-2pwl-W-_kT2xL88fkEy6G6Xl6kdTCqpH0YZjAuMNGWeiVFHEqu9VmiNV6WGGz6QxcPVl4C5wMhmE17e6cHkJkT3gwCYZ5F2FqgKZfTwWIt4N6FU0mlIsPoMp-OLtAdzuQqPZdjAMoC8sVX4a1xMvWRCsm5u3HSe8yHFecqYCUhNcHNJ86RbjrnJoh2iXQJXhKDbO6QTTJktKwUHYvg95VEDreJxKbgwHUN" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Velocity
 							Runners</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
 							Ultra-lightweight performance sneakers for elite athletes.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -238,10 +238,10 @@
 							data-alt="Modern white smart speaker sitting on a wooden shelf beside a small green succulent plant"
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTefx-Zr7C3Zz09rxeBvmAXBZicGaXOe12Q22BL8OySXqwHFQsktmta50p3IZaQrHDzSZSrNfXJVygilydEZb_uHpKGWSYCqugICYGGaFaX2GQV_v-HY3DIax-dVRdWJqToCtDcg-_fYu2HyJzdIS_Q035sRN-tpS0ComlgmeVGVSpHK1BnqtGDtGAumyZyGo07KkRR-jXUnbZZWDQHcSVPZs1skgJeip5XsM3a8kfQd6A0PXozoNFp6xer71uGYZ9RsNKHiUMVi84" />
 					</div>
-					<div class="p-4 flex flex-col flex-grow">
+					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Echo Home Hub
 						</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md flex-grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
 							Control your entire smart home from this sleek central unit.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
