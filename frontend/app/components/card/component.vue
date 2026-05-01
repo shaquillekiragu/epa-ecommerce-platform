@@ -53,10 +53,11 @@
 			<div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
 			<div class="absolute bottom-4 left-4 text-white">
-				<span class="font-label-md text-label-md block">{{ label }}</span>
-				<span v-if="description" class="text-sm opacity-90 mt-1 block line-clamp-2 max-w-md">
+				<p class="text-lg font-semibold">{{ label }}</p>
+
+				<p v-if="description" class="font-medium opacity-90 mt-1 block line-clamp-2 max-w-md">
 					{{ description }}
-				</span>
+				</p>
 			</div>
 		</template>
 
