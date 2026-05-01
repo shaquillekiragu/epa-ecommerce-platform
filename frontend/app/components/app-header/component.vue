@@ -20,16 +20,16 @@
 			<nav class="hidden md:flex items-center gap-6 font-['Manrope'] text-sm font-medium">
 				<NuxtLink
 					class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="#">Shop</NuxtLink>
+					to="/catalogue">Shop</NuxtLink>
 				<NuxtLink
 					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="#">Categories</NuxtLink>
+					to="/categories">Categories</NuxtLink>
 				<NuxtLink
 					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
 					to="#">Deals</NuxtLink>
 				<NuxtLink
 					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="#">Merchant Portal</NuxtLink>
+					to="/merchant">Merchant Portal</NuxtLink>
 			</nav>
 
 			<!-- Trailing Icons -->
