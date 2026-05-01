@@ -1,5 +1,3 @@
-version: '3.2'
-
 services:
 
   api:
@@ -24,6 +22,10 @@ services:
 
   mysql:
     image: mysql:latest
+    # Use 3307 on the host so Sequel Ace / CLI on your Mac don't hit a local mysqld
+    # that may already be bound to 127.0.0.1:3306 (e.g. Homebrew MySQL).
+    ports:
+      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=verysecret
       - MYSQL_DATABASE=ecom_platform_db
