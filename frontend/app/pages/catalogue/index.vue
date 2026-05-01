@@ -6,46 +6,46 @@
 				<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Filters</h2>
 				<div class="space-y-md">
 					<!-- Category Filter -->
-					<div class="border-b border-outline-variant pb-md">
+					<div class="border-b border-outline-layout pb-md">
 						<h3 class="font-label-md text-label-md text-on-surface mb-sm">Category</h3>
 						<div class="space-y-sm">
 							<label class="flex items-center space-x-3 cursor-pointer">
 								<input checked
-									class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-DEFAULT focus:ring-primary"
+									class="form-checkbox h-4 w-4 text-primary border-outline-layout rounded-DEFAULT focus:ring-primary"
 									type="checkbox" />
-								<span class="font-body-md text-body-md text-on-surface-variant">All Products</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">All Products</span>
 							</label>
 							<label class="flex items-center space-x-3 cursor-pointer">
 								<input
-									class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-DEFAULT focus:ring-primary"
+									class="form-checkbox h-4 w-4 text-primary border-outline-layout rounded-DEFAULT focus:ring-primary"
 									type="checkbox" />
-								<span class="font-body-md text-body-md text-on-surface-variant">Electronics</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">Electronics</span>
 							</label>
 							<label class="flex items-center space-x-3 cursor-pointer">
 								<input
-									class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-DEFAULT focus:ring-primary"
+									class="form-checkbox h-4 w-4 text-primary border-outline-layout rounded-DEFAULT focus:ring-primary"
 									type="checkbox" />
-								<span class="font-body-md text-body-md text-on-surface-variant">Home &amp; Garden</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">Home &amp; Garden</span>
 							</label>
 							<label class="flex items-center space-x-3 cursor-pointer">
 								<input
-									class="form-checkbox h-4 w-4 text-primary border-outline-variant rounded-DEFAULT focus:ring-primary"
+									class="form-checkbox h-4 w-4 text-primary border-outline-layout rounded-DEFAULT focus:ring-primary"
 									type="checkbox" />
-								<span class="font-body-md text-body-md text-on-surface-variant">Apparel</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">Apparel</span>
 							</label>
 						</div>
 					</div>
 
 					<!-- Price Range Filter -->
-					<div class="border-b border-outline-variant pb-md">
+					<div class="border-b border-outline-layout pb-md">
 						<h3 class="font-label-md text-label-md text-on-surface mb-sm">Price Range</h3>
 						<div class="flex items-center space-x-2">
 							<input
-								class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
+								class="w-full bg-surface-container-lowest border border-outline-layout rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
 								placeholder="Min" type="text" />
-							<span class="text-on-surface-variant">-</span>
+							<span class="text-on-surface-layout">-</span>
 							<input
-								class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
+								class="w-full bg-surface-container-lowest border border-outline-layout rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
 								placeholder="Max" type="text" />
 						</div>
 					</div>
@@ -56,14 +56,14 @@
 						<div class="space-y-sm">
 							<label class="flex items-center space-x-3 cursor-pointer">
 								<input checked
-									class="form-radio h-4 w-4 text-primary border-outline-variant focus:ring-primary"
+									class="form-radio h-4 w-4 text-primary border-outline-layout focus:ring-primary"
 									name="stock" type="radio" />
-								<span class="font-body-md text-body-md text-on-surface-variant">In Stock</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">In Stock</span>
 							</label>
 							<label class="flex items-center space-x-3 cursor-pointer">
-								<input class="form-radio h-4 w-4 text-primary border-outline-variant focus:ring-primary"
+								<input class="form-radio h-4 w-4 text-primary border-outline-layout focus:ring-primary"
 									name="stock" type="radio" />
-								<span class="font-body-md text-body-md text-on-surface-variant">Out of Stock</span>
+								<span class="font-body-md text-body-md text-on-surface-layout">Out of Stock</span>
 							</label>
 						</div>
 					</div>
@@ -79,13 +79,13 @@
 				<div class="flex items-center gap-4 w-full sm:w-auto">
 					<div class="relative w-full sm:w-64">
 						<span
-							class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+							class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-layout">search</span>
 						<input
-							class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT py-sm pl-10 pr-4 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
+							class="w-full bg-surface-container-lowest border border-outline-layout rounded-DEFAULT py-sm pl-10 pr-4 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0"
 							placeholder="Search products..." type="text" />
 					</div>
 					<select
-						class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer hidden sm:block">
+						class="bg-surface-container-lowest border border-outline-layout rounded-DEFAULT p-sm font-body-md text-body-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer hidden sm:block">
 						<option>Recommended</option>
 						<option>Price: Low to High</option>
 						<option>Price: High to Low</option>
@@ -94,14 +94,14 @@
 				</div>
 			</div>
 
-			<CardListComponent :cards="products" :has_limit="false" variant="portrait" />
+			<CardListComponent :cards="products" :has_limit="false" layout="portrait" variant="product" />
 			
 			<!-- Grid -->
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-grid_gutter">
 
 				<!-- Product Card 1 -->
 				<div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Minimalist smart watch with a clean white face and grey band on a plain background"
 							class="w-full h-full object-cover"
@@ -111,7 +111,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Chronograph
 							Smartwatch</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">Sleek,
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">Sleek,
 							minimalist design with advanced health tracking features.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -127,7 +127,7 @@
 
 				<!-- Product Card 2 -->
 				<!-- <div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="High-end over-ear studio headphones resting on a dark sleek surface with dramatic lighting"
 							class="w-full h-full object-cover"
@@ -137,7 +137,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Aura Studio
 							Headphones</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">Active
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">Active
 							noise cancellation with studio-grade sound reproduction.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -153,7 +153,7 @@
 
 				<!-- Product Card 3 -->
 				<!-- <div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Minimalist ceramic pour-over coffee maker set on a light wood kitchen counter"
 							class="w-full h-full object-cover"
@@ -163,7 +163,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Artisan
 							Pour-Over Set</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">
 							Hand-crafted ceramic set for the perfect morning brew ritual.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -179,7 +179,7 @@
 
 				<!-- Product Card 4 -->
 				<!-- <div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Vintage style instant camera resting on a colorful patterned fabric with soft natural light"
 							class="w-full h-full object-cover"
@@ -189,7 +189,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Retro Instant
 							Camera</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">
 							Capture memories instantly with classic vintage styling.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -205,7 +205,7 @@
 
 				<!-- Product Card 5 -->
 				<!-- <div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Vibrant red athletic running shoe suspended mid-air against a stark dark background"
 							class="w-full h-full object-cover"
@@ -215,7 +215,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Velocity
 							Runners</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">
 							Ultra-lightweight performance sneakers for elite athletes.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -231,7 +231,7 @@
 
 				<!-- Product Card 6 -->
 				<!-- <div
-					class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
+					class="bg-surface-container-lowest border border-outline-layout rounded-lg overflow-hidden flex flex-col hover:shadow-[0_4px_12px_rgba(15,23,42,0.05)] transition-shadow duration-200">
 					<div class="h-48 w-full bg-surface-container-highest relative">
 						<img alt="Modern white smart speaker sitting on a wooden shelf beside a small green succulent plant"
 							class="w-full h-full object-cover"
@@ -241,7 +241,7 @@
 					<div class="p-4 flex flex-col grow">
 						<h3 class="font-headline-md text-headline-md text-on-surface mb-xs line-clamp-1">Echo Home Hub
 						</h3>
-						<p class="font-body-md text-body-md text-on-surface-variant mb-md grow line-clamp-2">
+						<p class="font-body-md text-body-md text-on-surface-layout mb-md grow line-clamp-2">
 							Control your entire smart home from this sleek central unit.</p>
 						<div
 							class="flex justify-between items-center mt-auto pt-2 border-t border-surface-container-highest">
@@ -259,16 +259,16 @@
 			<!-- Pagination (Simple implementation for design) -->
 			<div class="mt-lg flex justify-center items-center space-x-2">
 				<button
-					class="px-4 py-2 border border-outline-variant rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors disabled:opacity-50"
+					class="px-4 py-2 border border-outline-layout rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors disabled:opacity-50"
 					disabled>Previous</button>
 				<button
 					class="w-10 h-10 flex items-center justify-center border border-primary bg-primary text-on-primary rounded-DEFAULT font-label-md text-label-md">1</button>
 				<button
-					class="w-10 h-10 flex items-center justify-center border border-outline-variant text-on-surface hover:bg-surface-container-highest rounded-DEFAULT font-label-md text-label-md transition-colors">2</button>
+					class="w-10 h-10 flex items-center justify-center border border-outline-layout text-on-surface hover:bg-surface-container-highest rounded-DEFAULT font-label-md text-label-md transition-colors">2</button>
 				<button
-					class="w-10 h-10 flex items-center justify-center border border-outline-variant text-on-surface hover:bg-surface-container-highest rounded-DEFAULT font-label-md text-label-md transition-colors">3</button>
+					class="w-10 h-10 flex items-center justify-center border border-outline-layout text-on-surface hover:bg-surface-container-highest rounded-DEFAULT font-label-md text-label-md transition-colors">3</button>
 				<button
-					class="px-4 py-2 border border-outline-variant rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors">Next</button>
+					class="px-4 py-2 border border-outline-layout rounded-DEFAULT font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors">Next</button>
 			</div>
 		</section>
 	</main>

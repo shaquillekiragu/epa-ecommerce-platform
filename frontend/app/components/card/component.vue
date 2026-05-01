@@ -1,7 +1,7 @@
 <template>
 	<NuxtLink class="group hover:cursor-pointer! transition" :class="wrapper_class" :to="resolved_url">
-		<template v-if="variant === 'portrait'">
-			<div class="relative aspect-4/5 bg-surface-container-lowest overflow-hidden">
+		<template v-if="layout === 'portrait'">
+			<div class="relative aspect-4/5 overflow-hidden">
 				<img
 					:alt="label"
 					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -11,17 +11,20 @@
 			</div>
 
 			<div class="p-4">
-				<div class="flex items-start justify-between gap-2">
-					<h4 class="font-headline-md text-headline-md text-base text-on-surface line-clamp-2 leading-tight">
+				<div class="flex justify-between gap-2">
+					<h4 class="line-clamp-2 leading-tight">
 						{{ label }}
 					</h4>
-					<span class="font-body-lg text-body-lg font-bold text-primary whitespace-nowrap">{{
+
+					<span class="font-bold whitespace-nowrap">{{
 						price_label
 					}}</span>
 				</div>
-				<p class="font-body-md text-body-md text-sm text-on-surface-variant mt-1">{{ category_label }}</p>
+
+				<p class="text-sm mt-1">{{ category_label }}</p>
 			</div>
 		</template>
+
 		<template v-else>
 			<img
 				:alt="label"
@@ -31,6 +34,7 @@
 			/>
 
 			<div :class="overlay_class"></div>
+
 			<div :class="content_class">
 				<span :class="title_class">{{ label }}</span>
 			</div>
@@ -41,7 +45,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { PropType } from 'vue'
-import type { CardVariant } from '~/types/card-variant';
+import type { CardLayout, CardVariant } from '~/types/card-component';
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
 
@@ -51,6 +55,7 @@ const {
 	card,
 	data_alt,
 	is_first_large,
+	layout,
 	variant,
 } = defineProps({
 	card: {
@@ -65,9 +70,13 @@ const {
 		type: Boolean,
 		default: false,
 	},
+	layout: {
+        type: String as PropType<CardLayout>,
+        required: true,
+    },
 	variant: {
         type: String as PropType<CardVariant>,
-        required: true,
+        default: 'product-category',
     }
 })
 
@@ -86,8 +95,8 @@ const resolved_url = computed(() => {
 })
 
 const wrapper_class = computed(() => {
-	if (variant === 'portrait') {
-		return 'bg-white border border-surface-variant rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
+	if (layout === 'portrait') {
+		return 'bg-white border border-surface-layout rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
 	}
 
 	return is_first_large
@@ -96,7 +105,7 @@ const wrapper_class = computed(() => {
 })
 
 const overlay_class = computed(() => {
-	if (variant === 'tri') {
+	if (layout === 'tri') {
 		return 'absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'
 	}
 
@@ -104,7 +113,7 @@ const overlay_class = computed(() => {
 })
 
 const content_class = computed(() => {
-	if (variant === 'tri') {
+	if (layout === 'tri') {
 		return 'absolute bottom-4 left-4 text-white'
 	}
 
@@ -112,7 +121,7 @@ const content_class = computed(() => {
 })
 
 const title_class = computed(() => {
-	if (variant === 'tri') {
+	if (layout === 'tri') {
 		return 'font-label-md text-label-md block'
 	}
 

@@ -7,7 +7,7 @@
 				:card="card"
 				:data_alt="data_alt[idx] ?? ''"
 				:is_first_large="idx === 0"
-				variant="tri"
+				layout="tri"
 			/>
 		</div>
 	</section>

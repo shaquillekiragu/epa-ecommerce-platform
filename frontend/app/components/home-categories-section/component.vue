@@ -1,9 +1,10 @@
 <template>
 	<section class="w-full max-w-7xl px-6 py-16">
 		<article class="flex justify-between items-end mb-8">
-			<div class="">
+			<div class="flex flex-col gap-2">
 				<h2 class="text-4xl font-medium">Curated Categories</h2>
-				<p class="opacity-75 mt-2">
+				
+				<p class="opacity-75">
 					Explore our finest selections across domains.
 				</p>
 			</div>
