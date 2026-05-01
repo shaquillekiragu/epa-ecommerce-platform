@@ -116,7 +116,7 @@ final class CatalogSeeder extends BaseSeeder
         foreach ($rows as $i => $row) {
             $merchant_id = $merchant_ids[$i % count($merchant_ids)];
             $rows[$i] = array_merge($row, [
-                // name and description are unique in this schema; prefix per seed run.
+                // name is unique in this schema; prefix per seed run.
                 'name' => $prefix . $row['name'],
                 'description' => $prefix . $row['description'],
                 'merchant_id' => (int) $merchant_id,

@@ -55,12 +55,6 @@ class Store extends BaseModel
                     ],
                     'unique'
                 ],
-                [
-                    [
-                        'description'
-                    ],
-                    'unique'
-                ],
             ]
         );
     }
@@ -80,12 +74,12 @@ class Store extends BaseModel
     }
 }
 
-// Model today: merchant_id, name unique, description also unique (unusual for a description).
+// Model today: merchant_id; name globally unique; description is not unique.
 
 // Recommended business logic:
 
 // Ownership: merchant_id should reference a user with role merchant (FK ensures row exists, not role).
-// Uniqueness: Prefer unique (merchant_id, name) over global unique description; align rules + migration when ready.
+// Uniqueness: Consider composite unique (merchant_id, name) instead of global unique name when multi-tenant rules firm up.
 // Authorization: Only owning merchant or superadmin may update; enforce in controllers/services + RBAC.
 
 // Leave child models empty — use api\models\Store / superadmin\models\Store for scenario-based mass-assignment if merchant vs admin differ.
