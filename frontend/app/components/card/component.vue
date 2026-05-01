@@ -22,7 +22,6 @@
 				</div>
 
 				<p class="text-sm mt-1">{{ category_label }}</p>
-
 			</div>
 			
 			<div v-if="variant === 'catalogue-product'" class="flex flex-col gap-1">
@@ -40,6 +39,24 @@
 
 					<button class="bg-black text-white">Add</button>
 				</div>
+			</div>
+		</template>
+
+		<template v-else-if="layout === 'landscape'">
+			<img
+				:alt="label"
+				class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+				:data-alt="data_alt"
+				:src="src"
+			/>
+
+			<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+			<div class="absolute bottom-4 left-4 text-white">
+				<span class="font-label-md text-label-md block">{{ label }}</span>
+				<span v-if="description" class="text-sm opacity-90 mt-1 block line-clamp-2 max-w-md">
+					{{ description }}
+				</span>
 			</div>
 		</template>
 
@@ -118,6 +135,10 @@ const resolved_url = computed(() => {
 const wrapper_class = computed(() => {
 	if (layout === 'portrait') {
 		return 'bg-white border border-surface-layout rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
+	}
+
+	if (layout === 'landscape') {
+		return 'relative rounded-xl overflow-hidden aspect-[16/9]'
 	}
 
 	return is_first_large
