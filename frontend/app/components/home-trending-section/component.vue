@@ -12,7 +12,7 @@
             <CardListComponent :cards="cards" :has_limit="true" layout="portrait" variant="trending-product" />
         </section>
 
-        <LinkButtonComponent text="Load More Products" url="/catalogue" :is_dark="false" class="mt-12 px-8" />
+        <ButtonLinkComponent text="Load More Products" url="/catalogue" :is_dark="false" class="mt-12 px-8" />
     </section>
 </template>
 

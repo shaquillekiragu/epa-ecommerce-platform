@@ -11,7 +11,7 @@
             </p>
 
             <div class="mt-4">
-                <LinkButtonComponent text="Shop Now" url="/catalogue" :is_dark="true" class="px-16" />
+                <ButtonLinkComponent text="Shop Now" url="/catalogue" :is_dark="true" class="px-16" />
             </div>
         </article>
 

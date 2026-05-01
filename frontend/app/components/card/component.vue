@@ -32,12 +32,12 @@
 				<p class="text-sm">{{ category_label }}</p>
 				<p class="truncate">{{ description }}</p>
 
-				<div class="">
+				<div class="flex justify-between mt-4">
 					<span class="font-bold whitespace-nowrap">
 						{{ price_label }}
 					</span>
 
-					<button class="bg-black text-white">Add</button>
+					<ButtonActionComponent text="Add" url="/basket" button_type="submit" :is_dark="true" class="px-3 py-1" @click.stop.prevent />
 				</div>
 			</div>
 		</template>
@@ -117,8 +117,17 @@ const {
 
 const label = computed(() => ('name' in card ? card.name : card.category_name))
 const src = computed(() => card.thumbnail)
-const price_label = computed(() => { return 'price_in_gbp' in card ? `£${card.price_in_gbp}` : '' })
 const description = computed(() => 'description' in card ? card.description : '')
+
+const price_label = computed(() => { 
+	if ('price_in_gbp' in card && variant === 'trending-product') {
+		return `£${card.price_in_gbp}`
+	} else if ('price_in_gbp' in card) {
+		return `£${card.price_in_gbp}.00`
+	} else {
+		return ''
+	}
+})
 
 const category_label = computed(() =>
 	'product_category_name' in card ? card.product_category_name : '',
