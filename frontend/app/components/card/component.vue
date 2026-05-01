@@ -124,7 +124,7 @@ const price_label = computed(() => {
 	if ('price_in_gbp' in card && variant === 'trending-product') {
 		return `£${card.price_in_gbp}`
 	} else if ('price_in_gbp' in card) {
-		return `£${card.price_in_gbp}.00`
+		return getPoundAndPenceFormat(card.price_in_gbp)
 	} else {
 		return ''
 	}
