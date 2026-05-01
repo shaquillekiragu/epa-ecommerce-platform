@@ -1,9 +1,9 @@
 <template>
-	<main class="w-screen flex flex-1 px-24 py-16">
+	<main class="w-screen flex px-24 py-16">
 		<FilterSidePanelComponent />
 
 		<section class="grow flex flex-col items-center gap-10 px-12">
-			<article class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+			<article class="w-full flex flex-col items-stretch sm:flex-row sm:justify-between sm:items-center gap-4">
 				<h1 class="text-4xl font-medium">Premium Collection</h1>
 
 				<div class="flex items-center gap-4 w-full sm:w-auto">
@@ -25,7 +25,7 @@
 				</div>
 			</article>
 
-			<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+			<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10">
 				<CardListComponent :cards="paged_products" :has_limit="false" layout="portrait" variant="catalogue-product" />
 			</section>
 

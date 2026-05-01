@@ -1,5 +1,5 @@
 <template>
-    <aside class="w-full md:w-64 shrink-0">
+    <aside class="w-full md:w-64">
         <div class="sticky top-24">
             <h2 class="font-headline-md text-headline-md text-on-surface mb-md">Filters</h2>
             <div class="space-y-md">
