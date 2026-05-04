@@ -1,3 +1,4 @@
+import { slugify } from "~/utils/strings";
 import type { Product, ProductCard } from "~/types/product";
 
 function getSlug(name: string, sku_code: string): string {

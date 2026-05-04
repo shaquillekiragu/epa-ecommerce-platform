@@ -139,10 +139,10 @@ const has_border = computed(() =>
 )
 
 const resolved_url = computed(() => {
-	if ('product_url' in card) {
-		return card.product_url
+	if ('slug' in card) {
+		return `/catalogue/${card.slug}`
 	}
-	return card.products_by_category_url
+	return `/catalogue?category=${card.name}`
 })
 
 const wrapper_class = computed(() => {
