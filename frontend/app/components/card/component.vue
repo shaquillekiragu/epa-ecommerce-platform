@@ -140,9 +140,9 @@ const has_border = computed(() =>
 
 const resolved_url = computed(() => {
 	if ('slug' in card) {
-		return `/catalogue/${card.slug}`
+		return `/products/${card.slug}`
 	}
-	return `/catalogue?category=${card.name}`
+	return `/products?category=${card.name}`
 })
 
 const wrapper_class = computed(() => {

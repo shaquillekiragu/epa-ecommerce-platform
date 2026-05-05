@@ -51,7 +51,7 @@ import type { NavLink } from '~/types/miscellaneous';
 
 const nav_links: NavLink[] = [
 	{ text: 'Home', url: '/', is_primary: false },
-	{ text: 'Shop', url: '/catalogue', is_primary: false },
+	{ text: 'Shop', url: '/products', is_primary: false },
 	{ text: 'Categories', url: '/categories', is_primary: false },
 	{ text: 'Merchant Portal', url: '/merchant', is_primary: false },
 ]

@@ -17,12 +17,12 @@ $data_entities = [
     ],
     [
         'title' => 'Products',
-        'subtitle' => 'Catalogue and stock',
+        'subtitle' => 'Products and stock',
         'url_param' => 'product',
     ],
     [
         'title' => 'Product Categories',
-        'subtitle' => 'Catalogue categories',
+        'subtitle' => 'Categories for products',
         'url_param' => 'productcategory',
     ],
     [

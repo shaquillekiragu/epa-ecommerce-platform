@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProductCards } from '~/composables/useCatalogue';
+import { getProductCards } from '~/composables/useProducts';
 
 const products = getProductCards()
 const page = ref(1)
