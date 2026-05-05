@@ -13,7 +13,7 @@
 					class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
 					<!-- Product Image -->
 					<div
-						class="w-full sm:size-40 bg-slate-100 flex-shrink-0 rounded-lg overflow-hidden border border-slate-400/30">
+						class="w-full sm:size-40 bg-slate-100 shrink-0 rounded-lg overflow-hidden border border-slate-400/30">
 						<img alt="Aura Studio Wireless Headphones" class="size-full object-cover"
 							data-alt="Sleek modern premium wireless over-ear headphones in matte black resting on a clean studio background with soft directional lighting."
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuAArmaIdhfBDuayeLEteMlMKqvZLDMP1KiA-vNGWS3myMj3rAp2TnzP9it93xevc2Kcp1TlIZmG5q_UFpIO_yUvtxuXOqXkSxV68L0vdXdXzi-b4E2GUCwk8QUDqwSrrf1gXloOikQhc8XAXx865d9Ge147TzdqlsHt_7WeTGwhpo5J_ieLW7hF4xAyqEg91CPriBg1B1K8LID9wRBGMuj0ExbFeQpzczAc08Aqctwn3W2mUApBMWc9pybd4ftA5D2BhCDmFMOkSN41" />

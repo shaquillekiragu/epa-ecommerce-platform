@@ -116,13 +116,13 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											class="size-12 rounded bg-slate-100 shrink-0 overflow-hidden border border-slate-200">
 											<img class="size-full object-cover"
 												data-alt="A clean studio product shot of a minimalist white ceramic watch on a neutral background. The lighting is soft and high-key, emphasizing smooth textures and sharp geometric lines. The aesthetic is contemporary, premium, and aligns with a professional e-commerce dashboard. The focus is sharp on the watch face with a shallow depth of field."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwVsJsDyB0dPZeICKdEaXy5FWF0L7P8i0J8cjT18spWWAlJr3y865EHehk0yxhFRgQ6ukr-8Y_nAwmgScivbFU_jfYuE1lyH1qKCbnlHijO_KiXqcZDYDhd0E8aS4nL5ksY74cFX8kRTM0BIDKRLQn6Rahh3gV3Ks-im8jWJZ7Jg9s1rP4WhkpyrSTGD4AijZ643wRgm6gE6do6ov9Pws8xHwE6ig4OAT9ra4PZAQvYuVSGHHBhFD26awqmwBk-BjS5W9X2dKHTIzZ" />
 										</div>
 										<div>
-											<p class="font-normal font-bold text-slate-900">Luxe Chronograph Series
+											<p class="font-bold text-slate-900">Luxe Chronograph Series
 												X</p>
 											<p class="text-xs text-slate-600">Last updated 2h ago</p>
 										</div>
@@ -133,7 +133,7 @@
 									<span
 										class="bg-slate-200 text-slate-800 px-2 py-1 rounded-full text-xs font-bold uppercase tracking-tight">Electronics</span>
 								</td>
-								<td class="p-4 font-normal font-bold text-slate-900">£249.99</td>
+								<td class="p-4 font-bold text-slate-900">£249.99</td>
 								<td class="p-4">
 									<div class="flex items-center gap-2">
 										<div class="w-24 bg-slate-100 h-1.5 rounded-full overflow-hidden">
@@ -174,13 +174,13 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											class="size-12 rounded bg-slate-100 shrink-0 overflow-hidden border border-slate-200">
 											<img class="size-full object-cover"
 												data-alt="Vibrant red performance sneakers photographed in a professional studio setting with dramatic side lighting. The background is a clean, dark grey that makes the primary red color pop intensely. The product detail is crisp, showing the texture of the fabric and the sleek sole design. The overall mood is energetic and high-performance."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw1j3nphiR7A08NjuyH_GGv8YtqfTm8rivAVbhhv7h87ymnlebDXLqZtaty2bLYGXrxK-C9QMlHCzoz8yCK5ABxYzpffJUKEt-3kWUt7yly3KnXsn-rRNqBe-e858NtgyB18-NtglIDWnjk5_wlfYQ9u5-q4KfYXExC-dZzEjaNn8KjxoTlOH4Ct5hEb86hvPfv5oOzwI-MBJgPmxeVDHjQUC9p5_pN8nX9UMkMLu6WCFRa2q8YTFU9CYJPVe-Om3KyPc19P_ka0C5" />
 										</div>
 										<div>
-											<p class="font-normal font-bold text-slate-900">Apex Runner Red Edition
+											<p class="font-bold text-slate-900">Apex Runner Red Edition
 											</p>
 											<p class="text-xs text-slate-600">Last updated 5h ago</p>
 										</div>
@@ -191,7 +191,7 @@
 									<span
 										class="bg-slate-200 text-slate-800 px-2 py-1 rounded-full text-xs font-bold uppercase tracking-tight">Apparel</span>
 								</td>
-								<td class="p-4 font-normal font-bold text-slate-900">£85.00</td>
+								<td class="p-4 font-bold text-slate-900">£85.00</td>
 								<td class="p-4">
 									<div class="flex items-center gap-2">
 										<div class="w-24 bg-slate-100 h-1.5 rounded-full overflow-hidden">
@@ -234,13 +234,13 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											class="size-12 rounded bg-slate-100 shrink-0 overflow-hidden border border-slate-200">
 											<img class="size-full object-cover"
 												data-alt="High-fidelity black wireless headphones positioned against a minimalist grey background. The professional studio lighting creates subtle highlights on the metallic and leather surfaces, emphasizing the high-end build quality. The aesthetic is sleek, corporate, and focuses on technological excellence and comfort."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj8RTXlZq3x3ohoSRomQaSQKr3T6Ca3a2nSRCqPoOcF5TX_JAq-j0vLlHY8OqYVRrfG20USL3FlMUMrD16VGrwoPSUF7RRnTvTxnkMzctWl-Qxp4HbgASu2-bdTki_G1fQHJWH19jmK98Qy9HftOaWZJQvxk7lgKwBLDS5TknNQYzdD_r8TJnGrSfavrF4vcaGh52s0wgaEuBmfOVyojLXQ4xXYqrxKHRMGi0P5nuI63MwNsUWaGLbCaAW9T-tBrzIuXTdwwYjIKtN" />
 										</div>
 										<div>
-											<p class="font-normal font-bold text-slate-900">Sonic Pro Over-Ear</p>
+											<p class="font-bold text-slate-900">Sonic Pro Over-Ear</p>
 											<p class="text-xs text-slate-600">Last updated 1d ago</p>
 										</div>
 									</div>
@@ -250,7 +250,7 @@
 									<span
 										class="bg-slate-200 text-slate-800 px-2 py-1 rounded-full text-xs font-bold uppercase tracking-tight">Electronics</span>
 								</td>
-								<td class="p-4 font-normal font-bold text-slate-900">£189.50</td>
+								<td class="p-4 font-bold text-slate-900">£189.50</td>
 								<td class="p-4">
 									<div class="flex items-center gap-2">
 										<div class="w-24 bg-slate-100 h-1.5 rounded-full overflow-hidden">

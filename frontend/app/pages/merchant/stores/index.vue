@@ -102,7 +102,7 @@
 								<span
 									class="inline-flex items-center px-2 py-1 rounded-full bg-slate-100 text-slate-900 font-medium text-xs">Accessories</span>
 							</td>
-							<td class="px-4 py-2 font-normal text-lg text-slate-900 font-bold text-right">
+							<td class="px-4 py-2 text-lg text-slate-900 font-bold text-right">
 								$499.00</td>
 							<td class="px-4 py-2 text-right">
 								<div class="font-normal text-base text-slate-900">45</div>
@@ -150,11 +150,11 @@
 								<span
 									class="inline-flex items-center px-2 py-1 rounded-full bg-slate-100 text-slate-900 font-medium text-xs">Bags</span>
 							</td>
-							<td class="px-4 py-2 font-normal text-lg text-slate-900 font-bold text-right">
+							<td class="px-4 py-2 text-lg text-slate-900 font-bold text-right">
 								$285.00</td>
 							<td class="px-4 py-2 text-right">
 								<div
-									class="font-normal text-base text-red-600 font-bold flex items-center justify-end gap-1">
+									class="text-base text-red-600 font-bold flex items-center justify-end gap-1">
 									<span class="material-symbols-outlined">warning</span>
 									3
 								</div>
@@ -200,7 +200,7 @@
 								<span
 									class="inline-flex items-center px-2 py-1 rounded-full bg-slate-100 text-slate-900 font-medium text-xs">Home</span>
 							</td>
-							<td class="px-4 py-2 font-normal text-lg text-slate-900 font-bold text-right">
+							<td class="px-4 py-2 text-lg text-slate-900 font-bold text-right">
 								$65.00</td>
 							<td class="px-4 py-2 text-right">
 								<div class="font-normal text-base text-slate-900">120</div>
@@ -249,7 +249,7 @@
 								<span
 									class="inline-flex items-center px-2 py-1 rounded-full bg-slate-100 text-slate-900 font-medium text-xs">Footwear</span>
 							</td>
-							<td class="px-4 py-2 font-normal text-lg text-slate-900 font-bold text-right">
+							<td class="px-4 py-2 text-lg text-slate-900 font-bold text-right">
 								$145.00</td>
 							<td class="px-4 py-2 text-right">
 								<div class="font-normal text-base text-slate-900">18</div>

@@ -73,7 +73,7 @@
 						<div class="divide-y divide-slate-100">
 							<!-- Item 1 -->
 							<div class="p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-								<div class="size-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
+								<div class="size-16 bg-slate-100 rounded overflow-hidden shrink-0">
 									<img alt="Product" class="size-full object-cover"
 										data-alt="A high-end, professional product photograph of a sleek crimson running shoe against a minimalist, bright light-mode background. The lighting is crisp and soft, emphasizing the textures of the high-performance fabric. The aesthetic is clean, corporate, and focuses on structural integrity with deep blacks and vibrant reds as accents."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsP0brIpa6RGliR_LnX4sKRoU5eofeW1Zk-j5zSAUHJHWywKONN3xutvNBjQpCbpTzsdzDjaodtQdAobDg5IdvQHpgtfq3FaqvjCSCFj3Qmj4MD2IWh16tSuPlEesIixtZ25WnDiKO_itfhOglNTyzQluQspQP4th8BOtniEuiiwHRvCBCnyaD58107jfhA16-4ZfqVBw65LPFjiXh8ym2fz-UqwxHxyjnIO9_cCZgZlMGXadqHIXuXb6bSgGfuCHtzqQsA3W0B0EL" />
@@ -86,7 +86,7 @@
 							</div>
 							<!-- Item 2 -->
 							<div class="p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-								<div class="size-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
+								<div class="size-16 bg-slate-100 rounded overflow-hidden shrink-0">
 									<img alt="Product" class="size-full object-cover"
 										data-alt="A minimalist studio photograph of a premium white smart watch with a clean, industrial design. The watch is presented on a soft grey surface under diffused bright lighting, creating a professional light-mode aesthetic. The composition highlights geometric precision and functional density, maintaining a palette of subtle greys and stark blacks."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfAjzhD8IU1hWkHsvqBsDKhVYKRzeaPsQZw6Ksx4OK20eyklJ2SgIB2hQBUsikftc4iAck2LsyhcdhRwHT1iw_MYG8sb3afvCeIRfYx7I3LkZ-zQ5lEPo8q39XdWeBVDZK8d5JOzIeHUFCvvP8Txcpva7_HLVh4Yv8Hc8VixszV-zV6MjI3x3FcYhBKichpNVsYrHcsoyp3lvhFtD2-hTMTwNCZSQo8-zwFpxRwq2Z0C5d24UzjTLP9wPYXdk37OKiPP5FdogM37yj" />

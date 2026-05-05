@@ -189,7 +189,7 @@
 								data-alt="A sophisticated retail showroom interior showcasing artisanal furniture and minimalist lighting. The space is curated with high-end materials like dark wood, textured linens, and warm ambient spotlights. The atmosphere is quiet, elegant, and modern, reflecting a premium merchant aesthetic."
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-GSSGtTwecH5ziiSHNSjghVTvRfOOEFR8MrwEB9cfpWWUfCK4E-wblq-AeD0GHar1yjcFc2XSVZM1fdhskS8oTvEBUAin1iKr8eY_eoGRJ52hBqcC6Y8m8n310CQaqvLzcD1vufZsdOHujnhq7P5cMBKvf6CeT_9BqPj9EDWGZaJeezI1t3hCF5J50A_YfQhimzjkYtCPOf-7T3roF_HGXUOnqzl2oFlpsxv6mxlQa0MFJIIONCl-Sf9tBc_AlwMTo46btmIck0Ql" />
 							<div
-								class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+								class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-6">
 								<span class="text-white font-semibold text-sm">Storefront Aesthetic: Nordic
 									Minimal</span>
 							</div>

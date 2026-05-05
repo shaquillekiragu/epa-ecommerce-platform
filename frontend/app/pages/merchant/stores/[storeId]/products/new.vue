@@ -187,7 +187,7 @@
 							data-alt="A studio shot of a vibrant red luxury sneaker positioned against a clean, minimalist white background with sharp, professional commercial lighting. The image captures the texture of the fabric and the sleek design lines, embodying a high-end retail aesthetic that matches a clean, corporate e-commerce user interface. The mood is sophisticated, polished, and emphasizes premium quality."
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkhvqDhOpo9R-7Z_w7n8_pREafC8NYzRPxzLE4AEqGyPR0vrXCDCJ-p9nwQ2zz7HTpl0tSlu2ZNgYdODqBAtS0CjR161ICmvS3D-vCsRAWihziXePzrg5zZno0fJ_HFOjg-yISpydc_enEAILW-F-8E1m4KUB8PXyVfX1w6Pr7B-Aaq5TP52qWeufJT9SeHETahZQDp8Vk8Z4PrQkOw74S_WJRHzaQvHxxE-UpnwAEKqM1Ja9xF6hYKH595k_eN7IAZ5CTJehXZwAu" />
 						<div
-							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+							class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
 							<span
 								class="text-xs font-medium text-slate-700 bg-slate-100 px-2 py-1 rounded inline-block w-fit mb-2">Merchant
 								Tip</span>

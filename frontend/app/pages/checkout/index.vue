@@ -153,7 +153,7 @@
 					<!-- Item List -->
 					<div class="space-y-6 mb-8">
 						<div class="flex space-x-4">
-							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
 								<img class="size-full object-cover"
 									data-alt="A high-end, professionally photographed product shot of a premium crimson leather sneaker against a clean, minimalist white background. The lighting is soft and architectural, emphasizing the texture of the grain and the artisanal stitching. The mood is sophisticated and contemporary, aligning with a luxury e-commerce aesthetic using sharp focus and neutral surroundings."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgztCKRcYBpTn-6rUd5hmFiddFdqzCvEh-5neJLFGJcr9Cop3xtHK-VOxxpDn_hCs78DOhC2ZVoA_ml4RVOU5CAppS6gyYUEKczddiKK4em9nFRgBqz350EIsYzt2VG25tRcEZxA2JYTNkV4nxoQHxEvocwA4MY4lrNPolkfV5pOvTazWi-G_TXxLkwRvK-bv8Oo69HNvNRGgEkHOwePbci3F913JrZxRK66eLxNtICoRQuqYA-hWTts__v-0aAXgx1egdt3OjLFaX" />
@@ -167,7 +167,7 @@
 							</div>
 						</div>
 						<div class="flex space-x-4">
-							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
 								<img class="size-full object-cover"
 									data-alt="A minimalist studio photograph of a structured designer handbag in charcoal gray, displayed on a sleek obsidian pedestal. The scene is illuminated by dramatic, high-contrast lighting that creates deep shadows and bright highlights, emphasizing its modern architectural silhouette. The overall aesthetic is one of quiet luxury and structural integrity, using a cool-toned slate color palette."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCyKOFXi6VKg0c_zdB-u1ZLnOZWHR4MZjld5fuxZfCmhkGXW48AItm-HvAFPS5B1_YNMdylohgiW6KbOyoWhsSfX-DTiLYS9XVOkcmgEMarQyqao7oLhKIws4ycPhW3SI_clfK6GnzKHfiFFxcV7MCyNlZHymMu1RliJyvDVPqiJ-kg_T5FMPiKEuyHstIzEHwVK9v5dHQECrGL8JkbK2roNDClfrQdnAC_AKL2_j9IRvHsdd3epHdnjXJWzg45-2QYxxxpjFhjmzP" />
