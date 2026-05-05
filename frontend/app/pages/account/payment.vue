@@ -33,7 +33,7 @@
 						</div>
 						<div class="mb-6">
 							<p class="text-xs font-semibold text-slate-600 mb-1">Card Number</p>
-							<p class="font-semibold tracking-tight text-xl leading-snug tracking-widest text-slate-900">•••• •••• ••••
+							<p class="font-semibold text-xl leading-snug tracking-widest text-slate-900">•••• •••• ••••
 								4242</p>
 						</div>
 						<div class="flex justify-between items-end">
@@ -62,7 +62,7 @@
 						</div>
 						<div class="mb-6">
 							<p class="text-xs font-semibold text-slate-600 mb-1">Card Number</p>
-							<p class="font-semibold tracking-tight text-xl leading-snug tracking-widest text-slate-900">•••• •••• ••••
+							<p class="font-semibold text-xl leading-snug tracking-widest text-slate-900">•••• •••• ••••
 								8801</p>
 						</div>
 						<div class="flex justify-between items-end">

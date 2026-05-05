@@ -12,7 +12,7 @@
 					a confirmation email to your registered address.</p>
 				<div class="mt-4 inline-block bg-slate-100 px-4 py-2 rounded-xl">
 					<span class="font-semibold text-slate-600 uppercase tracking-widest">Order ID:</span>
-					<span class="font-semibold text-slate-900 ml-2 font-bold">LX-99284-CO</span>
+					<span class="text-slate-900 ml-2 font-bold">LX-99284-CO</span>
 				</div>
 			</div>
 			<!-- Bento Content Grid -->
@@ -20,7 +20,7 @@
 				<!-- Timeline Section -->
 				<div
 					class="md:col-span-1 bg-white border border-slate-200 p-8 rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)]">
-					<h3 class="font-semibold tracking-tight text-sm mb-8 uppercase tracking-widest text-slate-600">
+					<h3 class="font-semibold text-sm mb-8 uppercase tracking-widest text-slate-600">
 						Status Timeline</h3>
 					<div class="relative space-y-12">
 						<div class="absolute left-4 top-2 bottom-2 w-0.5 bg-slate-100"></div>
@@ -65,7 +65,7 @@
 				<div
 					class="md:col-span-2 bg-white border border-slate-200 rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col">
 					<div class="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-						<h3 class="font-semibold tracking-tight text-sm uppercase tracking-widest text-slate-600">
+						<h3 class="font-semibold text-sm uppercase tracking-widest text-slate-600">
 							Order Summary</h3>
 						<span class="font-medium text-slate-600">3 Items</span>
 					</div>
@@ -109,7 +109,7 @@
 							<span class="text-xs text-slate-900">Free</span>
 						</div>
 						<div class="flex justify-between items-center">
-							<span class="font-semibold text-slate-900 font-bold">Total</span>
+							<span class="text-slate-900 font-bold">Total</span>
 							<span class="font-semibold tracking-tight text-slate-900">$500.00</span>
 						</div>
 					</div>

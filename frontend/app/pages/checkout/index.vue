@@ -2,7 +2,7 @@
 	<main class="grow pt-24 pb-12 px-6 max-w-7xl mx-auto w-full">
 		<!-- Page Title -->
 		<div class="mb-8">
-			<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 tracking-tight">Checkout: Shipping &amp; Billing
+			<h1 class="font-bold text-3xl leading-tight text-slate-900 tracking-tight">Checkout: Shipping &amp; Billing
 			</h1>
 		</div>
 		<!-- Progress Stepper -->
@@ -58,7 +58,7 @@
 							<div
 								class="p-6 border-2 border-slate-100 rounded-xl bg-slate-50 transition-all peer-checked:border-slate-900 peer-checked:bg-white group-hover:bg-white h-full">
 								<div class="flex justify-between items-start mb-2">
-									<span class="font-bold font-semibold text-slate-900">Home (Primary)</span>
+									<span class="font-semibold text-slate-900">Home (Primary)</span>
 									<span class="material-symbols-outlined text-slate-900 invisible peer-checked:visible"
 										style="font-variation-settings: 'FILL' 1;">check_circle</span>
 								</div>
@@ -72,7 +72,7 @@
 							<div
 								class="p-6 border-2 border-slate-100 rounded-xl bg-slate-50 transition-all peer-checked:border-slate-900 peer-checked:bg-white group-hover:bg-white h-full">
 								<div class="flex justify-between items-start mb-2">
-									<span class="font-bold font-semibold text-slate-900">Office</span>
+									<span class="font-semibold text-slate-900">Office</span>
 									<span class="material-symbols-outlined text-slate-900 invisible peer-checked:visible"
 										style="font-variation-settings: 'FILL' 1;">check_circle</span>
 								</div>
@@ -163,7 +163,7 @@
 									<h4 class="font-semibold text-slate-900">Elite Performance Runner</h4>
 									<p class="text-xs text-slate-500">Size: 42 | Color: Crimson</p>
 								</div>
-								<span class="font-bold font-normal text-slate-900">$295.00</span>
+								<span class="font-normal text-slate-900">$295.00</span>
 							</div>
 						</div>
 						<div class="flex space-x-4">
@@ -177,7 +177,7 @@
 									<h4 class="font-semibold text-slate-900">Architectural Tote Bag</h4>
 									<p class="text-xs text-slate-500">Size: Medium | Color: Slate</p>
 								</div>
-								<span class="font-bold font-normal text-slate-900">$1,450.00</span>
+								<span class="font-normal text-slate-900">$1,450.00</span>
 							</div>
 						</div>
 					</div>

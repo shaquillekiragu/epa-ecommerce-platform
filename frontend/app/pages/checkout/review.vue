@@ -78,7 +78,7 @@
 										<p class="font-normal text-xs text-slate-600 mt-1">Midnight Black | Size
 											42</p>
 									</div>
-									<span class="font-normal text-lg font-bold text-slate-900">$850.00</span>
+									<span class="text-lg font-bold text-slate-900">$850.00</span>
 								</div>
 								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
 							</div>
@@ -97,7 +97,7 @@
 										<p class="font-normal text-xs text-slate-600 mt-1">Cloud White | Size 10
 										</p>
 									</div>
-									<span class="font-normal text-lg font-bold text-slate-900">$210.00</span>
+									<span class="text-lg font-bold text-slate-900">$210.00</span>
 								</div>
 								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
 							</div>
@@ -117,7 +117,7 @@
 										<p class="font-normal text-xs text-slate-600 mt-1">Charcoal Grey | One
 											Size</p>
 									</div>
-									<span class="font-normal text-lg font-bold text-slate-900">$495.00</span>
+									<span class="text-lg font-bold text-slate-900">$495.00</span>
 								</div>
 								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
 							</div>

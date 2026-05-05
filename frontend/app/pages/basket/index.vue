@@ -28,7 +28,7 @@
 									Black</p>
 							</div>
 							<span
-								class="font-normal text-lg font-bold text-slate-900 ml-4 whitespace-nowrap">£349.50</span>
+								class="text-lg font-bold text-slate-900 ml-4 whitespace-nowrap">£349.50</span>
 						</div>
 						<div class="flex items-center justify-between mt-auto pt-2">
 							<!-- Quantity Controls -->
