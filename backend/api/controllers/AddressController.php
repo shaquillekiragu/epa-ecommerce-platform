@@ -12,22 +12,26 @@ class AddressController extends _ApiController
 {
     public $modelClass = Address::class;
 
-    // public function actions()
-    // {
-    //     $actions = parent::actions();
+    public function actions()
+    {
+        $actions = parent::actions();
 
-    //     return ArrayHelper::merge($actions, [
-    //         'index' => [
-    //             'class' => IndexAction::class,
-    //             'modelClass' => $this->modelClass,
-    //             'dataFilter' => [
-    //                 'class' => ActiveDataFilter::class,
-    //                 'searchModel' => CommonAddress::class
-    //             ],
-    //             'prepareSearchQuery' => function ($query, $request_params) {
-    //                 return $query;
-    //             }
-    //         ]
-    //     ]);
-    // }
+        unset($actions['create'], $actions['update'], $actions['delete']);
+
+        return $actions;
+
+        // return ArrayHelper::merge($actions, [
+        //     'index' => [
+        //         'class' => IndexAction::class,
+        //         'modelClass' => $this->modelClass,
+        //         'dataFilter' => [
+        //             'class' => ActiveDataFilter::class,
+        //             'searchModel' => CommonAddress::class
+        //         ],
+        //         'prepareSearchQuery' => function ($query, $request_params) {
+        //             return $query;
+        //         }
+        //     ]
+        // ]);
+    }
 }
