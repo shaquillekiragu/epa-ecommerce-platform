@@ -10,25 +10,25 @@
                     <div class="space-y-sm">
                         <label class="flex items-center space-x-3 cursor-pointer">
                             <input checked
-                                class="form-checkbox h-4 w-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
+                                class="form-checkbox size-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
                                 type="checkbox" />
                             <span class="font-normal text-base text-slate-900">All Products</span>
                         </label>
                         <label class="flex items-center space-x-3 cursor-pointer">
                             <input
-                                class="form-checkbox h-4 w-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
+                                class="form-checkbox size-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
                                 type="checkbox" />
                             <span class="font-normal text-base text-slate-900">Electronics</span>
                         </label>
                         <label class="flex items-center space-x-3 cursor-pointer">
                             <input
-                                class="form-checkbox h-4 w-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
+                                class="form-checkbox size-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
                                 type="checkbox" />
                             <span class="font-normal text-base text-slate-900">Home &amp; Garden</span>
                         </label>
                         <label class="flex items-center space-x-3 cursor-pointer">
                             <input
-                                class="form-checkbox h-4 w-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
+                                class="form-checkbox size-4 text-slate-900 border-slate-200 rounded-md focus:ring-primary"
                                 type="checkbox" />
                             <span class="font-normal text-base text-slate-900">Apparel</span>
                         </label>
@@ -55,12 +55,12 @@
                     <div class="space-y-sm">
                         <label class="flex items-center space-x-3 cursor-pointer">
                             <input checked
-                                class="form-radio h-4 w-4 text-slate-900 border-slate-200 focus:ring-primary"
+                                class="form-radio size-4 text-slate-900 border-slate-200 focus:ring-primary"
                                 name="stock" type="radio" />
                             <span class="font-normal text-base text-slate-900">In Stock</span>
                         </label>
                         <label class="flex items-center space-x-3 cursor-pointer">
-                            <input class="form-radio h-4 w-4 text-slate-900 border-slate-200 focus:ring-primary"
+                            <input class="form-radio size-4 text-slate-900 border-slate-200 focus:ring-primary"
                                 name="stock" type="radio" />
                             <span class="font-normal text-base text-slate-900">Out of Stock</span>
                         </label>

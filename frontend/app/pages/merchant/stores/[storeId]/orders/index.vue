@@ -13,7 +13,7 @@
 				<div class="flex items-center gap-3">
 					<button
 						class="flex items-center gap-2 border border-slate-300 px-4 py-2 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors">
-						<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+						<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
 						Export CSV
 					</button>
 				</div>
@@ -31,7 +31,7 @@
 					<div class="flex items-baseline gap-2">
 						<span class="font-bold tracking-tight text-4xl leading-tight text-slate-900">24</span>
 						<span class="text-red-600 font-medium text-xs flex items-center gap-1">
-							<span class="material-symbols-outlined text-[14px]"
+							<span class="material-symbols-outlined text-sm"
 								data-icon="trending_up">trending_up</span>
 							+12%
 						</span>
@@ -46,7 +46,7 @@
 					<div class="flex items-baseline gap-2">
 						<span class="font-bold tracking-tight text-4xl leading-tight text-slate-900">$12,840</span>
 						<span class="text-slate-700 font-medium text-xs flex items-center gap-1">
-							<span class="material-symbols-outlined text-[14px]"
+							<span class="material-symbols-outlined text-sm"
 								data-icon="trending_up">trending_up</span>
 							+4.5%
 						</span>
@@ -81,7 +81,7 @@
 						</select>
 						<button
 							class="flex items-center gap-2 border border-slate-400 px-4 py-2 rounded-lg font-semibold text-sm bg-white hover:bg-slate-100">
-							<span class="material-symbols-outlined text-[20px]"
+							<span class="material-symbols-outlined text-xl"
 								data-icon="calendar_month">calendar_month</span>
 							Date Range
 						</button>

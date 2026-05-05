@@ -7,7 +7,7 @@
 			<div>
 				<nav class="flex items-center gap-2 text-xs font-medium text-slate-600 mb-2">
 					<a class="hover:text-slate-900 transition-colors" href="#">Orders</a>
-					<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+					<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
 					<span class="text-slate-900 font-bold">#ORD-7402</span>
 				</nav>
 				<h1 class="text-3xl leading-tight font-bold tracking-tight text-slate-900 tracking-tight">Order Review</h1>
@@ -54,7 +54,7 @@
 									<td class="px-6 py-4">
 										<div class="flex items-center gap-4">
 											<div
-												class="h-16 w-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+												class="size-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
 												<img alt="Premium Watch"
 													data-alt="A high-end luxury wristwatch with a sleek black face and silver steel band, photographed in a studio with dramatic cinematic lighting. The watch is presented on a minimalist white pedestal, reflecting a corporate and modern aesthetic. The atmosphere is professional, highlighting refined craftsmanship and premium quality for an e-commerce context."
 													src="https://lh3.googleusercontent.com/aida-public/AB6AXuCab3sur_BshtiV48atD3U-u_4F1GPJ_7qZNTDSeHZd5vm7H6Rnn7SaMtH-1pY_DATBTyb9myff44fPP7pPOusNjOdGoG9K4vNhui_gD5z9GHfUR9Ddj6x4kplJjcniTgU7QDA2K48e4hr4YYjYxrTnqbWoRbeA4Xzpngoii2atBt3PnVo-4ZL-8ngYJ7q3LIGN-cuYsUZS4ofDlsBF-MPSAUa06DHlvajxCJX4XRuwCDgD30jDERuUmqb15TVlSWWenYTFAsQfCOLG" />
@@ -73,7 +73,7 @@
 									<td class="px-6 py-4">
 										<div class="flex items-center gap-4">
 											<div
-												class="h-16 w-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+												class="size-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
 												<img alt="Leather Backpack"
 													data-alt="A sophisticated dark brown leather backpack, showcasing fine stitching and metallic accents. The bag is placed in a bright, modern interior with soft, natural light coming from a large window. The background remains clean and uncluttered, maintaining a professional corporate feel. The lighting emphasizes the texture and quality of the leather."
 													src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWQz1tT4KPN32gknR34hyRiVOxTMa_8XuoadPHABHjWHb31i1IXxuht1h1GKjf3262VLmbF_XBdBD3R2AFJGI7FJ5bHdDCAJ8qp9Stfp6BXlK6uVa4vfo1w86Ymvncb8Ww6bV4fBHSF2Jv-jTzi0h1UDZ-Q8o1cZ9kK9eEmM20GBlV8s0bU-u3IUMIRnrJCr1Htp_7bwpD_LQVL9tDPyCc3yo4v1oCAhFJ2HEXw6WzriCDLCvhe8_fI86WL9GW_EZFLbd5VOeOZkks" />
@@ -92,7 +92,7 @@
 									<td class="px-6 py-4">
 										<div class="flex items-center gap-4">
 											<div
-												class="h-16 w-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+												class="size-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
 												<img alt="ANC Headphones"
 													data-alt="A pair of sleek, matte black wireless noise-canceling headphones resting on a polished wooden desk. The environment is a contemporary office setting with high-key lighting that creates a bright, productive mood. The image is crisp and clear, focusing on the technological sophistication and ergonomic design of the product in a premium e-commerce style."
 													src="https://lh3.googleusercontent.com/aida-public/AB6AXuCurFo3aBsLeVSSmndTeOg6eGorJZduTiViziWbHq0BwhpxFGcIJVtH3nmBrbhnbuae1amcsx-e6uXYcRUqsbkqYYOS0LWBgrJBGAAl7jPWD9km83fp8MWnudNgErby3p0h6WjUK3Xm67wQxJdkeXqzgp3aUBb3Qgjzdnn-M9SQy3IImQaix_RDSrdshKCoGFS3Mm_X2O3ouhMwuPIVJk-3sknjOUyENX1Kv4H6cQODLyN7s6guwJMScvI_O5afumFX1lQUJaPYB7ST" />
@@ -139,8 +139,8 @@
 						<div class="space-y-8">
 							<div class="relative flex items-start gap-6">
 								<div
-									class="z-10 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
-									<span class="material-symbols-outlined text-[18px]" data-icon="check"
+									class="z-10 size-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
+									<span class="material-symbols-outlined text-lg" data-icon="check"
 										style="font-variation-settings: 'FILL' 0;">check</span>
 								</div>
 								<div>
@@ -152,8 +152,8 @@
 							</div>
 							<div class="relative flex items-start gap-6">
 								<div
-									class="z-10 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
-									<span class="material-symbols-outlined text-[18px]"
+									class="z-10 size-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
+									<span class="material-symbols-outlined text-lg"
 										data-icon="payments">payments</span>
 								</div>
 								<div>
@@ -165,8 +165,8 @@
 							</div>
 							<div class="relative flex items-start gap-6">
 								<div
-									class="z-10 w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-50 ring-4 ring-white">
-									<span class="material-symbols-outlined text-[18px]"
+									class="z-10 size-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-50 ring-4 ring-white">
+									<span class="material-symbols-outlined text-lg"
 										data-icon="inventory_2">inventory_2</span>
 								</div>
 								<div>
@@ -178,8 +178,8 @@
 							</div>
 							<div class="relative flex items-start gap-6">
 								<div
-									class="z-10 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400">
-									<span class="material-symbols-outlined text-[18px]"
+									class="z-10 size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-400">
+									<span class="material-symbols-outlined text-lg"
 										data-icon="local_shipping">local_shipping</span>
 								</div>
 								<div>
@@ -225,7 +225,7 @@
 					</div>
 					<div class="flex items-center gap-4 mb-6">
 						<div
-							class="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-black text-lg">
+							class="size-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-black text-lg">
 							SJ
 						</div>
 						<div>

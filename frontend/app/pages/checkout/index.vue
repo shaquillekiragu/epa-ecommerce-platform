@@ -1,5 +1,5 @@
 <template>
-	<main class="flex-grow pt-24 pb-12 px-6 max-w-7xl mx-auto w-full">
+	<main class="grow pt-24 pb-12 px-6 max-w-7xl mx-auto w-full">
 		<!-- Page Title -->
 		<div class="mb-8">
 			<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 tracking-tight">Checkout: Shipping &amp; Billing
@@ -15,25 +15,25 @@
 				<!-- Steps -->
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm ring-4 ring-background">
+						class="size-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm ring-4 ring-background">
 						1</div>
 					<span class="mt-2 font-medium text-xs text-slate-900">Shipping</span>
 				</div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
+						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
 						2</div>
 					<span class="mt-2 font-medium text-xs text-slate-600">Payment</span>
 				</div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
+						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
 						3</div>
 					<span class="mt-2 font-medium text-xs text-slate-600">Review</span>
 				</div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
+						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
 						4</div>
 					<span class="mt-2 font-medium text-xs text-slate-600">Done</span>
 				</div>
@@ -47,7 +47,7 @@
 					<div class="flex items-center justify-between mb-6">
 						<h2 class="font-semibold tracking-tight text-xl leading-snug text-slate-900">Shipping Address</h2>
 						<button class="flex items-center text-slate-700 font-semibold hover:underline">
-							<span class="material-symbols-outlined mr-1 text-[20px]">add_location</span>
+							<span class="material-symbols-outlined mr-1 text-xl">add_location</span>
 							Use new address
 						</button>
 					</div>
@@ -132,7 +132,7 @@
 					<!-- Billing Checkbox -->
 					<div class="mt-8 pt-8 border-t border-slate-100">
 						<label class="flex items-center space-x-3 cursor-pointer">
-							<input checked class="w-5 h-5 rounded border-slate-300 text-slate-900 focus:ring-primary"
+							<input checked class="size-5 rounded border-slate-300 text-slate-900 focus:ring-primary"
 								type="checkbox" />
 							<span class="font-normal text-slate-900">Use this as my billing address</span>
 						</label>
@@ -154,7 +154,7 @@
 					<div class="space-y-6 mb-8">
 						<div class="flex space-x-4">
 							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="A high-end, professionally photographed product shot of a premium crimson leather sneaker against a clean, minimalist white background. The lighting is soft and architectural, emphasizing the texture of the grain and the artisanal stitching. The mood is sophisticated and contemporary, aligning with a luxury e-commerce aesthetic using sharp focus and neutral surroundings."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgztCKRcYBpTn-6rUd5hmFiddFdqzCvEh-5neJLFGJcr9Cop3xtHK-VOxxpDn_hCs78DOhC2ZVoA_ml4RVOU5CAppS6gyYUEKczddiKK4em9nFRgBqz350EIsYzt2VG25tRcEZxA2JYTNkV4nxoQHxEvocwA4MY4lrNPolkfV5pOvTazWi-G_TXxLkwRvK-bv8Oo69HNvNRGgEkHOwePbci3F913JrZxRK66eLxNtICoRQuqYA-hWTts__v-0aAXgx1egdt3OjLFaX" />
 							</div>
@@ -168,7 +168,7 @@
 						</div>
 						<div class="flex space-x-4">
 							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="A minimalist studio photograph of a structured designer handbag in charcoal gray, displayed on a sleek obsidian pedestal. The scene is illuminated by dramatic, high-contrast lighting that creates deep shadows and bright highlights, emphasizing its modern architectural silhouette. The overall aesthetic is one of quiet luxury and structural integrity, using a cool-toned slate color palette."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCyKOFXi6VKg0c_zdB-u1ZLnOZWHR4MZjld5fuxZfCmhkGXW48AItm-HvAFPS5B1_YNMdylohgiW6KbOyoWhsSfX-DTiLYS9XVOkcmgEMarQyqao7oLhKIws4ycPhW3SI_clfK6GnzKHfiFFxcV7MCyNlZHymMu1RliJyvDVPqiJ-kg_T5FMPiKEuyHstIzEHwVK9v5dHQECrGL8JkbK2roNDClfrQdnAC_AKL2_j9IRvHsdd3epHdnjXJWzg45-2QYxxxpjFhjmzP" />
 							</div>
@@ -205,7 +205,7 @@
 						<label class="font-medium text-slate-700 block mb-2">Promo Code</label>
 						<div class="flex space-x-2">
 							<input
-								class="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:bg-white focus:ring-1 focus:ring-primary"
+								class="grow bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:bg-white focus:ring-1 focus:ring-primary"
 								placeholder="Enter code" type="text" />
 							<button
 								class="bg-slate-900 text-white font-semibold px-4 py-2 rounded-lg hover:bg-black transition-colors">Apply</button>

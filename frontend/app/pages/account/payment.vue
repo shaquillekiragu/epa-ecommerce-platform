@@ -83,7 +83,7 @@
 				<button
 					class="border-2 border-dashed border-slate-400 rounded-xl p-8 flex flex-col items-center justify-center gap-4 hover:bg-slate-100 transition-all group">
 					<div
-						class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center group-hover:scale-110 transition-transform">
+						class="size-12 rounded-full bg-slate-200 flex items-center justify-center group-hover:scale-110 transition-transform">
 						<span class="material-symbols-outlined text-slate-900">add_card</span>
 					</div>
 					<span class="font-semibold text-sm text-slate-900 uppercase">Add New Payment Method</span>
@@ -129,9 +129,9 @@
 						<span class="material-symbols-outlined text-slate-900">info</span>
 					</div>
 					<!-- Abstract Visual Pattern -->
-					<div class="absolute top-0 right-0 w-32 h-32 bg-slate-600 opacity-20 blur-3xl -mr-16 -mt-16"></div>
+					<div class="absolute top-0 right-0 size-32 bg-slate-600 opacity-20 blur-3xl -mr-16 -mt-16"></div>
 					<div
-						class="absolute bottom-0 left-0 w-24 h-24 bg-slate-200 opacity-10 blur-2xl -ml-8 -mb-8">
+						class="absolute bottom-0 left-0 size-24 bg-slate-200 opacity-10 blur-2xl -ml-8 -mb-8">
 					</div>
 				</div>
 			</div>

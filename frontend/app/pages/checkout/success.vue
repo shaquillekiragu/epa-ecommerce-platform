@@ -1,9 +1,9 @@
 <template>
-	<main class="flex-grow pt-32 pb-24 px-6">
+	<main class="grow pt-32 pb-24 px-6">
 		<div class="max-w-4xl mx-auto">
 			<!-- Success Header -->
 			<div class="text-center mb-12">
-				<div class="inline-flex items-center justify-center w-20 h-20 bg-slate-900 text-white rounded-full mb-6">
+				<div class="inline-flex items-center justify-center size-20 bg-slate-900 text-white rounded-full mb-6">
 					<span class="material-symbols-outlined text-4xl" data-icon="check_circle" data-weight="fill"
 						style="font-variation-settings: 'FILL' 1;">check_circle</span>
 				</div>
@@ -27,7 +27,7 @@
 						<!-- Step 1 -->
 						<div class="relative flex items-center gap-6">
 							<div
-								class="z-10 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
+								class="z-10 size-8 rounded-full bg-slate-900 flex items-center justify-center text-white">
 								<span class="material-symbols-outlined text-sm" data-icon="check">check</span>
 							</div>
 							<div>
@@ -38,7 +38,7 @@
 						<!-- Step 2 -->
 						<div class="relative flex items-center gap-6">
 							<div
-								class="z-10 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white ring-4 ring-primary/10">
+								class="z-10 size-8 rounded-full bg-slate-900 flex items-center justify-center text-white ring-4 ring-primary/10">
 								<span class="material-symbols-outlined text-sm" data-icon="payments" data-weight="fill"
 									style="font-variation-settings: 'FILL' 1;">payments</span>
 							</div>
@@ -50,7 +50,7 @@
 						<!-- Step 3 -->
 						<div class="relative flex items-center gap-6 opacity-40">
 							<div
-								class="z-10 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
+								class="z-10 size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
 								<span class="material-symbols-outlined text-sm"
 									data-icon="inventory_2">inventory_2</span>
 							</div>
@@ -69,16 +69,16 @@
 							Order Summary</h3>
 						<span class="font-medium text-slate-600">3 Items</span>
 					</div>
-					<div class="flex-grow overflow-y-auto max-h-[300px]">
+					<div class="grow overflow-y-auto max-h-[300px]">
 						<div class="divide-y divide-slate-100">
 							<!-- Item 1 -->
 							<div class="p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-								<div class="w-16 h-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
-									<img alt="Product" class="w-full h-full object-cover"
+								<div class="size-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
+									<img alt="Product" class="size-full object-cover"
 										data-alt="A high-end, professional product photograph of a sleek crimson running shoe against a minimalist, bright light-mode background. The lighting is crisp and soft, emphasizing the textures of the high-performance fabric. The aesthetic is clean, corporate, and focuses on structural integrity with deep blacks and vibrant reds as accents."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsP0brIpa6RGliR_LnX4sKRoU5eofeW1Zk-j5zSAUHJHWywKONN3xutvNBjQpCbpTzsdzDjaodtQdAobDg5IdvQHpgtfq3FaqvjCSCFj3Qmj4MD2IWh16tSuPlEesIixtZ25WnDiKO_itfhOglNTyzQluQspQP4th8BOtniEuiiwHRvCBCnyaD58107jfhA16-4ZfqVBw65LPFjiXh8ym2fz-UqwxHxyjnIO9_cCZgZlMGXadqHIXuXb6bSgGfuCHtzqQsA3W0B0EL" />
 								</div>
-								<div class="flex-grow">
+								<div class="grow">
 									<p class="font-semibold text-slate-900">Velocity Runner X1</p>
 									<p class="text-xs text-slate-600">Size: 42 | Color: Crimson</p>
 								</div>
@@ -86,12 +86,12 @@
 							</div>
 							<!-- Item 2 -->
 							<div class="p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-								<div class="w-16 h-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
-									<img alt="Product" class="w-full h-full object-cover"
+								<div class="size-16 bg-slate-100 rounded overflow-hidden flex-shrink-0">
+									<img alt="Product" class="size-full object-cover"
 										data-alt="A minimalist studio photograph of a premium white smart watch with a clean, industrial design. The watch is presented on a soft grey surface under diffused bright lighting, creating a professional light-mode aesthetic. The composition highlights geometric precision and functional density, maintaining a palette of subtle greys and stark blacks."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfAjzhD8IU1hWkHsvqBsDKhVYKRzeaPsQZw6Ksx4OK20eyklJ2SgIB2hQBUsikftc4iAck2LsyhcdhRwHT1iw_MYG8sb3afvCeIRfYx7I3LkZ-zQ5lEPo8q39XdWeBVDZK8d5JOzIeHUFCvvP8Txcpva7_HLVh4Yv8Hc8VixszV-zV6MjI3x3FcYhBKichpNVsYrHcsoyp3lvhFtD2-hTMTwNCZSQo8-zwFpxRwq2Z0C5d24UzjTLP9wPYXdk37OKiPP5FdogM37yj" />
 								</div>
-								<div class="flex-grow">
+								<div class="grow">
 									<p class="font-semibold text-slate-900">Core Chronograph</p>
 									<p class="text-xs text-slate-600">Edition: Matte White</p>
 								</div>

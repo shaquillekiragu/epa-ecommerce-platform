@@ -4,7 +4,7 @@
 			<div class="relative aspect-4/5 overflow-hidden">
 				<img
 					:alt="label"
-					class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+					class="size-full object-cover transition-transform duration-500 group-hover:scale-105"
 					:data-alt="data_alt"
 					:src="src"
 				/>

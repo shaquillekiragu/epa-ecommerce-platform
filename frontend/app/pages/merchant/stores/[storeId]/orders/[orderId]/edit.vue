@@ -15,7 +15,7 @@
                 <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
                     <span class="material-symbols-outlined">settings</span>
                 </button>
-                <div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden border border-slate-200">
+                <div class="size-8 rounded-full bg-slate-200 overflow-hidden border border-slate-200">
                     <img alt="Merchant Profile"
                         data-alt="A professional headshot of a business merchant in a modern corporate setting. The lighting is bright and clean with a soft-focus office background, reflecting a professional and trustworthy e-commerce management environment. The aesthetic is high-key and minimalist with neutral tones."
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEe8AkbyauDE0zns4tOgIluI_xFLtsS5zKExg2nhauY0_a45spXkLoz0Xgd07KFfO8QtslyVewe9busMoZtwAAhmrkvgf3FSA6Pcr4iY9eUdSH5ZL9l61aG-JBA8to2hGQTGwEJuEUhEGMAU91xHVGuWzFYKBEHjgBLnRnTdT6UkkmteXLLuCBFPIUZ3SlxGnrDEupvag6808Sg1HkjA8t62l90GSOWk2pEE8XBJF3Z3y2ca2FNuqNcsIPVvA0qzBvlmACubs5qfs-" />
@@ -35,7 +35,7 @@
                 </div>
                 <div
                     class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+                    <span class="size-2 rounded-full bg-slate-600"></span>
                     <span class="text-sm">Current Status: Paid</span>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                             <!-- Vertical Line -->
                             <div class="absolute left-3.5 top-2 bottom-2 w-0.5 bg-slate-200"></div>
                             <div class="relative flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center z-10">
+                                <div class="size-7 rounded-full bg-slate-900 flex items-center justify-center z-10">
                                     <span class="material-symbols-outlined text-white text-xs"
                                         style="font-variation-settings: 'FILL' 1;">check</span>
                                 </div>
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="relative flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center z-10">
+                                <div class="size-7 rounded-full bg-slate-900 flex items-center justify-center z-10">
                                     <span class="material-symbols-outlined text-white text-xs"
                                         style="font-variation-settings: 'FILL' 1;">check</span>
                                 </div>
@@ -106,8 +106,8 @@
                             </div>
                             <div class="relative flex gap-4">
                                 <div
-                                    class="w-7 h-7 rounded-full bg-slate-200 border-2 border-slate-900 flex items-center justify-center z-10">
-                                    <div class="w-2 h-2 rounded-full bg-slate-900"></div>
+                                    class="size-7 rounded-full bg-slate-200 border-2 border-slate-900 flex items-center justify-center z-10">
+                                    <div class="size-2 rounded-full bg-slate-900"></div>
                                 </div>
                                 <div>
                                     <p class="text-sm text-slate-900 font-bold">In Processing</p>
@@ -115,8 +115,8 @@
                                 </div>
                             </div>
                             <div class="relative flex gap-4 opacity-50">
-                                <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center z-10">
-                                    <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                                <div class="size-7 rounded-full bg-slate-200 flex items-center justify-center z-10">
+                                    <div class="size-2 rounded-full bg-slate-400"></div>
                                 </div>
                                 <div>
                                     <p class="text-sm text-slate-600">Shipped</p>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="p-8 bg-slate-50/50">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white border border-slate-200 rounded p-2">
+                        <div class="size-12 bg-white border border-slate-200 rounded p-2">
                             <img alt="Product"
                                 data-alt="A studio photograph of a premium red running shoe on a clean, white background. The lighting is soft and professional, highlighting the texture of the fabric and the sleek design. The overall feel is modern, commercial, and high-quality e-commerce photography."
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR-4xfCXHtWOAmSgu09QjuWSkVM9FrKwhmshIPS0j5gmo1CserJhDskKLCiO63zlvPbbJ7ZoIcExdlYyJDmZQKsgCOSAAy9a8EkEXG9lX6B7Vt3LUmjzum76OLG6p_qMmbOpZL28gYgC3tZl7QN1Hgt-zm_SZ0K89ga6ZFMYtFzAgZB0aKDjApHT4TtBbq-NYGf-Sk1N33hCw0ubSA3mAqxSfWeO_TEqFpfwKgDSoY6adK8m6nweOAiFar9Vp93sbvZ6pqi4EOpuAn" />

@@ -169,6 +169,39 @@ function replaceAllTokens(source) {
     const re = new RegExp(`(^|[\\s"'\\[\\]{}(),:/])${from}([\\s"'\\[\\]{}(),:/]|$)`, 'g')
     next = next.replace(re, `$1${to}$2`)
   }
+
+  // Prefer `size-*` when width & height match.
+  // Examples:
+  // - `w-8 h-8` -> `size-8`
+  // - `h-8 w-8` -> `size-8`
+  // - `w-[56px] h-[56px]` -> `size-[56px]`
+  next = next
+    .replace(/\bw-(\[[^\]]+\]|\S+)\s+h-\1\b/g, 'size-$1')
+    .replace(/\bh-(\[[^\]]+\]|\S+)\s+w-\1\b/g, 'size-$1')
+
+  // Collapse matching axis pairs to their shorthand when values match.
+  // Examples:
+  // - `px-6 py-6` -> `p-6`
+  // - `mx-4 my-4` -> `m-4`
+  // - `pl-3 pr-3` -> `px-3`
+  // - `pt-2 pb-2` -> `py-2`
+  // - `ml-1 mr-1` -> `mx-1`
+  // - `mt-8 mb-8` -> `my-8`
+  // Supports arbitrary values: `px-[18px] py-[18px]` -> `p-[18px]`
+  next = next
+    .replace(/\bpx-(\[[^\]]+\]|\S+)\s+py-\1\b/g, 'p-$1')
+    .replace(/\bpy-(\[[^\]]+\]|\S+)\s+px-\1\b/g, 'p-$1')
+    .replace(/\bmx-(\[[^\]]+\]|\S+)\s+my-\1\b/g, 'm-$1')
+    .replace(/\bmy-(\[[^\]]+\]|\S+)\s+mx-\1\b/g, 'm-$1')
+    .replace(/\bpl-(\[[^\]]+\]|\S+)\s+pr-\1\b/g, 'px-$1')
+    .replace(/\bpr-(\[[^\]]+\]|\S+)\s+pl-\1\b/g, 'px-$1')
+    .replace(/\bpt-(\[[^\]]+\]|\S+)\s+pb-\1\b/g, 'py-$1')
+    .replace(/\bpb-(\[[^\]]+\]|\S+)\s+pt-\1\b/g, 'py-$1')
+    .replace(/\bml-(\[[^\]]+\]|\S+)\s+mr-\1\b/g, 'mx-$1')
+    .replace(/\bmr-(\[[^\]]+\]|\S+)\s+ml-\1\b/g, 'mx-$1')
+    .replace(/\bmt-(\[[^\]]+\]|\S+)\s+mb-\1\b/g, 'my-$1')
+    .replace(/\bmb-(\[[^\]]+\]|\S+)\s+mt-\1\b/g, 'my-$1')
+
   return next
 }
 

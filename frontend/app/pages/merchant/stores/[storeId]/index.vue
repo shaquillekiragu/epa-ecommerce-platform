@@ -15,8 +15,8 @@
 				<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
 					<span class="material-symbols-outlined" data-icon="settings">settings</span>
 				</button>
-				<div class="h-8 w-8 rounded-full overflow-hidden border border-slate-200 ml-2">
-					<img alt="Merchant Profile" class="h-full w-full object-cover"
+				<div class="size-8 rounded-full overflow-hidden border border-slate-200 ml-2">
+					<img alt="Merchant Profile" class="size-full object-cover"
 						data-alt="A professional close-up headshot of a boutique store owner in a minimalist, high-end office environment. The lighting is soft and flattering, emphasizing a clean and corporate aesthetic. The background features muted tones of slate and white, maintaining a professional commerce management atmosphere."
 						src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE-LVh__7Uo_zCkTxblfEH_J22hJU1NF8cUI5N4YlG0LscNbMlqN4uI8RZhQchMqvgVtxOpGSbwKObzDXLFi0dj_zKiEqgg3hmnLcw8yyqk7lR_PzEgxQNwMR--_MSzY014PAbCpnqAkxIGnoWnSpQGoL3l-phPGwdWNFIIS6pQx3DfYT5yyljLTaBiDzsRYpalJIgnLRopNMKYO3AU4XsboJVEEtGBuceBTf_L7eRN9P3tIWxExPCo_lAD5dN7xdxV8olR1I6kMiw" />
 				</div>
@@ -39,7 +39,7 @@
 						<div class="flex items-center mt-3 gap-4">
 							<span
 								class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-								<span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
+								<span class="size-1.5 rounded-full bg-green-500 mr-1.5"></span>
 								Active
 							</span>
 							<span class="text-sm font-semibold text-slate-600 flex items-center">
@@ -185,7 +185,7 @@
 					<div
 						class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2">
 						<div class="h-64 relative overflow-hidden">
-							<img alt="Store Interior" class="h-full w-full object-cover"
+							<img alt="Store Interior" class="size-full object-cover"
 								data-alt="A sophisticated retail showroom interior showcasing artisanal furniture and minimalist lighting. The space is curated with high-end materials like dark wood, textured linens, and warm ambient spotlights. The atmosphere is quiet, elegant, and modern, reflecting a premium merchant aesthetic."
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-GSSGtTwecH5ziiSHNSjghVTvRfOOEFR8MrwEB9cfpWWUfCK4E-wblq-AeD0GHar1yjcFc2XSVZM1fdhskS8oTvEBUAin1iKr8eY_eoGRJ52hBqcC6Y8m8n310CQaqvLzcD1vufZsdOHujnhq7P5cMBKvf6CeT_9BqPj9EDWGZaJeezI1t3hCF5J50A_YfQhimzjkYtCPOf-7T3roF_HGXUOnqzl2oFlpsxv6mxlQa0MFJIIONCl-Sf9tBc_AlwMTo46btmIck0Ql" />
 							<div
@@ -201,16 +201,16 @@
 								home decor products.</p>
 							<div class="space-y-3">
 								<div class="flex items-center gap-3">
-									<div class="w-8 h-8 rounded bg-slate-900"></div>
+									<div class="size-8 rounded bg-slate-900"></div>
 									<span class="text-xs font-medium text-slate-600">Primary: #0F172A</span>
 								</div>
 								<div class="flex items-center gap-3">
-									<div class="w-8 h-8 rounded bg-white border border-slate-200"></div>
+									<div class="size-8 rounded bg-white border border-slate-200"></div>
 									<span class="text-xs font-medium text-slate-600">Background: #FFFFFF</span>
 								</div>
 								<div class="flex items-center gap-3">
 									<div
-										class="w-8 h-8 rounded border-2 border-slate-900 flex items-center justify-center text-[10px] font-bold">
+										class="size-8 rounded border-2 border-slate-900 flex items-center justify-center text-[10px] font-bold">
 										Aa</div>
 									<span class="text-xs font-medium text-slate-600">Font: Manrope Bold /
 										Regular</span>
@@ -272,13 +272,13 @@
 						</div>
 						<!-- Abstract Design Element -->
 						<div
-							class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-colors">
+							class="absolute -bottom-10 -right-10 size-40 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-colors">
 						</div>
 					</div>
 					<!-- Inventory Alert -->
 					<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
 						<div class="flex items-center gap-3 mb-4">
-							<div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-red-500">
+							<div class="size-10 rounded-lg bg-red-50 flex items-center justify-center text-red-500">
 								<span class="material-symbols-outlined" data-icon="warning">warning</span>
 							</div>
 							<div>
@@ -289,8 +289,8 @@
 						<div class="space-y-4">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-3">
-									<div class="w-10 h-10 bg-slate-100 rounded border border-slate-200">
-										<img alt="Product" class="w-full h-full object-cover rounded"
+									<div class="size-10 bg-slate-100 rounded border border-slate-200">
+										<img alt="Product" class="size-full object-cover rounded"
 											data-alt="A macro shot of a handcrafted ceramic vase with a textured matte finish. The image is brightly lit from the side to emphasize the surface detail. The background is a clean, neutral white, typical of a high-end product listing."
 											src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy0-SbJvGeefYE0i4wEdkHpJtOhj01b1h43yrrPBT4rEjPNXROnBBoEsjrSO9P1UmZEaVUrLZ3jvGq0w10PEbimp0axvDFBWQCSJnPjR_ap7xKiEM0ZGyD5mPFDaJKAjlLDJ-eZMy2VBSqiHmGEId7OIMNiLqoVlNYdEjp5YCapsNWCusDBSuUKJw7Fhl472MwIuZ4PQWfy3KJ-V0KEFlUkDYH2iXCF9XRr-3utVQ62fW14UCmCnhjjxkTVHG9EwEGCMXWFFnkkOG0" />
 									</div>
@@ -304,8 +304,8 @@
 							</div>
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-3">
-									<div class="w-10 h-10 bg-slate-100 rounded border border-slate-200">
-										<img alt="Product" class="w-full h-full object-cover rounded"
+									<div class="size-10 bg-slate-100 rounded border border-slate-200">
+										<img alt="Product" class="size-full object-cover rounded"
 											data-alt="A minimalist brass pendant light hanging against a soft grey wall. The lighting is warm and directional, creating subtle shadows that define the geometric form of the lamp. The aesthetic is clean, professional, and sophisticated."
 											src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxgKdf2Xj0ETY2p-CENoCbvicXDHXNRnNYZ2G5I6J0m0ymXBcTYhk7WKxwi143yu4kmbh1V4664yIqgDbtLlSddG47kWKhj0SUIKi_q_2P0VOsunyVcxUACvzDUXR2LaV7GVJzUTDGkO4fWojDlvZm9B_Kg87izol3uE0cIStGa5lTBDJwK85SW146q-ltoX90ofhTA48lNC7TOemdN1x8-ZIPtWIZULcnToVzsxzIbLGLuydGQHyhj-2Bvf5722XNZv3kjUZvEFYo" />
 									</div>

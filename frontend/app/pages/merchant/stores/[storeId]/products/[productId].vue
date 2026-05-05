@@ -17,7 +17,7 @@
 				<span
 					class="material-symbols-outlined text-slate-600 cursor-pointer hover:bg-slate-50 p-2 rounded-full transition-colors"
 					data-icon="settings">settings</span>
-				<img alt="Merchant Profile" class="h-8 w-8 rounded-full border border-slate-200"
+				<img alt="Merchant Profile" class="size-8 rounded-full border border-slate-200"
 					data-alt="A professional headshot of a middle-aged merchant with a friendly expression, set against a blurred office background. The lighting is bright and clean, emphasizing a corporate and trustworthy aesthetic. The image features high contrast with natural skin tones and a minimalist composition."
 					src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3mmh9SuMl1xwD_2o2o-EkxHu8QFn75ViLccU-0EgWew5gEvbOtH5ZcErmU_sN9SkMhKB0Ytb4S0O5PQY-GUFKRzdllvWUj9b8BOWZPHbq19H0_dePI46SLiv21IS0utkvinCeCuxxkQQYinjr4lqIVH5tEo6Sls3E7Dtm9fiNzXuM2rDwlj2vC4gitJaX1h83hFiXVL6CA7dd8DUjJHhwwKNizo80iQoUW6SP1QebFORaUj14GjMdqsfhBezv8BIkR5AuCEqMg-Nd" />
 			</div>
@@ -31,7 +31,7 @@
 						<h2 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Aura Studio Headphones</h2>
 						<span
 							class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center gap-1">
-							<span class="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+							<span class="size-1.5 bg-green-600 rounded-full"></span>
 							Live
 						</span>
 					</div>
@@ -56,7 +56,7 @@
 				<div class="col-span-12 lg:col-span-8 space-y-6">
 					<div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
 						<div class="aspect-video w-full bg-slate-100 relative">
-							<img alt="Product Thumbnail" class="w-full h-full object-cover"
+							<img alt="Product Thumbnail" class="size-full object-cover"
 								data-alt="A premium pair of matte black studio headphones placed on a minimalist wooden surface with soft, directional lighting. The background is a clean, neutral grey that enhances the sleek curves and high-end materials of the audio equipment. The overall mood is sophisticated and modern, mirroring a high-end commercial photography style for luxury technology."
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZLj9bNLJUvpnZnLY6Bgiq86rRGjK2VVcSLZClJOge_S2Tv5zAzuLmRDTpKQShlBcVLq36KuSPdFBATFtnxSk-PjSJ0leE6Owci32IethpNSvKmsNr8NPz8IDGWLk0G-oZyHeRSez5nwhrCs9EahKl7rahi6QvJIJaD9lz2wVuU70P3yO04cfz3B1CrwCqc5XXYztfBlYHRlIFQ5UJnkLbIZEiJQdQGrzFuXRGFX3dS_RZAf_bYUcghps7XFODtiEy7irhvzTRXkmH" />
 							<div class="absolute top-4 left-4">
@@ -207,14 +207,14 @@
 							Activity</h3>
 						<div class="space-y-4">
 							<div class="flex gap-3">
-								<div class="w-2 h-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
+								<div class="size-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
 								<div>
 									<p class="font-medium text-xs text-slate-800">Inventory count updated</p>
 									<p class="text-[10px] text-slate-400">2 hours ago • Warehouse A</p>
 								</div>
 							</div>
 							<div class="flex gap-3">
-								<div class="w-2 h-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
+								<div class="size-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
 								<div>
 									<p class="font-medium text-xs text-slate-800">Price changed from $329 to
 										$349</p>

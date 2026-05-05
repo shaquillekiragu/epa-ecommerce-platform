@@ -12,8 +12,8 @@
 					<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
 				</button>
 				<div
-					class="h-8 w-8 rounded-full bg-slate-800 text-slate-50 flex items-center justify-center font-semibold text-sm overflow-hidden ring-1 ring-outline-variant">
-					<img alt="User Avatar" class="w-full h-full object-cover"
+					class="size-8 rounded-full bg-slate-800 text-slate-50 flex items-center justify-center font-semibold text-sm overflow-hidden ring-1 ring-outline-variant">
+					<img alt="User Avatar" class="size-full object-cover"
 						data-alt="close-up portrait of a professional man in a bright modern office setting"
 						src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqds0N5VSs_xqnweqTXweffd1SP4Ou_G0Ms46keqhH9JUd6ze4Ty7sgUJqhgQnzStyX6FhEFTn8uTJMYJ2tJ9GlDzQB5qsHYfloeMcpLq9B4yQ67KasblOOHwnoREEdOrK-bf2W3RDxbjfAGgBk_IU5JdThQ6os2c26OLr_f91CTxg2lRhMJqZ1p6Ljxcfkh_DFHR1HBT5BOYIrSLMPd8J50Rc5nCEVbgh4dshjraDcV8d-a3cYE-BDlZDT3d6wNDL1svgJ7qErbHf" />
 				</div>
@@ -113,12 +113,12 @@
 					<div class="flex items-center gap-2 mt-auto pt-2">
 						<div class="flex -space-x-2">
 							<div
-								class="w-6 h-6 rounded-full bg-slate-200 border border-white">
+								class="size-6 rounded-full bg-slate-200 border border-white">
 							</div>
 							<div
-								class="w-6 h-6 rounded-full bg-slate-100 border border-white">
+								class="size-6 rounded-full bg-slate-100 border border-white">
 							</div>
-							<div class="w-6 h-6 rounded-full bg-slate-300 border border-white">
+							<div class="size-6 rounded-full bg-slate-300 border border-white">
 							</div>
 						</div>
 						<span class="font-medium text-xs text-slate-600 ml-2">All operating
@@ -158,18 +158,18 @@
 						<tbody class="font-normal text-base text-slate-900">
 							<tr
 								class="border-b border-slate-400 hover:bg-slate-100 transition-colors group cursor-pointer">
-								<td class="py-4 px-4 font-semibold text-sm text-slate-900">#ORD-9823</td>
-								<td class="py-4 px-4">
+								<td class="p-4 font-semibold text-sm text-slate-900">#ORD-9823</td>
+								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-800 font-semibold text-sm">
+											class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-800 font-semibold text-sm">
 											ES</div>
 										<span>Elena Smith</span>
 									</div>
 								</td>
-								<td class="py-4 px-4 text-slate-600">Oct 24, 2024</td>
-								<td class="py-4 px-4 font-normal text-lg font-semibold text-right">$450.00</td>
-								<td class="py-4 px-4">
+								<td class="p-4 text-slate-600">Oct 24, 2024</td>
+								<td class="p-4 text-lg font-semibold text-right">$450.00</td>
+								<td class="p-4">
 									<span
 										class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium text-xs bg-slate-900 text-white border border-slate-400">
 										Processing
@@ -178,18 +178,18 @@
 							</tr>
 							<tr
 								class="border-b border-slate-400 hover:bg-slate-100 transition-colors group cursor-pointer">
-								<td class="py-4 px-4 font-semibold text-sm text-slate-900">#ORD-9822</td>
-								<td class="py-4 px-4">
+								<td class="p-4 font-semibold text-sm text-slate-900">#ORD-9822</td>
+								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-semibold text-sm">
+											class="size-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-semibold text-sm">
 											MR</div>
 										<span>Marcus Rossi</span>
 									</div>
 								</td>
-								<td class="py-4 px-4 text-slate-600">Oct 24, 2024</td>
-								<td class="py-4 px-4 font-normal text-lg font-semibold text-right">$1,299.50</td>
-								<td class="py-4 px-4">
+								<td class="p-4 text-slate-600">Oct 24, 2024</td>
+								<td class="p-4 text-lg font-semibold text-right">$1,299.50</td>
+								<td class="p-4">
 									<span
 										class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium text-xs bg-slate-900 text-white border border-slate-400">
 										Processing
@@ -198,20 +198,20 @@
 							</tr>
 							<tr
 								class="border-b border-slate-400 hover:bg-slate-100 transition-colors group cursor-pointer">
-								<td class="py-4 px-4 font-semibold text-sm text-slate-900">#ORD-9821</td>
-								<td class="py-4 px-4">
+								<td class="p-4 font-semibold text-sm text-slate-900">#ORD-9821</td>
+								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-900 font-semibold text-sm">
-											<span class="material-symbols-outlined text-[16px]"
+											class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-900 font-semibold text-sm">
+											<span class="material-symbols-outlined"
 												data-icon="person">person</span>
 										</div>
 										<span>Guest Checkout</span>
 									</div>
 								</td>
-								<td class="py-4 px-4 text-slate-600">Oct 23, 2024</td>
-								<td class="py-4 px-4 font-normal text-lg font-semibold text-right">$85.00</td>
-								<td class="py-4 px-4">
+								<td class="p-4 text-slate-600">Oct 23, 2024</td>
+								<td class="p-4 text-lg font-semibold text-right">$85.00</td>
+								<td class="p-4">
 									<span
 										class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium text-xs bg-slate-100 text-slate-600 border border-slate-400">
 										Shipped
@@ -219,18 +219,18 @@
 								</td>
 							</tr>
 							<tr class="hover:bg-slate-100 transition-colors group cursor-pointer">
-								<td class="py-4 px-4 font-semibold text-sm text-slate-900">#ORD-9820</td>
-								<td class="py-4 px-4">
+								<td class="p-4 font-semibold text-sm text-slate-900">#ORD-9820</td>
+								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-800 font-semibold text-sm">
+											class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-800 font-semibold text-sm">
 											AL</div>
 										<span>Anna Lee</span>
 									</div>
 								</td>
-								<td class="py-4 px-4 text-slate-600">Oct 23, 2024</td>
-								<td class="py-4 px-4 font-normal text-lg font-semibold text-right">$320.00</td>
-								<td class="py-4 px-4">
+								<td class="p-4 text-slate-600">Oct 23, 2024</td>
+								<td class="p-4 text-lg font-semibold text-right">$320.00</td>
+								<td class="p-4">
 									<span
 										class="inline-flex items-center px-2.5 py-0.5 rounded-full font-medium text-xs bg-slate-100 text-slate-600 border border-slate-400">
 										Shipped

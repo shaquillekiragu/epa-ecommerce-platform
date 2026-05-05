@@ -153,13 +153,13 @@
 					<div class="space-y-md">
 						<div
 							class="aspect-square w-full rounded border border-slate-400 overflow-hidden group relative">
-							<img alt="Leather Weekender Bag" class="w-full h-full object-cover"
+							<img alt="Leather Weekender Bag" class="size-full object-cover"
 								data-alt="A luxurious, cognac-colored full-grain leather weekender bag sitting on a minimalist concrete plinth. The lighting is cinematic with deep shadows and soft highlights that reveal the rich texture and stitching of the leather. The environment is a clean, modern studio with a neutral background, conveying a sense of premium craftsmanship and timeless design. High-resolution product photography for a top-tier e-commerce platform."
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7vYmK39cpanEbP9F_pl6TIhEBm-aND7rHyKQq24df7sbqColT6VBVsEgNYOiVINfMgUX0ZFkaIoNm5PBMXdd_tP0BrMBdiakyJ6nBf-hyiE4bzAWM6NhA4cKS41tqCxsvMtru2Fy2iRgkmsa2wxz7XNpsyNNfvD5nI6unJ0pCgcLZCc8ambrAyCvaQh7dexb5tftSo3UM7jQvdvGTKY6ZVHod1I8h8ehbwfLFZ07852Vk9DdmaZhKQmSKtfRKoLBqsgDO1wbHy2O" />
 							<div
 								class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
 								<button class="bg-white px-4 py-2 rounded font-semibold flex items-center gap-1">
-									<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+									<span class="material-symbols-outlined text-lg">photo_camera</span>
 									Change Image
 								</button>
 							</div>

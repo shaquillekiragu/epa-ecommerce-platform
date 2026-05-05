@@ -47,8 +47,8 @@
 							<p class="text-sm font-semibold text-slate-900 mb-4">Store Logo</p>
 							<div class="flex items-center gap-4">
 								<div
-									class="w-24 h-24 bg-slate-100 rounded-lg border border-dashed border-slate-400 flex items-center justify-center relative overflow-hidden group">
-									<img class="w-full h-full object-cover"
+									class="size-24 bg-slate-100 rounded-lg border border-dashed border-slate-400 flex items-center justify-center relative overflow-hidden group">
+									<img class="size-full object-cover"
 										data-alt="A minimalist logo design featuring clean, high-contrast typography in black and white. The aesthetic is extremely modern and sophisticated, reflecting a luxury boutique identity. The logo is displayed in a brightly lit studio setting with soft shadows, fitting perfectly within the LuxCommerce design system."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpXaEN_vEmKiC9EvKlAgBmIDrUtWlNZg6AA0MYXTBaDyoQ4SSDoyudPCLEj2Ia_IQP0UdECSt5Oa3mK-IqQ2Qj6jI1dpVeLF_4EHi9wjDw6DmTO_MmuXFLF5xF1jPca5w8inbTF3pc6vOx8toDpwiCezLGLE8JLpH4Tn1_kBqAvtS3EhbP7r7MNNRN8xogJtJHRCvLeESaIqsWSDSRi5RLpXjCCCuksNa0HQnG68bnvdXQxGe827YqRB3hPz0Ck2jkqof1CZnT49fV" />
 									<div
@@ -58,7 +58,7 @@
 								</div>
 								<div class="flex-1">
 									<button
-										class="px-2 py-2 border border-slate-400 rounded text-xs font-medium text-slate-900 hover:bg-slate-100 transition-colors mb-2">Upload
+										class="p-2 border border-slate-400 rounded text-xs font-medium text-slate-900 hover:bg-slate-100 transition-colors mb-2">Upload
 										New Logo</button>
 									<p class="text-[11px] text-slate-600">Recommended size: 512x512px. PNG or SVG.</p>
 								</div>
@@ -68,7 +68,7 @@
 							<p class="text-sm font-semibold text-slate-900 mb-4">Banner Image</p>
 							<div
 								class="h-24 bg-slate-100 rounded-lg border border-dashed border-slate-400 flex items-center justify-center overflow-hidden relative group">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="An expansive, wide-angle shot of a high-end fashion showroom with minimalist interior design. The lighting is soft and airy, creating a high-key, sophisticated atmosphere. Soft neutral tones of beige, white, and charcoal dominate the palette, aligning with the premium retail focus of the Merchant Central platform."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7vbGgLZJS3xuWOrbFbp9-146OTvE2R3jK6vLk139U8dpAUOfkWhqO5T73kNK1oCKMACxa1ATDyayMgNGQx_fx9RG3vdLsLv4eaRY9ZueFygsCFpNeY3ZnNWuWfgElEl4XY6DzlUVqgQ3QZLA2KUW0IyyDvDvj1UnGMqJ2bHM1qwJQSzZpQMUQA8c7ZRlJYvlZPu4ZkSD_qfjYeNIUa80Up9OHS8azHik3YG4Q5x_JOZBZqZI3-yGqe8zahAmxXqtfvLQ3UIwMWKvn" />
 								<div
@@ -89,7 +89,7 @@
 					<div
 						class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-400 mb-4">
 						<div class="flex items-center gap-2">
-							<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+							<span class="size-2 rounded-full bg-emerald-500"></span>
 							<span class="text-sm font-semibold text-slate-900">Public</span>
 						</div>
 						<button
@@ -110,7 +110,7 @@
 						</div>
 						<div class="flex items-center gap-2">
 							<input checked
-								class="w-4 h-4 rounded border-slate-400 text-slate-900 focus:ring-primary"
+								class="size-4 rounded border-slate-400 text-slate-900 focus:ring-primary"
 								id="showEmail" type="checkbox" />
 							<label class="text-xs font-medium text-slate-900" for="showEmail">Display on
 								storefront</label>

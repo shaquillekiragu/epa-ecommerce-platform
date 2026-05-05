@@ -66,14 +66,14 @@
 						<!-- Item 1 -->
 						<div class="p-4 flex items-start gap-4">
 							<div class="w-24 h-32 bg-slate-100 flex-shrink-0">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="A premium, structured black tailored coat photographed against a clean, light grey studio background. The lighting is crisp and editorial, highlighting the high-quality wool texture and sharp lapel details. The aesthetic is modern corporate luxury, using a minimalist composition to emphasize craftsmanship and material integrity."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPkttIguTQjXUadmNtS_BMeFn6de0M6SMFkcQYsa9fOyZN3oWDrmH4f3Mj7TU53-DqbitIjFJmPlTvtMHrGc7y12UDXYJRXtGVZbJIZvVwgxnnJyyCpa1iexNWVx_NRppCtaC7CcSp-aqScYSweC-zX6LcVWaQ6sdT3hM2M6LsRhQkQZTYd7iF7GlKmi_CM8aQYTetDl3om3pHOwTVJ5qn6Vi-m3RzPCMIYsEQpyxsSzXXKcAo-Xe7uiUxFIaffQ9VHGmi9Q9GFYZP" />
 							</div>
-							<div class="flex-grow">
+							<div class="grow">
 								<div class="flex justify-between items-start">
 									<div>
-										<h3 class="font-semibold tracking-tight text-[18px] text-slate-900">Sculpted Wool Overcoat
+										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Sculpted Wool Overcoat
 										</h3>
 										<p class="font-normal text-xs text-slate-600 mt-1">Midnight Black | Size
 											42</p>
@@ -86,14 +86,14 @@
 						<!-- Item 2 -->
 						<div class="p-4 flex items-start gap-4">
 							<div class="w-24 h-32 bg-slate-100 flex-shrink-0">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="Modern athletic footwear with a sleek, aerodynamic silhouette in a sophisticated tonal grey and white palette. The shoes are presented in a high-key studio setting with soft, diffused shadows, creating an atmosphere of technical precision and effortless efficiency. Every stitching detail and texture transition is clearly visible."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFZSd6JRxMHXAOheLJFvLOsh0znbX-opDdqMzt4r_B_1Jz97Jl0_ASyxVRidL-tJJCQytx7amktPb1IeG5MizuyV4XervngD4cF3OKKWNs4dgd9peoWwI5Sby0EWTy45AzXdCssFOOzmv-y5jIqy-ZEUuzaq2Ar4ZWnDBKWgUIAsD_Ky0OO6VlMfO6zMwOpxdzTsjzZYgzQP897pVNvEjpgXGMedIBQkh2a_hwJYTzbjYn5oCsPfnC7UxMQk5jZIOkBzAkSUbbZAPA" />
 							</div>
-							<div class="flex-grow">
+							<div class="grow">
 								<div class="flex justify-between items-start">
 									<div>
-										<h3 class="font-semibold tracking-tight text-[18px] text-slate-900">Aerodynamic Runner v2</h3>
+										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Aerodynamic Runner v2</h3>
 										<p class="font-normal text-xs text-slate-600 mt-1">Cloud White | Size 10
 										</p>
 									</div>
@@ -105,14 +105,14 @@
 						<!-- Item 3 -->
 						<div class="p-4 flex items-start gap-4">
 							<div class="w-24 h-32 bg-slate-100 flex-shrink-0">
-								<img class="w-full h-full object-cover"
+								<img class="size-full object-cover"
 									data-alt="A luxury pebble-grain leather tote bag in a deep charcoal color, standing elegantly on a marble surface. The lighting is natural and bright, conveying a sense of reliability and structural integrity. The leather's rich texture and the metallic hardware accents are captured with high definition, reflecting a premium e-commerce visual style."
 									src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_V3D3Hsq7hBIZ8oQaGSp6sEADJLRDbAhAxYLxT8RVJxOB4DkVj-0-2C0L8_l_ZsJ9bvk3E-8sWt6pPcMh7nHqSa9bgjZ_ppsFz-PnhTWQmE48-eeMcf0G7C-wEfG9krscVPoQb9gMK2qeFO38EDtlnm-aWqND-CgeMn-7ijjP0p67fAS5Ap1Y6TvKekPgMGEHstN4T29zUUw-bqNSSGNgZMWWbo8MRQB1Iucp5Z1METoB1b6ZkLeCsSKp49q_Oh62V9qs4AT-5VNi" />
 							</div>
-							<div class="flex-grow">
+							<div class="grow">
 								<div class="flex justify-between items-start">
 									<div>
-										<h3 class="font-semibold tracking-tight text-[18px] text-slate-900">Signature Leather Tote
+										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Signature Leather Tote
 										</h3>
 										<p class="font-normal text-xs text-slate-600 mt-1">Charcoal Grey | One
 											Size</p>
@@ -163,11 +163,11 @@
 					<!-- Trust Indicators -->
 					<div class="flex flex-col gap-2 px-3">
 						<div class="flex items-center gap-3 text-slate-600">
-							<span class="material-symbols-outlined text-[20px]">shield</span>
+							<span class="material-symbols-outlined text-xl">shield</span>
 							<span class="font-medium text-xs">Secure Encrypted Checkout</span>
 						</div>
 						<div class="flex items-center gap-3 text-slate-600">
-							<span class="material-symbols-outlined text-[20px]">package_2</span>
+							<span class="material-symbols-outlined text-xl">package_2</span>
 							<span class="font-medium text-xs">Sustainability Certified Packaging</span>
 						</div>
 					</div>

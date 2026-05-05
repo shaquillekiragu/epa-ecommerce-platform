@@ -116,8 +116,8 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-12 h-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
-											<img class="w-full h-full object-cover"
+											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											<img class="size-full object-cover"
 												data-alt="A clean studio product shot of a minimalist white ceramic watch on a neutral background. The lighting is soft and high-key, emphasizing smooth textures and sharp geometric lines. The aesthetic is contemporary, premium, and aligns with a professional e-commerce dashboard. The focus is sharp on the watch face with a shallow depth of field."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwVsJsDyB0dPZeICKdEaXy5FWF0L7P8i0J8cjT18spWWAlJr3y865EHehk0yxhFRgQ6ukr-8Y_nAwmgScivbFU_jfYuE1lyH1qKCbnlHijO_KiXqcZDYDhd0E8aS4nL5ksY74cFX8kRTM0BIDKRLQn6Rahh3gV3Ks-im8jWJZ7Jg9s1rP4WhkpyrSTGD4AijZ643wRgm6gE6do6ov9Pws8xHwE6ig4OAT9ra4PZAQvYuVSGHHBhFD26awqmwBk-BjS5W9X2dKHTIzZ" />
 										</div>
@@ -144,14 +144,14 @@
 								</td>
 								<td class="p-4">
 									<span class="flex items-center gap-1.5 text-xs font-bold text-green-600">
-										<span class="w-2 h-2 rounded-full bg-green-500"></span>
+										<span class="size-2 rounded-full bg-green-500"></span>
 										Active
 									</span>
 								</td>
 								<td class="p-4">
 									<div class="relative inline-block w-10 align-middle select-none">
 										<input checked
-											class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
+											class="toggle-checkbox absolute block size-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
 											type="checkbox" />
 										<label
 											class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-800 cursor-pointer"></label>
@@ -174,8 +174,8 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-12 h-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
-											<img class="w-full h-full object-cover"
+											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											<img class="size-full object-cover"
 												data-alt="Vibrant red performance sneakers photographed in a professional studio setting with dramatic side lighting. The background is a clean, dark grey that makes the primary red color pop intensely. The product detail is crisp, showing the texture of the fabric and the sleek sole design. The overall mood is energetic and high-performance."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw1j3nphiR7A08NjuyH_GGv8YtqfTm8rivAVbhhv7h87ymnlebDXLqZtaty2bLYGXrxK-C9QMlHCzoz8yCK5ABxYzpffJUKEt-3kWUt7yly3KnXsn-rRNqBe-e858NtgyB18-NtglIDWnjk5_wlfYQ9u5-q4KfYXExC-dZzEjaNn8KjxoTlOH4Ct5hEb86hvPfv5oOzwI-MBJgPmxeVDHjQUC9p5_pN8nX9UMkMLu6WCFRa2q8YTFU9CYJPVe-Om3KyPc19P_ka0C5" />
 										</div>
@@ -204,14 +204,14 @@
 								</td>
 								<td class="p-4">
 									<span class="flex items-center gap-1.5 text-xs font-bold text-amber-600">
-										<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+										<span class="size-2 rounded-full bg-amber-500"></span>
 										Low Stock
 									</span>
 								</td>
 								<td class="p-4">
 									<div class="relative inline-block w-10 align-middle select-none">
 										<input checked
-											class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
+											class="toggle-checkbox absolute block size-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
 											type="checkbox" />
 										<label
 											class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-800 cursor-pointer"></label>
@@ -234,8 +234,8 @@
 								<td class="p-4">
 									<div class="flex items-center gap-3">
 										<div
-											class="w-12 h-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
-											<img class="w-full h-full object-cover"
+											class="size-12 rounded bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200">
+											<img class="size-full object-cover"
 												data-alt="High-fidelity black wireless headphones positioned against a minimalist grey background. The professional studio lighting creates subtle highlights on the metallic and leather surfaces, emphasizing the high-end build quality. The aesthetic is sleek, corporate, and focuses on technological excellence and comfort."
 												src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj8RTXlZq3x3ohoSRomQaSQKr3T6Ca3a2nSRCqPoOcF5TX_JAq-j0vLlHY8OqYVRrfG20USL3FlMUMrD16VGrwoPSUF7RRnTvTxnkMzctWl-Qxp4HbgASu2-bdTki_G1fQHJWH19jmK98Qy9HftOaWZJQvxk7lgKwBLDS5TknNQYzdD_r8TJnGrSfavrF4vcaGh52s0wgaEuBmfOVyojLXQ4xXYqrxKHRMGi0P5nuI63MwNsUWaGLbCaAW9T-tBrzIuXTdwwYjIKtN" />
 										</div>
@@ -261,14 +261,14 @@
 								</td>
 								<td class="p-4">
 									<span class="flex items-center gap-1.5 text-xs font-bold text-green-600">
-										<span class="w-2 h-2 rounded-full bg-green-500"></span>
+										<span class="size-2 rounded-full bg-green-500"></span>
 										Active
 									</span>
 								</td>
 								<td class="p-4">
 									<div class="relative inline-block w-10 align-middle select-none">
 										<input checked
-											class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
+											class="toggle-checkbox absolute block size-5 rounded-full bg-white border-4 appearance-none cursor-pointer right-0 border-slate-800"
 											type="checkbox" />
 										<label
 											class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-800 cursor-pointer"></label>

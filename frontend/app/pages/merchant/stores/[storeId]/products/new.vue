@@ -14,8 +14,8 @@
 					class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
 					<span class="material-symbols-outlined" data-icon="settings">settings</span>
 				</button>
-				<div class="h-8 w-8 rounded-full overflow-hidden border border-slate-200">
-					<img alt="Merchant Profile" class="h-full w-full object-cover"
+				<div class="size-8 rounded-full overflow-hidden border border-slate-200">
+					<img alt="Merchant Profile" class="size-full object-cover"
 						src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQxsUlnzf-vcWAJVJdLNdI8MwNN2zcPo3NwneKrKj3_TFRqVDS_LWm677lv1DGFoOYws499zbTHeinfKqaL-Quh9VnImUXJOOOJYWzP5eKZLFA9NCGC9MKo3UdRFW-ZjjFkSoTFTCpuxZDGYPgD1Q6SROHA7PWvQrQrQyZO2OjS2A-TI-CavjZ0zq8v-YRXq3piVN5C_u5zisyVydg7lRsz5vhUr2NZG4dZw7p-7Zt9sChlyGxPj152G4PDTjgcl43YH5-qrcOo5v" />
 				</div>
 			</div>
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<!-- Form Layout: Asymmetric Bento Grid -->
-		<div class="px-10 py-10 max-w-6xl mx-auto">
+		<div class="p-10 max-w-6xl mx-auto">
 			<div class="grid grid-cols-12 gap-8">
 				<!-- Main Form Body -->
 				<div class="col-span-12 lg:col-span-8 space-y-8">
@@ -147,7 +147,7 @@
 						<div
 							class="p-8 flex flex-col items-center justify-center min-h-[300px] bg-slate-50 border-2 border-dashed border-slate-200 m-6 rounded-xl group hover:border-slate-900 transition-colors cursor-pointer">
 							<div
-								class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-slate-400 group-hover:text-slate-900 transition-colors">
+								class="size-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-slate-400 group-hover:text-slate-900 transition-colors">
 								<span class="material-symbols-outlined text-3xl"
 									data-icon="add_a_photo">add_a_photo</span>
 							</div>
@@ -164,26 +164,26 @@
 							<label
 								class="flex items-center justify-between p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
 								<div class="flex items-center gap-3">
-									<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+									<div class="size-2 bg-green-500 rounded-full"></div>
 									<span class="text-base font-normal">Published</span>
 								</div>
-								<input checked class="text-slate-900 focus:ring-primary h-4 w-4" name="status"
+								<input checked class="text-slate-900 focus:ring-primary size-4" name="status"
 									type="radio" />
 							</label>
 							<label
 								class="flex items-center justify-between p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
 								<div class="flex items-center gap-3">
-									<div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+									<div class="size-2 bg-slate-300 rounded-full"></div>
 									<span class="text-base font-normal">Draft</span>
 								</div>
-								<input class="text-slate-900 focus:ring-primary h-4 w-4" name="status" type="radio" />
+								<input class="text-slate-900 focus:ring-primary size-4" name="status" type="radio" />
 							</label>
 						</div>
 					</div>
 					<!-- Marketing Banner (Contextual Visual) -->
 					<div class="relative h-64 rounded-xl overflow-hidden group">
 						<img alt="Luxury Retail Concept"
-							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+							class="size-full object-cover group-hover:scale-105 transition-transform duration-700"
 							data-alt="A studio shot of a vibrant red luxury sneaker positioned against a clean, minimalist white background with sharp, professional commercial lighting. The image captures the texture of the fabric and the sleek design lines, embodying a high-end retail aesthetic that matches a clean, corporate e-commerce user interface. The mood is sophisticated, polished, and emphasizes premium quality."
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkhvqDhOpo9R-7Z_w7n8_pREafC8NYzRPxzLE4AEqGyPR0vrXCDCJ-p9nwQ2zz7HTpl0tSlu2ZNgYdODqBAtS0CjR161ICmvS3D-vCsRAWihziXePzrg5zZno0fJ_HFOjg-yISpydc_enEAILW-F-8E1m4KUB8PXyVfX1w6Pr7B-Aaq5TP52qWeufJT9SeHETahZQDp8Vk8Z4PrQkOw74S_WJRHzaQvHxxE-UpnwAEKqM1Ja9xF6hYKH595k_eN7IAZ5CTJehXZwAu" />
 						<div

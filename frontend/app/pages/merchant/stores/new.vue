@@ -76,7 +76,7 @@
 								search engines and high-conversion shopping experiences instantly.</p>
 							<div class="p-2 bg-white/10 rounded border border-white/20 backdrop-blur-sm">
 								<div class="flex items-center gap-3 mb-2">
-									<div class="h-10 w-10 bg-white/20 rounded-full animate-pulse"></div>
+									<div class="size-10 bg-white/20 rounded-full animate-pulse"></div>
 									<div class="space-y-1">
 										<div class="h-3 w-24 bg-white/30 rounded"></div>
 										<div class="h-2 w-16 bg-white/10 rounded"></div>
@@ -87,7 +87,7 @@
 						</div>
 						<!-- Abstract texture using Tailwind gradients -->
 						<div
-							class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-white/10 pointer-events-none">
+							class="absolute inset-0 bg-linear-to-br from-transparent via-white/5 to-white/10 pointer-events-none">
 						</div>
 					</div>
 					<!-- Secondary Guidance -->
@@ -120,7 +120,7 @@
 					<!-- Brand Visual -->
 					<div
 						class="h-48 rounded-xl overflow-hidden border border-slate-400 grayscale hover:grayscale-0 transition-all duration-500">
-						<img alt="Store Interior" class="w-full h-full object-cover"
+						<img alt="Store Interior" class="size-full object-cover"
 							data-alt="A minimalist and high-end boutique interior with clean lines, soft recessed lighting, and a palette of warm greys and ivory. The scene features marble surfaces and modern architectural details that convey a sense of premium quality and luxury commerce. The lighting is balanced and artistic, creating an aspirational merchant environment."
 							src="https://lh3.googleusercontent.com/aida-public/AB6AXuAapD6o2qZSRK-NbGnk5uT9cBMw6prkPlo3wtEd6dBj6EDIsfL1OWUoCZ46XrUiGE9cyUoqp48GP8Mi05APwvMW3wBHrAX6r0ACbOE3vxvGbG7qQE6OseMDqGjeZITGRhm5dUtc03YI4rmtghSUXnDeh2x_eZ_6V8_dU98Tm3wlmYPmd-A7-F2HFjGHHm8RPHPirdjMxKEzCJYakpDjdi_5Rl66npqva6c93VZdr888LPk7D-2u0H51k1sM53m40udymHej2_brn5QZ" />
 					</div>
