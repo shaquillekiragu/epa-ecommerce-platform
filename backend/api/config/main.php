@@ -57,6 +57,7 @@ return [
                 '' => 'site/index',
                 [
                     'class' => \yii\rest\UrlRule::class,
+                    'prefix' => 'api/v1',
                     'controller' => [
                         'address',
                         'basket',
