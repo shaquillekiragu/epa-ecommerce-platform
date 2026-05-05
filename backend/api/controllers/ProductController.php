@@ -2,7 +2,9 @@
 
 namespace api\controllers;
 
-class ProductController
+use api\models\Product;
+
+class ProductController extends _ApiController
 {
-    public $model_class = "common\models\Product";
+    public $modelClass = Product::class;
 }

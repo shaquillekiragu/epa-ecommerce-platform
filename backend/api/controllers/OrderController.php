@@ -2,7 +2,9 @@
 
 namespace api\controllers;
 
-class OrderController
+use api\models\Order;
+
+class OrderController extends _ApiController
 {
-    public $model_class = "common\models\Order";
+    public $modelClass = Order::class;
 }

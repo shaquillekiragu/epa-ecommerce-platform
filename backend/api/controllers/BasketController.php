@@ -2,7 +2,9 @@
 
 namespace api\controllers;
 
-class BasketController
+use api\models\Basket;
+
+class BasketController extends _ApiController
 {
-    public $model_class = "common\models\Basket";
+    public $modelClass = Basket::class;
 }

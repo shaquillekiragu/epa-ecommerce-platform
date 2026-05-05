@@ -25,6 +25,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-api',
+            'parsers' => [
+                'application/json' => \yii\web\JsonParser::class,
+            ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -52,6 +55,22 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                [
+                    'class' => \yii\rest\UrlRule::class,
+                    'controller' => [
+                        'address',
+                        'basket',
+                        'basketproduct',
+                        'order',
+                        'orderproduct',
+                        'product',
+                        'productcategory',
+                        'store',
+                        'user',
+                        'useraddress',
+                    ],
+                    'pluralize' => true,
+                ],
             ],
         ],
     ],

@@ -2,7 +2,9 @@
 
 namespace api\controllers;
 
-class StoreController
+use api\models\Store;
+
+class StoreController extends _ApiController
 {
-    public $model_class = "common\models\Store";
+    public $modelClass = Store::class;
 }

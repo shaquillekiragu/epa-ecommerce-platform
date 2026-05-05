@@ -2,7 +2,9 @@
 
 namespace api\controllers;
 
-class UseraddressController
+use api\models\Useraddress;
+
+class UseraddressController extends _ApiController
 {
-    public $model_class = "common\models\Useraddress";
+    public $modelClass = Useraddress::class;
 }
