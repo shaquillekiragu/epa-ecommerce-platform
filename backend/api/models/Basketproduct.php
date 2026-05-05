@@ -6,4 +6,18 @@ use common\models\Basketproduct as CommonBasketproduct;
 
 class Basketproduct extends CommonBasketproduct
 {
+    public function fields()
+    {
+        return [
+            'id',
+            'basket_id',
+            'product_id',
+            'quantity',
+            'basket_product_price' => static fn (self $model) => $model->basketProductPrice,
+            'allow_update',
+            'allow_delete',
+            'created_at',
+            'last_updated_at',
+        ];
+    }
 }
