@@ -86,6 +86,11 @@ class Address extends BaseModel
         }
         return "$this->building_number $this->street_name, $this->city, $this->post_code, $this->country";
     }
+
+    public function getUserAddresses()
+    {
+        return $this->hasMany(Useraddress::class, ['address_id' => 'id']);
+    }
 }
 
 // Model today: address_type shipping|billing|both; structured lines; getFullAddress helper; allow_* flags.

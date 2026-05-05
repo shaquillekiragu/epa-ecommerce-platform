@@ -139,6 +139,11 @@ class Product extends BaseModel
         return $this->hasOne(Productcategory::class, ['id' => 'product_category_id']);
     }
 
+    public function getStore(): ActiveQuery
+    {
+        return $this->hasOne(Store::class, ['id' => 'store_id']);
+    }
+
     public function getProductCategoryName(): ?string
     {
         return $this->productCategory->name ?? null;

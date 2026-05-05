@@ -2,8 +2,11 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use common\models\BaseModel;
 use common\models\User;
+use common\models\Basketproduct;
+use common\models\Product;
 
 class Basket extends BaseModel
 {
@@ -64,14 +67,41 @@ class Basket extends BaseModel
         );
     }
 
+    public function getCustomer(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'customer_id']);
+    }
+
     public function getCustomerName()
     {
         $customer = User::findOne($this->customer_id);
-        if (!$customer) {
-            return null;
+        return $customer ? $customer->fullName : null;
+    }
+
+    public function getBasketProducts(): ActiveQuery
+    {
+        return $this->hasMany(Basketproduct::class, ['basket_id' => 'id']);
+    }
+
+    public function getBasketProductCount(): int
+    {
+        return count($this->basketProducts);
+    }
+
+    public function getProducts(): ActiveQuery
+    {
+        return $this->hasMany(Product::class, ['id' => 'product_id'])->via('basketProducts');
+    }
+
+    public function getBasketTotal(): float
+    {
+        $sub_total = 0;
+
+        foreach ($this->basketProducts as $line_item) {
+            $sub_total += $line_item->product->price_in_gbp * $line_item->quantity;
         }
 
-        return $customer->fullName;
+        return round($sub_total, 2);
     }
 }
 

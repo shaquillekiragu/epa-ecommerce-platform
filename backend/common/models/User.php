@@ -5,8 +5,9 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use common\models\BaseModel;
 use yii\web\IdentityInterface;
+use common\models\BaseModel;
+use common\models\Useraddress;
 
 /**
  * User model
@@ -47,20 +48,6 @@ class User extends BaseModel
         return array_merge(
             parent::rules(),
             [
-                // [
-                //     [
-                //         'status'
-                //     ],
-                //     'default',
-                //     'value' => self::STATUS_INACTIVE
-                // ],
-                // [
-                //     [
-                //         'status'
-                //     ],
-                //     'in',
-                //     'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]
-                // ],
                 [
                     [
                         'role'
@@ -282,6 +269,21 @@ class User extends BaseModel
     public function getUserAge()
     {
         return (new \DateTime($this->date_of_birth))->diff(new \DateTime('today'))->y;
+    }
+
+    public function getUserAddresses()
+    {
+        return $this->hasMany(Useraddress::class, ['user_id' => 'id']);
+    }
+
+    public function getBillingAddress()
+    {
+        return $this->hasOne(Address::class, ['id' => 'address_id'])->via('userAddresses')->andWhere(['address_type' => ['billing', 'both']]);
+    }
+
+    public function getShippingAddress()
+    {
+        return $this->hasOne(Address::class, ['id' => 'address_id'])->via('userAddresses')->andWhere(['address_type' => ['shipping', 'both']]);
     }
 }
 

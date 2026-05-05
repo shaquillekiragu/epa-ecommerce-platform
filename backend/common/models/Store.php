@@ -2,7 +2,10 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use common\models\BaseModel;
+use common\models\Product;
+use common\models\User;
 
 class Store extends BaseModel
 {
@@ -71,6 +74,16 @@ class Store extends BaseModel
                 'allow_delete' => 'Allow Deletion',
             ]
         );
+    }
+
+    public function getProducts(): ActiveQuery
+    {
+        return $this->hasMany(Product::class, ['store_id' => 'id']);
+    }
+
+    public function getMerchant(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'merchant_id']);
     }
 }
 

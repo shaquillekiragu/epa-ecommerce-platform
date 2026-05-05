@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use common\models\BaseModel;
 
 class Orderproduct extends BaseModel
@@ -64,6 +65,16 @@ class Orderproduct extends BaseModel
                 'quantity' => 'Item Quantity',
             ]
         );
+    }
+
+    public function getOrder(): ActiveQuery
+    {
+        return $this->hasOne(Order::class, ['id' => 'order_id']);
+    }
+
+    public function getProduct(): ActiveQuery
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 }
 

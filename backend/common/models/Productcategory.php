@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use common\models\BaseModel;
 
 class Productcategory extends BaseModel
@@ -65,6 +66,11 @@ class Productcategory extends BaseModel
                 'allow_delete' => 'Allow Deletion',
             ]
         );
+    }
+
+    public function getProducts(): ActiveQuery
+    {
+        return $this->hasMany(Product::class, ['product_category_id' => 'id']);
     }
 }
 

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
 use common\models\BaseModel;
 
 class Useraddress extends BaseModel
@@ -53,6 +54,16 @@ class Useraddress extends BaseModel
                 'address_id' => 'Address ID',
             ]
         );
+    }
+
+    public function getUser(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getAddress(): ActiveQuery
+    {
+        return $this->hasOne(Address::class, ['id' => 'address_id']);
     }
 }
 
