@@ -26,7 +26,7 @@
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">shopping_cart</span>
 					<span
-						class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">3</span>
+						class="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">3</span>
 				</NuxtLink>
 				
 				<button

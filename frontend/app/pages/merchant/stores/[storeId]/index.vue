@@ -26,15 +26,15 @@
 		<div class="p-8 max-w-7xl mx-auto">
 			<!-- Breadcrumbs & Header -->
 			<div class="mb-8">
-				<div class="flex items-center text-xs text-slate-500 font-label-sm space-x-2 mb-3">
+				<div class="flex items-center text-xs text-slate-500 font-medium space-x-2 mb-3">
 					<span>My Stores</span>
 					<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
 					<span class="text-slate-900 font-semibold">Velvet &amp; Vine</span>
 				</div>
 				<div class="flex justify-between items-end">
 					<div>
-						<h2 class="font-headline-lg text-on-surface">Velvet &amp; Vine</h2>
-						<p class="text-slate-500 font-body-md mt-1">Premium artisanal home decor and floral
+						<h2 class="font-bold tracking-tight text-slate-900">Velvet &amp; Vine</h2>
+						<p class="text-slate-500 font-normal mt-1">Premium artisanal home decor and floral
 							arrangements.</p>
 						<div class="flex items-center mt-3 gap-4">
 							<span
@@ -42,7 +42,7 @@
 								<span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></span>
 								Active
 							</span>
-							<span class="text-sm font-label-md text-slate-600 flex items-center">
+							<span class="text-sm font-semibold text-slate-600 flex items-center">
 								<span class="material-symbols-outlined text-sm mr-1" data-icon="link">link</span>
 								velvet-vine-premium.luxcommerce.io
 							</span>
@@ -50,11 +50,11 @@
 					</div>
 					<div class="flex gap-3">
 						<button
-							class="px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-900 font-label-md rounded-xl transition-all">
+							class="px-4 py-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-900 font-semibold rounded-xl transition-all">
 							View Live Store
 						</button>
 						<button
-							class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-xl hover:opacity-90 transition-all flex items-center">
+							class="px-4 py-2 bg-slate-900 text-white font-semibold rounded-xl hover:opacity-90 transition-all flex items-center">
 							<span class="material-symbols-outlined text-sm mr-2" data-icon="edit">edit</span>
 							Edit Details
 						</button>
@@ -74,8 +74,8 @@
 								data-icon="trending_up">trending_up</span>
 						</span>
 					</div>
-					<p class="text-slate-500 text-label-sm uppercase tracking-wider mb-1">Total Sales</p>
-					<h3 class="font-display-lg text-3xl">$42,912.00</h3>
+					<p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Total Sales</p>
+					<h3 class="font-bold tracking-tight text-3xl">$42,912.00</h3>
 				</div>
 				<!-- Stat Card 2 -->
 				<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
@@ -85,8 +85,8 @@
 								data-icon="inventory_2">inventory_2</span>
 						</div>
 					</div>
-					<p class="text-slate-500 text-label-sm uppercase tracking-wider mb-1">Active Products</p>
-					<h3 class="font-display-lg text-3xl">124</h3>
+					<p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Active Products</p>
+					<h3 class="font-bold tracking-tight text-3xl">124</h3>
 				</div>
 				<!-- Stat Card 3 -->
 				<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm">
@@ -96,9 +96,9 @@
 						</div>
 						<span class="text-slate-400 text-xs font-medium">84 reviews</span>
 					</div>
-					<p class="text-slate-500 text-label-sm uppercase tracking-wider mb-1">Store Rating</p>
+					<p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Store Rating</p>
 					<div class="flex items-end gap-2">
-						<h3 class="font-display-lg text-3xl">4.9</h3>
+						<h3 class="font-bold tracking-tight text-3xl">4.9</h3>
 						<div class="flex text-amber-400 mb-1.5">
 							<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
 							<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
@@ -119,8 +119,8 @@
 								data-icon="trending_up">trending_up</span>
 						</span>
 					</div>
-					<p class="text-slate-500 text-label-sm uppercase tracking-wider mb-1">Total Customers</p>
-					<h3 class="font-display-lg text-3xl">1,208</h3>
+					<p class="text-slate-500 text-xs uppercase tracking-wider mb-1">Total Customers</p>
+					<h3 class="font-bold tracking-tight text-3xl">1,208</h3>
 				</div>
 			</div>
 			<!-- Main Layout Bento -->
@@ -130,25 +130,25 @@
 					<!-- Recent Orders -->
 					<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
 						<div class="p-6 border-b border-slate-100 flex justify-between items-center">
-							<h4 class="font-headline-md text-lg">Recent Orders</h4>
-							<button class="text-primary font-label-md text-sm hover:underline">View All Orders</button>
+							<h4 class="font-semibold tracking-tight text-lg">Recent Orders</h4>
+							<button class="text-slate-900 font-semibold text-sm hover:underline">View All Orders</button>
 						</div>
 						<div class="overflow-x-auto">
 							<table class="w-full text-left border-collapse">
 								<thead class="bg-slate-50 border-b border-slate-100">
 									<tr>
-										<th class="px-6 py-4 font-label-md text-slate-500 text-xs uppercase">Order ID
+										<th class="px-6 py-4 font-semibold text-slate-500 text-xs uppercase">Order ID
 										</th>
-										<th class="px-6 py-4 font-label-md text-slate-500 text-xs uppercase">Customer
+										<th class="px-6 py-4 font-semibold text-slate-500 text-xs uppercase">Customer
 										</th>
-										<th class="px-6 py-4 font-label-md text-slate-500 text-xs uppercase">Date</th>
-										<th class="px-6 py-4 font-label-md text-slate-500 text-xs uppercase">Total</th>
-										<th class="px-6 py-4 font-label-md text-slate-500 text-xs uppercase">Status</th>
+										<th class="px-6 py-4 font-semibold text-slate-500 text-xs uppercase">Date</th>
+										<th class="px-6 py-4 font-semibold text-slate-500 text-xs uppercase">Total</th>
+										<th class="px-6 py-4 font-semibold text-slate-500 text-xs uppercase">Status</th>
 									</tr>
 								</thead>
 								<tbody class="divide-y divide-slate-100">
 									<tr class="hover:bg-slate-50/50 transition-colors cursor-pointer">
-										<td class="px-6 py-4 text-sm font-label-md text-slate-900">#ORD-2918</td>
+										<td class="px-6 py-4 text-sm font-semibold text-slate-900">#ORD-2918</td>
 										<td class="px-6 py-4 text-sm text-slate-600">Marcus Sterling</td>
 										<td class="px-6 py-4 text-sm text-slate-500">Oct 24, 2023</td>
 										<td class="px-6 py-4 text-sm font-bold text-slate-900">$249.00</td>
@@ -158,7 +158,7 @@
 										</td>
 									</tr>
 									<tr class="hover:bg-slate-50/50 transition-colors cursor-pointer">
-										<td class="px-6 py-4 text-sm font-label-md text-slate-900">#ORD-2917</td>
+										<td class="px-6 py-4 text-sm font-semibold text-slate-900">#ORD-2917</td>
 										<td class="px-6 py-4 text-sm text-slate-600">Sarah Jenkins</td>
 										<td class="px-6 py-4 text-sm text-slate-500">Oct 24, 2023</td>
 										<td class="px-6 py-4 text-sm font-bold text-slate-900">$89.50</td>
@@ -168,7 +168,7 @@
 										</td>
 									</tr>
 									<tr class="hover:bg-slate-50/50 transition-colors cursor-pointer">
-										<td class="px-6 py-4 text-sm font-label-md text-slate-900">#ORD-2916</td>
+										<td class="px-6 py-4 text-sm font-semibold text-slate-900">#ORD-2916</td>
 										<td class="px-6 py-4 text-sm text-slate-600">Elena Rodriguez</td>
 										<td class="px-6 py-4 text-sm text-slate-500">Oct 23, 2023</td>
 										<td class="px-6 py-4 text-sm font-bold text-slate-900">$1,120.00</td>
@@ -190,29 +190,29 @@
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-GSSGtTwecH5ziiSHNSjghVTvRfOOEFR8MrwEB9cfpWWUfCK4E-wblq-AeD0GHar1yjcFc2XSVZM1fdhskS8oTvEBUAin1iKr8eY_eoGRJ52hBqcC6Y8m8n310CQaqvLzcD1vufZsdOHujnhq7P5cMBKvf6CeT_9BqPj9EDWGZaJeezI1t3hCF5J50A_YfQhimzjkYtCPOf-7T3roF_HGXUOnqzl2oFlpsxv6mxlQa0MFJIIONCl-Sf9tBc_AlwMTo46btmIck0Ql" />
 							<div
 								class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-								<span class="text-white font-label-md text-sm">Storefront Aesthetic: Nordic
+								<span class="text-white font-semibold text-sm">Storefront Aesthetic: Nordic
 									Minimal</span>
 							</div>
 						</div>
 						<div class="p-8 flex flex-col justify-center">
-							<h4 class="font-headline-md text-lg mb-2">Store Branding</h4>
-							<p class="text-slate-500 text-sm mb-6 font-body-md leading-relaxed">Your store currently
+							<h4 class="font-semibold tracking-tight text-lg mb-2">Store Branding</h4>
+							<p class="text-slate-500 text-sm mb-6 font-normal leading-relaxed">Your store currently
 								uses the "Nordic Lux" theme. This maintains a clean, high-contrast look suitable for
 								home decor products.</p>
 							<div class="space-y-3">
 								<div class="flex items-center gap-3">
 									<div class="w-8 h-8 rounded bg-slate-900"></div>
-									<span class="text-xs font-label-sm text-slate-600">Primary: #0F172A</span>
+									<span class="text-xs font-medium text-slate-600">Primary: #0F172A</span>
 								</div>
 								<div class="flex items-center gap-3">
 									<div class="w-8 h-8 rounded bg-white border border-slate-200"></div>
-									<span class="text-xs font-label-sm text-slate-600">Background: #FFFFFF</span>
+									<span class="text-xs font-medium text-slate-600">Background: #FFFFFF</span>
 								</div>
 								<div class="flex items-center gap-3">
 									<div
 										class="w-8 h-8 rounded border-2 border-slate-900 flex items-center justify-center text-[10px] font-bold">
 										Aa</div>
-									<span class="text-xs font-label-sm text-slate-600">Font: Manrope Bold /
+									<span class="text-xs font-medium text-slate-600">Font: Manrope Bold /
 										Regular</span>
 								</div>
 							</div>
@@ -224,10 +224,10 @@
 					<!-- Quick Links Card -->
 					<div class="bg-slate-900 text-white p-8 rounded-xl shadow-lg relative overflow-hidden group">
 						<div class="relative z-10">
-							<h4 class="font-headline-md text-lg mb-4">Management Actions</h4>
+							<h4 class="font-semibold tracking-tight text-lg mb-4">Management Actions</h4>
 							<div class="grid gap-3">
 								<button
-									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-label-md group/item">
+									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-semibold group/item">
 									<span class="flex items-center">
 										<span class="material-symbols-outlined mr-3" data-icon="add_box">add_box</span>
 										Add New Product
@@ -237,7 +237,7 @@
 										data-icon="arrow_forward">arrow_forward</span>
 								</button>
 								<button
-									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-label-md group/item">
+									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-semibold group/item">
 									<span class="flex items-center">
 										<span class="material-symbols-outlined mr-3"
 											data-icon="campaign">campaign</span>
@@ -248,7 +248,7 @@
 										data-icon="arrow_forward">arrow_forward</span>
 								</button>
 								<button
-									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-label-md group/item">
+									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-semibold group/item">
 									<span class="flex items-center">
 										<span class="material-symbols-outlined mr-3" data-icon="brush">brush</span>
 										Customize Theme
@@ -258,7 +258,7 @@
 										data-icon="arrow_forward">arrow_forward</span>
 								</button>
 								<button
-									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-label-md group/item">
+									class="w-full flex items-center justify-between p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-sm font-semibold group/item">
 									<span class="flex items-center">
 										<span class="material-symbols-outlined mr-3"
 											data-icon="analytics">analytics</span>
@@ -282,7 +282,7 @@
 								<span class="material-symbols-outlined" data-icon="warning">warning</span>
 							</div>
 							<div>
-								<h4 class="font-label-md text-slate-900">Inventory Alerts</h4>
+								<h4 class="font-semibold text-slate-900">Inventory Alerts</h4>
 								<p class="text-[10px] text-slate-500 uppercase tracking-widest">3 items low in stock</p>
 							</div>
 						</div>
@@ -319,7 +319,7 @@
 							</div>
 						</div>
 						<button
-							class="w-full mt-6 py-2 text-sm text-slate-500 hover:text-slate-900 font-label-md border-t border-slate-100 pt-4">
+							class="w-full mt-6 py-2 text-sm text-slate-500 hover:text-slate-900 font-semibold border-t border-slate-100 pt-4">
 							View Inventory Dashboard
 						</button>
 					</div>

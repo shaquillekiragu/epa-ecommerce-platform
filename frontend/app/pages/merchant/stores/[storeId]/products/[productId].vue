@@ -28,14 +28,14 @@
 			<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 				<div>
 					<div class="flex items-center gap-3 mb-1">
-						<h2 class="font-headline-lg text-headline-lg text-primary">Aura Studio Headphones</h2>
+						<h2 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Aura Studio Headphones</h2>
 						<span
 							class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center gap-1">
 							<span class="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
 							Live
 						</span>
 					</div>
-					<p class="text-slate-500 font-body-md">Category: Premium Audio / Wireless Over-Ear</p>
+					<p class="text-slate-500 font-normal">Category: Premium Audio / Wireless Over-Ear</p>
 				</div>
 				<div class="flex gap-3">
 					<button
@@ -44,7 +44,7 @@
 						Hide Product
 					</button>
 					<button
-						class="px-6 py-2 bg-primary text-on-primary font-semibold rounded-lg flex items-center gap-2 hover:opacity-90 active:opacity-100 transition-opacity">
+						class="px-6 py-2 bg-slate-900 text-white font-semibold rounded-lg flex items-center gap-2 hover:opacity-90 active:opacity-100 transition-opacity">
 						<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
 						Edit Product
 					</button>
@@ -61,14 +61,14 @@
 								src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZLj9bNLJUvpnZnLY6Bgiq86rRGjK2VVcSLZClJOge_S2Tv5zAzuLmRDTpKQShlBcVLq36KuSPdFBATFtnxSk-PjSJ0leE6Owci32IethpNSvKmsNr8NPz8IDGWLk0G-oZyHeRSez5nwhrCs9EahKl7rahi6QvJIJaD9lz2wVuU70P3yO04cfz3B1CrwCqc5XXYztfBlYHRlIFQ5UJnkLbIZEiJQdQGrzFuXRGFX3dS_RZAf_bYUcghps7XFODtiEy7irhvzTRXkmH" />
 							<div class="absolute top-4 left-4">
 								<button class="bg-white/90 backdrop-blur p-2 rounded-full shadow-sm">
-									<span class="material-symbols-outlined text-primary"
+									<span class="material-symbols-outlined text-slate-900"
 										data-icon="zoom_in">zoom_in</span>
 								</button>
 							</div>
 						</div>
 						<div class="p-6">
-							<h3 class="font-headline-md text-headline-md text-primary mb-4">Product Description</h3>
-							<p class="text-slate-600 font-body-md leading-relaxed">
+							<h3 class="font-semibold tracking-tight text-xl leading-snug text-slate-900 mb-4">Product Description</h3>
+							<p class="text-slate-600 font-normal leading-relaxed">
 								Engineered for the purist, the Aura Studio Headphones deliver uncompromising sonic
 								clarity and an expansive soundstage. Featuring custom 40mm drivers and active noise
 								cancellation, these headphones are the pinnacle of our merchant collection. The
@@ -80,36 +80,36 @@
 					<!-- SEO & Metadata Section -->
 					<div class="bg-white border border-slate-200 rounded-xl p-6">
 						<div class="flex items-center justify-between mb-6">
-							<h3 class="font-headline-md text-headline-md text-primary">SEO Metadata</h3>
+							<h3 class="font-semibold tracking-tight text-xl leading-snug text-slate-900">SEO Metadata</h3>
 							<span class="material-symbols-outlined text-slate-400" data-icon="info">info</span>
 						</div>
 						<div class="space-y-4">
 							<div>
-								<label class="block font-label-md text-label-md text-slate-500 mb-2">Meta Title</label>
+								<label class="block font-semibold text-sm text-slate-500 mb-2">Meta Title</label>
 								<div
-									class="p-3 bg-slate-50 rounded border border-slate-100 font-body-md text-slate-800">
+									class="p-3 bg-slate-50 rounded border border-slate-100 font-normal text-slate-800">
 									Aura Studio Headphones | High-Fidelity Wireless Audio | LuxCommerce
 								</div>
 							</div>
 							<div>
-								<label class="block font-label-md text-label-md text-slate-500 mb-2">Meta
+								<label class="block font-semibold text-sm text-slate-500 mb-2">Meta
 									Description</label>
 								<div
-									class="p-3 bg-slate-50 rounded border border-slate-100 font-body-md text-slate-600">
+									class="p-3 bg-slate-50 rounded border border-slate-100 font-normal text-slate-600">
 									Experience pure sound with the Aura Studio Headphones. Featuring 40mm drivers,
 									active noise cancellation, and 40-hour battery life. Shop now at LuxCommerce.
 								</div>
 							</div>
 							<div class="flex gap-4">
 								<div class="flex-1">
-									<label class="block font-label-md text-label-md text-slate-500 mb-2">Slug</label>
+									<label class="block font-semibold text-sm text-slate-500 mb-2">Slug</label>
 									<div
-										class="p-3 bg-slate-50 rounded border border-slate-100 font-body-md text-primary">
+										class="p-3 bg-slate-50 rounded border border-slate-100 font-normal text-slate-900">
 										/products/aura-studio-headphones-v1
 									</div>
 								</div>
 								<div class="flex-1">
-									<label class="block font-label-md text-label-md text-slate-500 mb-2">Tags</label>
+									<label class="block font-semibold text-sm text-slate-500 mb-2">Tags</label>
 									<div class="flex flex-wrap gap-2">
 										<span
 											class="px-2 py-1 bg-slate-200 text-slate-700 text-xs font-semibold rounded">Audio</span>
@@ -127,42 +127,42 @@
 				<div class="col-span-12 lg:col-span-4 space-y-6">
 					<!-- Inventory & Pricing -->
 					<div class="bg-white border border-slate-200 rounded-xl p-6">
-						<h3 class="font-headline-md text-headline-md text-primary mb-6">Inventory Status</h3>
+						<h3 class="font-semibold tracking-tight text-xl leading-snug text-slate-900 mb-6">Inventory Status</h3>
 						<div class="space-y-6">
 							<div class="flex justify-between items-end pb-4 border-b border-slate-100">
 								<div>
-									<p class="font-label-sm text-label-sm text-slate-500 mb-1">Current Stock</p>
-									<p class="font-display-lg text-display-lg text-primary">1,248</p>
+									<p class="font-medium text-xs text-slate-500 mb-1">Current Stock</p>
+									<p class="font-bold tracking-tight text-4xl leading-tight text-slate-900">1,248</p>
 								</div>
 								<div class="text-right">
 									<p
-										class="font-label-sm text-label-sm text-green-600 mb-1 flex items-center justify-end">
+										class="font-medium text-xs text-green-600 mb-1 flex items-center justify-end">
 										<span class="material-symbols-outlined text-xs mr-1"
 											data-icon="trending_up">trending_up</span>
 										+12%
 									</p>
-									<p class="font-body-md text-slate-500">Units / Month</p>
+									<p class="font-normal text-slate-500">Units / Month</p>
 								</div>
 							</div>
 							<div class="grid grid-cols-2 gap-4">
 								<div>
-									<p class="font-label-sm text-label-sm text-slate-500 mb-1 uppercase tracking-wider">
+									<p class="font-medium text-xs text-slate-500 mb-1 uppercase tracking-wider">
 										SKU</p>
-									<p class="font-body-lg text-body-lg text-primary font-bold">LX-ASH-001</p>
+									<p class="font-normal text-lg text-slate-900 font-bold">LX-ASH-001</p>
 								</div>
 								<div>
-									<p class="font-label-sm text-label-sm text-slate-500 mb-1 uppercase tracking-wider">
+									<p class="font-medium text-xs text-slate-500 mb-1 uppercase tracking-wider">
 										Price</p>
-									<p class="font-body-lg text-body-lg text-primary font-bold">$349.00</p>
+									<p class="font-normal text-lg text-slate-900 font-bold">$349.00</p>
 								</div>
 							</div>
 							<div>
 								<div class="flex justify-between mb-2">
-									<span class="font-label-md text-label-md text-slate-700">Stock Threshold</span>
-									<span class="font-label-md text-label-md text-slate-900 font-bold">Low (100)</span>
+									<span class="font-semibold text-sm text-slate-700">Stock Threshold</span>
+									<span class="font-semibold text-sm text-slate-900 font-bold">Low (100)</span>
 								</div>
 								<div class="w-full bg-slate-100 h-2 rounded-full">
-									<div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+									<div class="bg-slate-900 h-2 rounded-full" style="width: 85%"></div>
 								</div>
 							</div>
 						</div>
@@ -170,14 +170,14 @@
 					<!-- Quick Actions / Details -->
 					<div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
 						<div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
-							<h3 class="font-label-md text-label-md text-slate-900">Distribution Channels</h3>
+							<h3 class="font-semibold text-sm text-slate-900">Distribution Channels</h3>
 						</div>
 						<div class="p-6 space-y-4">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-3">
 									<span class="material-symbols-outlined text-slate-400"
 										data-icon="public">public</span>
-									<span class="font-body-md text-slate-700">Online Store</span>
+									<span class="font-normal text-slate-700">Online Store</span>
 								</div>
 								<span class="material-symbols-outlined text-green-500" data-icon="check_circle"
 									data-weight="fill">check_circle</span>
@@ -186,7 +186,7 @@
 								<div class="flex items-center gap-3">
 									<span class="material-symbols-outlined text-slate-400"
 										data-icon="shopping_bag">shopping_bag</span>
-									<span class="font-body-md text-slate-700">Mobile App</span>
+									<span class="font-normal text-slate-700">Mobile App</span>
 								</div>
 								<span class="material-symbols-outlined text-green-500" data-icon="check_circle"
 									data-weight="fill">check_circle</span>
@@ -194,7 +194,7 @@
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-3">
 									<span class="material-symbols-outlined text-slate-400" data-icon="hub">hub</span>
-									<span class="font-body-md text-slate-700">Marketplaces</span>
+									<span class="font-normal text-slate-700">Marketplaces</span>
 								</div>
 								<span class="material-symbols-outlined text-slate-300"
 									data-icon="radio_button_unchecked">radio_button_unchecked</span>
@@ -203,20 +203,20 @@
 					</div>
 					<!-- Audit Trail Card -->
 					<div class="bg-white border border-slate-200 rounded-xl p-6">
-						<h3 class="font-label-md text-label-md text-primary mb-4 uppercase tracking-widest">Last
+						<h3 class="font-semibold text-sm text-slate-900 mb-4 uppercase tracking-widest">Last
 							Activity</h3>
 						<div class="space-y-4">
 							<div class="flex gap-3">
 								<div class="w-2 h-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
 								<div>
-									<p class="font-label-sm text-label-sm text-slate-800">Inventory count updated</p>
+									<p class="font-medium text-xs text-slate-800">Inventory count updated</p>
 									<p class="text-[10px] text-slate-400">2 hours ago • Warehouse A</p>
 								</div>
 							</div>
 							<div class="flex gap-3">
 								<div class="w-2 h-2 rounded-full bg-slate-300 mt-1.5 shrink-0"></div>
 								<div>
-									<p class="font-label-sm text-label-sm text-slate-800">Price changed from $329 to
+									<p class="font-medium text-xs text-slate-800">Price changed from $329 to
 										$349</p>
 									<p class="text-[10px] text-slate-400">Yesterday • Admin User</p>
 								</div>

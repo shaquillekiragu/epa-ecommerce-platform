@@ -175,7 +175,7 @@ const content_class = computed(() => {
 
 const title_class = computed(() => {
 	if (layout === 'tri') {
-		return 'font-label-md text-label-md block'
+		return 'font-semibold text-sm block'
 	}
 	return ''
 })
