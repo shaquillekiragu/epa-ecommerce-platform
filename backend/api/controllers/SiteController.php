@@ -65,15 +65,15 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    // /**
-    //  * Displays error page.
-    //  *
-    //  * @return string
-    //  */
-    // public function actionError()
-    // {
-    //     return $this->render('error');
-    // }
+    /**
+     * Displays error page.
+     *
+     * @return string
+     */
+    public function actionError()
+    {
+        return $this->render('error');
+    }
 
     /**
      * Login action.
