@@ -1,57 +1,59 @@
 <template>
 	<header
 		class="bg-white dark:bg-slate-900 docked full-width top-0 z-50 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky">
-		<div class="flex items-center justify-between w-full px-6 h-16 max-w-[1280px] mx-auto">
-			<!-- Brand -->
-			<NuxtLink class="text-xl font-extrabold tracking-tighter text-slate-900 dark:text-white" to="/">
+		<div class="flex items-center justify-between w-full px-6 h-20 max-w-7xl mx-auto">
+			<NuxtLink class="text-2xl font-extrabold tracking-tighter text-slate-900 dark:text-white" to="/">
 				LuxCommerce
 			</NuxtLink>
 
-			<!-- Search (Left aligned relative to nav as per 'on_left') -->
-			<div class="hidden md:flex flex-1 mx-8 max-w-md relative items-center">
-				<span class="material-symbols-outlined absolute left-3 text-outline"
-					style="font-variation-settings: 'FILL' 0">search</span>
-				<input
-					class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 pl-10 pr-4 text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-					placeholder="Search for luxury goods..." type="text" />
-			</div>
-
-			<!-- Navigation Links -->
-			<nav class="hidden md:flex items-center gap-6 font-['Manrope'] text-sm font-medium">
+			<nav class="hidden md:flex items-center gap-12 text-sm font-medium">
 				<NuxtLink
-					class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="/catalogue">Shop</NuxtLink>
-				<NuxtLink
+					v-for="link in nav_links"
+					:key="link.text"
 					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="/categories">Categories</NuxtLink>
-				<NuxtLink
-					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="#">Deals</NuxtLink>
-				<NuxtLink
-					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
-					to="/merchant">Merchant Portal</NuxtLink>
+					active-class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1"
+					exact-active-class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1"
+					:to="link.url"
+				>
+					{{ link.text }}
+				</NuxtLink>
 			</nav>
 
-			<!-- Trailing Icons -->
-			<div class="flex items-center gap-4 text-slate-900 dark:text-slate-50">
-				<button
-					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95 relative">
+			<div class="flex items-center gap-6 text-slate-900 dark:text-slate-50">
+				<NuxtLink
+					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95 relative"
+					to="/basket">
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">shopping_cart</span>
 					<span
 						class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">3</span>
-				</button>
+				</NuxtLink>
+				
 				<button
-					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95">
+					class="hover:text-slate-900 dark:hover:text-white hover:cursor-pointer transition active:scale-95">
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">notifications</span>
 				</button>
-				<button
-					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95">
+
+				<NuxtLink
+					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95"
+					to="/account">
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">account_circle</span>
-				</button>
+				</NuxtLink>
 			</div>
 		</div>
 	</header>
 </template>
+
+<script setup lang="ts">
+import type { NavLink } from '~/types/miscellaneous';
+
+const nav_links: NavLink[] = [
+	{ text: 'Home', url: '/', is_primary: false },
+	{ text: 'Shop', url: '/catalogue', is_primary: false },
+	{ text: 'Categories', url: '/categories', is_primary: false },
+	{ text: 'Merchant Portal', url: '/merchant', is_primary: false },
+]
+
+</script>
