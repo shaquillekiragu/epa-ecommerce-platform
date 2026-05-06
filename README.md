@@ -1,4 +1,4 @@
-# epa-ecommerce-platform
+# MerchFlow
 
 ## Enter docker container:
 ```sh

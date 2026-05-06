@@ -1,9 +1,9 @@
 <template>
 	<header
 		class="bg-white dark:bg-slate-900 docked full-width top-0 z-50 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky">
-		<div class="flex items-center justify-between w-full px-6 h-20 max-w-7xl mx-auto">
+		<div class="flex items-center justify-between w-full px-16 h-20 overflow-x-hidden">
 			<NuxtLink class="text-2xl font-extrabold tracking-tighter text-slate-900 dark:text-white" to="/">
-				LuxCommerce
+				MerchFlow
 			</NuxtLink>
 
 			<nav class="hidden md:flex items-center gap-12 text-sm font-medium">
