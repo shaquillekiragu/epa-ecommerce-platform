@@ -2,113 +2,81 @@
 
 namespace api\controllers;
 
-use common\models\LoginForm;
 use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\Controller;
+use yii\filters\ContentNegotiator;
+use yii\filters\Cors;
+use yii\rest\Controller;
 use yii\web\Response;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
+        $behaviors = parent::behaviors();
+
+        $behaviors['contentNegotiator'] = [
+            'class' => ContentNegotiator::class,
+            'formats' => [
+                'application/json' => Response::FORMAT_JSON,
             ],
         ];
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
+        $behaviors['corsFilter'] = [
+            'class' => Cors::class,
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+                'Access-Control-Allow-Credentials' => false,
+                'Access-Control-Max-Age' => 86400,
             ],
         ];
+
+        return $behaviors;
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
-        return $this->render('index');
+        return [
+            'ok' => true,
+            'service' => 'epa-ecommerce-platform-api',
+            'version' => 'v1',
+            'time' => date(DATE_ATOM),
+        ];
     }
 
-    /**
-     * Displays error page.
-     *
-     * @return string
-     */
     public function actionError()
     {
-        return $this->render('error');
-    }
+        $exception = Yii::$app->errorHandler->exception;
 
-    /**
-     * Login action.
-     *
-     * @return string|Response
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        if ($exception === null) {
+            Yii::$app->response->statusCode = 500;
+            return [
+                'name' => 'Error',
+                'message' => 'An unexpected error occurred.',
+                'status' => 500,
+            ];
         }
 
-        $this->layout = 'blank';
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $status = 500;
+        if ($exception instanceof \yii\web\HttpException) {
+            $status = (int)$exception->statusCode;
         }
 
-        $model->password = '';
+        Yii::$app->response->statusCode = $status;
 
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+        $payload = [
+            'name' => (new \ReflectionClass($exception))->getShortName(),
+            'message' => YII_DEBUG ? (string)$exception->getMessage() : 'An unexpected error occurred.',
+            'status' => $status,
+        ];
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
+        if (YII_DEBUG) {
+            $payload['type'] = get_class($exception);
+            $payload['file'] = $exception->getFile();
+            $payload['line'] = $exception->getLine();
+        }
 
-        return $this->goHome();
+        return $payload;
     }
 }
