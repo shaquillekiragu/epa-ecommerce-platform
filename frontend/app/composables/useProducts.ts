@@ -27,7 +27,7 @@ function unwrapCollection<T>(data: unknown): T[] {
 	if (data && typeof data === 'object' && 'items' in (data as any) && Array.isArray((data as any).items)) {
 		return (data as any).items as T[];
 	}
-    
+
 	return [];
 }
 
@@ -71,6 +71,7 @@ export function useProducts(query: ProductsQuery = {}) {
 	const products = useState<Product[]>('products', () => []);
 	const pending = useState<boolean>('products_pending', () => false);
 	const error = useState<unknown>('products_error', () => null);
+	const did_autoload = useState<boolean>('products_did_autoload', () => false);
 
 	function buildQueryString(q: ProductsQuery): string {
 		const params = new URLSearchParams();
@@ -100,22 +101,24 @@ export function useProducts(query: ProductsQuery = {}) {
 
 	const product_cards = computed<ProductCard[]>(() => products.value.map(toCard));
 
-	if (products.value.length === 0 && !pending.value && error.value === null) {
-		refresh().catch(() => {});
-	}
+	onMounted(() => {
+		if (!did_autoload.value && products.value.length === 0 && !pending.value) {
+			did_autoload.value = true;
+			refresh().catch(() => {});
+		}
+	});
 
 	return { products, product_cards, pending, error, refresh };
 }
 
-// Backwards-compatible exports used by existing components.
 export function getProducts(): Product[] {
 	const { products, refresh } = useProducts();
-	if (products.value.length === 0) refresh().catch(() => {});
+	if (import.meta.client && products.value.length === 0) refresh().catch(() => {});
 	return products.value;
 }
 
 export function getProductCards(): ProductCard[] {
 	const { product_cards, refresh, products } = useProducts();
-	if (products.value.length === 0) refresh().catch(() => {});
+	if (import.meta.client && products.value.length === 0) refresh().catch(() => {});
 	return product_cards.value;
 }
