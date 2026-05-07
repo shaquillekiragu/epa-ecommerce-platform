@@ -28,6 +28,13 @@ class Basket extends BaseModel
                 ],
                 [
                     [
+                        'customer_id',
+                    ],
+                    'unique',
+                    'message' => 'You already have an open basket.'
+                ],
+                [
+                    [
                         'price_total',
                     ],
                     'number'
@@ -108,5 +115,3 @@ class Basket extends BaseModel
         return round($sub_total, 2);
     }
 }
-
-// Ownership: Optionally one open basket per customer — enforce via unique constraint or app check.
