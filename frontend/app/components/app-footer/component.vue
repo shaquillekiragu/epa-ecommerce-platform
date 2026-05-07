@@ -5,7 +5,7 @@
 			<div class="flex flex-col items-center md:items-start gap-2">
 				<span class="text-lg font-black text-slate-900 dark:text-white">LuxCommerce</span>
 				<p class="text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500">
-					© 2026 LuxCommerce Inc. Engineered for efficiency.
+					© 2026 MerchFlow Inc. Engineered for efficiency.
 				</p>
 			</div>
 			<nav
