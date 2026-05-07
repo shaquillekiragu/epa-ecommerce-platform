@@ -158,7 +158,7 @@ class User extends BaseModel implements IdentityInterface
         return null;
     }
 
-    public function validateAuthKey($authKey)
+    public function validateAuthKey($auth_key)
     {
         return false;
     }

@@ -12,36 +12,36 @@ class BearerTokenAuth extends AuthMethod
 {
     public function authenticate($user, $request, $response)
     {
-        $authHeader = (string) $request->getHeaders()->get('Authorization', '');
+        $auth_header = (string) $request->getHeaders()->get('Authorization', '');
         
-        if ($authHeader === '' || stripos($authHeader, 'Bearer ') !== 0) {
+        if ($auth_header === '' || stripos($auth_header, 'Bearer ') !== 0) {
             return null;
         }
 
-        $token = trim(substr($authHeader, 7));
+        $token = trim(substr($auth_header, 7));
 
         if ($token === '') {
             return null;
         }
 
-        $tokenHash = hash('sha256', $token);
+        $token_hash = hash('sha256', $token);
 
-        /** @var Usertoken|null $userToken */
-        $userToken = Usertoken::findOne(['token_hash' => $tokenHash]);
+        /** @var Usertoken|null $user_token */
+        $user_token = Usertoken::findOne(['token_hash' => $token_hash]);
 
-        if ($userToken === null || $userToken->isRevoked || $userToken->isExpired) {
+        if ($user_token === null || $user_token->isRevoked || $user_token->isExpired) {
             throw new UnauthorizedHttpException('Invalid or expired token.');
         }
 
         /** @var User|null $identity */
-        $identity = $userToken->user;
+        $identity = $user_token->user;
 
         if ($identity === null || !$identity->is_active) {
             throw new UnauthorizedHttpException('User is inactive.');
         }
 
-        $userToken->last_used_at = date('Y-m-d H:i:s');
-        $userToken->save(false, ['last_used_at']);
+        $user_token->last_used_at = date('Y-m-d H:i:s');
+        $user_token->save(false, ['last_used_at']);
 
         Yii::$app->user->setIdentity($identity);
 

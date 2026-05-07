@@ -24,14 +24,14 @@ class MerchantController extends _ApiController
     public function actionStore()
     {
         $this->requireRole('merchant');
-        $merchantId = (int) Yii::$app->user->id;
+        $merchant_id = (int) Yii::$app->user->id;
 
-        $storeId = (int) Yii::$app->request->get('id', 0);
-        if ($storeId <= 0) {
+        $store_id = (int) Yii::$app->request->get('id', 0);
+        if ($store_id <= 0) {
             throw new BadRequestHttpException('Store id is required.');
         }
 
-        $store = Store::findOne(['id' => $storeId, 'merchant_id' => $merchantId]);
+        $store = Store::findOne(['id' => $store_id, 'merchant_id' => $merchant_id]);
         if ($store === null) {
             throw new NotFoundHttpException('Store not found.');
         }
@@ -42,20 +42,20 @@ class MerchantController extends _ApiController
     public function actionOrders()
     {
         $this->requireRole('merchant');
-        $merchantId = (int) Yii::$app->user->id;
+        $merchant_id = (int) Yii::$app->user->id;
 
-        $storeId = (int) Yii::$app->request->get('store', 0);
-        if ($storeId <= 0) {
+        $store_id = (int) Yii::$app->request->get('store', 0);
+        if ($store_id <= 0) {
             throw new BadRequestHttpException('store query param is required.');
         }
 
-        $store = Store::findOne(['id' => $storeId, 'merchant_id' => $merchantId]);
+        $store = Store::findOne(['id' => $store_id, 'merchant_id' => $merchant_id]);
         if ($store === null) {
             throw new ForbiddenHttpException('Not your store.');
         }
 
         return Order::find()
-            ->where(['store_id' => $storeId])
+            ->where(['store_id' => $store_id])
             ->orderBy(['order_datetime' => SORT_DESC])
             ->all();
     }
@@ -63,14 +63,14 @@ class MerchantController extends _ApiController
     public function actionOrderStatus($id)
     {
         $this->requireRole('merchant');
-        $merchantId = (int) Yii::$app->user->id;
+        $merchant_id = (int) Yii::$app->user->id;
 
         $order = Order::findOne(['id' => (int) $id]);
         if ($order === null) {
             throw new NotFoundHttpException('Order not found.');
         }
 
-        $store = Store::findOne(['id' => $order->store_id, 'merchant_id' => $merchantId]);
+        $store = Store::findOne(['id' => $order->store_id, 'merchant_id' => $merchant_id]);
         if ($store === null) {
             throw new ForbiddenHttpException('Not your order.');
         }
@@ -92,22 +92,22 @@ class MerchantController extends _ApiController
     public function actionProducts()
     {
         $this->requireRole('merchant');
-        $merchantId = (int) Yii::$app->user->id;
+        $merchant_id = (int) Yii::$app->user->id;
         $body = Yii::$app->request->getBodyParams();
 
-        $storeId = (int) ($body['store_id'] ?? 0);
-        if ($storeId <= 0) {
+        $store_id = (int) ($body['store_id'] ?? 0);
+        if ($store_id <= 0) {
             throw new BadRequestHttpException('store_id is required.');
         }
 
-        $store = Store::findOne(['id' => $storeId, 'merchant_id' => $merchantId]);
+        $store = Store::findOne(['id' => $store_id, 'merchant_id' => $merchant_id]);
         if ($store === null) {
             throw new ForbiddenHttpException('Not your store.');
         }
 
         $product = new Product();
         $product->load($body, '');
-        $product->store_id = $storeId;
+        $product->store_id = $store_id;
         $product->allow_update = true;
         $product->allow_delete = true;
 
@@ -121,14 +121,14 @@ class MerchantController extends _ApiController
     public function actionDeleteProduct($id)
     {
         $this->requireRole('merchant');
-        $merchantId = (int) Yii::$app->user->id;
+        $merchant_id = (int) Yii::$app->user->id;
 
         $product = Product::findOne(['id' => (int) $id]);
         if ($product === null) {
             throw new NotFoundHttpException('Product not found.');
         }
 
-        $store = Store::findOne(['id' => $product->store_id, 'merchant_id' => $merchantId]);
+        $store = Store::findOne(['id' => $product->store_id, 'merchant_id' => $merchant_id]);
         if ($store === null) {
             throw new ForbiddenHttpException('Not your product.');
         }

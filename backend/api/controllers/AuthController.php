@@ -96,12 +96,12 @@ class AuthController extends Controller
             throw new UnauthorizedHttpException('User is inactive.');
         }
 
-        $rawToken = Yii::$app->security->generateRandomString(64);
-        $tokenHash = hash('sha256', $rawToken);
+        $raw_token = Yii::$app->security->generateRandomString(64);
+        $token_hash = hash('sha256', $raw_token);
 
         $token = new Usertoken();
         $token->user_id = (int) $user->id;
-        $token->token_hash = $tokenHash;
+        $token->token_hash = $token_hash;
         $token->expires_at = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 30)); // 30 days
 
         if (!$token->save()) {
@@ -109,7 +109,7 @@ class AuthController extends Controller
         }
 
         return [
-            'token' => $rawToken,
+            'token' => $raw_token,
             'token_type' => 'bearer',
             'expires_at' => $token->expires_at,
             'user' => [
@@ -123,18 +123,18 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        $authHeader = (string) Yii::$app->request->getHeaders()->get('Authorization', '');
-        if ($authHeader === '' || stripos($authHeader, 'Bearer ') !== 0) {
+        $auth_header = (string) Yii::$app->request->getHeaders()->get('Authorization', '');
+        if ($auth_header === '' || stripos($auth_header, 'Bearer ') !== 0) {
             throw new UnauthorizedHttpException('Missing bearer token.');
         }
 
-        $rawToken = trim(substr($authHeader, 7));
-        if ($rawToken === '') {
+        $raw_token = trim(substr($auth_header, 7));
+        if ($raw_token === '') {
             throw new UnauthorizedHttpException('Missing bearer token.');
         }
 
-        $tokenHash = hash('sha256', $rawToken);
-        $token = Usertoken::findOne(['token_hash' => $tokenHash]);
+        $token_hash = hash('sha256', $raw_token);
+        $token = Usertoken::findOne(['token_hash' => $token_hash]);
         if ($token === null) {
             return ['ok' => true];
         }

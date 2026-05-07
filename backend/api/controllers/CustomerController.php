@@ -43,30 +43,30 @@ class CustomerController extends _ApiController
     {
         $this->requireRole('customer');
         $body = Yii::$app->request->getBodyParams();
-        $productId = (int) ($body['product_id'] ?? 0);
+        $product_id = (int) ($body['product_id'] ?? 0);
         $quantity = (int) ($body['quantity'] ?? 0);
-        if ($productId <= 0 || $quantity <= 0) {
+        if ($product_id <= 0 || $quantity <= 0) {
             throw new BadRequestHttpException('product_id and quantity are required.');
         }
 
-        $product = Product::findOne($productId);
+        $product = Product::findOne($product_id);
         if ($product === null || !$product->is_active) {
             throw new NotFoundHttpException('Product not found.');
         }
 
         $basket = $this->getOrCreateBasket((int) Yii::$app->user->id);
 
-        $existing = Basketproduct::findOne(['basket_id' => $basket->id, 'product_id' => $productId]);
-        $newQty = $quantity + (int) ($existing?->quantity ?? 0);
-        $newQty = min($newQty, (int) $product->number_in_stock);
-        if ($newQty <= 0) {
+        $existing = Basketproduct::findOne(['basket_id' => $basket->id, 'product_id' => $product_id]);
+        $new_qty = $quantity + (int) ($existing?->quantity ?? 0);
+        $new_qty = min($new_qty, (int) $product->number_in_stock);
+        if ($new_qty <= 0) {
             throw new BadRequestHttpException('Insufficient stock.');
         }
 
         $item = $existing ?? new Basketproduct();
         $item->basket_id = $basket->id;
-        $item->product_id = $productId;
-        $item->quantity = $newQty;
+        $item->product_id = $product_id;
+        $item->quantity = $new_qty;
 
         if (!$item->save()) {
             throw new BadRequestHttpException(json_encode($item->errors));
@@ -113,8 +113,8 @@ class CustomerController extends _ApiController
     public function actionCheckout()
     {
         $this->requireRole('customer');
-        $userId = (int) Yii::$app->user->id;
-        $basket = Basket::findOne(['customer_id' => $userId]);
+        $user_id = (int) Yii::$app->user->id;
+        $basket = Basket::findOne(['customer_id' => $user_id]);
         if ($basket === null) {
             throw new BadRequestHttpException('Basket is empty.');
         }
@@ -140,18 +140,18 @@ class CustomerController extends _ApiController
                 $groups[(int) $product->store_id][] = [$item, $product];
             }
 
-            $createdOrders = [];
+            $created_orders = [];
 
-            foreach ($groups as $storeId => $rows) {
-                $orderTotal = 0.0;
+            foreach ($groups as $store_id => $rows) {
+                $order_total = 0.0;
                 foreach ($rows as [$item, $product]) {
-                    $orderTotal += ((float) $product->price_in_gbp) * ((int) $item->quantity);
+                    $order_total += ((float) $product->price_in_gbp) * ((int) $item->quantity);
                 }
 
                 $order = new Order();
-                $order->customer_id = $userId;
-                $order->store_id = (int) $storeId;
-                $order->price_total = $orderTotal;
+                $order->customer_id = $user_id;
+                $order->store_id = (int) $store_id;
+                $order->price_total = $order_total;
                 $order->order_datetime = date('Y-m-d H:i:s');
                 $order->status = 'pending_payment';
                 $order->allow_update = true;
@@ -175,7 +175,7 @@ class CustomerController extends _ApiController
                     }
                 }
 
-                $createdOrders[] = $order;
+                $created_orders[] = $order;
             }
 
             // Clear basket after checkout creation.
@@ -192,7 +192,7 @@ class CustomerController extends _ApiController
                     'status' => $o->status,
                     'price_total' => $o->price_total,
                     'order_datetime' => $o->order_datetime,
-                ], $createdOrders),
+                ], $created_orders),
             ];
         } catch (\Throwable $e) {
             $tx->rollBack();
@@ -203,22 +203,22 @@ class CustomerController extends _ApiController
     public function actionOrders()
     {
         $this->requireRole('customer');
-        $userId = (int) Yii::$app->user->id;
+        $user_id = (int) Yii::$app->user->id;
         return Order::find()
-            ->where(['customer_id' => $userId])
+            ->where(['customer_id' => $user_id])
             ->orderBy(['order_datetime' => SORT_DESC])
             ->all();
     }
 
-    private function getOrCreateBasket(int $customerId): Basket
+    private function getOrCreateBasket(int $customer_id): Basket
     {
-        $basket = Basket::findOne(['customer_id' => $customerId]);
+        $basket = Basket::findOne(['customer_id' => $customer_id]);
         if ($basket !== null) {
             return $basket;
         }
 
         $basket = new Basket();
-        $basket->customer_id = $customerId;
+        $basket->customer_id = $customer_id;
         $basket->price_total = 0;
         $basket->allow_update = true;
         $basket->allow_delete = true;
