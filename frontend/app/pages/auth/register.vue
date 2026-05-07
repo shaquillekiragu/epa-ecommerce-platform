@@ -68,9 +68,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-	middleware: ['auth'],
-});
+import type { ApiError } from '~/composables/useApi';
 
 const first_name = ref('');
 const last_name = ref('');
@@ -84,6 +82,24 @@ const error = ref<string | null>(null);
 const loading = ref(false);
 
 const { register } = useAuth();
+
+function to_friendly_error(e: unknown): string {
+	const err = e as Partial<ApiError> | null;
+
+	if (err?.status === 400) {
+		return 'Please check your details and try again.';
+	}
+
+	if (err?.status === 401) {
+		return 'Please sign in again and retry.';
+	}
+
+	if (err?.status === 0) {
+		return 'Could not reach the server. Please try again.';
+	}
+
+	return 'We could not create your account. Please try again.';
+}
 
 async function on_submit() {
 	error.value = null;
@@ -104,7 +120,7 @@ async function on_submit() {
 		});
 		await navigateTo('/auth/login');
 	} catch (e: any) {
-		error.value = e?.message ?? 'Registration failed';
+		error.value = to_friendly_error(e);
 	} finally {
 		loading.value = false;
 	}

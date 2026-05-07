@@ -37,9 +37,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-	middleware: ['auth'],
-});
+import type { ApiError } from '~/composables/useApi';
 
 const email = ref('');
 const password = ref('');
@@ -47,6 +45,20 @@ const error = ref<string | null>(null);
 const loading = ref(false);
 
 const { login, role } = useAuth();
+
+function to_friendly_error(e: unknown): string {
+	const err = e as Partial<ApiError> | null;
+
+	if (err?.status === 401) {
+		return 'Incorrect email or password.';
+	}
+
+	if (err?.status === 0) {
+		return 'Could not reach the server. Please try again.';
+	}
+
+	return 'We could not sign you in. Please try again.';
+}
 
 async function on_submit() {
 	error.value = null;
@@ -60,7 +72,7 @@ async function on_submit() {
 			await navigateTo('/');
 		}
 	} catch (e: any) {
-		error.value = e?.message ?? 'Login failed';
+		error.value = to_friendly_error(e);
 	} finally {
 		loading.value = false;
 	}
