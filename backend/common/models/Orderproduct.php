@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use yii\db\ActiveQuery;
 use common\models\BaseModel;
 
@@ -32,6 +33,20 @@ class Orderproduct extends BaseModel
                     'number'
                 ],
                 [
+                    ['product_id'],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => Product::class,
+                    'targetAttribute' => ['product_id' => 'id']
+                ],
+                [
+                    ['order_id'],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => Order::class,
+                    'targetAttribute' => ['order_id' => 'id']
+                ],
+                [
                     [
                         'product_id',
                         'order_id',
@@ -45,6 +60,16 @@ class Orderproduct extends BaseModel
                     'compare',
                     'compareValue' => 1,
                     'operator' => '>='
+                ],
+                [
+                    ['price_at_purchase_in_gbp'],
+                    'compare',
+                    'compareValue' => 0,
+                    'operator' => '>='
+                ],
+                [
+                    ['price_at_purchase_in_gbp'],
+                    'validatePriceSnapshot',
                 ],
                 [
                     [
@@ -85,14 +110,63 @@ class Orderproduct extends BaseModel
     {
         return round(((float)$this->price_at_purchase_in_gbp) * ((int)$this->quantity), 2);
     }
+
+    public function validatePriceSnapshot(string $attribute): void
+    {
+        if ($this->hasErrors()) {
+            return;
+        }
+
+        if (!$this->isNewRecord && $this->isAttributeChanged($attribute)) {
+            $this->addError($attribute, 'Price snapshot cannot be changed after checkout.');
+        }
+    }
+
+    #[Override]
+    public function beforeSave($insert)
+    {
+        if (!$insert) {
+            $order = $this->order;
+            if ($order !== null && $order->isFinanciallyLocked()) {
+                $locked = ['product_id', 'quantity', 'price_at_purchase_in_gbp', 'order_id'];
+                foreach ($locked as $attr) {
+                    if ($this->isAttributeChanged($attr)) {
+                        $this->addError($attr, 'Order items cannot be modified after the order is paid/shipped/delivered/cancelled/refunded.');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // If caller didn't set a snapshot price, default it from product price.
+        if ($insert && (string) $this->price_at_purchase_in_gbp === '' && $this->product !== null) {
+            $this->price_at_purchase_in_gbp = (float) $this->product->price_in_gbp;
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    #[Override]
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $this->recalcOrderTotal();
+    }
+
+    #[Override]
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $this->recalcOrderTotal();
+    }
+
+    private function recalcOrderTotal(): void
+    {
+        $order = $this->order;
+        if ($order === null) {
+            return;
+        }
+
+        $order->recalcAndPersistTotal();
+    }
 }
-
-// Model today: Unique (order_id, product_id); price_at_purchase_in_gbp snapshots line price.
-
-// Recommended business logic:
-
-// Quantity: Same as basket lines; ≥ 1.
-// Price integrity: Freeze price_at_purchase_in_gbp at checkout from product/promotions; validate at creation, not on later reads.
-// Immutability: No edits after order paid except superadmin correction with trail.
-
-// Leave child models empty — use api\models\Orderproduct for read-only customer exposure if needed.

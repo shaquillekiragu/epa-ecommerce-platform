@@ -141,7 +141,6 @@ class Order extends BaseModel
             }
         }
 
-        // Keep totals consistent with line items once they exist.
         if (!$insert && $this->hasLineItems()) {
             $this->price_total = $this->getOrderTotal();
         }
