@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\db\ActiveQuery;
+use yii\base\InvalidCallException;
 use common\models\BaseModel;
 
 class Useraddress extends BaseModel
@@ -53,6 +54,19 @@ class Useraddress extends BaseModel
             ]
         );
     }
+    
+        public function beforeSave($insert)
+        {
+            if (!$insert) {
+                $original_user_id = $this->getOldAttribute('user_id');
+                
+                if ($original_user_id !== null && (int)$this->user_id !== (int)$original_user_id) {
+                    throw new InvalidCallException('Cannot change user_id for an existing user_address row. Delete and recreate the link instead.');
+                }
+            }
+    
+            return parent::beforeSave($insert);
+        }
 
     public function getUser(): ActiveQuery
     {
@@ -64,13 +78,3 @@ class Useraddress extends BaseModel
         return $this->hasOne(Address::class, ['id' => 'address_id']);
     }
 }
-
-// Model today: Join user_id ↔ address_id; unique (user_id, address_id).
-
-// Recommended business logic:
-
-// Ownership: Ensure address is not linked in conflicting ways without rules (e.g. shared address rows).
-// Default address: If you add default shipping, enforce one-per-user in app logic (not in current schema).
-// Cascade: Define behaviour on user delete (orphan addresses vs cascade).
-
-// Leave child models empty — use api\models\Useraddress / superadmin\models\Useraddress for scenario splits.
