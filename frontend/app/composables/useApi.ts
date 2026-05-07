@@ -8,7 +8,8 @@ export type ApiError = {
 
 function getApiBaseUrl(): string {
 	const env = useRuntimeConfig().public as { apiBaseUrl?: string };
-	return (env.apiBaseUrl ?? 'http://localhost:21080/api/v1').replace(/\/+$/, '');
+	const configured = (env.apiBaseUrl ?? '').trim();
+	return (configured !== '' ? configured : 'http://localhost:21080/api/v1').replace(/\/+$/, '');
 }
 
 export function useApi() {

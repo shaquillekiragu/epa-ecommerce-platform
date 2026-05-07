@@ -35,19 +35,9 @@ export function useAuth() {
 			return null;
 		}
 
-		// This endpoint is role/customer protected; for merchants, we’ll use it too
-		// by changing backend later, but for now use /api/v1/user if present.
-		// We wired GET /api/v1/user -> CustomerController::actionUser (customer only).
-		// For now, we’ll attempt it and ignore failures.
-		try {
-			const me = await api.get<AuthUserSelf>('/user');
-			user.value = me;
-			return me;
-		} catch {
-			// Fallback: if customer-only endpoint blocks merchants, keep user null until you add /merchant/me.
-			user.value = null;
-			return null;
-		}
+		const me = await api.get<AuthUserSelf>('/me');
+		user.value = me;
+		return me;
 	}
 
 	return {

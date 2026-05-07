@@ -67,6 +67,7 @@ return [
 
                 // Customer (bearer token + role=customer)
                 'GET api/v1/user' => 'customer/user',
+                'GET api/v1/me' => 'me/index',
                 'GET api/v1/basket' => 'customer/basket',
                 'POST api/v1/basket/add' => 'customer/basket-add',
                 'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
@@ -84,6 +85,7 @@ return [
                     'class' => \yii\rest\UrlRule::class,
                     'prefix' => 'api/v1',
                     'controller' => [
+                        'me',
                         'address',
                         'basket',
                         'basketproduct',
