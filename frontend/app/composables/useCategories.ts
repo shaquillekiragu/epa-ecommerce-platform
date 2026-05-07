@@ -2,7 +2,8 @@ import type { ProductCategory } from '~/types/product-category';
 
 type ApiCategory = {
 	id: number;
-	category_name: string;
+	name?: string | null;
+	category_name?: string | null; // legacy
 	description?: string | null;
 	thumbnail?: string | null;
 };
@@ -10,9 +11,9 @@ type ApiCategory = {
 function mapCategory(c: ApiCategory): ProductCategory {
 	return {
 		id: c.id,
-		name: c.category_name,
+		name: (c.name ?? c.category_name ?? '').trim(),
 		description: c.description ?? undefined,
-		thumbnail: c.thumbnail ?? '',
+		thumbnail: (c.thumbnail ?? '').trim() !== '' ? (c.thumbnail as string) : '/images/category-placeholder.svg',
 	};
 }
 
@@ -48,10 +49,12 @@ export function useCategories() {
 		}
 	}
 
-	if (categories.value.length === 0 && !pending.value && error.value === null) {
-		// Fire-and-forget initial load (components can still call refresh() explicitly).
-		refresh().catch(() => {});
-	}
+	// Auto-load on client to avoid SSR refresh emptiness.
+	onMounted(() => {
+		if (categories.value.length === 0 && !pending.value) {
+			refresh().catch(() => {});
+		}
+	});
 
 	return { categories, pending, error, refresh };
 }

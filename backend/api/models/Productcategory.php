@@ -10,7 +10,7 @@ class Productcategory extends CommonProductcategory
     {
         return [
             'id',
-            'category_name',
+            'name',
             'description',
             'thumbnail',
         ];

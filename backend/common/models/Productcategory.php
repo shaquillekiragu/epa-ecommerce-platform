@@ -24,7 +24,14 @@ class Productcategory extends BaseModel
                         'thumbnail',
                     ],
                     'string',
-                    'max' => 255
+                    'max' => 65535
+                ],
+                [['name', 'description'], 'trim'],
+                [
+                    ['name'],
+                    'match',
+                    'pattern' => '/[A-Za-z]/',
+                    'message' => 'Category name must contain letters.'
                 ],
                 [
                     [
@@ -75,10 +82,6 @@ class Productcategory extends BaseModel
     {
         if (!parent::beforeValidate()) {
             return false;
-        }
-
-        if ($this->name !== null) {
-            $this->name = trim((string)$this->name);
         }
 
         return true;
