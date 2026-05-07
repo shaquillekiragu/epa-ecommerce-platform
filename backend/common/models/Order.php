@@ -2,12 +2,22 @@
 
 namespace common\models;
 
+use Yii;
+use Override;
 use yii\db\ActiveQuery;
 use common\models\BaseModel;
 use common\models\User;
 
 class Order extends BaseModel
 {
+    public const STATUS_PENDING_PAYMENT = 'pending_payment';
+    public const STATUS_PAYMENT_FAILED = 'payment_failed';
+    public const STATUS_PAID = 'paid';
+    public const STATUS_SHIPPED = 'shipped';
+    public const STATUS_DELIVERED = 'delivered';
+    public const STATUS_CANCELLED = 'cancelled';
+    public const STATUS_REFUNDED = 'refunded';
+
     public static function tableName()
     {
         return '{{%order}}';
@@ -50,14 +60,18 @@ class Order extends BaseModel
                     ],
                     'in',
                     'range' => [
-                        'pending_payment',
-                        'payment_failed',
-                        'paid',
-                        'shipped',
-                        'delivered',
-                        'cancelled',
-                        'refunded'
+                        self::STATUS_PENDING_PAYMENT,
+                        self::STATUS_PAYMENT_FAILED,
+                        self::STATUS_PAID,
+                        self::STATUS_SHIPPED,
+                        self::STATUS_DELIVERED,
+                        self::STATUS_CANCELLED,
+                        self::STATUS_REFUNDED,
                     ]
+                ],
+                [
+                    ['status'],
+                    'validateStatusTransition',
                 ],
                 [
                     [
@@ -91,9 +105,46 @@ class Order extends BaseModel
         );
     }
 
+    #[Override]
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        if ($this->hasAttribute('placed_at') && empty($this->placed_at)) {
+            $this->placed_at = $now;
+        }
+        if ($this->hasAttribute('order_datetime') && empty($this->order_datetime)) {
+            $this->order_datetime = $now;
+        }
+
+        return true;
+    }
+
     public function beforeSave($insert)
     {
-        $this->price_total = $this->getOrderTotal();
+        if (!$insert && $this->isFinanciallyLocked()) {
+            $locked = [
+                'customer_id',
+                'store_id',
+                'price_total',
+                'placed_at',
+                'order_datetime',
+            ];
+            foreach ($locked as $attr) {
+                if ($this->hasAttribute($attr) && $this->isAttributeChanged($attr)) {
+                    $this->addError($attr, 'Order cannot be modified after it is paid/shipped/delivered/cancelled/refunded.');
+                    return false;
+                }
+            }
+        }
+
+        // Keep totals consistent with line items once they exist.
+        if (!$insert && $this->hasLineItems()) {
+            $this->price_total = $this->getOrderTotal();
+        }
 
         return parent::beforeSave($insert);
     }
@@ -156,16 +207,116 @@ class Order extends BaseModel
 
     public function getIsPaid(): bool
     {
-        return $this->status === 'paid';
+        return $this->status === self::STATUS_PAID;
+    }
+
+    public function validateStatusTransition(string $attribute): void
+    {
+        if ($this->hasErrors()) {
+            return;
+        }
+
+        if ($this->isNewRecord) {
+            return;
+        }
+
+        if (!$this->isAttributeChanged($attribute)) {
+            return;
+        }
+
+        $from = (string) $this->getOldAttribute($attribute);
+        $to = (string) $this->$attribute;
+
+        $allowed = self::allowedTransitions();
+
+        if (!isset($allowed[$from]) || !in_array($to, $allowed[$from], true)) {
+            $this->addError($attribute, "Illegal status transition: {$from} → {$to}.");
+        }
+    }
+
+    public static function allowedTransitions(): array
+    {
+        return [
+            self::STATUS_PENDING_PAYMENT => [self::STATUS_PAID, self::STATUS_PAYMENT_FAILED, self::STATUS_CANCELLED],
+            self::STATUS_PAYMENT_FAILED => [self::STATUS_PENDING_PAYMENT, self::STATUS_CANCELLED],
+            self::STATUS_PAID => [self::STATUS_SHIPPED, self::STATUS_CANCELLED, self::STATUS_REFUNDED],
+            self::STATUS_SHIPPED => [self::STATUS_DELIVERED, self::STATUS_REFUNDED],
+            self::STATUS_DELIVERED => [self::STATUS_REFUNDED],
+            self::STATUS_CANCELLED => [],
+            self::STATUS_REFUNDED => [],
+        ];
+    }
+
+    public function transitionTo(string $newStatus, bool $save = true): bool
+    {
+        $this->status = $newStatus;
+        return $save ? $this->save() : $this->validate();
+    }
+
+    public function cancel(bool $restoreStock = true): bool
+    {
+        return $this->changeTerminalStatus(self::STATUS_CANCELLED, $restoreStock);
+    }
+
+    public function refund(bool $restoreStock = true): bool
+    {
+        return $this->changeTerminalStatus(self::STATUS_REFUNDED, $restoreStock);
+    }
+
+    private function changeTerminalStatus(string $terminalStatus, bool $restoreStock): bool
+    {
+        $db = Yii::$app->db;
+        
+        return (bool) $db->transaction(function () use ($terminalStatus, $restoreStock) {
+            if (!$this->transitionTo($terminalStatus, false)) {
+                return false;
+            }
+
+            if (!$this->save(false, ['status'])) {
+                return false;
+            }
+
+            if ($restoreStock) {
+                foreach ($this->orderProducts as $line) {
+                    $product = $line->product;
+
+                    if ($product === null) {
+                        continue;
+                    }
+
+                    $product->number_in_stock = (int) $product->number_in_stock + (int) $line->quantity;
+                    $product->save(false, ['number_in_stock']);
+                }
+            }
+
+            return true;
+        });
+    }
+
+    public function recalcAndPersistTotal(): void
+    {
+        $this->refresh();
+        $this->price_total = $this->getOrderTotal();
+        $this->save(false, ['price_total']);
+    }
+
+    private function hasLineItems(): bool
+    {
+        if ($this->isNewRecord) {
+            return false;
+        }
+
+        return Orderproduct::find()->where(['order_id' => $this->id])->exists();
+    }
+
+    private function isFinanciallyLocked(): bool
+    {
+        return in_array((string) $this->status, [
+            self::STATUS_PAID,
+            self::STATUS_SHIPPED,
+            self::STATUS_DELIVERED,
+            self::STATUS_CANCELLED,
+            self::STATUS_REFUNDED,
+        ], true);
     }
 }
-
-// Recommended business logic:
-
-// Status machine: Allow only legal transitions (e.g. pending_payment → paid); centralize in model or domain service.
-// Immutability: After paid/shipped restrict field changes; financial fields immutable except admin correction with audit.
-// Totals: price_total should match sum of Orderproduct lines (+ tax/shipping when added).
-// Timestamps: Set placed_at on create if omitted; document timezone policy.
-// Cancellation / refund: Define stock restoration and payment linkage when those flows exist.
-
-// Leave child models empty — use api\models\Order for customer-scoped reads; superadmin\models\Order for admin overrides with logging in services.
