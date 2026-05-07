@@ -23,7 +23,7 @@ import type { ProductCategory } from '~/types/product-category'
 
 type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 
-const { cards, is_section_large, variant } = defineProps({
+const { cards, is_section_large, variant, fallback_type } = defineProps({
 	cards: {
 		type: Array as PropType<CardItem[]>,
 		required: true,
@@ -36,6 +36,10 @@ const { cards, is_section_large, variant } = defineProps({
 	variant: {
 		type: String as PropType<CardVariant>,
 		required: true
+	},
+	fallback_type: {
+		type: String as PropType<'auto' | 'product' | 'category'>,
+		default: 'auto',
 	}
 })
 
@@ -80,7 +84,13 @@ const product_fallback = [
 	},
 ] as const
 
-const is_products_fallback = computed(() => cards.some((c) => c && typeof c === 'object' && 'slug' in c))
+const is_products_fallback = computed(() => {
+	if (fallback_type === 'product') return true
+	else if (fallback_type === 'category') return false
+
+	return cards.some((c) => c && typeof c === 'object' && 'slug' in c)
+})
+
 const fallback = computed(() => (is_products_fallback.value ? product_fallback : category_fallback))
 
 const normalized_cards = computed<CardItem[]>(() => {

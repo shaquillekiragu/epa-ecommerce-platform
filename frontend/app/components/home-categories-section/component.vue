@@ -15,7 +15,7 @@
 			</NuxtLink>
 		</article>
 
-		<TriCardComponent :cards="cards" :is_section_large="true" variant="default" />
+		<TriCardComponent :cards="cards" :is_section_large="true" variant="default" fallback_type="category" />
 	</section>
 </template>
 
