@@ -11,7 +11,7 @@
 
 			<NuxtLink class="flex items-center gap-1 font-semibold hover:underline" to="/categories">
 				View All
-				<!-- <span class="material-symbols-outlined text-lg">arrow_forward</span> -->
+				<UIcon name="i-ic:round-arrow-forward" class="size-5" />
 			</NuxtLink>
 		</article>
 
