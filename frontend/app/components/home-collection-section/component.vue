@@ -20,8 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import { getProductCards } from '#imports';
+import { useProducts } from '#imports';
 
-const cards = getProductCards()
+const { product_cards } = useProducts();
+const cards = computed(() => product_cards.value);
 
 </script>

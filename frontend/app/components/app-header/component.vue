@@ -58,24 +58,21 @@ import type { NavLink } from '~/types/miscellaneous';
 const { is_logged_in, role } = useAuth();
 
 const nav_links = computed<NavLink[]>(() => {
-	const shared: NavLink[] = [
+	const customer_links: NavLink[] = [
 		{ text: 'Home', url: '/', is_primary: false },
 		{ text: 'Shop', url: '/products', is_primary: false },
 		{ text: 'Categories', url: '/categories', is_primary: false },
 	];
 
-	if (!is_logged_in.value) {
-		return shared;
-	}
+	const merchant_links: NavLink[] = [
+		{ text: 'Dashboard', url: '/merchant', is_primary: false },
+		{ text: 'Stores', url: '/merchant/stores', is_primary: false },
+	];
 
 	if (role.value === 'merchant') {
-		return [
-			{ text: 'Dashboard', url: '/merchant', is_primary: false },
-			{ text: 'Stores', url: '/merchant/stores', is_primary: false },
-		];
+		return merchant_links
 	}
-
-	return [...shared, { text: 'Account', url: '/account', is_primary: false }];
+	return customer_links
 });
 
 const account_link_url = computed(() => {

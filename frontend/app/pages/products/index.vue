@@ -35,16 +35,17 @@
 </template>
 
 <script setup lang="ts">
-import { getProductCards } from '~/composables/useProducts';
+import { useProducts } from '~/composables/useProducts';
 
-const products = getProductCards()
+const { product_cards } = useProducts();
+const products = computed(() => product_cards.value);
 const page = ref(1)
 
 const items_per_page = 5
 
 const paged_products = computed(() => {
 	const start = (page.value - 1) * items_per_page
-	return products.slice(start, start + items_per_page)
+	return products.value.slice(start, start + items_per_page)
 })
 
 </script>

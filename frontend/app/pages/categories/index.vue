@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { getProductCategories } from '#imports';
+import { useCategories } from '#imports';
 
-const cards = getProductCategories();
+const { categories } = useCategories();
+const cards = computed(() => categories.value);
 
 </script>
