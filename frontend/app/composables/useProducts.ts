@@ -8,16 +8,16 @@ function getSlug(name: string, sku_code: string): string {
 type ApiProduct = {
 	id: number;
 	store_id: number;
-	product_name: string;
-	slug?: string | null;
-	product_category_name?: string | null;
+	name: string;
+	slug: string;
+	product_category_name: string;
 	description?: string | null;
 	price_in_gbp: number;
 	number_in_stock: number;
 	sku_code: string;
 	weight_in_grams: number;
 	thumbnail?: string | null;
-	seo_title?: string | null;
+	seo_title?: string;
 	is_active: boolean;
 };
 
@@ -32,7 +32,7 @@ function unwrapCollection<T>(data: unknown): T[] {
 }
 
 function mapProduct(p: ApiProduct): Product {
-	const name = p.product_name;
+	const name = p.name;
 	const sku = p.sku_code;
 	const slug = (p.slug ?? '').trim() !== '' ? (p.slug as string) : getSlug(name, sku);
 
