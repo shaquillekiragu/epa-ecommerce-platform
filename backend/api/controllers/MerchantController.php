@@ -13,7 +13,7 @@ use api\models\Store;
 
 class MerchantController extends _ApiController
 {
-    public $authRequired = true;
+    public $auth_required = true;
     public $modelClass = Store::class;
 
     public function actions()

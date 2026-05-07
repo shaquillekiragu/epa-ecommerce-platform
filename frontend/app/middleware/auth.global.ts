@@ -8,18 +8,17 @@ export default defineNuxtRouteMiddleware(async (to) => {
 	const is_checkout_area = to.path.startsWith('/checkout');
 	const needs_customer = is_account_area || is_checkout_area;
 
-	// If token exists but user not loaded, load it once.
-	if (is_logged_in.value && role.value === null) {
+	if (is_logged_in.value && is_auth_page) {
+		return role.value === 'merchant' ? navigateTo('/merchant/stores') : navigateTo('/');
+	}
+
+	// If token exists but user not loaded, load it once (skip /auth pages).
+	if (!is_auth_page && is_logged_in.value && role.value === null) {
 		try {
 			await refresh_me();
 		} catch {
-			// Bad/expired token
+			// refresh_me clears token on 401; avoid retry loops here
 		}
-	}
-
-	// Logged-in users shouldn't see auth pages.
-	if (is_logged_in.value && is_auth_page) {
-		return role.value === 'merchant' ? navigateTo('/merchant/stores') : navigateTo('/');
 	}
 
 	// Not logged in: block merchant portal pages.

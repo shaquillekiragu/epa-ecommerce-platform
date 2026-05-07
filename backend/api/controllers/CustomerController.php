@@ -16,7 +16,7 @@ use api\models\Product;
 
 class CustomerController extends _ApiController
 {
-    public $authRequired = true;
+    public $auth_required = true;
     public $modelClass = \api\models\User::class;
 
     public function actions()

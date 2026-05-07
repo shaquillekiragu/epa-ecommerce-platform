@@ -38,9 +38,17 @@ class _ApiController extends ActiveController
             ],
         ];
 
-        // Auth placeholder: enable when you implement bearer tokens/JWT.
-        // Concrete controllers can set `$this->authRequired = true` and/or enforce roles.
-        if (property_exists($this, 'authRequired') && $this->authRequired) {
+        // Auth: enable per-controller with `$auth_required = true`.
+        // Backwards compatible with older `$authRequired` while we migrate.
+        $auth_required = false;
+        
+        if (property_exists($this, 'auth_required')) {
+            $auth_required = (bool)$this->auth_required;
+        } elseif (property_exists($this, 'authRequired')) {
+            $auth_required = (bool)$this->authRequired;
+        }
+
+        if ($auth_required) {
             $behaviors['authenticator'] = [
                 'class' => \api\components\BearerTokenAuth::class,
                 'except' => ['options'],

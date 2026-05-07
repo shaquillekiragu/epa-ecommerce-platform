@@ -3,8 +3,10 @@ import type { AuthUserSelf, LoginResponse } from '~/types/auth';
 export function useAuth() {
 	const api = useApi();
 	const token = useCookie<string | null>('auth_token', { sameSite: 'lax', path: '/' });
+	const token_expires_at = useCookie<string | null>('auth_token_expires_at', { sameSite: 'lax', path: '/' });
 
 	const user = useState<AuthUserSelf | null>('auth_user', () => null);
+	const me_request = useState<Promise<AuthUserSelf | null> | null>('auth_me_request', () => null);
 
 	const is_logged_in = computed(() => Boolean(token.value));
 	const role = computed(() => user.value?.role ?? null);
@@ -12,6 +14,7 @@ export function useAuth() {
 	async function login(email: string, password: string) {
 		const res = await api.post<LoginResponse>('/auth/login', { email, password });
 		token.value = res.token;
+		token_expires_at.value = res.expires_at ?? null;
 		await refresh_me();
 		return res;
 	}
@@ -25,6 +28,7 @@ export function useAuth() {
 			await api.post('/auth/logout');
 		} finally {
 			token.value = null;
+			token_expires_at.value = null;
 			user.value = null;
 		}
 	}
@@ -35,9 +39,29 @@ export function useAuth() {
 			return null;
 		}
 
-		const me = await api.get<AuthUserSelf>('/me');
-		user.value = me;
-		return me;
+		if (me_request.value) {
+			return me_request.value;
+		}
+
+		me_request.value = (async () => {
+			try {
+				const me = await api.get<AuthUserSelf>('/me');
+				user.value = me;
+				return me;
+			} catch (e: any) {
+				// If the token is invalid/expired, stop retry loops by clearing it.
+				if (e?.status === 401) {
+					token.value = null;
+					token_expires_at.value = null;
+					user.value = null;
+				}
+				throw e;
+			} finally {
+				me_request.value = null;
+			}
+		})();
+
+		return me_request.value;
 	}
 
 	return {

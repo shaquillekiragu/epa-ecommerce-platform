@@ -23,6 +23,6 @@ class MeController extends _ApiController
             throw new UnauthorizedHttpException('Not authenticated.');
         }
 
-        return User::findOne((int)$identity->id);
+        return User::findOne((int)$identity->id) ?? $identity;
     }
 }

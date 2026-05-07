@@ -14,8 +14,25 @@ function getApiBaseUrl(): string {
 
 export function useApi() {
 	const token = useCookie<string | null>('auth_token', { sameSite: 'lax', path: '/' });
+	const token_expires_at = useCookie<string | null>('auth_token_expires_at', { sameSite: 'lax', path: '/' });
+
+	function is_token_expired(): boolean {
+		const raw = (token_expires_at.value ?? '').trim();
+		if (raw === '') return false; // unknown; treat as not expired
+		const ms = Date.parse(raw);
+		if (!Number.isFinite(ms)) return false;
+		return Date.now() >= ms;
+	}
 
 	async function request<T>(path: string, method: HttpMethod, body?: unknown): Promise<T> {
+		// Proactively treat expired tokens as logged-out to avoid loops.
+		if (token.value && is_token_expired()) {
+			token.value = null;
+			token_expires_at.value = null;
+			const err: ApiError = { status: 401, message: 'Session expired.' };
+			throw err;
+		}
+
 		const base_url = getApiBaseUrl();
 		const url = path.startsWith('http') ? path : `${base_url}${path.startsWith('/') ? '' : '/'}${path}`;
 
@@ -43,6 +60,13 @@ export function useApi() {
 				message: typeof data === 'object' && data && 'message' in (data as any) ? (data as any).message : 'API request failed',
 				details: data,
 			};
+
+			// If API says the token is no longer valid, clear it.
+			if (err.status === 401) {
+				token.value = null;
+				token_expires_at.value = null;
+			}
+
 			throw err;
 		}
 
