@@ -69,11 +69,11 @@
 				:src="src"
 			/>
 
-			<div :class="overlay_class"></div>
+			<div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
-			<div :class="[content_class, variant === 'default' ? 'text-xl' : 'text-lg']" >
-				<span :class="title_class">{{ label }}</span>
-			</div>
+			<p class="absolute bottom-4 left-4 font-medium text-white" :class="variant === 'default' ? 'text-xl' : 'text-lg'" >
+				{{ label }}
+			</p>
 		</template>
 	</NuxtLink>
 </template>
@@ -112,7 +112,7 @@ const {
     },
 	variant: {
         type: String as PropType<CardVariant>,
-        default: 'default'
+        required: true
     }
 })
 
@@ -142,6 +142,7 @@ const resolved_url = computed(() => {
 	if ('slug' in card) {
 		return `/products/${card.slug}`
 	}
+
 	return `/products?category=${card.name}`
 })
 
@@ -150,34 +151,13 @@ const wrapper_class = computed(() => {
 		return 'bg-white rounded-lg overflow-hidden hover:shadow-sm transition-shadow'
 	}
 
-	if (layout === 'landscape') {
+	else if (layout === 'landscape') {
 		return 'relative rounded-xl overflow-hidden aspect-[16/9]'
 	}
 
 	return is_first_large
 		? 'col-span-1 row-span-2 relative rounded-xl overflow-hidden'
 		: 'col-span-1 row-span-1 relative rounded-xl overflow-hidden'
-})
-
-const overlay_class = computed(() => {
-	if (layout === 'tri') {
-		return 'absolute inset-0 bg-linear-to-t from-black/60 to-transparent'
-	}
-	return ''
-})
-
-const content_class = computed(() => {
-	if (layout === 'tri') {
-		return 'text-lg font-medium absolute bottom-4 left-4 text-white'
-	}
-	return ''
-})
-
-const title_class = computed(() => {
-	if (layout === 'tri') {
-		return 'font-semibold text-sm block'
-	}
-	return ''
 })
 
 </script>

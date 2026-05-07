@@ -35,7 +35,7 @@ const { cards, is_section_large, variant } = defineProps({
 	},
 	variant: {
 		type: String as PropType<CardVariant>,
-		default: 'default'
+		required: true
 	}
 })
 

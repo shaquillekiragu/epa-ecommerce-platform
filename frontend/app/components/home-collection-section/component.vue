@@ -15,7 +15,7 @@
             </div>
         </article>
 
-        <TriCardComponent :cards="cards" :is_section_large="false" />
+        <TriCardComponent :cards="cards" :is_section_large="false" variant="default-sm" />
     </section>
 </template>
 
