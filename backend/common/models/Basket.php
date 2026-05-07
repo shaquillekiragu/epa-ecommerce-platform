@@ -10,8 +10,6 @@ use common\models\Product;
 
 class Basket extends BaseModel
 {
-    public $basket_id_list;
-
     public static function tableName()
     {
         return '{{%basket}}';
@@ -67,6 +65,13 @@ class Basket extends BaseModel
         );
     }
 
+    public function beforeSave($insert)
+    {
+        $this->price_total = $this->getBasketTotal();
+
+        return parent::beforeSave($insert);
+    }
+
     public function getCustomer(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'customer_id']);
@@ -74,8 +79,7 @@ class Basket extends BaseModel
 
     public function getCustomerName()
     {
-        $customer = User::findOne($this->customer_id);
-        return $customer ? $customer->fullName : null;
+        return $this->customer?->fullName;
     }
 
     public function getBasketProducts(): ActiveQuery
@@ -105,12 +109,4 @@ class Basket extends BaseModel
     }
 }
 
-// Model today: customer_id, price_total required; getCustomerName uses fullName on User (getter is getFullName — verify magic property).
-
-// Recommended business logic:
-
-// Totals: Derive price_total from Basketproduct lines; do not trust client-submitted totals; recalc after line changes.
 // Ownership: Optionally one open basket per customer — enforce via unique constraint or app check.
-// Currency: Keep aligned with product/order (GBP).
-
-// Leave child models empty — use api\models\Basket for customer-only rules (e.g. cannot set customer_id to another user).

@@ -7,8 +7,6 @@ use common\models\BaseModel;
 
 class Orderproduct extends BaseModel
 {
-    public $order_product_id_list;
-
     public static function tableName()
     {
         return '{{%order_product}}';
@@ -43,6 +41,12 @@ class Orderproduct extends BaseModel
                     'required'
                 ],
                 [
+                    ['quantity'],
+                    'compare',
+                    'compareValue' => 1,
+                    'operator' => '>='
+                ],
+                [
                     [
                         'order_id',
                         'product_id'
@@ -75,6 +79,11 @@ class Orderproduct extends BaseModel
     public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    public function getLineTotal(): float
+    {
+        return round(((float)$this->price_at_purchase_in_gbp) * ((int)$this->quantity), 2);
     }
 }
 

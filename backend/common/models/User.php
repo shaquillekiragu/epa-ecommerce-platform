@@ -82,6 +82,10 @@ class User extends BaseModel
                     'max' => 20
                 ],
                 [
+                    ['email'],
+                    'email',
+                ],
+                [
                     [
                         'date_of_birth'
                     ],
@@ -257,6 +261,32 @@ class User extends BaseModel
     // {
     //     $this->password_reset_token = null;
     // }
+
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        if ($this->email !== null) {
+            $this->email = mb_strtolower(trim((string)$this->email));
+        }
+
+        return true;
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($this->hasAttribute('is_active') && $this->hasAttribute('deactivated_at')) {
+            if ($this->is_active) {
+                $this->deactivated_at = null;
+            } elseif ($this->deactivated_at === null) {
+                $this->deactivated_at = date('Y-m-d H:i:s');
+            }
+        }
+
+        return parent::beforeSave($insert);
+    }
 
     public function getFullName()
     {

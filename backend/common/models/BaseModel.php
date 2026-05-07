@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+use yii\base\InvalidCallException;
 use yii\db\ActiveRecord;
 
 class BaseModel extends ActiveRecord
@@ -41,15 +43,63 @@ class BaseModel extends ActiveRecord
         ];
     }
 
-    // beforeSave - set created_at only on creation - set created_by using logged-in user - look at docs - look at types
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        foreach ($this->attributes as $attribute => $value) {
+            if (!is_string($value)) {
+                continue;
+            }
+            $this->$attribute = trim($value);
+        }
+
+        return true;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if (!$insert && $this->hasAttribute('allow_update') && $this->allow_update === false) {
+            throw new InvalidCallException('Updating is not allowed for this record.');
+        }
+
+        try {
+            $user = Yii::$app->user ?? null;
+            $identity = $user && !$user->isGuest ? $user->identity : null;
+            $user_id = $identity?->getId();
+        } catch (\Throwable) {
+            $user_id = null;
+        }
+
+        if ($user_id !== null) {
+            if ($insert && $this->hasAttribute('created_by') && ($this->created_by === null || $this->created_by === '')) {
+                $this->created_by = (int)$user_id;
+            }
+            
+            if ($this->hasAttribute('last_updated_by')) {
+                $this->last_updated_by = (int)$user_id;
+            }
+        }
+
+        return true;
+    }
+
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        if ($this->hasAttribute('allow_delete') && $this->allow_delete === false) {
+            throw new InvalidCallException('Deletion is not allowed for this record.');
+        }
+
+        return true;
+    }
 }
-
-// Model today: Shared audit attributes (id, created_*, last_updated_*); type rules only; beforeSave audit behaviour still TODO in comment.
-
-// Recommended business logic:
-
-// Audit: On insert set created_by / last_updated_by from current identity when unset; on update refresh last_updated_by. Align bootstrap user nullable created_by with other tables that require non-null FKs.
-// allow_update / allow_delete: Enforce in beforeSave/beforeDelete (or a helper) so flagged records cannot be mutated in normal flows; superadmin bypass via explicit policy elsewhere.
-// Lifecycle: One consistent rule for soft delete vs hard delete (e.g. user is_active + deactivated_at vs physical delete).
-
-// N/A — base class only; no api/superadmin child models.

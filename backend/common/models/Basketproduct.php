@@ -3,11 +3,10 @@
 namespace common\models;
 
 use common\models\BaseModel;
+use yii\db\ActiveQuery;
 
 class Basketproduct extends BaseModel
 {
-    public $basket_product_id_list;
-
     public static function tableName()
     {
         return '{{%basket_product}}';
@@ -35,6 +34,12 @@ class Basketproduct extends BaseModel
                     'required'
                 ],
                 [
+                    ['quantity'],
+                    'compare',
+                    'compareValue' => 1,
+                    'operator' => '>='
+                ],
+                [
                     [
                         'basket_id',
                         'product_id'
@@ -59,24 +64,22 @@ class Basketproduct extends BaseModel
         );
     }
 
-    public function getProduct()
+    public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
-    public function getBasketProductPrice()
+    public function getBasketProductPrice(): float
     {
-        return $this->product->price_in_gbp;
+        return (float)$this->product->price_in_gbp;
+    }
+
+    public function getLineTotal(): float
+    {
+        return round(((float)$this->getBasketProductPrice()) * ((int)$this->quantity), 2);
     }
 }
 
-// Model today: Unique (basket_id, product_id); basketProductPrice reads live product.price_in_gbp (not snapshotted).
-
-// Recommended business logic:
-
-// Quantity: Integer ≥ 1 (or ≥ 0 with delete-on-zero).
 // Eligibility: Product must be is_active, sufficient stock, and fit store policy (single-store vs multi-store basket).
 // Price snapshot: Decide unit price at add-to-basket vs always current price; avoid silent total changes if prices move.
 // Recalc: Update parent Basket.price_total after any line change.
-
-// Leave child models empty — use api\models\Basketproduct for caps, rate limits, etc.

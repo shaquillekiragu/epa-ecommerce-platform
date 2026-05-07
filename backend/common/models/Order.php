@@ -8,8 +8,6 @@ use common\models\User;
 
 class Order extends BaseModel
 {
-    public $order_id_list;
-
     public static function tableName()
     {
         return '{{%order}}';
@@ -93,6 +91,13 @@ class Order extends BaseModel
         );
     }
 
+    public function beforeSave($insert)
+    {
+        $this->price_total = $this->getOrderTotal();
+
+        return parent::beforeSave($insert);
+    }
+
     public function getCustomer(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'customer_id']);
@@ -105,26 +110,22 @@ class Order extends BaseModel
 
     public function getCustomerName(): string | null
     {
-        $customer = User::findOne($this->customer_id);
-        return $customer->fullName;
+        return $this->customer?->fullName;
     }
 
     public function getCustomerEmail(): string | null
     {
-        $customer = User::findOne($this->customer_id);
-        return $customer->email;
+        return $this->customer?->email;
     }
 
     public function getBillingAddress(): string | null
     {
-        $customer = User::findOne($this->customer_id);
-        return $customer->billingAddress;
+        return $this->customer?->billingAddress;
     }
 
     public function getShippingAddress(): string | null
     {
-        $customer = User::findOne($this->customer_id);
-        return $customer->shippingAddress;
+        return $this->customer?->shippingAddress;
     }
 
     public function getOrderProducts(): ActiveQuery
@@ -152,9 +153,12 @@ class Order extends BaseModel
 
         return round($sub_total, 2);
     }
-}
 
-// Model today: customer_id, store_id, price_total, placed_at, status enum; allow_* flags.
+    public function getIsPaid(): bool
+    {
+        return $this->status === 'paid';
+    }
+}
 
 // Recommended business logic:
 

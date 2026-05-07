@@ -9,8 +9,6 @@ use common\models\BaseModel;
 
 class Product extends BaseModel
 {
-    public $product_id_list;
-
     public static function tableName()
     {
         return '{{%product}}';
@@ -36,6 +34,7 @@ class Product extends BaseModel
                     ],
                     'number'
                 ],
+                [['price_in_gbp'], 'compare', 'compareValue' => 0, 'operator' => '>='],
                 [
                     [
                         'is_active',
@@ -82,6 +81,7 @@ class Product extends BaseModel
                     ],
                     'required'
                 ],
+                [['number_in_stock', 'weight_in_grams'], 'compare', 'compareValue' => 0, 'operator' => '>='],
                 [
                     [
                         'name'

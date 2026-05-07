@@ -9,8 +9,6 @@ use common\models\User;
 
 class Store extends BaseModel
 {
-    public $store_id_list;
-
     public static function tableName()
     {
         return '{{%store}}';
@@ -84,6 +82,22 @@ class Store extends BaseModel
     public function getMerchant(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'merchant_id']);
+    }
+
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        if ($this->merchant_id !== null) {
+            $merchant = $this->merchant;
+            if ($merchant && $merchant->role !== 'merchant') {
+                $this->addError('merchant_id', 'Merchant ID must reference a user with role merchant.');
+            }
+        }
+
+        return true;
     }
 }
 

@@ -3,11 +3,10 @@
 namespace common\models;
 
 use common\models\BaseModel;
+use yii\base\InvalidCallException;
 
 class Address extends BaseModel
 {
-    public $address_id_list;
-
     public static function tableName()
     {
         return '{{%address}}';
@@ -38,6 +37,12 @@ class Address extends BaseModel
                     'max' => 255
                 ],
                 [
+                    ['post_code'],
+                    'match',
+                    'pattern' => '/^[A-Za-z0-9](?:[A-Za-z0-9 \\-]{0,18}[A-Za-z0-9])?$/',
+                    'message' => 'Post Code must contain only letters, numbers, spaces, or hyphens.',
+                ],
+                [
                     [
                         'allow_update',
                         'allow_delete',
@@ -59,6 +64,32 @@ class Address extends BaseModel
                 ],
             ]
         );
+    }
+
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        if ($this->post_code !== null) {
+            $this->post_code = strtoupper(trim((string)$this->post_code));
+        }
+
+        if ($this->country !== null) {
+            $this->country = trim((string)$this->country);
+        }
+
+        return true;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!$insert && $this->getUserAddresses()->exists()) {
+            throw new InvalidCallException('This address is already linked and cannot be modified. Create a new address instead.');
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function attributeLabels()
@@ -92,13 +123,3 @@ class Address extends BaseModel
         return $this->hasMany(Useraddress::class, ['address_id' => 'id']);
     }
 }
-
-// Model today: address_type shipping|billing|both; structured lines; getFullAddress helper; allow_* flags.
-
-// Recommended business logic:
-
-// Normalization: Trim fields; optional postcode/country validation per region.
-// Type rules: Clarify behaviour when address_type is both vs separate rows.
-// Immutability: If address is tied to historical orders, prefer new address row (versioning) over mutating shared rows.
-
-// Leave child models empty — use api\models\Address / superadmin\models\Address for customer vs admin scenarios.

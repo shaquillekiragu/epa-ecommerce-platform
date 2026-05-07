@@ -7,8 +7,6 @@ use common\models\BaseModel;
 
 class Productcategory extends BaseModel
 {
-    public $product_category_id_list;
-
     public static function tableName()
     {
         return '{{%product_category}}';
@@ -71,6 +69,19 @@ class Productcategory extends BaseModel
     public function getProducts(): ActiveQuery
     {
         return $this->hasMany(Product::class, ['product_category_id' => 'id']);
+    }
+
+    public function beforeValidate()
+    {
+        if (!parent::beforeValidate()) {
+            return false;
+        }
+
+        if ($this->name !== null) {
+            $this->name = trim((string)$this->name);
+        }
+
+        return true;
     }
 }
 
