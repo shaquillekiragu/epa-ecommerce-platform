@@ -43,6 +43,7 @@ class _ApiController extends ActiveController
         if (property_exists($this, 'authRequired') && $this->authRequired) {
             $behaviors['authenticator'] = [
                 'class' => \api\components\BearerTokenAuth::class,
+                'except' => ['options'],
             ];
         }
 

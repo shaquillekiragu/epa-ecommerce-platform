@@ -13,7 +13,7 @@ function getApiBaseUrl(): string {
 }
 
 export function useApi() {
-	const token = useCookie<string | null>('auth_token', { sameSite: 'lax' });
+	const token = useCookie<string | null>('auth_token', { sameSite: 'lax', path: '/' });
 
 	async function request<T>(path: string, method: HttpMethod, body?: unknown): Promise<T> {
 		const base_url = getApiBaseUrl();

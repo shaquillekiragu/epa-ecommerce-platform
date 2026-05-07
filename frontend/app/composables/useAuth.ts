@@ -2,7 +2,7 @@ import type { AuthUserSelf, LoginResponse } from '~/types/auth';
 
 export function useAuth() {
 	const api = useApi();
-	const token = useCookie<string | null>('auth_token', { sameSite: 'lax' });
+	const token = useCookie<string | null>('auth_token', { sameSite: 'lax', path: '/' });
 
 	const user = useState<AuthUserSelf | null>('auth_user', () => null);
 

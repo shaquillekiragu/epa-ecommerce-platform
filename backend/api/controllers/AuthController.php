@@ -77,6 +77,11 @@ class AuthController extends Controller
         ];
     }
 
+    public function actionOptions()
+    {
+        return ['ok' => true];
+    }
+
     public function actionLogin()
     {
         $body = Yii::$app->request->getBodyParams();

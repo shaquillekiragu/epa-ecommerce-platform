@@ -55,6 +55,9 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                // CORS preflight
+                'OPTIONS api/v1/<path:.+>' => 'auth/options',
+                
                 // Auth
                 'POST api/v1/auth/register' => 'auth/register',
                 'POST api/v1/auth/login' => 'auth/login',

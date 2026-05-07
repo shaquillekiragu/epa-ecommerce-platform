@@ -10,26 +10,31 @@ class BaseModel extends ActiveRecord
 {
     public function rules()
     {
-        return array_merge(
-            parent::rules(),
-            [
-                [
-                    [
-                        'id',
-                        'created_by',
-                        'last_updated_by'
-                    ],
-                    'integer'
-                ],
-                [
-                    [
-                        'created_at',
-                        'last_updated_at'
-                    ],
-                    'safe'
-                ],
-            ]
-        );
+        $integer_attrs = ['id'];
+        if ($this->hasAttribute('created_by')) {
+            $integer_attrs[] = 'created_by';
+        }
+        if ($this->hasAttribute('last_updated_by')) {
+            $integer_attrs[] = 'last_updated_by';
+        }
+
+        $safe_attrs = [];
+        if ($this->hasAttribute('created_at')) {
+            $safe_attrs[] = 'created_at';
+        }
+        if ($this->hasAttribute('last_updated_at')) {
+            $safe_attrs[] = 'last_updated_at';
+        }
+
+        $rules = parent::rules();
+        if (!empty($integer_attrs)) {
+            $rules[] = [$integer_attrs, 'integer'];
+        }
+        if (!empty($safe_attrs)) {
+            $rules[] = [$safe_attrs, 'safe'];
+        }
+
+        return $rules;
     }
 
     public function attributeLabels()
