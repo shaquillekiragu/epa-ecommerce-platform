@@ -30,7 +30,7 @@ class ProductController extends _ApiController
 
         $search = \Yii::$app->request->get('search');
         if ($search !== null && trim((string) $search) !== '') {
-            $query->andWhere(['like', 'product_name', trim((string) $search)]);
+            $query->andWhere(['like', 'name', trim((string) $search)]);
         }
 
         $sort = (string) \Yii::$app->request->get('sort', '');
@@ -44,7 +44,7 @@ class ProductController extends _ApiController
 
             $allowed = [
                 'price_in_gbp' => 'price_in_gbp',
-                'product_name' => 'product_name',
+                'name' => 'name',
                 'number_in_stock' => 'number_in_stock',
                 'created_at' => 'created_at',
             ];

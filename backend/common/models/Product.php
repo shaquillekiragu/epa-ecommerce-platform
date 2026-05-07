@@ -56,7 +56,14 @@ class Product extends BaseModel
                         'slug',
                     ],
                     'string',
-                    'max' => 255
+                    'max' => 65535
+                ],
+                [['name', 'sku_code'], 'trim'],
+                [
+                    ['name'],
+                    'match',
+                    'pattern' => '/[A-Za-z]/',
+                    'message' => 'Product name must contain letters.'
                 ],
                 [
                     [
@@ -102,10 +109,11 @@ class Product extends BaseModel
         $name = trim((string)$this->name);
         $sku_code = trim((string)$this->sku_code);
 
-        $this->seo_title = $name !== '' ? mb_substr($name, 0, 255) : null;
+        $this->seo_title = mb_substr(($name !== '' ? $name : $sku_code), 0, 255);
 
-        $base = trim($name . ' ' . $sku_code);
-        $this->slug = $base !== '' ? mb_substr(Inflector::slug($base), 0, 255) : null;
+        $name_slug = Inflector::slug($name);
+        $base = $name_slug !== '' ? ($name_slug . '-' . $sku_code) : $sku_code;
+        $this->slug = mb_substr($base, 0, 255);
 
         return true;
     }
@@ -144,12 +152,10 @@ class Product extends BaseModel
         return $this->hasOne(Store::class, ['id' => 'store_id']);
     }
 
-    public function getProductCategoryName(): ?string
+    public function getProductCategoryName(): string
     {
-        return $this->productCategory->name ?? null;
+        return $this->productCategory->name;
     }
-
-    
 }
 
 // Model today: Pricing, stock, SKU, is_active, joins to store/category; beforeValidate always overwrites seo_title and slug from name + sku_code.
