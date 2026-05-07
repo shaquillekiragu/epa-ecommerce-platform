@@ -161,14 +161,14 @@ const wrapper_class = computed(() => {
 
 const overlay_class = computed(() => {
 	if (layout === 'tri') {
-		return 'absolute inset-0 bg-gradient-to-t from-black/60 to-transparent'
+		return 'absolute inset-0 bg-linear-to-t from-black/60 to-transparent'
 	}
 	return ''
 })
 
 const content_class = computed(() => {
 	if (layout === 'tri') {
-		'text-lg font-medium absolute bottom-4 left-4 text-white'
+		return 'text-lg font-medium absolute bottom-4 left-4 text-white'
 	}
 	return ''
 })
