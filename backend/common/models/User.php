@@ -4,44 +4,18 @@ namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 use common\models\BaseModel;
 use common\models\Useraddress;
 
-/**
- * User model
- *
- * @property int $id
- * @property string $username
- * @property string $hashed_password
- * @property string $password_reset_token
- * @property string $verification_token
- * @property string $email
- * @property string $auth_key
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property string $password write-only password
- */
-
-class User extends BaseModel
+class User extends BaseModel implements IdentityInterface
 {
-    // public const STATUS_DELETED = 0;
-    // public const STATUS_INACTIVE = 9;
-    // public const STATUS_ACTIVE = 10;
+    public ?string $password = null;
 
     public static function tableName()
     {
         return '{{%user}}';
     }
-
-    // public function behaviors()
-    // {
-    //     return [
-    //         TimestampBehavior::class,
-    //     ];
-    // }
 
     public function rules()
     {
@@ -73,6 +47,18 @@ class User extends BaseModel
                     ],
                     'string',
                     'max' => 255
+                ],
+                [
+                    ['password'],
+                    'string',
+                    'min' => 8,
+                    'max' => 255,
+                ],
+                [
+                    ['password'],
+                    'match',
+                    'pattern' => '/^(?=.*[A-Za-z])(?=.*\d).+$/',
+                    'message' => 'Password must contain at least one letter and one number.',
                 ],
                 [
                     [
@@ -117,7 +103,6 @@ class User extends BaseModel
                         'first_name',
                         'last_name',
                         'email',
-                        'hashed_password',
                         'date_of_birth',
                         'country',
                         'mobile_number',
@@ -153,114 +138,53 @@ class User extends BaseModel
         );
     }
 
-    // public static function findIdentity($id)
-    // {
-    //     return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
-    // }
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
 
-    // public static function findIdentityByAccessToken($token, $type = null)
-    // {
-    //     throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    // }
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented. Use API bearer tokens.');
+    }
 
-    // public static function findByPasswordResetToken($token)
-    // {
-    //     if (!static::isPasswordResetTokenValid($token)) {
-    //         return null;
-    //     }
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
 
-    //     return static::findOne([
-    //         'password_reset_token' => $token,
-    //         'status' => self::STATUS_ACTIVE,
-    //     ]);
-    // }
+    public function getAuthKey()
+    {
+        return null;
+    }
 
-    // public static function findByVerificationToken($token)
-    // {
-    //     return static::findOne([
-    //         'verification_token' => $token,
-    //         'status' => self::STATUS_INACTIVE
-    //     ]);
-    // }
+    public function validateAuthKey($authKey)
+    {
+        return false;
+    }
 
-    // public static function isPasswordResetTokenValid($token)
-    // {
-    //     if (empty($token)) {
-    //         return false;
-    //     }
+    public static function findByEmail(string $email): ?self
+    {
+        $email = mb_strtolower(trim($email));
+        $user = static::findOne(['email' => $email]);
+        return $user;
+    }
 
-    //     $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-    //     $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-    //     return $timestamp + $expire >= time();
-    // }
+    public function validatePassword(string $password): bool
+    {
+        $hash = (string) ($this->hashed_password ?? '');
 
-    // public function getId()
-    // {
-    //     return $this->getPrimaryKey();
-    // }
+        if ($hash === '') {
+            return false;
+        }
 
-    // public function getAuthKey()
-    // {
-    //     return $this->auth_key;
-    // }
+        return Yii::$app->security->validatePassword($password, $hash);
+    }
 
-    // public function validateAuthKey($authKey)
-    // {
-    //     return $this->getAuthKey() === $authKey;
-    // }
-
-    // /**
-    //  * Validates password
-    //  *
-    //  * @param string $password password to validate
-    //  * @return bool if password provided is valid for current user
-    //  */
-    // public function validatePassword($password)
-    // {
-    //     return Yii::$app->security->validatePassword($password, $this->hashed_password);
-    // }
-
-    // /**
-    //  * Generates password hash from password and sets it to the model
-    //  *
-    //  * @param string $password
-    //  */
-    // public function setPassword($password)
-    // {
-    //     $this->hashed_password = Yii::$app->security->generatePasswordHash($password);
-    // }
-
-    // /**
-    //  * Generates "remember me" authentication key
-    //  */
-    // public function generateAuthKey()
-    // {
-    //     $this->auth_key = Yii::$app->security->generateRandomString();
-    // }
-
-    // /**
-    //  * Generates new password reset token
-    //  */
-    // public function generatePasswordResetToken()
-    // {
-    //     $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    // }
-
-    // /**
-    //  * Generates new token for email verification
-    //  */
-    // public function generateEmailVerificationToken()
-    // {
-    //     $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
-    // }
-
-    // /**
-    //  * Removes password reset token
-    //  */
-    // public function removePasswordResetToken()
-    // {
-    //     $this->password_reset_token = null;
-    // }
+    public function setPassword(string $password): void
+    {
+        $this->hashed_password = Yii::$app->security->generatePasswordHash($password);
+    }
 
     public function beforeValidate()
     {
@@ -277,6 +201,10 @@ class User extends BaseModel
 
     public function beforeSave($insert)
     {
+        if ($this->password !== null && $this->password !== '') {
+            $this->setPassword($this->password);
+        }
+
         if ($this->hasAttribute('is_active') && $this->hasAttribute('deactivated_at')) {
             if ($this->is_active) {
                 $this->deactivated_at = null;
@@ -296,9 +224,18 @@ class User extends BaseModel
         return "$this->first_name $this->last_name";
     }
 
-    public function getUserAge()
+    public function getUserAge(): ?int
     {
-        return (new \DateTime($this->date_of_birth))->diff(new \DateTime('today'))->y;
+        try {
+            $dob = (string)($this->date_of_birth ?? '');
+            if ($dob === '') {
+                return null;
+            }
+
+            return (new \DateTime($dob))->diff(new \DateTime('today'))->y;
+        } catch (\Throwable) {
+            return null;
+        }
     }
 
     public function getUserAddresses()
@@ -316,16 +253,3 @@ class User extends BaseModel
         return $this->hasOne(Address::class, ['id' => 'address_id'])->via('userAddresses')->andWhere(['address_type' => ['shipping', 'both']]);
     }
 }
-
-// Model today: role customer|merchant, profile + hashed_password, is_active, deactivated_at, email unique in DB; Identity/password helpers largely commented; LoginForm still references findByUsername/validatePassword.
-
-// Recommended business logic:
-
-// Registration / password: Hash on write; do not trust raw hashed_password from clients; password strength policy.
-// Email: Normalize (trim, lowercase); uniqueness; optional verification if tokens are added.
-// Activation: Toggling is_active should set/clear deactivated_at; block login when inactive.
-// Role changes: Restrict customer → merchant to superadmin (not self-service API); use api/superadmin scenarios for mass-assignment.
-// DOB / age: Validate date range; harden getUserAge() against invalid dates.
-// PII: Limit fields in API serializers (often API layer, not AR).
-
-// Leave child models empty — use api\models\User / superadmin\models\User for scenarios (e.g. forbid role escalation from API).
