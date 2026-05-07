@@ -6,6 +6,7 @@ use yii\rest\ActiveController;
 use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use yii\filters\Cors;
+use yii\web\ForbiddenHttpException;
 
 class _ApiController extends ActiveController
 {
@@ -38,10 +39,22 @@ class _ApiController extends ActiveController
         ];
 
         // Auth placeholder: enable when you implement bearer tokens/JWT.
-        // $behaviors['authenticator'] = [
-        //     'class' => \yii\filters\auth\HttpBearerAuth::class,
-        // ];
+        // Concrete controllers can set `$this->authRequired = true` and/or enforce roles.
+        if (property_exists($this, 'authRequired') && $this->authRequired) {
+            $behaviors['authenticator'] = [
+                'class' => \api\components\BearerTokenAuth::class,
+            ];
+        }
 
         return $behaviors;
+    }
+
+    protected function requireRole(string $role): void
+    {
+        $identity = \Yii::$app->user->identity;
+        
+        if ($identity === null || ($identity->role ?? null) !== $role) {
+            throw new ForbiddenHttpException('Forbidden.');
+        }
     }
 }

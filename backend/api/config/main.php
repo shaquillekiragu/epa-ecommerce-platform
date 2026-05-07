@@ -55,6 +55,31 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                // Auth
+                'POST api/v1/auth/register' => 'auth/register',
+                'POST api/v1/auth/login' => 'auth/login',
+                'POST api/v1/auth/logout' => 'auth/logout',
+
+                // Public catalogue convenience aliases
+                'GET api/v1/products' => 'product/index',
+                'GET api/v1/products/<id:\\d+>' => 'product/view',
+                'GET api/v1/categories' => 'productcategory/index',
+
+                // Customer (bearer token + role=customer)
+                'GET api/v1/user' => 'customer/user',
+                'GET api/v1/basket' => 'customer/basket',
+                'POST api/v1/basket/add' => 'customer/basket-add',
+                'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
+                'POST api/v1/checkout' => 'customer/checkout',
+                'GET api/v1/customer/orders' => 'customer/orders',
+
+                // Merchant (bearer token + role=merchant + store ownership)
+                'GET api/v1/merchant/store' => 'merchant/store',
+                'GET api/v1/merchant/orders' => 'merchant/orders',
+                'PATCH api/v1/merchant/orders/<id:\\d+>/status' => 'merchant/order-status',
+                'POST api/v1/merchant/products' => 'merchant/products',
+                'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/delete-product',
+
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'prefix' => 'api/v1',
