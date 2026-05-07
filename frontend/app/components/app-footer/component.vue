@@ -3,7 +3,7 @@
 		<div
 			class="w-full py-12 px-6 flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-6">
 			<div class="flex flex-col items-center md:items-start gap-2">
-				<span class="text-lg font-black text-slate-900 dark:text-white">LuxCommerce</span>
+				<span class="text-lg font-black text-slate-900 dark:text-white">MerchFlow</span>
 				<p class="text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500">
 					© 2026 MerchFlow Inc. Engineered for efficiency.
 				</p>
