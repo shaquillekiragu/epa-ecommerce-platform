@@ -49,7 +49,6 @@ export function useAuth() {
 				user.value = me;
 				return me;
 			} catch (e: any) {
-				// If the token is invalid/expired, stop retry loops by clearing it.
 				if (e?.status === 401) {
 					token.value = null;
 					token_expires_at.value = null;
@@ -63,6 +62,12 @@ export function useAuth() {
 
 		return me_request.value;
 	}
+
+	onMounted(() => {
+		if (token.value && !user.value) {
+			refresh_me().catch(() => {});
+		}
+	});
 
 	return {
 		token,
