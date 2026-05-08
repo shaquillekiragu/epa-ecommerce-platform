@@ -2,11 +2,7 @@
 
 namespace api\controllers;
 
-use yii\helpers\ArrayHelper;
-use yii\rest\IndexAction;
-use yii\data\ActiveDataFilter;
 use api\models\Address;
-use common\models\Address as CommonAddress;
 
 class AddressController extends _ApiController
 {
@@ -19,19 +15,5 @@ class AddressController extends _ApiController
         unset($actions['create'], $actions['update'], $actions['delete']);
 
         return $actions;
-
-        // return ArrayHelper::merge($actions, [
-        //     'index' => [
-        //         'class' => IndexAction::class,
-        //         'modelClass' => $this->modelClass,
-        //         'dataFilter' => [
-        //             'class' => ActiveDataFilter::class,
-        //             'searchModel' => CommonAddress::class
-        //         ],
-        //         'prepareSearchQuery' => function ($query, $request_params) {
-        //             return $query;
-        //         }
-        //     ]
-        // ]);
     }
 }
