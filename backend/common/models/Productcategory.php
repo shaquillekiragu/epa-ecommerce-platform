@@ -2,8 +2,10 @@
 
 namespace common\models;
 
+use Override;
+use yii\base\UserException;
 use yii\db\ActiveQuery;
-use common\models\BaseModel;
+use common\validators\ThumbnailValidator;
 
 class Productcategory extends BaseModel
 {
@@ -55,6 +57,15 @@ class Productcategory extends BaseModel
                     ],
                     'unique'
                 ],
+                [
+                    ['thumbnail'],
+                    'trim',
+                ],
+                [
+                    ['thumbnail'],
+                    ThumbnailValidator::class,
+                    'skipOnEmpty' => true,
+                ],
             ]
         );
     }
@@ -78,22 +89,38 @@ class Productcategory extends BaseModel
         return $this->hasMany(Product::class, ['product_category_id' => 'id']);
     }
 
+    #[Override]
     public function beforeValidate()
     {
         if (!parent::beforeValidate()) {
             return false;
         }
 
+        if ($this->name !== null && $this->name !== '') {
+            $name = preg_replace('/\s+/u', ' ', trim((string) $this->name));
+            $this->name = $name;
+        }
+
+        if ($this->description !== null && $this->description !== '') {
+            $this->description = trim((string) $this->description);
+        }
+
+        return true;
+    }
+
+    #[Override]
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        if ($this->getProducts()->exists()) {
+            throw new UserException(
+                'Cannot delete this category while products still reference it. Reassign or remove those products first.'
+            );
+        }
+
         return true;
     }
 }
-
-// Model today: name, description, thumbnail; name globally unique; allow_* flags.
-
-// Recommended business logic:
-
-// Naming: Trim/normalize name; decide uniqueness global vs per-store if categories become store-scoped.
-// Thumbnail: Validate URL or storage key if uploads are added.
-// Deletes: Deleting/deactivating categories must account for products still referencing them (restrict, cascade, or archive).
-
-// Leave child models empty — use superadmin\models\Productcategory / api\models\Productcategory for read vs write scenarios.
