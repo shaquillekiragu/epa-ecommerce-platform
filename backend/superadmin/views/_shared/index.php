@@ -1,9 +1,43 @@
 <?php
 
+/**
+ * Shared admin GridView listing.
+ *
+ * @var yii\data\ActiveDataProvider $data_provider
+ * @var class-string<\yii\db\ActiveRecord>|null $model_class ActiveRecord backing this grid (provided by dashboard or inferred from `$data_provider->query`).
+ */
+
+use superadmin\models\User;
+use yii\db\ActiveQuery;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+if (!isset($data_provider)) {
+    throw new \yii\base\InvalidConfigException('Listing view requires `$data_provider` (ActiveDataProvider).');
+}
+
+$model_class = $model_class ?? null;
+
+if (
+    !is_string($model_class)
+    || $model_class === ''
+    || !class_exists($model_class)
+) {
+    $q = isset($data_provider->query) ? $data_provider->query : null;
+    $resolved = (
+        $q instanceof ActiveQuery
+        && isset($q->modelClass)
+        && is_string($q->modelClass)
+        && $q->modelClass !== ''
+        && class_exists($q->modelClass)
+    )
+        ? $q->modelClass
+        : User::class;
+
+    $model_class = $resolved;
+}
 
 $model = new $model_class();
 
@@ -80,8 +114,6 @@ $model_short_name = strtolower((new \ReflectionClass($model_class))->getShortNam
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $data_provider,
-            // 'filterModel' => $filter_model,
-
             'tableOptions' => ['class' => 'table table-striped table-bordered table-hover'],
 
             'rowOptions' => function ($model) {

@@ -27,12 +27,9 @@ class DashboardController extends _SuperadminWebController
 
         $this->view->params['breadcrumbs'][] = $plural_label;
 
-        $filter_model = null;
-
         if ($filter_model_class) {
             $filter_model = new $filter_model_class();
             $data_provider = $filter_model->search(Yii::$app->request->queryParams);
-            //
         } else {
             $data_provider = new ActiveDataProvider([
                 'query' => $model_class::find(),
@@ -40,20 +37,10 @@ class DashboardController extends _SuperadminWebController
             ]);
         }
 
-        try {
-            return $this->render('index', [
-                'data_provider' => $data_provider,
-                'model_class' => $model_class,
-                'filter_model' => $filter_model,
-            ]);
-            //
-        } catch (\Throwable $th) {
-            return $this->render('@superadmin/views/_shared/index', [
-                'data_provider' => $data_provider,
-                'model_class' => $model_class,
-                'filter_model' => $filter_model,
-            ]);
-        }
+        return $this->render('@superadmin/views/_shared/index', [
+            'data_provider' => $data_provider,
+            'model_class' => $model_class,
+        ]);
     }
 
     public function actionView($id)
