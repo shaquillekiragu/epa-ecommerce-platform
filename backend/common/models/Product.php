@@ -5,6 +5,7 @@ namespace common\models;
 use Override;
 use yii\db\ActiveQuery;
 use yii\helpers\Inflector;
+use common\validators\ThumbnailValidator;
 
 class Product extends BaseModel
 {
@@ -64,7 +65,12 @@ class Product extends BaseModel
                     'string',
                     'max' => 65535
                 ],
-                [['name', 'sku_code'], 'trim'],
+                [['name', 'sku_code', 'thumbnail'], 'trim'],
+                [
+                    ['thumbnail'],
+                    ThumbnailValidator::class,
+                    'skipOnEmpty' => true,
+                ],
                 [
                     ['name'],
                     'match',
