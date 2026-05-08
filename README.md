@@ -22,3 +22,6 @@ ssh -i "~/.ssh/SKKey.pem" ubuntu@ec2-18-133-204-127.eu-west-2.compute.amazonaws.
 ```sh
 rsync -avz -e "ssh -i ~/.ssh/SKKey.pem" . ubuntu@ec2-18-133-204-127.eu-west-2.compute.amazonaws.com:/var/www/production
 ```
+
+## Note:
+If website gets stuck/crashes, then go to EC2 service instance page, then click reboot instance using Instance State button on the right.
