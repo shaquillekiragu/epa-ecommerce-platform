@@ -2,9 +2,9 @@
 
 namespace api\controllers;
 
-use api\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
+use api\models\Product;
 
 class ProductController extends _ApiController
 {
@@ -23,15 +23,7 @@ class ProductController extends _ApiController
     {
         $query = Product::activeCatalogQuery();
 
-        $category = \Yii::$app->request->get('category');
-        if ($category !== null && $category !== '') {
-            $query->andWhere(['product_category_id' => (int) $category]);
-        }
-
-        $search = \Yii::$app->request->get('search');
-        if ($search !== null && trim((string) $search) !== '') {
-            $query->andWhere(['like', 'name', trim((string) $search)]);
-        }
+        Product::applyListFilters($query, \Yii::$app->request->get());
 
         $sort = (string) \Yii::$app->request->get('sort', '');
         if ($sort !== '') {
