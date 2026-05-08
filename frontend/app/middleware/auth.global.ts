@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 	const needs_customer = is_account_area || is_checkout_area;
 
 	if (is_logged_in.value && is_auth_page) {
-		return role.value === 'merchant' ? navigateTo('/merchant/stores') : navigateTo('/');
+		return role.value === 'merchant' ? navigateTo('/merchant') : navigateTo('/');
 	}
 
 	// If token exists but user not loaded, load it once (skip /auth pages).
@@ -24,19 +24,19 @@ export default defineNuxtRouteMiddleware(async (to) => {
 	// Not logged in: block merchant portal pages.
 	if (!is_logged_in.value) {
 		if (is_merchant_area || needs_customer) {
-			return navigateTo('/auth/login');
+			return navigateTo('/auth');
 		}
 		return;
 	}
 
 	// Logged in but role unknown (token invalid / failed hydrate)
 	if (role.value === null) {
-		return navigateTo('/auth/login');
+		return navigateTo('/auth');
 	}
 
 	// Logged in merchant: force them into merchant portal.
 	if (role.value === 'merchant' && !is_merchant_area) {
-		return navigateTo('/merchant/stores');
+		return navigateTo('/merchant');
 	}
 
 	// Logged in customer: block merchant portal.
@@ -46,7 +46,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
 	// Customer-only areas (account + checkout).
 	if (needs_customer && role.value !== 'customer') {
-		return navigateTo('/merchant/stores');
+		return navigateTo('/merchant');
 	}
 
 	// Checkout requires a non-empty basket (shipping + review steps).
