@@ -12,7 +12,6 @@ class UseraddressController extends _ApiController
     {
         $actions = parent::actions();
 
-        // Read-only until auth + ownership scoping is implemented.
         unset($actions['create'], $actions['update'], $actions['delete']);
 
         return $actions;

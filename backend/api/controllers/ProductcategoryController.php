@@ -12,7 +12,6 @@ class ProductcategoryController extends _ApiController
     {
         $actions = parent::actions();
 
-        // Public product endpoints: read-only.
         unset($actions['create'], $actions['update'], $actions['delete']);
 
         return $actions;
