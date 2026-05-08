@@ -48,7 +48,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
+     * Logs in a user using the provided email and password.
      *
      * @return bool whether the user is logged in successfully
      */
@@ -62,7 +62,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
+     * Finds user by [[email]]
      *
      * @return User|null
      */
@@ -81,7 +81,7 @@ class LoginForm extends Model
 // Recommended business logic:
 
 // Align with real auth: Restore IdentityInterface + password helpers on User, or replace this form with API token/JWT flow.
-// Generic errors: Keep "incorrect username or password" to avoid user enumeration if that is a requirement.
+// Generic errors: Keep "incorrect email or password" to avoid user enumeration if that is a requirement.
 // Session: login() uses web user component — ensure this form is only used in web context, not stateless API.
 
 // N/A — form model only; no api/superadmin subclasses.
