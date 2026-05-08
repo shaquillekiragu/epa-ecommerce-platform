@@ -13,8 +13,12 @@ npx prettier . --write  # formats everything
 npx prettier "**/*.vue" --write  # formats vue files
 ```
 
-## SSH and Deployment:
+## SSH:
 ```sh
-.ssh % ssh -i "~/.ssh/SKKey.pem" ubuntu@ec2-18-133-204-127.eu-west-2.compute.amazonaws.com
+ssh -i "~/.ssh/SKKey.pem" ubuntu@ec2-18-133-204-127.eu-west-2.compute.amazonaws.com
+```
+
+## Deployment (On the Mac):
+```sh
 rsync -avz -e "ssh -i ~/.ssh/SKKey.pem" . ubuntu@ec2-18-133-204-127.eu-west-2.compute.amazonaws.com:/var/www/production
 ```
