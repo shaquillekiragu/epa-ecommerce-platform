@@ -3,7 +3,6 @@
 namespace api\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

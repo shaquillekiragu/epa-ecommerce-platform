@@ -2,8 +2,8 @@
 
 namespace api\controllers;
 
-use api\models\User;
 use yii\web\UnauthorizedHttpException;
+use api\models\User;
 
 class MeController extends _ApiController
 {
@@ -19,6 +19,7 @@ class MeController extends _ApiController
     {
         /** @var \common\models\User|null $identity */
         $identity = \Yii::$app->user->identity;
+
         if ($identity === null) {
             throw new UnauthorizedHttpException('Not authenticated.');
         }
