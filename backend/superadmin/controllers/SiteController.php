@@ -3,50 +3,50 @@
 namespace superadmin\controllers;
 
 use Yii;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
+use common\models\LoginForm;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    // public function behaviors()
-    // {
-    //     return [
-    //         'access' => [
-    //             'class' => AccessControl::class,
-    //             'rules' => [
-    //                 [
-    //                     'actions' => ['login', 'error'],
-    //                     'allow' => true,
-    //                 ],
-    //                 [
-    //                     'actions' => ['logout', 'index'],
-    //                     'allow' => true,
-    //                     'roles' => ['@'],
-    //                     'matchCallback' => fn () => Yii::$app->user->can('superadmin'),
-    //                 ],
-    //             ],
-    //         ],
-    //         'verbs' => [
-    //             'class' => VerbFilter::class,
-    //             'actions' => [
-    //                 'logout' => ['post'],
-    //             ],
-    //         ],
-    //     ];
-    // }
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'denyCallback' => static function () {
+                    if (Yii::$app->user->isGuest) {
+                        return Yii::$app->response->redirect(['site/login']);
+                    }
 
-    /**
-     * {@inheritdoc}
-     */
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this area.');
+                },
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => static function (): bool {
+                            $identity = Yii::$app->user->identity;
+                            return $identity !== null && ($identity->role ?? null) === 'superadmin';
+                        },
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actions()
     {
         return [
@@ -56,31 +56,38 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return string|Response
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            $identity = Yii::$app->user->identity;
+
+            if ($identity !== null && ($identity->role ?? null) === 'superadmin') {
+                return $this->goHome();
+            }
+            
+            Yii::$app->user->logout();
         }
 
         $this->layout = 'blank';
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $identity = Yii::$app->user->identity;
+            
+            if ($identity === null || ($identity->role ?? null) !== 'superadmin') {
+                Yii::$app->user->logout();
+                $model->addError('password', 'You do not have permission to access this area.');
+
+                return $this->render('login', [
+                    'model' => $model,
+                ]);
+            }
+
             return $this->goBack();
         }
 
@@ -91,15 +98,9 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 }

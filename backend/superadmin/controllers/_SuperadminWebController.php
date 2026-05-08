@@ -9,42 +9,31 @@ use yii\web\ForbiddenHttpException;
 
 class _SuperadminWebController extends Controller
 {
-    // public function behaviors()
-    // {
-    //     return [
-    //         'access' => [
-    //             'class' => AccessControl::class,
-    //             'denyCallback' => [$this, 'handleUnauthorisedUser'],
-    //             'rules' => [
-    //                 // [
-    //                 //     'actions' => [
-    //                 //         'index',
-    //                 //         'view',
-    //                 //         'create',
-    //                 //         'update',
-    //                 //         'delete',
-    //                 //     ],
-    //                 //     'allow' => true,
-    //                 //     'roles' => ['superadmin'],
-    //                 // ],
-    //                 [
-    //                     'allow' => true,
-    //                     'roles' => ['@'],
-    //                     'matchCallback' => fn () => Yii::$app->user->can('superadmin'),
-    //                 ],
-    //             ],
-    //         ],
-    //     ];
-    // }
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'denyCallback' => [$this, 'handleUnauthorisedUser'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => static function (): bool {
+                            $identity = Yii::$app->user->identity;
+                            return $identity !== null && ($identity->role ?? null) === 'superadmin';
+                        },
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function handleUnauthorisedUser()
     {
         if (Yii::$app->user->isGuest) {
             return Yii::$app->response->redirect(['site/login']);
         }
-        throw new ForbiddenHttpException('Superadmin access required.');
+        throw new ForbiddenHttpException('You do not have permission to access this area.');
     }
 }
-
-// research yii's in-built role functionality - auth item, assignment - allows you to define roles - ranked roles
-// disable rbac for now - until you ensure admin views are visable

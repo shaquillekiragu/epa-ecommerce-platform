@@ -34,7 +34,7 @@ class User extends BaseModel implements IdentityInterface
                         'role'
                     ],
                     'in',
-                    'range' => ['customer', 'merchant']
+                    'range' => ['customer', 'merchant', 'superadmin']
                 ],
                 [
                     [
