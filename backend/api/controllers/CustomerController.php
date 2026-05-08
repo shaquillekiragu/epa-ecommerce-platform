@@ -3,10 +3,8 @@
 namespace api\controllers;
 
 use Yii;
-use yii\db\Expression;
 use yii\db\Transaction;
 use yii\web\BadRequestHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use api\models\Basket;
 use api\models\Basketproduct;
@@ -49,8 +47,8 @@ class CustomerController extends _ApiController
             throw new BadRequestHttpException('product_id and quantity are required.');
         }
 
-        $product = Product::findOne($product_id);
-        if ($product === null || !$product->is_active) {
+        $product = Product::activeCatalogQuery()->andWhere(['id' => $product_id])->one();
+        if ($product === null) {
             throw new NotFoundHttpException('Product not found.');
         }
 
@@ -92,8 +90,8 @@ class CustomerController extends _ApiController
             throw new BadRequestHttpException('Invalid quantity.');
         }
 
-        $product = Product::findOne((int) $id);
-        if ($product === null || !$product->is_active) {
+        $product = Product::activeCatalogQuery()->andWhere(['id' => (int) $id])->one();
+        if ($product === null) {
             throw new NotFoundHttpException('Product not found.');
         }
 
@@ -130,8 +128,8 @@ class CustomerController extends _ApiController
             // Group by store_id because Order requires store_id.
             $groups = [];
             foreach ($items as $item) {
-                $product = Product::findOne($item->product_id);
-                if ($product === null || !$product->is_active) {
+                $product = Product::activeCatalogQuery()->andWhere(['id' => $item->product_id])->one();
+                if ($product === null) {
                     throw new BadRequestHttpException('Basket contains invalid product.');
                 }
                 if ($product->number_in_stock < $item->quantity) {
@@ -255,7 +253,7 @@ class CustomerController extends _ApiController
             }
             $out[] = [
                 'product_id' => $product->id,
-                'product_name' => $product->product_name,
+                'product_name' => $product->name,
                 'price_in_gbp' => (float) $product->price_in_gbp,
                 'quantity' => (int) $item->quantity,
                 'line_total' => (float) $product->price_in_gbp * (int) $item->quantity,

@@ -21,7 +21,7 @@ class ProductController extends _ApiController
 
     public function prepareDataProvider()
     {
-        $query = Product::find()->andWhere(['is_active' => 1]);
+        $query = Product::activeCatalogQuery();
 
         $category = \Yii::$app->request->get('category');
         if ($category !== null && $category !== '') {

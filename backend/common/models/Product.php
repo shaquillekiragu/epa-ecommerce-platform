@@ -5,7 +5,6 @@ namespace common\models;
 use Override;
 use yii\db\ActiveQuery;
 use yii\helpers\Inflector;
-use common\models\BaseModel;
 
 class Product extends BaseModel
 {
@@ -35,6 +34,13 @@ class Product extends BaseModel
                     'number'
                 ],
                 [['price_in_gbp'], 'compare', 'compareValue' => 0, 'operator' => '>='],
+                [
+                    ['price_in_gbp'],
+                    'compare',
+                    'compareValue' => 1000000,
+                    'operator' => '<=',
+                    'message' => 'Price exceeds allowed maximum.'
+                ],
                 [
                     [
                         'is_active',
@@ -90,10 +96,24 @@ class Product extends BaseModel
                 ],
                 [['number_in_stock', 'weight_in_grams'], 'compare', 'compareValue' => 0, 'operator' => '>='],
                 [
-                    [
-                        'name'
-                    ],
-                    'unique'
+                    ['store_id'],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => Store::class,
+                    'targetAttribute' => ['store_id' => 'id']
+                ],
+                [
+                    ['product_category_id'],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => Productcategory::class,
+                    'targetAttribute' => ['product_category_id' => 'id']
+                ],
+                [
+                    ['store_id', 'sku_code'],
+                    'unique',
+                    'targetAttribute' => ['store_id', 'sku_code'],
+                    'message' => 'SKU must be unique within this store.',
                 ],
             ]
         );
@@ -111,11 +131,23 @@ class Product extends BaseModel
 
         $this->seo_title = mb_substr(($name !== '' ? $name : $sku_code), 0, 255);
 
-        $name_slug = Inflector::slug($name);
-        $base = $name_slug !== '' ? ($name_slug . '-' . $sku_code) : $sku_code;
-        $this->slug = mb_substr($base, 0, 255);
+        $regenerateSlug = true;
+        if (!$this->isNewRecord && (bool) $this->getOldAttribute('is_active')) {
+            $regenerateSlug = false;
+        }
+
+        if ($regenerateSlug) {
+            $name_slug = Inflector::slug($name);
+            $base = $name_slug !== '' ? ($name_slug . '-' . $sku_code) : $sku_code;
+            $this->slug = mb_substr($base, 0, 255);
+        }
 
         return true;
+    }
+
+    public static function activeCatalogQuery(): ActiveQuery
+    {
+        return static::find()->andWhere(['is_active' => true]);
     }
 
     public function attributeLabels()
@@ -157,16 +189,3 @@ class Product extends BaseModel
         return $this->productCategory->name;
     }
 }
-
-// Model today: Pricing, stock, SKU, is_active, joins to store/category; beforeValidate always overwrites seo_title and slug from name + sku_code.
-
-// Recommended business logic:
-
-// Monetary: price_in_gbp ≥ 0, reasonable max; consider integer minor units later to avoid float issues (you already migrated some totals to float—products should follow the same convention).
-// Stock: number_in_stock ≥ 0; optional reservation rules when you add checkout.
-// SKU: Uniqueness—typically per store_id (or globally); enforce with composite unique index when you define the rule.
-// Slug / SEO: If slugs must be stable for published URLs, regenerating on every validate can break bookmarks—consider immutable slug after first publish or redirects; if you keep current behavior, document that URLs change when name/SKU changes.
-// Active catalog: Hide inactive products from storefront queries (API query layer).
-// Store/category consistency: Optionally validate product_category is allowed for that store if you introduce such rules.
-
-// Leave child models empty

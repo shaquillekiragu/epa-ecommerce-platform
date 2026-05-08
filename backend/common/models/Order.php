@@ -308,7 +308,7 @@ class Order extends BaseModel
         return Orderproduct::find()->where(['order_id' => $this->id])->exists();
     }
 
-    private function isFinanciallyLocked(): bool
+    public function isFinanciallyLocked(): bool
     {
         return in_array((string) $this->status, [
             self::STATUS_PAID,
