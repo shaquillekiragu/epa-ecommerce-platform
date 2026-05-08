@@ -2,10 +2,9 @@
 
 namespace common\models;
 
+use Override;
 use yii\db\ActiveQuery;
-use common\models\BaseModel;
-use common\models\Product;
-use common\models\User;
+use yii\base\UserException;
 
 class Store extends BaseModel
 {
@@ -26,6 +25,13 @@ class Store extends BaseModel
                     ],
                     'string',
                     'max' => 255
+                ],
+                [
+                    [
+                        'name',
+                        'description'
+                    ],
+                    'trim'
                 ],
                 [
                     [
@@ -52,12 +58,47 @@ class Store extends BaseModel
                 ],
                 [
                     [
+                        'merchant_id'
+                    ],
+                    'exist',
+                    'skipOnError' => true,
+                    'targetClass' => User::class,
+                    'targetAttribute' => ['merchant_id' => 'id'],
+                ],
+                [
+                    [
+                        'merchant_id'
+                    ],
+                    'validateMerchantRole',
+                ],
+                [
+                    [
+                        'merchant_id',
                         'name'
                     ],
-                    'unique'
+                    'unique',
+                    'targetAttribute' => ['merchant_id', 'name'],
+                    'message' => 'You already have a store with this name.',
                 ],
             ]
         );
+    }
+
+    public function validateMerchantRole(string $attribute): void
+    {
+        if ($this->hasErrors()) {
+            return;
+        }
+
+        $user = User::findOne((int) $this->$attribute);
+        
+        if ($user === null) {
+            return;
+        }
+
+        if ($user->role !== 'merchant') {
+            $this->addError($attribute, 'Merchant ID must reference a user with the merchant role.');
+        }
     }
 
     public function attributeLabels()
@@ -79,34 +120,53 @@ class Store extends BaseModel
         return $this->hasMany(Product::class, ['store_id' => 'id']);
     }
 
+    public function getOrders(): ActiveQuery
+    {
+        return $this->hasMany(Order::class, ['store_id' => 'id']);
+    }
+
     public function getMerchant(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'merchant_id']);
     }
 
+    #[Override]
     public function beforeValidate()
     {
         if (!parent::beforeValidate()) {
             return false;
         }
 
-        if ($this->merchant_id !== null) {
-            $merchant = $this->merchant;
-            if ($merchant && $merchant->role !== 'merchant') {
-                $this->addError('merchant_id', 'Merchant ID must reference a user with role merchant.');
-            }
+        if ($this->name !== null && $this->name !== '') {
+            $this->name = preg_replace('/\s+/u', ' ', trim((string) $this->name));
+        }
+
+        if ($this->description !== null && $this->description !== '') {
+            $this->description = trim((string) $this->description);
+        }
+
+        return true;
+    }
+
+    #[Override]
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        if ($this->getProducts()->exists()) {
+            throw new UserException(
+                'Cannot delete this store while products still reference it. Remove or reassign those products first.'
+            );
+        }
+
+        if ($this->getOrders()->exists()) {
+            throw new UserException(
+                'Cannot delete this store while orders still reference it.'
+            );
         }
 
         return true;
     }
 }
-
-// Model today: merchant_id; name globally unique; description is not unique.
-
-// Recommended business logic:
-
-// Ownership: merchant_id should reference a user with role merchant (FK ensures row exists, not role).
-// Uniqueness: Consider composite unique (merchant_id, name) instead of global unique name when multi-tenant rules firm up.
-// Authorization: Only owning merchant or superadmin may update; enforce in controllers/services + RBAC.
-
-// Leave child models empty — use api\models\Store / superadmin\models\Store for scenario-based mass-assignment if merchant vs admin differ.
