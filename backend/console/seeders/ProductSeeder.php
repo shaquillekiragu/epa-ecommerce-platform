@@ -64,7 +64,7 @@ final class CatalogSeeder extends BaseSeeder
             Console::endProgress();
 
             $products = $this->applyAuditActor(
-                $this->buildProducts($count, $store_ids, $category_ids, $this->seed_run_prefix),
+                $this->buildProducts($count, $store_ids, $category_ids),
                 $actor_id
             );
             Console::output('Seeding products...');
@@ -200,7 +200,7 @@ final class CatalogSeeder extends BaseSeeder
         return $rows;
     }
 
-    private function buildProducts(int $count, array $store_ids, array $category_ids, string $prefix): array
+    private function buildProducts(int $count, array $store_ids, array $category_ids): array
     {
         $rows = [
             ['name' => 'Stainless Water Bottle', 'price_in_gbp' => 14.99, 'number_in_stock' => 120, 'sku_code' => 'SKU-WB-0001', 'weight_in_grams' => 320, 'thumbnail' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuCsP0brIpa6RGliR_LnX4sKRoU5eofeW1Zk-j5zSAUHJHWywKONN3xutvNBjQpCbpTzsdzDjaodtQdAobDg5IdvQHpgtfq3FaqvjCSCFj3Qmj4MD2IWh16tSuPlEesIixtZ25WnDiKO_itfhOglNTyzQluQspQP4th8BOtniEuiiwHRvCBCnyaD58107jfhA16-4ZfqVBw65LPFjiXh8ym2fz-UqwxHxyjnIO9_cCZgZlMGXadqHIXuXb6bSgGfuCHtzqQsA3W0B0EL'],
@@ -219,8 +219,8 @@ final class CatalogSeeder extends BaseSeeder
 
         foreach ($rows as $i => $row) {
             $rows[$i] = array_merge($row, [
-                'name' => $prefix . $row['name'],
-                'sku_code' => $prefix . $row['sku_code'],
+                'name' => $row['name'],
+                'sku_code' => $this->seed_run_prefix . $row['sku_code'],
                 'store_id' => $store_ids[$i % count($store_ids)],
                 'product_category_id' => $category_ids[$i % count($category_ids)],
                 'is_active' => 1,
