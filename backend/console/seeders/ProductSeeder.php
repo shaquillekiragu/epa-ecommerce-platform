@@ -28,7 +28,7 @@ final class CatalogSeeder extends BaseSeeder
         }
 
         $stores = $this->applyAuditActor($this->buildStores($count, $merchant_ids, $this->seed_run_prefix), $actor_id);
-        $categories = $this->applyAuditActor($this->buildCategories($count, $this->seed_run_prefix), $actor_id);
+        $categories = $this->applyAuditActor($this->buildCategories($count), $actor_id);
 
         $tx = $this->db->beginTransaction();
 
@@ -130,7 +130,7 @@ final class CatalogSeeder extends BaseSeeder
         return $rows;
     }
 
-    private function buildCategories(int $count, string $prefix): array
+    private function buildCategories(int $count): array
     {
         $rows = [
             [
@@ -189,7 +189,7 @@ final class CatalogSeeder extends BaseSeeder
 
         foreach ($rows as $i => $row) {
             $rows[$i] = array_merge($row, [
-                'name' => $prefix . $row['name'],
+                'name' => $row['name'],
                 'allow_update' => 1,
                 'allow_delete' => 1,
                 'created_by' => null,
