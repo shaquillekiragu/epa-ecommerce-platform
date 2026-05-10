@@ -6,7 +6,7 @@
 			<h1 class="font-semibold tracking-tight text-xl leading-snug text-slate-900">Account</h1>
 		</header>
 
-		<section class="p-6 md:p-12 max-w-[900px] w-full">
+		<section class="w-full p-6 md:p-12 max-w-4xl">
 			<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
 				<p class="text-slate-700">
 					Merchant account details page.
