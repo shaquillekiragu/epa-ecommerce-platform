@@ -13,7 +13,7 @@
 				<NuxtLink
 					v-for="link in nav_links"
 					:key="link.text"
-					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95"
+					class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition active:scale-95 hover:cursor-pointer!"
 					active-class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1"
 					exact-active-class="text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-slate-100 pb-1"
 					:to="link.url"
@@ -22,7 +22,7 @@
 				</NuxtLink>
 			</nav>
 
-			<div class="flex items-center gap-6 text-slate-900 dark:text-slate-50">
+			<div class="flex items-center gap-6 text-slate-900 dark:text-slate-50 **:hover:cursor-pointer!">
 				<NuxtLink
 					v-if="show_basket_link"
 					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95 relative"
