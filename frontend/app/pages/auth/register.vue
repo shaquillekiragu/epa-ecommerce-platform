@@ -25,12 +25,12 @@
 						placeholder="you@example.com" />
 				</div>
 
-				<div class="space-y-1">
-					<label class="text-sm font-medium text-slate-700">Password</label>
-					<input v-model="password" type="password"
-						class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-slate-900"
-						placeholder="At least 8 chars, letters + numbers" />
-				</div>
+				<FormsPasswordFieldComponent
+					v-model="password"
+					autocomplete="new-password"
+					placeholder="At least 8 chars, letters + numbers"
+					:disabled="loading"
+				/>
 
 				<div class="space-y-1">
 					<label class="text-sm font-medium text-slate-700">Date of birth</label>

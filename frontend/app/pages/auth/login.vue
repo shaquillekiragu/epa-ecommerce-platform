@@ -12,12 +12,12 @@
 						placeholder="you@example.com" />
 				</div>
 
-				<div class="space-y-1">
-					<label class="text-sm font-medium text-slate-700">Password</label>
-					<input v-model="password" type="password"
-						class="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-slate-900"
-						placeholder="••••••••" />
-				</div>
+				<FormsPasswordFieldComponent
+					v-model="password"
+					autocomplete="current-password"
+					placeholder="••••••••"
+					:disabled="loading"
+				/>
 
 				<p v-if="error" class="text-sm text-red-600">{{ error }}</p>
 
