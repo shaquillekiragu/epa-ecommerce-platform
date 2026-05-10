@@ -6,11 +6,13 @@ use Yii;
 use yii\db\Transaction;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
+use common\models\Address;
 use api\models\Basket;
 use api\models\Basketproduct;
 use api\models\Order;
 use api\models\Orderproduct;
 use api\models\Product;
+use api\models\Useraddress;
 
 class CustomerController extends _ApiController
 {
@@ -202,10 +204,53 @@ class CustomerController extends _ApiController
     {
         $this->requireRole('customer');
         $user_id = (int) Yii::$app->user->id;
-        return Order::find()
+        $orders = Order::find()
             ->where(['customer_id' => $user_id])
             ->orderBy(['order_datetime' => SORT_DESC])
             ->all();
+
+        $out = [];
+        foreach ($orders as $order) {
+            /** @var Order $order */
+            $row = $order->toArray();
+            $row['item_count'] = (int) Orderproduct::find()
+                ->where(['order_id' => $order->id])
+                ->sum('quantity');
+            $out[] = $row;
+        }
+
+        return $out;
+    }
+
+    public function actionAddresses()
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+
+        $links = Useraddress::find()->where(['user_id' => $user_id])->all();
+        $out = [];
+
+        foreach ($links as $link) {
+            /** @var Useraddress $link */
+            $addr = Address::findOne((int) $link->address_id);
+            if ($addr === null) {
+                continue;
+            }
+
+            $out[] = [
+                'id' => (int) $link->id,
+                'address_id' => (int) $addr->id,
+                'address_type' => $addr->address_type,
+                'building_number' => $addr->building_number,
+                'street_name' => $addr->street_name,
+                'city' => $addr->city,
+                'region' => $addr->region,
+                'post_code' => $addr->post_code,
+                'country' => $addr->country,
+            ];
+        }
+
+        return $out;
     }
 
     private function getOrCreateBasket(int $customer_id): Basket
@@ -254,6 +299,8 @@ class CustomerController extends _ApiController
             $out[] = [
                 'product_id' => $product->id,
                 'product_name' => $product->name,
+                'product_slug' => (string) $product->slug,
+                'thumbnail' => (string) ($product->thumbnail ?? ''),
                 'price_in_gbp' => (float) $product->price_in_gbp,
                 'quantity' => (int) $item->quantity,
                 'line_total' => (float) $product->price_in_gbp * (int) $item->quantity,

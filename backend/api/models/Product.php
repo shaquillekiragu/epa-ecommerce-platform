@@ -38,12 +38,18 @@ class Product extends CommonProduct
      * - `search` — substring match on product name or SKU
      * - `product_category_name` — substring match on related category name
      * - `store_name` — substring match on related store name
+     * - `slug` — exact match on product slug (detail pages)
      *
      * @param array<string, mixed> $params
      */
     public static function applyListFilters(ActiveQuery $query, array $params): void
     {
         $t = static::tableName();
+
+        $slug = trim((string) ($params['slug'] ?? ''));
+        if ($slug !== '') {
+            $query->andWhere([$t . '.slug' => $slug]);
+        }
 
         $categoryId = $params['category'] ?? $params['product_category_id'] ?? null;
         if ($categoryId !== null && $categoryId !== '' && (int) $categoryId > 0) {
