@@ -6,23 +6,13 @@
 			<article class="w-full flex flex-col items-stretch sm:flex-row sm:justify-between sm:items-center gap-4">
 				<h1 class="text-4xl font-medium">Premium Collection</h1>
 
-				<div class="flex items-center gap-4 w-full sm:w-auto">
-					<div class="relative w-full sm:w-64">
-						<span
-							class="absolute left-3 top-1/2 -translate-y-1/2">search</span>
-						<input
-							class="w-full border pl-10 pr-4 focus:ring-0"
-							placeholder="Search products..." type="text" />
-					</div>
-
-					<select
-						class="border focus:ring-0 cursor-pointer hidden sm:block">
-						<option>Recommended</option>
-						<option>Price: Low to High</option>
-						<option>Price: High to Low</option>
-						<option>Newest Arrivals</option>
-					</select>
-				</div>
+				<select
+					class="border focus:ring-0 cursor-pointer hidden sm:block w-1/3">
+					<option>Recommended</option>
+					<option>Price: Low to High</option>
+					<option>Price: High to Low</option>
+					<option>Newest Arrivals</option>
+				</select>
 			</article>
 
 			<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10">
