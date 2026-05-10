@@ -3,7 +3,7 @@
 @import "@nuxt/ui";
 
 /* 
-  LuxCommerce - Professional E-Commerce Core Design System
+  MerchFlow - Professional E-Commerce Core Design System
   Main CSS Foundation
 */
 
@@ -50,7 +50,6 @@
 	--spacing-unit: 4px;
 }
 
-/* Base Styles */
 body {
 	font-family: var(--font-family);
 	font-size: var(--font-size-base);
@@ -61,7 +60,6 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-/* Typography Utilities */
 h1,
 h2,
 h3,
@@ -73,71 +71,23 @@ h6 {
 	margin-top: 0;
 }
 
-/* Component Styles */
-/* .btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0.75rem 1.5rem;
-	border-radius: var(--radius-sm);
-	font-weight: 600;
-	transition: all 0.2s ease;
-	cursor: pointer;
-	border: none;
-}
+/* @layer base {
+	:where(
+			button:not(:disabled),
+			[type='button']:not(:disabled),
+			[type='submit']:not(:disabled),
+			[type='reset']:not(:disabled),
+			[role='button']:not([aria-disabled='true']),
+			summary,
+			label[for],
+			select:not(:disabled)
+		) {
+		@apply hover:cursor-pointer;
+	}
 
-.btn-primary {
-	background-color: var(--color-primary);
-	color: var(--color-on-primary);
-}
-
-.btn-primary:hover {
-	background-color: var(--color-primary-container);
-}
-
-.btn-outline {
-	background-color: transparent;
-	border: 1px solid var(--color-outline);
-	color: var(--color-primary);
-}
-
-.btn-outline:hover {
-	background-color: var(--color-surface-container-low);
-}
-
-/* Card Style */
-/* .card {
-	background-color: var(--color-surface-container-lowest);
-	border: 1px solid var(--color-outline-variant);
-	border-radius: var(--radius-md);
-	padding: 1.5rem;
-	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-}
-
-/* Layout Utilities */
-/*.container {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 0 1.5rem;
-}
-
-/* Status Indicators */
-/*.badge {
-	padding: 0.25rem 0.5rem;
-	border-radius: 9999px;
-	font-size: var(--font-size-xs);
-	font-weight: 700;
-	text-transform: uppercase;
-}
-
-.badge-success {
-	background-color: #dcfce7;
-	color: var(--color-success);
-}
-
-.badge-error {
-	background-color: #fee2e2;
-	color: var(--color-error);
+	:where(a[href]) {
+		@apply hover:cursor-pointer;
+	}
 } */
 
 .material-symbols-outlined {
