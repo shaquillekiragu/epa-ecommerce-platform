@@ -32,13 +32,22 @@
 				<p class="text-sm">{{ category_label }}</p>
 				<p class="truncate">{{ description }}</p>
 
-				<div class="flex justify-between mt-4">
+				<div class="flex justify-between mt-4 items-center gap-2">
 					<span class="font-bold whitespace-nowrap">
 						{{ price_label }}
 					</span>
 
-					<ButtonActionComponent text="Add" url="/basket" button_type="submit" :is_dark="true" icon="i-ic:baseline-add-shopping-cart" class="px-3 py-1" @click.stop.prevent />
+					<ButtonActionComponent
+						:text="adding_to_basket ? 'Adding…' : 'Add'"
+						button_type="button"
+						:is_dark="true"
+						icon="i-ic:baseline-add-shopping-cart"
+						class="shrink-0 px-3 py-1"
+						:disabled="adding_to_basket"
+						@click="add_to_basket"
+					/>
 				</div>
+				<p v-if="add_error" class="text-xs text-red-600 mt-1">{{ add_error }}</p>
 			</div>
 		</template>
 
@@ -79,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { PropType } from 'vue'
 import type { CardLayout, CardVariant } from '~/types/card-component';
 import type { ProductCard } from '~/types/product'
@@ -159,5 +168,51 @@ const wrapper_class = computed(() => {
 		? 'col-span-1 row-span-2 relative rounded-xl overflow-hidden'
 		: 'col-span-1 row-span-1 relative rounded-xl overflow-hidden'
 })
+
+const api = useApi()
+const { is_logged_in, role } = useAuth()
+const { refresh_basket_item_count } = useBasketItemCount()
+
+const adding_to_basket = ref(false)
+const add_error = ref<string | null>(null)
+
+const is_product_card = computed(() => 'id' in card && typeof (card as { id?: number }).id === 'number')
+
+async function add_to_basket() {
+	add_error.value = null
+
+	if (!is_product_card.value) {
+		return
+	}
+
+	const product_id = (card as { id: number }).id
+
+	if (!is_logged_in.value) {
+		await navigateTo('/auth/login')
+		return
+	}
+
+	if (role.value === 'merchant') {
+		add_error.value = 'Switch to a customer account to shop.'
+		return
+	}
+
+	if (role.value !== 'customer') {
+		await navigateTo('/auth/login')
+		return
+	}
+
+	adding_to_basket.value = true
+	try {
+		await api.post('/basket/add', { product_id, quantity: 1 })
+		await refresh_basket_item_count()
+	} catch (e: unknown) {
+		const msg =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Could not add to basket.'
+		add_error.value = msg
+	} finally {
+		adding_to_basket.value = false
+	}
+}
 
 </script>

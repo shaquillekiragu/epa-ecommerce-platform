@@ -24,8 +24,8 @@
 			</NuxtLink>
 		</div>
 
-		<div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-			<div class="lg:col-span-8 flex flex-col gap-4">
+		<section v-else class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+			<article class="lg:col-span-8 flex flex-col gap-4">
 				<div
 					v-for="line in lines"
 					:key="line.product_id"
@@ -98,9 +98,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</article>
 
-			<div class="lg:col-span-4">
+			<article class="lg:col-span-4">
 				<div class="bg-white border border-slate-200 rounded-xl p-4 sticky top-30">
 					<h2 class="font-semibold tracking-tight text-xl leading-snug text-slate-900 mb-4">Order Summary</h2>
 					<div class="flex flex-col gap-2 border-b border-slate-200 pb-4 mb-4">
@@ -133,8 +133,8 @@
 						</p>
 					</div>
 				</div>
-			</div>
-		</div>
+			</article>
+		</section>
 	</main>
 </template>
 
