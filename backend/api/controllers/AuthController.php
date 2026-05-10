@@ -88,7 +88,7 @@ class AuthController extends Controller
     public function actionLogin()
     {
         $body = Yii::$app->request->getBodyParams();
-        $email = (string) ($body['email'] ?? '');
+        $email = mb_strtolower(trim((string) ($body['email'] ?? '')));
         $password = (string) ($body['password'] ?? '');
 
         if ($email === '' || $password === '') {
@@ -125,10 +125,13 @@ class AuthController extends Controller
             throw new BadRequestHttpException('Could not create token.');
         }
 
+        $expires_ts = strtotime((string)$token->expires_at);
+        $expires_at_iso = $expires_ts !== false ? gmdate('c', $expires_ts) : (string)$token->expires_at;
+
         return [
             'token' => $raw_token,
             'token_type' => 'bearer',
-            'expires_at' => $token->expires_at,
+            'expires_at' => $expires_at_iso,
             'user' => [
                 'id' => $user->id,
                 'role' => $user->role,

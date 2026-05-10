@@ -19,6 +19,12 @@ function clear_client_auth_session() {
 	auth_user.value = null;
 }
 
+/** These routes must not send a stale bearer token (e.g. after logout / revoke). */
+function is_public_auth_path(path: string): boolean {
+	const normalized = path.replace(/^\/+/, '');
+	return normalized === 'auth/login' || normalized === 'auth/register';
+}
+
 export function useApi() {
 	const token = useCookie<string | null>('auth_token', { sameSite: 'lax', path: '/' });
 	const token_expires_at = useCookie<string | null>('auth_token_expires_at', { sameSite: 'lax', path: '/' });
@@ -49,7 +55,7 @@ export function useApi() {
 			Accept: 'application/json',
 		};
 
-		if (token.value) {
+		if (token.value && !is_public_auth_path(path)) {
 			headers.Authorization = `Bearer ${token.value}`;
 		}
 

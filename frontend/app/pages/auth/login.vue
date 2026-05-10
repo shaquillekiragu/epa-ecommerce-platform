@@ -48,9 +48,21 @@ const { login, role } = useAuth();
 
 function to_friendly_error(e: unknown): string {
 	const err = e as Partial<ApiError> | null;
+	const msg = (err?.message ?? '').toLowerCase();
 
 	if (err?.status === 401) {
-		return 'Incorrect email or password.';
+		if (msg.includes('inactive')) {
+			return 'This account is inactive. Contact support if you need help.';
+		}
+		if (msg.includes('invalid credential')) {
+			return 'Incorrect email or password.';
+		}
+		if (msg.includes('session expired')) {
+			return 'Your session has expired. Please sign in again.';
+		}
+		return err?.message && !msg.includes('unauthorized')
+			? (err.message as string)
+			: 'Sign-in failed. Please check your details and try again.';
 	}
 
 	if (err?.status === 403) {

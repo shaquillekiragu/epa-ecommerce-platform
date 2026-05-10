@@ -13,7 +13,14 @@ export function useAuth() {
 	const role = computed(() => user.value?.role ?? null);
 
 	async function login(email: string, password: string) {
-		const res = await api.post<LoginResponse>('/auth/login', { email, password });
+		token.value = null;
+		token_expires_at.value = null;
+		user.value = null;
+
+		const res = await api.post<LoginResponse>('/auth/login', {
+			email: email.trim(),
+			password,
+		});
 		token.value = res.token;
 		token_expires_at.value = res.expires_at ?? null;
 		await refresh_me();
