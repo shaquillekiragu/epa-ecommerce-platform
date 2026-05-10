@@ -96,6 +96,7 @@ import { getPoundAndPenceFormat } from '~/utils/money';
 
 const route = useRoute();
 const api = useApi();
+const { refresh_basket_item_count } = useBasketItemCount();
 
 const slug = computed(() => String(route.params.slug ?? ''));
 
@@ -143,6 +144,7 @@ async function add_to_basket() {
 			product_id: p.id,
 			quantity: qty.value,
 		});
+		await refresh_basket_item_count();
 		await navigateTo('/basket');
 	} catch (e: unknown) {
 		const msg =

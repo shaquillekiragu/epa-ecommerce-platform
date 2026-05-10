@@ -30,7 +30,11 @@
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">shopping_cart</span>
 					<span
-						class="absolute -top-1 -right-1 bg-slate-900 text-white text-[10px] font-bold size-4 rounded-full flex items-center justify-center">3</span>
+						v-if="show_basket_count_badge"
+						class="absolute -top-1 -right-1 min-w-4 h-4 min-h-4 px-0.5 bg-slate-900 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none"
+					>
+						{{ basket_badge_label }}
+					</span>
 				</NuxtLink>
 				
 				<NuxtLink
@@ -66,6 +70,17 @@
 import type { NavLink } from '~/types/miscellaneous';
 
 const { is_logged_in, role, logout } = useAuth();
+const { basket_item_count, refresh_basket_item_count } = useBasketItemCount();
+
+const show_basket_count_badge = computed(
+	() => is_logged_in.value && role.value === 'customer' && basket_item_count.value > 0,
+);
+
+const basket_badge_label = computed(() => {
+	const n = basket_item_count.value;
+	if (n > 99) return '99+';
+	return String(n);
+});
 
 const nav_links = computed<NavLink[]>(() => {
 	const customer_links: NavLink[] = [
@@ -99,5 +114,13 @@ async function on_logout() {
 	await logout();
 	await navigateTo('/auth');
 }
+
+watch(
+	() => [is_logged_in.value, role.value] as const,
+	() => {
+		refresh_basket_item_count();
+	},
+	{ immediate: true },
+);
 
 </script>

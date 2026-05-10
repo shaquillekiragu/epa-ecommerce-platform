@@ -147,6 +147,7 @@ definePageMeta({
 });
 
 const api = useApi();
+const { apply_from_basket } = useBasketItemCount();
 
 const pending = ref(true);
 const error_message = ref<string | null>(null);
@@ -172,11 +173,13 @@ async function load_basket() {
 	pending.value = true;
 	try {
 		basket.value = await api.get<BasketResponse>('/basket');
+		apply_from_basket(basket.value);
 	} catch (e: unknown) {
 		const msg =
 			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to load basket';
 		error_message.value = msg;
 		basket.value = null;
+		apply_from_basket(null);
 	} finally {
 		pending.value = false;
 	}
@@ -187,6 +190,7 @@ async function change_qty(product_id: number, quantity: number) {
 	error_message.value = null;
 	try {
 		basket.value = await api.patch<BasketResponse>(`/basket/item/${product_id}`, { quantity });
+		apply_from_basket(basket.value);
 	} catch (e: unknown) {
 		const msg =
 			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Could not update quantity';
