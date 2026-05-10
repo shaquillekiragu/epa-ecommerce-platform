@@ -1,5 +1,7 @@
 <?php
 
+/** @var \yii\db\ActiveRecord $model Active record passed in from the create/update views. */
+
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
@@ -24,6 +26,9 @@ $skip_fields = [
 	'basket_id',
 	'order_id',
 	'product_category_id',
+
+	// Never edit the digest directly; use the virtual `password` field below (hashed via User::beforeSave).
+	'hashed_password',
 ];
 
 $boolean_fields = ['allow_update', 'allow_delete'];
@@ -74,10 +79,6 @@ $textarea_fields = [
 	'description',
 ];
 
-$password_fields = [
-	'hashed_password',
-];
-
 $email_fields = [
 	'email',
 ];
@@ -126,10 +127,6 @@ $email_fields = [
 					echo $field->textarea(['rows' => 4]);
 					break;
 
-				case in_array($attribute, $password_fields, true):
-					echo $field->passwordInput();
-					break;
-
 				case in_array($attribute, $email_fields, true):
 					echo $field->input('email');
 					break;
@@ -141,6 +138,19 @@ $email_fields = [
 			?>
 		</div>
 	<?php endforeach; ?>
+
+	<?php if ($model instanceof \common\models\User): ?>
+		<div class="col-12 col-md-6">
+			<?= $form->field($model, 'password')->passwordInput([
+				'autocomplete' => 'new-password',
+				'placeholder' => $model->getIsNewRecord() ? 'Min 8 chars, include a letter and a number' : '',
+			])->hint(
+				$model->getIsNewRecord()
+					? 'Required for new users. It is stored as a bcrypt hash automatically.'
+					: 'Leave blank to keep the current password. Type a new password to change it—do not paste a hash.'
+			) ?>
+		</div>
+	<?php endif; ?>
 </div>
 
 <div class="mt-4 d-flex justify-content-center gap-2">

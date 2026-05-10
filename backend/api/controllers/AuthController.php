@@ -12,9 +12,108 @@ use common\models\Usertoken;
 
 class AuthController extends Controller
 {
+    /**
+     * Parsed body params. Handles JSON when Postman/clients omit Content-Type: application/json
+     * (Yii would otherwise leave getBodyParams() empty).
+     *
+     * @return array<string, mixed>
+     */
+    private function getRequestBodyParams(): array
+    {
+        $request = Yii::$app->request;
+        $params = $request->getBodyParams();
+
+        if (is_array($params) && $params !== []) {
+            return $params;
+        }
+
+        $raw = $request->getRawBody();
+
+        if ($raw === '' || !is_string($raw)) {
+            return [];
+        }
+
+        $trimmed = ltrim($raw);
+        $contentType = (string) $request->getContentType();
+        $looksLikeJson = $trimmed !== '' && ($trimmed[0] === '{' || $trimmed[0] === '[');
+
+        if (stripos($contentType, 'json') !== false || $looksLikeJson) {
+            $decoded = json_decode($raw, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Canonical composed Unicode (NFC) so the same visual password matches across clients
+     * (browsers often send NFD for some characters; Postman/APIs may send NFC).
+     */
+    private function normalizePasswordUnicode(string $password): string
+    {
+        if ($password === '' || !class_exists(\Normalizer::class)) {
+            return $password;
+        }
+
+        $normalized = \Normalizer::normalize($password, \Normalizer::FORM_C);
+
+        return is_string($normalized) ? $normalized : $password;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function loginPasswordCandidates(string $password_raw): array
+    {
+        $trimmed = trim($password_raw);
+        $candidates = [
+            $this->normalizePasswordUnicode($trimmed),
+            $trimmed,
+        ];
+
+        if (class_exists(\Normalizer::class)) {
+            $nfd_trimmed = \Normalizer::normalize($trimmed, \Normalizer::FORM_D);
+            if (is_string($nfd_trimmed)) {
+                $candidates[] = $nfd_trimmed;
+            }
+        }
+
+        if ($password_raw !== $trimmed) {
+            $candidates[] = $this->normalizePasswordUnicode($password_raw);
+            $candidates[] = $password_raw;
+
+            if (class_exists(\Normalizer::class)) {
+                $nfd_raw = \Normalizer::normalize($password_raw, \Normalizer::FORM_D);
+                if (is_string($nfd_raw)) {
+                    $candidates[] = $nfd_raw;
+                }
+            }
+        }
+
+        $seen = [];
+        $out = [];
+
+        foreach ($candidates as $c) {
+            if ($c === '' || array_key_exists($c, $seen)) {
+                continue;
+            }
+
+            $seen[$c] = true;
+            $out[] = $c;
+        }
+
+        return $out;
+    }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
+        // yii\rest\Controller attaches CompositeAuth by default; keep these endpoints public.
+        unset($behaviors['authenticator']);
 
         $behaviors['contentNegotiator'] = [
             'class' => \yii\filters\ContentNegotiator::class,
@@ -39,9 +138,10 @@ class AuthController extends Controller
 
     public function actionRegister()
     {
-        $body = Yii::$app->request->getBodyParams();
-        $email = (string) ($body['email'] ?? '');
-        $password = (string) ($body['password'] ?? '');
+        $body = $this->getRequestBodyParams();
+        $email = mb_strtolower(trim((string) ($body['email'] ?? '')));
+        $password_raw_register = (string) ($body['password'] ?? '');
+        $password = $this->normalizePasswordUnicode(trim($password_raw_register));
 
         if ($email === '' || $password === '') {
             throw new BadRequestHttpException('Email and password are required.');
@@ -51,9 +151,16 @@ class AuthController extends Controller
             throw new BadRequestHttpException('Email already exists.');
         }
 
+        $safe = $body;
+
+        foreach (['password', 'hashed_password', 'id'] as $key) {
+            unset($safe[$key]);
+        }
+
         $user = new User();
-        $user->load($body, '');
-        $user->setPassword($password);
+        $user->load($safe, '');
+        $user->email = $email;
+        $user->password = $password;
         $user->is_active = true;
         $user->allow_update = true;
         $user->allow_delete = true;
@@ -68,6 +175,25 @@ class AuthController extends Controller
 
         if (!$user->save()) {
             throw new BadRequestHttpException(json_encode($user->errors));
+        }
+
+        $user->refresh();
+
+        $verified_after_save = false;
+
+        foreach ($this->loginPasswordCandidates($password_raw_register) as $candidate) {
+            if ($user->validatePassword($candidate)) {
+                $verified_after_save = true;
+                break;
+            }
+        }
+
+        if (!$verified_after_save) {
+            throw new BadRequestHttpException(
+                YII_DEBUG
+                    ? 'Registration saved but password verification failed after reload. The stored hashed_password does not match any login-equivalent form of this password (check DB column / ORM).'
+                    : 'Could not complete registration.'
+            );
         }
 
         return [
@@ -87,19 +213,65 @@ class AuthController extends Controller
 
     public function actionLogin()
     {
-        $body = Yii::$app->request->getBodyParams();
+        $body = $this->getRequestBodyParams();
         $email = mb_strtolower(trim((string) ($body['email'] ?? '')));
-        $password = (string) ($body['password'] ?? '');
+        $password_raw = (string) ($body['password'] ?? '');
+        $trimmed = trim($password_raw);
 
-        if ($email === '' || $password === '') {
+        if ($email === '' || $trimmed === '') {
             throw new BadRequestHttpException('Email and password are required.');
         }
 
         $user = User::findByEmail($email);
 
-        if ($user === null || !$user->validatePassword($password)) {
-            throw new UnauthorizedHttpException('Invalid credentials.');
+        if ($user === null) {
+            $msg = YII_DEBUG
+                ? 'Invalid credentials. (debug: no user row matches this email. Confirm URL is the storefront API, database, and JSON keys are "email" and "password".)'
+                : 'Invalid credentials.';
+            throw new UnauthorizedHttpException($msg);
         }
+
+        $hash = trim((string) ($user->hashed_password ?? ''));
+
+        if ($hash === '') {
+            $msg = YII_DEBUG
+                ? 'Invalid credentials. (debug: user has an empty hashed_password; re-register or fix the row.)'
+                : 'Invalid credentials.';
+
+            throw new UnauthorizedHttpException($msg);
+        }
+
+        $matched_plain = null;
+
+        foreach ($this->loginPasswordCandidates($password_raw) as $candidate) {
+            if ($user->validatePassword($candidate)) {
+                $matched_plain = $candidate;
+                break;
+            }
+        }
+
+        $password_ok = $matched_plain !== null;
+
+        if (!$password_ok) {
+            $stored_preview = trim((string) ($user->hashed_password ?? ''));
+            $looks_bcrypt_or_argon2 = str_starts_with($stored_preview, '$2')
+                || str_starts_with($stored_preview, '$argon2');
+            $msg = YII_DEBUG
+                ? (
+                    $looks_bcrypt_or_argon2
+                        ? 'Invalid credentials. (debug: bcrypt/argon2 hash present but no login variant matched (password bytes differ from signup—try superadmin Password field, re-register, or if the password has accents/emoji, retry after deploy; we try NFC-normalized and raw forms).)'
+                        : sprintf(
+                            'Invalid credentials. (debug: stored length=%d; prefix=%s. If this is not a $2… or $argon2… hash, it may be legacy plaintext.)',
+                            strlen($stored_preview),
+                            json_encode(substr($stored_preview, 0, 16))
+                        )
+                )
+                : 'Invalid credentials.';
+
+            throw new UnauthorizedHttpException($msg);
+        }
+
+        $user->upgradePlaintextPasswordColumn((string) $matched_plain);
 
         if (!$user->is_active) {
             throw new UnauthorizedHttpException('User is inactive.');

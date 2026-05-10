@@ -58,6 +58,11 @@ class BaseModel extends ActiveRecord
             if (!is_string($value)) {
                 continue;
             }
+            // Never trim password hashes / token digests — whitespace is rare but trimming can corrupt verification.
+            if ($attribute === 'hashed_password' || str_ends_with($attribute, '_hash')) {
+                continue;
+            }
+            
             $this->$attribute = trim($value);
         }
 

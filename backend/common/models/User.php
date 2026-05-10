@@ -50,6 +50,14 @@ class User extends BaseModel implements IdentityInterface
                 ],
                 [
                     ['password'],
+                    'required',
+                    'when' => static function ($model) {
+                        /** @var self $model */
+                        return $model->isNewRecord;
+                    },
+                ],
+                [
+                    ['password'],
                     'string',
                     'min' => 8,
                     'max' => 255,
@@ -166,19 +174,78 @@ class User extends BaseModel implements IdentityInterface
     public static function findByEmail(string $email): ?self
     {
         $email = mb_strtolower(trim($email));
-        $user = static::findOne(['email' => $email]);
-        return $user;
+
+        if ($email === '') {
+            return null;
+        }
+
+        $user = static::find()
+            ->where(new \yii\db\Expression('LOWER(TRIM([[email]])) = :email', [':email' => $email]))
+            ->one();
+
+        return $user ?: null;
     }
 
     public function validatePassword(string $password): bool
     {
-        $hash = (string) ($this->hashed_password ?? '');
-
-        if ($hash === '') {
+        if ($password === '') {
             return false;
         }
 
-        return Yii::$app->security->validatePassword($password, $hash);
+        // Trim: trailing/leading whitespace in DB breaks password_verify() even for valid bcrypt strings.
+        $stored = trim((string) ($this->hashed_password ?? ''));
+
+        if ($stored === '') {
+            return false;
+        }
+
+        if (!function_exists('password_verify') || !function_exists('password_get_info')) {
+            try {
+                return Yii::$app->security->validatePassword($password, $stored);
+            } catch (\InvalidArgumentException) {
+                return false;
+            }
+        }
+
+        if (password_verify($password, $stored)) {
+            return true;
+        }
+
+        // Recognised password_hash() digest but wrong password.
+        if (password_get_info($stored)['algo'] !== 0) {
+            return false;
+        }
+
+        // Legacy: plaintext saved in hashed_password (e.g. admin CRUD on the column without hashing).
+        return hash_equals($stored, $password);
+    }
+
+    /**
+     * If hashed_password still holds plaintext, replace it with a proper hash (safe no-op otherwise).
+     */
+    public function upgradePlaintextPasswordColumn(string $plain): void
+    {
+        $plain = trim($plain);
+        if ($plain === '') {
+            return;
+        }
+
+        $stored = trim((string) ($this->hashed_password ?? ''));
+
+        if ($stored === '' || !function_exists('password_get_info')) {
+            return;
+        }
+
+        if (password_get_info($stored)['algo'] !== 0) {
+            return;
+        }
+
+        if (!hash_equals($stored, $plain)) {
+            return;
+        }
+
+        $this->setPassword($plain);
+        $this->save(false, ['hashed_password']);
     }
 
     public function setPassword(string $password): void
@@ -214,6 +281,13 @@ class User extends BaseModel implements IdentityInterface
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // Virtual plaintext must not linger in memory or survive a second save() in the same request.
+        $this->password = null;
     }
 
     public function getFullName()

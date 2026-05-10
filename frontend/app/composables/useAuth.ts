@@ -18,12 +18,25 @@ export function useAuth() {
 		user.value = null;
 
 		const res = await api.post<LoginResponse>('/auth/login', {
-			email: email.trim(),
+			email: email.trim().toLowerCase(),
+			// Do not trim here: the API compares trimmed and raw password (legacy hashes / paste quirks).
 			password,
 		});
 		token.value = res.token;
 		token_expires_at.value = res.expires_at ?? null;
-		await refresh_me();
+		try {
+			// Pass token explicitly: Nuxt useCookie can lag one tick, so useApi might not send Authorization yet.
+			await refresh_me(res.token);
+		} catch {
+			token.value = null;
+			token_expires_at.value = null;
+			user.value = null;
+			throw {
+				status: 401,
+				message:
+					'We could not finish signing you in (loading your profile). Please try again, or contact support if this continues.',
+			};
+		}
 		return res;
 	}
 
@@ -41,10 +54,33 @@ export function useAuth() {
 		}
 	}
 
-	async function refresh_me() {
-		if (!token.value) {
+	async function refresh_me(explicit_bearer?: string) {
+		const bearer = explicit_bearer ?? token.value;
+		if (!bearer) {
 			user.value = null;
 			return null;
+		}
+
+		const request_opts = explicit_bearer !== undefined ? { bearerOverride: explicit_bearer } : undefined;
+
+		async function run_me(): Promise<AuthUserSelf> {
+			const me = await api.get<AuthUserSelf>('/me', request_opts);
+			user.value = me;
+			return me;
+		}
+
+		// Right after login: use explicit token and skip shared in-flight request (cookie may not be readable yet).
+		if (explicit_bearer !== undefined) {
+			try {
+				return await run_me();
+			} catch (e: any) {
+				if (e?.status === 401) {
+					token.value = null;
+					token_expires_at.value = null;
+					user.value = null;
+				}
+				throw e;
+			}
 		}
 
 		if (me_request.value) {
@@ -53,9 +89,7 @@ export function useAuth() {
 
 		me_request.value = (async () => {
 			try {
-				const me = await api.get<AuthUserSelf>('/me');
-				user.value = me;
-				return me;
+				return await run_me();
 			} catch (e: any) {
 				if (e?.status === 401) {
 					token.value = null;

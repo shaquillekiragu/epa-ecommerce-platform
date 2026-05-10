@@ -8,6 +8,11 @@ export type ApiError = {
 	details?: unknown;
 };
 
+export type ApiRequestOptions = {
+	/** Send this as Bearer instead of reading the auth cookie (needed right after login; cookie can lag one tick). */
+	bearerOverride?: string;
+};
+
 function getApiBaseUrl(): string {
 	const env = useRuntimeConfig().public as { apiBaseUrl?: string };
 	const configured = (env.apiBaseUrl ?? '').trim();
@@ -37,9 +42,17 @@ export function useApi() {
 		return Date.now() >= ms;
 	}
 
-	async function request<T>(path: string, method: HttpMethod, body?: unknown): Promise<T> {
-		// Proactively treat expired tokens as logged-out to avoid loops.
-		if (token.value && is_token_expired()) {
+	async function request<T>(
+		path: string,
+		method: HttpMethod,
+		body?: unknown,
+		options?: ApiRequestOptions,
+	): Promise<T> {
+		const use_cookie_bearer = options?.bearerOverride === undefined;
+		const bearer_for_request = use_cookie_bearer ? token.value : options.bearerOverride;
+
+		// Proactively treat expired tokens as logged-out to avoid loops (cookie session only).
+		if (use_cookie_bearer && token.value && is_token_expired()) {
 			token.value = null;
 			token_expires_at.value = null;
 			clear_client_auth_session();
@@ -55,8 +68,8 @@ export function useApi() {
 			Accept: 'application/json',
 		};
 
-		if (token.value && !is_public_auth_path(path)) {
-			headers.Authorization = `Bearer ${token.value}`;
+		if (bearer_for_request && !is_public_auth_path(path)) {
+			headers.Authorization = `Bearer ${bearer_for_request}`;
 		}
 
 		const res = await fetch(url, {
@@ -89,9 +102,9 @@ export function useApi() {
 	}
 
 	return {
-		get: <T>(path: string) => request<T>(path, 'GET'),
-		post: <T>(path: string, body?: unknown) => request<T>(path, 'POST', body),
-		patch: <T>(path: string, body?: unknown) => request<T>(path, 'PATCH', body),
-		del: <T>(path: string) => request<T>(path, 'DELETE'),
+		get: <T>(path: string, opts?: ApiRequestOptions) => request<T>(path, 'GET', undefined, opts),
+		post: <T>(path: string, body?: unknown, opts?: ApiRequestOptions) => request<T>(path, 'POST', body, opts),
+		patch: <T>(path: string, body?: unknown, opts?: ApiRequestOptions) => request<T>(path, 'PATCH', body, opts),
+		del: <T>(path: string, opts?: ApiRequestOptions) => request<T>(path, 'DELETE', undefined, opts),
 	};
 }
