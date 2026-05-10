@@ -1,4 +1,5 @@
 import type { AuthUserSelf, LoginResponse } from '~/types/auth';
+import { getCurrentInstance, onMounted } from 'vue';
 
 export function useAuth() {
 	const api = useApi();
@@ -63,11 +64,13 @@ export function useAuth() {
 		return me_request.value;
 	}
 
-	onMounted(() => {
-		if (token.value && !user.value) {
-			refresh_me().catch(() => {});
-		}
-	});
+	if (getCurrentInstance()) {
+		onMounted(() => {
+			if (token.value && !user.value) {
+				refresh_me().catch(() => {});
+			}
+		});
+	}
 
 	return {
 		token,

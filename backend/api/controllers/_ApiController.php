@@ -20,6 +20,13 @@ class _ApiController extends ActiveController
     {
         $behaviors = parent::behaviors();
 
+        // Ensure CORS runs even when authentication fails.
+        // Yii's REST controllers may register an authenticator in parent::behaviors(),
+        // so we remove it and re-add after the CORS filter below.
+        if (isset($behaviors['authenticator'])) {
+            unset($behaviors['authenticator']);
+        }
+
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::class,
             'formats' => [
