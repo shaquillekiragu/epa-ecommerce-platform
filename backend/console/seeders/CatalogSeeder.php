@@ -2,6 +2,7 @@
 
 namespace console\seeders;
 
+use common\models\Product;
 use yii\db\Query;
 use yii\helpers\Console;
 
@@ -93,6 +94,92 @@ final class CatalogSeeder extends BaseSeeder
         } catch (\Throwable $e) {
             $tx->rollBack();
             throw $e;
+        }
+    }
+
+    /**
+     * Inserts products using only store and product_category rows already in the database.
+     * Does not create stores or categories.
+     */
+    public function seedExtraProductsUsingExistingCatalog(int $debug = 1, int $count = 30): void
+    {
+        if ($count <= 0) {
+            throw new \InvalidArgumentException('count must be positive.');
+        }
+
+        $store_ids = (new Query())
+            ->select(['id'])
+            ->from('{{%store}}')
+            ->orderBy(['id' => SORT_ASC])
+            ->column($this->db);
+
+        $category_ids = (new Query())
+            ->select(['id'])
+            ->from('{{%product_category}}')
+            ->orderBy(['id' => SORT_ASC])
+            ->column($this->db);
+
+        if (count($store_ids) === 0) {
+            throw new \RuntimeException('No stores in the database. Seed stores first.');
+        }
+
+        if (count($category_ids) === 0) {
+            throw new \RuntimeException('No product categories in the database. Seed categories first.');
+        }
+
+        $actor_id = $this->ensureSuperadminUserId();
+
+        $thumbnail_pool = [
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuCsP0brIpa6RGliR_LnX4sKRoU5eofeW1Zk-j5zSAUHJHWywKONN3xutvNBjQpCbpTzsdzDjaodtQdAobDg5IdvQHpgtfq3FaqvjCSCFj3Qmj4MD2IWh16tSuPlEesIixtZ25WnDiKO_itfhOglNTyzQluQspQP4th8BOtniEuiiwHRvCBCnyaD58107jfhA16-4ZfqVBw65LPFjiXh8ym2fz-UqwxHxyjnIO9_cCZgZlMGXadqHIXuXb6bSgGfuCHtzqQsA3W0B0EL',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAfAjzhD8IU1hWkHsvqBsDKhVYKRzeaPsQZw6Ksx4OK20eyklJ2SgIB2hQBUsikftc4iAck2LsyhcdhRwHT1iw_MYG8sb3afvCeIRfYx7I3LkZ-zQ5lEPo8q39XdWeBVDZK8d5JOzIeHUFCvvP8Txcpva7_HLVh4Yv8Hc8VixszV-zV6MjI3x3FcYhBKichpNVsYrHcsoyp3lvhFtD2-hTMTwNCZSQo8-zwFpxRwq2Z0C5d24UzjTLP9wPYXdk37OKiPP5FdogM37yj',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuC2Jql8K5UdayOQMiRYTUtVqzjTtl1kTUG4DHWLWEmePyWLIu15We9UGWolWc97oLi80pi6TkEEf4Z3uSN--d6bvNVogVfDNzjpQLd_GMaXh23pu98CKy7q3itlpdeItGbCwl6lh9OHtrl8o8NKyzhliECJSklJ-336EW4AxVeIDfzhKbfd3dw8ZIBrBl3p-5wLXZjoo5KsNIg4kbtOFxYteJOxrOirLTSWF6xUsRl6CgpyZ1pGTIR17WXKF9sAxlRKEWH0exKyfEL1',
+        ];
+
+        $inserted = 0;
+
+        $tx = $this->db->beginTransaction();
+
+        try {
+            for ($i = 0; $i < $count; $i++) {
+                $n = $i + 1;
+                $store_id = (int) $store_ids[$i % count($store_ids)];
+                $category_id = (int) $category_ids[$i % count($category_ids)];
+
+                $sku_base = $this->seed_run_prefix . 'X-' . str_pad((string) $n, 4, '0', STR_PAD_LEFT);
+                if (strlen($sku_base) > 64) {
+                    $sku_base = substr($sku_base, 0, 64);
+                }
+
+                $product = new Product();
+                $product->store_id = $store_id;
+                $product->product_category_id = $category_id;
+                $product->name = 'Catalog Extra Item ' . $n;
+                $product->sku_code = $sku_base;
+                $product->price_in_gbp = round(4.99 + ($i % 47) * 0.75 + ($i % 3) * 2.5, 2);
+                $product->number_in_stock = 20 + ($i * 7) % 180;
+                $product->weight_in_grams = 50 + ($i * 13) % 2000;
+                $product->thumbnail = $thumbnail_pool[$i % count($thumbnail_pool)];
+                $product->is_active = true;
+                $product->allow_update = true;
+                $product->allow_delete = true;
+                $product->created_by = $actor_id;
+                $product->last_updated_by = $actor_id;
+
+                if (!$product->save()) {
+                    throw new \RuntimeException('Failed to save product: ' . json_encode($product->errors));
+                }
+
+                $inserted++;
+            }
+
+            $tx->commit();
+        } catch (\Throwable $e) {
+            $tx->rollBack();
+            throw $e;
+        }
+
+        if ($debug === 1) {
+            Console::output('Inserted ' . $inserted . ' products using existing stores and categories.');
         }
     }
 

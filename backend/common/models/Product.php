@@ -78,11 +78,10 @@ class Product extends BaseModel
                     'message' => 'Product name must contain letters.'
                 ],
                 [
-                    [
-                        'sku_code',
-                    ],
+                    ['sku_code'],
                     'string',
-                    'length' => 64
+                    'max' => 64,
+                    'min' => 1,
                 ],
                 [
                     [

@@ -35,6 +35,17 @@ class SeedController extends Controller
     }
 
     /**
+     * Inserts extra products via {@see CatalogSeeder::seedExtraProductsUsingExistingCatalog()}.
+     *
+     * php yii seed/extra-products [debug] [count] [seed]
+     */
+    public function actionExtraProducts(int $debug = 1, int $count = 30, $seed = null): void
+    {
+        $seeder = new CatalogSeeder(Yii::$app->db, $seed !== null ? (int) $seed : null);
+        $seeder->seedExtraProductsUsingExistingCatalog($debug, $count);
+    }
+
+    /**
      * Seeds: basket, basket_product.
      *
      * php yii seed/baskets
