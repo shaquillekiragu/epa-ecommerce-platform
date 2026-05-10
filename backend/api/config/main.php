@@ -31,8 +31,9 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
+            // Storefront API is bearer-token only; do not restore identity from session cookie.
+            'enableAutoLogin' => false,
+            'loginUrl' => null,
         ],
         'session' => [
             // this is the name of the session cookie used for login on the api
@@ -84,21 +85,15 @@ return [
                 'POST api/v1/merchant/products' => 'merchant/products',
                 'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/delete-product',
 
+                // Only public catalogue/store discovery via REST. Sensitive models are exposed via
+                // scoped customer/* and merchant/* routes with role checks — not generic ActiveController lists.
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'prefix' => 'api/v1',
                     'controller' => [
-                        'me',
-                        'address',
-                        'basket',
-                        'basketproduct',
-                        'order',
-                        'orderproduct',
                         'product',
                         'productcategory',
                         'store',
-                        'user',
-                        'useraddress',
                     ],
                     'pluralize' => true,
                 ],

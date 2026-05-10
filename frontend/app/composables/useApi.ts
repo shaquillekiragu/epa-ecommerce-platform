@@ -1,3 +1,5 @@
+import type { AuthUserSelf } from '~/types/auth';
+
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 export type ApiError = {
@@ -10,6 +12,11 @@ function getApiBaseUrl(): string {
 	const env = useRuntimeConfig().public as { apiBaseUrl?: string };
 	const configured = (env.apiBaseUrl ?? '').trim();
 	return (configured !== '' ? configured : 'http://localhost:21080/api/v1').replace(/\/+$/, '');
+}
+
+function clear_client_auth_session() {
+	const auth_user = useState<AuthUserSelf | null>('auth_user', () => null);
+	auth_user.value = null;
 }
 
 export function useApi() {
@@ -29,6 +36,7 @@ export function useApi() {
 		if (token.value && is_token_expired()) {
 			token.value = null;
 			token_expires_at.value = null;
+			clear_client_auth_session();
 			const err: ApiError = { status: 401, message: 'Session expired.' };
 			throw err;
 		}
@@ -65,6 +73,7 @@ export function useApi() {
 			if (err.status === 401) {
 				token.value = null;
 				token_expires_at.value = null;
+				clear_client_auth_session();
 			}
 
 			throw err;

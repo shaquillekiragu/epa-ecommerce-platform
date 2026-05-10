@@ -5,6 +5,7 @@ namespace api\controllers;
 use Yii;
 use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
 use common\models\User;
 use common\models\Usertoken;
@@ -39,7 +40,6 @@ class AuthController extends Controller
     public function actionRegister()
     {
         $body = Yii::$app->request->getBodyParams();
-
         $email = (string) ($body['email'] ?? '');
         $password = (string) ($body['password'] ?? '');
 
@@ -58,10 +58,13 @@ class AuthController extends Controller
         $user->allow_update = true;
         $user->allow_delete = true;
 
-        // Prevent self-service role escalation by default.
-        if (isset($body['role']) && $body['role'] === 'merchant') {
-            $user->role = 'customer';
+        $account_type = strtolower(trim((string)($body['account_type'] ?? 'customer')));
+
+        if (!in_array($account_type, ['customer', 'merchant'], true)) {
+            throw new BadRequestHttpException('Account type must be customer or merchant.');
         }
+
+        $user->role = $account_type;
 
         if (!$user->save()) {
             throw new BadRequestHttpException(json_encode($user->errors));
@@ -93,12 +96,21 @@ class AuthController extends Controller
         }
 
         $user = User::findByEmail($email);
+
         if ($user === null || !$user->validatePassword($password)) {
             throw new UnauthorizedHttpException('Invalid credentials.');
         }
 
         if (!$user->is_active) {
             throw new UnauthorizedHttpException('User is inactive.');
+        }
+
+        if (($user->role ?? null) === 'superadmin') {
+            throw new ForbiddenHttpException('You are not allowed to access the storefront with this account type. Login to the superadmin dashboard.');
+        }
+
+        if (!in_array((string)$user->role, ['customer', 'merchant'], true)) {
+            throw new ForbiddenHttpException('This account is not allowed to use the storefront API.');
         }
 
         $raw_token = Yii::$app->security->generateRandomString(64);
@@ -129,17 +141,20 @@ class AuthController extends Controller
     public function actionLogout()
     {
         $auth_header = (string) Yii::$app->request->getHeaders()->get('Authorization', '');
+
         if ($auth_header === '' || stripos($auth_header, 'Bearer ') !== 0) {
             throw new UnauthorizedHttpException('Missing bearer token.');
         }
 
         $raw_token = trim(substr($auth_header, 7));
+
         if ($raw_token === '') {
             throw new UnauthorizedHttpException('Missing bearer token.');
         }
 
         $token_hash = hash('sha256', $raw_token);
         $token = Usertoken::findOne(['token_hash' => $token_hash]);
+
         if ($token === null) {
             return ['ok' => true];
         }

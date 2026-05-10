@@ -23,7 +23,13 @@
 					to="/auth/register"
 					class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
 				>
-					Create account
+					Create customer account
+				</NuxtLink>
+				<NuxtLink
+					to="/auth/register-merchant"
+					class="sm:col-span-2 inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-3 font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
+				>
+					Create merchant account
 				</NuxtLink>
 			</div>
 		</section>

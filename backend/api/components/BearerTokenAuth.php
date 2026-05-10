@@ -40,6 +40,14 @@ class BearerTokenAuth extends AuthMethod
             throw new UnauthorizedHttpException('User is inactive.');
         }
 
+        if (($identity->role ?? null) === 'superadmin') {
+            throw new UnauthorizedHttpException('You are not allowed to access the storefront with this account type. Login to the superadmin dashboard.');
+        }
+
+        if (!in_array((string)$identity->role, ['customer', 'merchant'], true)) {
+            throw new UnauthorizedHttpException('This account is not allowed to use the storefront API.');
+        }
+
         $user_token->last_used_at = date('Y-m-d H:i:s');
         $user_token->save(false, ['last_used_at']);
 

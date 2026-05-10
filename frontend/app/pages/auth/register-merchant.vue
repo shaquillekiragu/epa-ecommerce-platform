@@ -1,8 +1,10 @@
 <template>
 	<main class="min-h-screen flex items-center justify-center px-6 py-16">
 		<section class="w-full max-w-md bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
-			<h1 class="text-2xl font-bold text-slate-900 mb-2">Create account</h1>
-			<p class="text-sm text-slate-600 mb-6">Register as a customer to shop.</p>
+			<h1 class="text-2xl font-bold text-slate-900 mb-2">Create merchant account</h1>
+			<p class="text-sm text-slate-600 mb-6">
+				Register to manage your store on the platform. (Demo: no approval workflow — production would add verification.)
+			</p>
 
 			<form class="space-y-4" @submit.prevent="on_submit">
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -55,14 +57,14 @@
 				<button type="submit"
 					class="w-full bg-slate-900 text-white rounded-lg py-3 font-semibold hover:bg-slate-800 transition-colors"
 					:disabled="loading">
-					{{ loading ? 'Creating...' : 'Create account' }}
+					{{ loading ? 'Creating...' : 'Create merchant account' }}
 				</button>
 			</form>
 
 			<div class="mt-6 space-y-2 text-sm text-slate-600">
 				<p>
-					Want to sell?
-					<NuxtLink to="/auth/register-merchant" class="text-slate-900 font-semibold hover:underline">Create a merchant account</NuxtLink>
+					Shopping only?
+					<NuxtLink to="/auth/register" class="text-slate-900 font-semibold hover:underline">Register as a customer</NuxtLink>
 				</p>
 				<p>
 					Already have an account?
@@ -112,7 +114,7 @@ async function on_submit() {
 	loading.value = true;
 	try {
 		await register({
-			account_type: 'customer',
+			account_type: 'merchant',
 			first_name: first_name.value,
 			last_name: last_name.value,
 			email: email.value,

@@ -53,6 +53,10 @@ function to_friendly_error(e: unknown): string {
 		return 'Incorrect email or password.';
 	}
 
+	if (err?.status === 403) {
+		return 'This account cannot sign in here. Use the correct sign-in page for your account type.';
+	}
+
 	if (err?.status === 0) {
 		return 'Could not reach the server. Please try again.';
 	}
