@@ -77,6 +77,7 @@ return [
                 'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
                 'POST api/v1/checkout' => 'customer/checkout',
                 'GET api/v1/customer/orders' => 'customer/orders',
+                'GET api/v1/customer/addresses' => 'customer/addresses',
 
                 // Merchant (bearer token + role=merchant + store ownership)
                 'GET api/v1/merchant/store' => 'merchant/store',
