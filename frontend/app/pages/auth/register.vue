@@ -115,7 +115,7 @@ async function on_submit() {
 			account_type: 'customer',
 			first_name: first_name.value,
 			last_name: last_name.value,
-			email: email.value,
+			email: email.value.trim().toLowerCase(),
 			password: password.value,
 			date_of_birth: date_of_birth.value,
 			country: country.value,
