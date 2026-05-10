@@ -47,6 +47,16 @@
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">account_circle</span>
 				</NuxtLink>
+
+				<button
+					v-if="is_logged_in"
+					class="hidden md:inline-flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 ml-8 px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition active:scale-95"
+					type="button"
+					@click="on_logout"
+				>
+					<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0">logout</span>
+					Logout
+				</button>
 			</div>
 		</div>
 	</header>
@@ -55,7 +65,7 @@
 <script setup lang="ts">
 import type { NavLink } from '~/types/miscellaneous';
 
-const { is_logged_in, role } = useAuth();
+const { is_logged_in, role, logout } = useAuth();
 
 const nav_links = computed<NavLink[]>(() => {
 	const customer_links: NavLink[] = [
@@ -84,5 +94,10 @@ const brand_link_url = computed(() => (role.value === 'merchant' ? '/merchant' :
 const show_basket_link = computed(() => role.value !== 'merchant');
 const basket_link_url = computed(() => (!is_logged_in.value ? '/auth' : '/basket'));
 const notifications_link_url = computed(() => (!is_logged_in.value ? '/auth' : '/account'));
+
+async function on_logout() {
+	await logout();
+	await navigateTo('/auth');
+}
 
 </script>
