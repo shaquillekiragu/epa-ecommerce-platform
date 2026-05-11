@@ -14,8 +14,6 @@ class Orderproduct extends CommonOrderproduct
             'product_id',
             'price_at_purchase_in_gbp',
             'quantity',
-            'allow_update',
-            'allow_delete',
             'created_at',
             'last_updated_at',
         ];

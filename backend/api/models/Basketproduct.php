@@ -14,8 +14,6 @@ class Basketproduct extends CommonBasketproduct
             'product_id',
             'quantity',
             'basket_product_price' => static fn (self $model) => $model->basketProductPrice,
-            'allow_update',
-            'allow_delete',
             'created_at',
             'last_updated_at',
         ];
