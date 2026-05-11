@@ -21,14 +21,34 @@
 				</div>
 			</article>
 
-			<p v-if="pending" class="text-slate-600 w-full text-center">Loading products…</p>
-			<p v-else-if="fetch_error" class="text-red-600 w-full text-center">Could not load products.</p>
+			<p v-if="pending" class="w-full text-center text-slate-600">Loading products…</p>
+			<p v-else-if="fetch_error" class="w-full text-center text-red-600">Could not load products.</p>
 
-			<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10">
-				<CardListComponent :cards="paged_products" :has_limit="false" layout="portrait" variant="catalogue-product" />
-			</section>
+			<div
+				v-else-if="products.length === 0"
+				class="w-full max-w-lg rounded-xl border border-dashed border-slate-300 bg-white px-8 py-12 text-center"
+			>
+				<p class="font-medium text-slate-800">No products found</p>
+				<p class="mt-2 text-sm text-slate-600">
+					<span v-if="has_store_filter">This store has nothing in the catalogue yet, or nothing matches your filters.</span>
+					<span v-else>Nothing matches your search or filters yet. Try widening price or category, or check back later.</span>
+				</p>
+			</div>
 
-			<UPagination v-model:page="page" active-color="neutral" size="xl" :items-per-page="items_per_page" :total="products.length" class="mt-4" />
+			<template v-else>
+				<section class="grid grid-cols-1 gap-10 sm:grid-cols-2 xl:grid-cols-3">
+					<CardListComponent :cards="paged_products" :has_limit="false" layout="portrait" variant="catalogue-product" />
+				</section>
+
+				<UPagination
+					v-model:page="page"
+					active-color="neutral"
+					size="xl"
+					:items-per-page="items_per_page"
+					:total="products.length"
+					class="mt-4"
+				/>
+			</template>
 		</section>
 	</main>
 </template>
@@ -83,6 +103,8 @@ function store_id_from_route(): number | null {
 	const n = Number.parseInt(s, 10);
 	return Number.isFinite(n) && n > 0 ? n : null;
 }
+
+const has_store_filter = computed(() => store_id_from_route() !== null);
 
 function buildProductsQuery(): ProductsQuery {
 	const q: ProductsQuery = {};
