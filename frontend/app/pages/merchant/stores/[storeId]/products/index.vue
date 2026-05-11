@@ -12,12 +12,12 @@
 						<p class="mt-1 text-slate-600">Catalogue for {{ store_name }} — same product data customers see, filtered by store.</p>
 					</div>
 					<div class="flex flex-wrap gap-3">
-						<NuxtLink
+						<!-- <NuxtLink
 							:to="`/products?store_id=${store_id}`"
 							class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-white"
 						>
 							View as shopper
-						</NuxtLink>
+						</NuxtLink> -->
 						<NuxtLink
 							:to="`/merchant/stores/${store_id}/products/new`"
 							class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
