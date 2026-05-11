@@ -1,11 +1,5 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 pb-16 pt-24">
-		<header
-			class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6"
-		>
-			<h1 class="truncate text-xl font-semibold text-slate-900">{{ store?.name ?? 'Store' }}</h1>
-		</header>
-
 		<div class="mx-auto max-w-5xl space-y-8 p-6 md:p-8">
 			<div v-if="invalid_id" class="rounded-xl border border-slate-200 bg-white p-8 text-center">
 				<p class="text-slate-700">Invalid store link.</p>

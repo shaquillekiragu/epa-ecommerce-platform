@@ -1,9 +1,5 @@
 <template>
-	<main class="min-h-screen w-full flex-1 bg-slate-50 pb-16 pt-24">
-		<header class="sticky top-0 z-30 flex h-16 items-center border-b border-slate-200 bg-white px-6">
-			<h1 class="text-xl font-semibold text-slate-900">Account</h1>
-		</header>
-
+	<main class="min-h-screen w-full flex-1 bg-slate-50 py-16">
 		<section class="mx-auto max-w-5xl p-6 md:p-12">
 			<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-8 text-slate-600">Loading…</div>
 

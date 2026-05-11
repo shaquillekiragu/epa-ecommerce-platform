@@ -33,10 +33,10 @@
 							</NuxtLink>
 							<NuxtLink
 								v-if="stores[0]"
-								:to="`/merchant/stores/${stores[0].id}/orders`"
+								to="/merchant/orders"
 								class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-50"
 							>
-								Orders ({{ stores[0].name }})
+								All orders
 							</NuxtLink>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 						<h3 class="text-lg font-semibold text-slate-900">Recent orders</h3>
 						<NuxtLink
 							v-if="stores[0]"
-							:to="`/merchant/stores/${stores[0].id}/orders`"
+							to="/merchant/orders"
 							class="text-sm font-semibold text-slate-900 hover:underline"
 						>
 							View all

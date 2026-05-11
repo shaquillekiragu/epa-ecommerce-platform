@@ -1,47 +1,26 @@
 <template>
 	<main class="min-h-screen w-full pb-16 pt-24">
-		<!-- Top App Bar -->
-		<header
-			class="flex justify-between items-center h-16 px-6 w-full sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 z-40">
-			<div class="flex items-center gap-4">
-				<button
-					class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-					<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-				</button>
-				<button
-					class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-					<span class="material-symbols-outlined" data-icon="settings">settings</span>
-				</button>
-				<div class="size-8 rounded-full overflow-hidden border border-slate-200">
-					<img alt="Merchant Profile" class="size-full object-cover"
-						src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQxsUlnzf-vcWAJVJdLNdI8MwNN2zcPo3NwneKrKj3_TFRqVDS_LWm677lv1DGFoOYws499zbTHeinfKqaL-Quh9VnImUXJOOOJYWzP5eKZLFA9NCGC9MKo3UdRFW-ZjjFkSoTFTCpuxZDGYPgD1Q6SROHA7PWvQrQrQyZO2OjS2A-TI-CavjZ0zq8v-YRXq3piVN5C_u5zisyVydg7lRsz5vhUr2NZG4dZw7p-7Zt9sChlyGxPj152G4PDTjgcl43YH5-qrcOo5v" />
+		<div class="max-w-6xl mx-auto px-10 py-8 flex items-end justify-between">
+			<div>
+				<div class="flex items-center gap-2 text-slate-500 mb-2">
+					<span class="text-xs font-medium uppercase tracking-widest">Inventory Management</span>
+					<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+					<span class="text-xs font-medium text-slate-900 uppercase tracking-widest">Add
+						Product</span>
 				</div>
+				<h2 class="text-3xl leading-tight font-bold tracking-tight text-slate-900">Create New Product</h2>
+				<p class="text-base font-normal text-slate-500 mt-1">Populate your inventory with a new retail
+					entry.</p>
 			</div>
-		</header>
-		<!-- Page Header -->
-		<div class="px-10 py-8 border-b border-slate-200 bg-white">
-			<div class="max-w-6xl mx-auto flex items-end justify-between">
-				<div>
-					<div class="flex items-center gap-2 text-slate-500 mb-2">
-						<span class="text-xs font-medium uppercase tracking-widest">Inventory Management</span>
-						<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
-						<span class="text-xs font-medium text-slate-900 uppercase tracking-widest">Add
-							Product</span>
-					</div>
-					<h2 class="text-3xl leading-tight font-bold tracking-tight text-slate-900">Create New Product</h2>
-					<p class="text-base font-normal text-slate-500 mt-1">Populate your inventory with a new retail
-						entry.</p>
-				</div>
-				<div class="flex gap-3">
-					<button
-						class="px-6 py-2.5 border border-slate-300 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">Discard
-						Draft</button>
-					<button
-						class="px-8 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg shadow-slate-900/10">
-						<span class="material-symbols-outlined text-base" data-icon="save">save</span>
-						Save Product
-					</button>
-				</div>
+			<div class="flex gap-3">
+				<button
+					class="px-6 py-2.5 border border-slate-300 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">Discard
+					Draft</button>
+				<button
+					class="px-8 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg shadow-slate-900/10">
+					<span class="material-symbols-outlined text-base" data-icon="save">save</span>
+					Save Product
+				</button>
 			</div>
 		</div>
 		<!-- Form Layout: Asymmetric Bento Grid -->

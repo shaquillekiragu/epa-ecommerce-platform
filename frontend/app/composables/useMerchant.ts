@@ -10,9 +10,19 @@ export async function merchantFetchStore(storeId: number): Promise<MerchantStore
 	return api.get<MerchantStore>(`/merchant/store?id=${storeId}`);
 }
 
+export async function merchantUpdateStore(storeId: number, payload: Partial<Pick<MerchantStore, 'name' | 'description'>>): Promise<MerchantStore> {
+	const api = useApi();
+	return api.patch<MerchantStore>(`/merchant/stores/${storeId}`, payload);
+}
+
 export async function merchantFetchOrders(storeId: number): Promise<MerchantOrderRow[]> {
 	const api = useApi();
 	return api.get<MerchantOrderRow[]>(`/merchant/orders?store=${storeId}`);
+}
+
+export async function merchantFetchAllOrders(): Promise<MerchantOrderRow[]> {
+	const api = useApi();
+	return api.get<MerchantOrderRow[]>('/merchant/orders-all');
 }
 
 export async function merchantFetchOrder(orderId: number): Promise<MerchantOrderDetail> {

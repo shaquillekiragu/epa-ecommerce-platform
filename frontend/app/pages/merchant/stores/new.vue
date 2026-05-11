@@ -22,14 +22,17 @@
 				<div class="md:col-span-7 space-y-md">
 					<section
 						class="bg-white border border-slate-400 p-4 rounded-xl shadow-sm">
-						<form action="#" class="space-y-md">
+						<form class="space-y-md" @submit.prevent="on_submit">
 							<div class="space-y-2">
 								<label class="font-semibold text-sm text-slate-900 block" for="store-name">Store
 									Name</label>
 								<input
 									class="w-full bg-white border border-slate-400 rounded p-2 focus:border-2 focus:border-slate-900 focus:ring-0 transition-all font-normal text-base"
 									id="store-name" name="store_name" placeholder="e.g. Blue Ribbon Boutique"
-									type="text" />
+									type="text"
+									v-model="store_name"
+									:disabled="submitting"
+								/>
 								<div
 									class="flex items-start gap-2 p-3 bg-slate-50 rounded border-l-4 border-slate-700 mt-2">
 									<span class="material-symbols-outlined text-slate-700 text-sm mt-0.5"
@@ -48,13 +51,19 @@
 								<textarea
 									class="w-full bg-white border border-slate-400 rounded p-2 focus:border-2 focus:border-slate-900 focus:ring-0 transition-all font-normal text-base"
 									id="description" name="description"
-									placeholder="Tell customers what makes your store unique..." rows="5"></textarea>
+									placeholder="Tell customers what makes your store unique..." rows="5"
+									v-model="description"
+									:disabled="submitting"
+								></textarea>
 							</div>
+							<p v-if="error_message" class="text-sm text-red-600">{{ error_message }}</p>
 							<div class="pt-2">
 								<button
 									class="w-full md:w-auto px-6 py-2 bg-slate-900 text-white font-semibold text-sm rounded-lg hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-									type="submit">
-									Create Store
+									type="submit"
+									:disabled="submitting || store_name.trim() === ''"
+								>
+									{{ submitting ? 'Creating…' : 'Create Store' }}
 									<span class="material-symbols-outlined"
 										data-icon="arrow_forward">arrow_forward</span>
 								</button>
@@ -127,3 +136,48 @@
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+import type { MerchantStore } from '~/types/merchant';
+
+definePageMeta({
+	middleware: ['role-merchant'],
+});
+
+const api = useApi();
+
+const store_name = ref('');
+const description = ref('');
+const submitting = ref(false);
+const error_message = ref<string | null>(null);
+
+async function on_submit() {
+	if (submitting.value) return;
+	error_message.value = null;
+
+	const name = store_name.value.trim();
+	if (name === '') {
+		error_message.value = 'Store name is required.';
+		return;
+	}
+
+	submitting.value = true;
+	try {
+		const created = await api.post<MerchantStore>('/merchant/stores', {
+			name,
+			description: description.value.trim(),
+		});
+
+		if (!created?.id) {
+			throw new Error('Store created but missing id.');
+		}
+
+		await navigateTo(`/merchant/stores/${created.id}`);
+	} catch (e: unknown) {
+		error_message.value =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to create store';
+	} finally {
+		submitting.value = false;
+	}
+}
+</script>

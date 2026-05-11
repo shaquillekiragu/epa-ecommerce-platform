@@ -32,6 +32,48 @@ class MerchantController extends _ApiController
             ->all();
     }
 
+    public function actionStoresCreate()
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $body = Yii::$app->request->getBodyParams();
+
+        $store = new Store();
+        $store->load($body, '');
+        $store->merchant_id = $merchant_id;
+        $store->allow_update = true;
+        $store->allow_delete = true;
+
+        if (!$store->save()) {
+            throw new BadRequestHttpException(json_encode($store->errors) ?: 'Could not create store.');
+        }
+
+        return $store;
+    }
+
+    public function actionStoresUpdate($id)
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $store = Store::findOne(['id' => (int) $id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new NotFoundHttpException('Store not found.');
+        }
+
+        $body = Yii::$app->request->getBodyParams();
+        $store->load($body, '');
+        $store->allow_update = true;
+        $store->allow_delete = true;
+
+        if (!$store->save()) {
+            throw new BadRequestHttpException(json_encode($store->errors) ?: 'Could not update store.');
+        }
+
+        return $store;
+    }
+
     public function actionStore()
     {
         $this->requireRole('merchant');
@@ -75,6 +117,26 @@ class MerchantController extends _ApiController
         return $items;
     }
 
+    /**
+     * @param Order[] $orders
+     * @return list<array<string, mixed>>
+     */
+    private function ordersToRows(array $orders): array
+    {
+        $out = [];
+        foreach ($orders as $order) {
+            /** @var Order $order */
+            $row = $order->toArray();
+            $row['item_count'] = (int) Orderproduct::find()
+                ->where(['order_id' => $order->id])
+                ->sum('quantity');
+            $row['customer_display_name'] = $order->getCustomerName() ?? '';
+            $row['customer_email'] = $order->getCustomerEmail() ?? '';
+            $out[] = $row;
+        }
+        return $out;
+    }
+
     public function actionOrders()
     {
         $this->requireRole('merchant');
@@ -95,20 +157,30 @@ class MerchantController extends _ApiController
             ->with('customer')
             ->orderBy(['placed_at' => SORT_DESC])
             ->all();
+        return $this->ordersToRows($orders);
+    }
 
-        $out = [];
-        foreach ($orders as $order) {
-            /** @var Order $order */
-            $row = $order->toArray();
-            $row['item_count'] = (int) Orderproduct::find()
-                ->where(['order_id' => $order->id])
-                ->sum('quantity');
-            $row['customer_display_name'] = $order->getCustomerName() ?? '';
-            $row['customer_email'] = $order->getCustomerEmail() ?? '';
-            $out[] = $row;
+    public function actionOrdersAll()
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $store_ids = Store::find()
+            ->select('id')
+            ->where(['merchant_id' => $merchant_id])
+            ->column();
+
+        if (empty($store_ids)) {
+            return [];
         }
 
-        return $out;
+        $orders = Order::find()
+            ->where(['store_id' => $store_ids])
+            ->with('customer')
+            ->orderBy(['placed_at' => SORT_DESC])
+            ->all();
+
+        return $this->ordersToRows($orders);
     }
 
     public function actionOrderView($id)
