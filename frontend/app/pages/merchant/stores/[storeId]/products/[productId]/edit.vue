@@ -1,7 +1,5 @@
 <template>
-	<MerchantSidePanelComponent />
-
-	<main class="flex-1 p-4 lg:p-6 overflow-y-auto">
+	<main class="min-h-screen w-full flex-1 overflow-y-auto p-4 pb-16 pt-24 lg:p-6">
 		<!-- Header Section -->
 		<div class="max-w-6xl mx-auto mb-6">
 			<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">

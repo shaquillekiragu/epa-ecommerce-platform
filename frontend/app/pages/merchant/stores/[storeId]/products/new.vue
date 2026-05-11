@@ -1,7 +1,5 @@
 <template>
-	<MerchantSidePanelComponent />
-
-	<main class="ml-64 min-h-screen">
+	<main class="min-h-screen w-full pb-16 pt-24">
 		<!-- Top App Bar -->
 		<header
 			class="flex justify-between items-center h-16 px-6 w-full sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 z-40">

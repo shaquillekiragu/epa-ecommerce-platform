@@ -1,7 +1,5 @@
 <template>
-	<MerchantSidePanelComponent />
-
-	<main class="ml-64 p-4 max-w-5xl mx-auto">
+	<main class="mx-auto min-h-screen w-full max-w-5xl flex-1 p-4 pb-16 pt-24">
 		<!-- Breadcrumbs & Header -->
 		<section class="mb-6">
 			<nav class="flex items-center gap-2 text-xs font-medium text-slate-600 mb-4">
