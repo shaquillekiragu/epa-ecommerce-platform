@@ -38,8 +38,9 @@
 				</NuxtLink>
 				
 				<NuxtLink
-					:to="notifications_link_url"
-					class="hover:text-slate-900 dark:hover:text-white hover:cursor-pointer transition active:scale-95"
+					v-if="!is_logged_in"
+					to="/auth"
+					class="hover:text-slate-900 dark:hover:text-white hover:cursor-pointer transition active:scale-95 relative"
 				>
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">notifications</span>
@@ -136,8 +137,6 @@ const account_link_url = computed(() => {
 const brand_link_url = computed(() => (role.value === 'merchant' ? '/merchant' : '/'));
 const show_basket_link = computed(() => role.value !== 'merchant');
 const basket_link_url = computed(() => (!is_logged_in.value ? '/auth' : '/basket'));
-const notifications_link_url = computed(() => (!is_logged_in.value ? '/auth' : '/account'));
-
 async function on_logout() {
 	await logout();
 	await navigateTo('/auth');

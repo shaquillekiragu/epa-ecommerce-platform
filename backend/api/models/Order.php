@@ -15,6 +15,7 @@ class Order extends CommonOrder
             'price_total',
             'placed_at',
             'status',
+            'stripe_payment_intent_id',
             'allow_update',
             'allow_delete',
             'created_at',

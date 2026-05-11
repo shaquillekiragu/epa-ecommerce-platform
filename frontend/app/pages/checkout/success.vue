@@ -53,8 +53,10 @@
 									>
 								</div>
 								<div>
-									<p class="font-semibold text-slate-900">Payment pending</p>
-									<p class="text-[10px] text-slate-600 uppercase">Awaiting PSP / merchant</p>
+									<p class="font-semibold text-slate-900">{{ all_orders_paid ? 'Payment received' : 'Payment pending' }}</p>
+									<p class="text-[10px] text-slate-600 uppercase">
+										{{ all_orders_paid ? 'Stripe (test)' : 'Complete payment if needed' }}
+									</p>
 								</div>
 							</div>
 							<div class="relative flex items-center gap-6 opacity-40">
@@ -176,6 +178,11 @@ const total_line_count = computed(() =>
 );
 
 const grand_total = computed(() => order_details.value.reduce((sum, o) => sum + o.price_total, 0));
+
+const all_orders_paid = computed(
+	() =>
+		order_details.value.length > 0 && order_details.value.every((o) => o.status === 'paid'),
+);
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);

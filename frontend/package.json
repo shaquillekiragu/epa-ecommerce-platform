@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@nuxt/ui": "^4.7.1",
+		"@stripe/stripe-js": "^5.10.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"nuxt": "^4.4.2",
 		"tailwindcss": "^4.2.4",

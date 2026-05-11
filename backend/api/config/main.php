@@ -63,6 +63,7 @@ return [
                 'POST api/v1/auth/register' => 'auth/register',
                 'POST api/v1/auth/login' => 'auth/login',
                 'POST api/v1/auth/logout' => 'auth/logout',
+                'POST api/v1/stripe/webhook' => 'stripe/webhook',
 
                 // Public catalogue convenience aliases
                 'GET api/v1/products' => 'product/index',
@@ -76,6 +77,8 @@ return [
                 'POST api/v1/basket/add' => 'customer/basket-add',
                 'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
                 'POST api/v1/checkout' => 'customer/checkout',
+                'POST api/v1/customer/payments/create-intent' => 'customer/create-payment-intent',
+                'POST api/v1/customer/payments/sync' => 'customer/sync-payment',
                 'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view',
                 'GET api/v1/customer/orders' => 'customer/orders',
                 'POST api/v1/customer/addresses' => 'customer/addresses-create',

@@ -55,6 +55,11 @@ class Order extends BaseModel
                     'boolean'
                 ],
                 [
+                    ['stripe_payment_intent_id'],
+                    'string',
+                    'max' => 255,
+                ],
+                [
                     [
                         'status',
                     ],
@@ -116,9 +121,6 @@ class Order extends BaseModel
         if ($this->hasAttribute('placed_at') && empty($this->placed_at)) {
             $this->placed_at = $now;
         }
-        if ($this->hasAttribute('order_datetime') && empty($this->order_datetime)) {
-            $this->order_datetime = $now;
-        }
 
         return true;
     }
@@ -131,7 +133,6 @@ class Order extends BaseModel
                 'store_id',
                 'price_total',
                 'placed_at',
-                'order_datetime',
             ];
             foreach ($locked as $attr) {
                 if ($this->hasAttribute($attr) && $this->isAttributeChanged($attr)) {

@@ -13,6 +13,7 @@ use api\models\Order;
 use api\models\Orderproduct;
 use api\models\Product;
 use api\models\Useraddress;
+use api\services\OrderStripePayment;
 
 class CustomerController extends _ApiController
 {
@@ -167,8 +168,6 @@ class CustomerController extends _ApiController
                     $op->product_id = $product->id;
                     $op->price_at_purchase_in_gbp = (float) $product->price_in_gbp;
                     $op->quantity = (int) $item->quantity;
-                    $op->allow_update = true;
-                    $op->allow_delete = true;
 
                     if (!$op->save()) {
                         throw new BadRequestHttpException(json_encode($op->errors));
@@ -186,12 +185,12 @@ class CustomerController extends _ApiController
             $tx->commit();
 
             return [
-                'orders' => array_map(static fn (Order $o) => [
-                    'id' => $o->id,
-                    'store_id' => $o->store_id,
-                    'status' => $o->status,
-                    'price_total' => $o->price_total,
-                    'order_datetime' => $o->order_datetime,
+                'orders' => array_map(static fn (Order $order) => [
+                    'id' => $order->id,
+                    'store_id' => $order->store_id,
+                    'status' => $order->status,
+                    'price_total' => $order->price_total,
+                    'placed_at' => $order->placed_at,
                 ], $created_orders),
             ];
         } catch (\Throwable $e) {
@@ -200,13 +199,55 @@ class CustomerController extends _ApiController
         }
     }
 
+    /**
+     * Create or resume a Stripe PaymentIntent for one or more pending orders (same customer).
+     */
+    public function actionCreatePaymentIntent()
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+        $body = Yii::$app->request->getBodyParams();
+        $order_ids = $body['order_ids'] ?? null;
+        if (!is_array($order_ids)) {
+            throw new BadRequestHttpException('order_ids must be a JSON array of order ids.');
+        }
+
+        $out = OrderStripePayment::createOrResumePaymentIntent($user_id, $order_ids);
+
+        return [
+            'client_secret' => $out['clientSecret'],
+            'payment_intent_id' => $out['paymentIntentId'],
+            'amount_pence' => $out['amountPence'],
+            'currency' => $out['currency'],
+            'order_ids' => $out['orderIds'],
+        ];
+    }
+
+    /**
+     * After the browser confirms the PaymentIntent, sync order status from Stripe (for local dev without webhooks).
+     */
+    public function actionSyncPayment()
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+        $body = Yii::$app->request->getBodyParams();
+        $payment_intent_id = trim((string) ($body['payment_intent_id'] ?? ''));
+        if ($payment_intent_id === '') {
+            throw new BadRequestHttpException('payment_intent_id is required.');
+        }
+
+        OrderStripePayment::syncPaidFromIntentForCustomer($user_id, $payment_intent_id);
+
+        return ['ok' => true];
+    }
+
     public function actionOrders()
     {
         $this->requireRole('customer');
         $user_id = (int) Yii::$app->user->id;
         $orders = Order::find()
             ->where(['customer_id' => $user_id])
-            ->orderBy(['order_datetime' => SORT_DESC])
+            ->orderBy(['placed_at' => SORT_DESC])
             ->all();
 
         $out = [];
@@ -256,7 +297,7 @@ class CustomerController extends _ApiController
             'store_id' => $order->store_id,
             'status' => $order->status,
             'price_total' => (float) $order->price_total,
-            'order_datetime' => $order->order_datetime,
+            'placed_at' => $order->placed_at,
             'items' => $items,
         ];
     }

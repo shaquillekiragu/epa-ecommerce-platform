@@ -50,10 +50,10 @@
 							<span class="material-symbols-outlined text-slate-600">payments</span>
 						</div>
 						<div class="font-normal text-base text-slate-900">
-							<p class="font-semibold">Pay with your seller</p>
+							<p class="font-semibold">Stripe (test mode)</p>
 							<p class="text-sm text-slate-600 mt-1">
-								Orders are created as <strong>pending payment</strong>. Card capture and settlement are handled
-								outside this demo storefront when you integrate a PSP with each merchant.
+								After you confirm, you will be taken to a secure card step. Orders stay
+								<strong>pending payment</strong> until the charge succeeds.
 							</p>
 						</div>
 					</div>
@@ -118,17 +118,17 @@
 								class="w-full bg-slate-900 text-white py-4 font-semibold text-sm uppercase tracking-widest hover:bg-slate-800 transition-all active:scale-[0.98] duration-200 disabled:opacity-50 disabled:pointer-events-none"
 								@click="confirm_checkout"
 							>
-								{{ submitting ? 'Placing order…' : 'Confirm order' }}
+								{{ submitting ? 'Placing order…' : 'Confirm & pay' }}
 							</button>
 						</div>
 						<p class="mt-4 font-medium text-xs text-slate-600 text-center">
 							By placing this order you agree to our terms of sale with each participating store.
 						</p>
-					</div>
-					<div class="flex flex-col gap-2 px-3">
-						<div class="flex items-center gap-3 text-slate-600">
-							<span class="material-symbols-outlined text-xl">shield</span>
-							<span class="font-medium text-xs">Your session is protected with HTTPS.</span>
+						<div class="flex flex-col gap-2 px-3 items-center mt-3">
+							<div class="flex items-center gap-1 text-slate-600">
+								<span class="material-symbols-outlined text-xl">shield</span>
+								<span class="font-medium text-xs">Your session is protected with HTTPS.</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -152,7 +152,7 @@ type CheckoutOrdersPayload = {
 		store_id: number;
 		status: string;
 		price_total: number;
-		order_datetime: string;
+		placed_at: string;
 	}>;
 };
 
@@ -238,10 +238,13 @@ async function confirm_checkout() {
 		const res = await api.post<CheckoutOrdersPayload>('/checkout');
 		if (typeof sessionStorage !== 'undefined') {
 			sessionStorage.setItem(LAST_CHECKOUT_STORAGE_KEY, JSON.stringify(res.orders));
+			sessionStorage.setItem(
+				'checkout_pending_order_ids',
+				JSON.stringify(res.orders.map((o) => o.id)),
+			);
 		}
 		await refresh_basket_item_count();
-		const ids = res.orders.map((o) => String(o.id)).join(',');
-		await navigateTo({ path: '/checkout/success', query: { ids } });
+		await navigateTo('/checkout/pay');
 	} catch (e: unknown) {
 		const msg =
 			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Checkout failed';

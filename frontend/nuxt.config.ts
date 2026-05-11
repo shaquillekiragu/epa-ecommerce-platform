@@ -10,6 +10,8 @@ export default defineNuxtConfig({
 			// Should include /api/v1 (e.g. https://api.example.com/api/v1).
 			// Override with NUXT_PUBLIC_API_BASE_URL — Nuxt merges it automatically.
 			apiBaseUrl: '',
+			// Stripe publishable key only (pk_test_… / pk_live_…). Set NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in .env
+			stripePublishableKey: '',
 		},
 	},
 	vite: {
@@ -18,8 +20,5 @@ export default defineNuxtConfig({
 		optimizeDeps: {
 			include: ['@vue/devtools-core', '@vue/devtools-kit'],
 		},
-	},
-	nitro: {
-		preset: 'aws-amplify',
 	},
 })
