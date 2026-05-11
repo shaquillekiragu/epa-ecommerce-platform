@@ -222,6 +222,45 @@ class CustomerController extends _ApiController
         return $out;
     }
 
+    public function actionOrderView($id)
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+        $order = Order::findOne(['id' => (int) $id, 'customer_id' => $user_id]);
+        if ($order === null) {
+            throw new NotFoundHttpException('Order not found.');
+        }
+
+        $lines = Orderproduct::find()->where(['order_id' => $order->id])->all();
+        $items = [];
+        foreach ($lines as $line) {
+            /** @var Orderproduct $line */
+            $product = Product::findOne((int) $line->product_id);
+            if ($product === null) {
+                continue;
+            }
+            $unit = (float) $line->price_at_purchase_in_gbp;
+            $qty = (int) $line->quantity;
+            $items[] = [
+                'product_id' => $product->id,
+                'product_name' => $product->name,
+                'thumbnail' => (string) ($product->thumbnail ?? ''),
+                'price_at_purchase_in_gbp' => $unit,
+                'quantity' => $qty,
+                'line_total' => $unit * $qty,
+            ];
+        }
+
+        return [
+            'id' => $order->id,
+            'store_id' => $order->store_id,
+            'status' => $order->status,
+            'price_total' => (float) $order->price_total,
+            'order_datetime' => $order->order_datetime,
+            'items' => $items,
+        ];
+    }
+
     public function actionAddresses()
     {
         $this->requireRole('customer');

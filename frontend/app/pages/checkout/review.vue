@@ -1,174 +1,134 @@
 <template>
 	<main class="pt-24 pb-8 px-6 max-w-7xl mx-auto min-h-screen">
 		<div class="mb-6">
-			<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Checkout: Final Review</h1>
-			<p class="font-normal text-base text-slate-600 mt-2">Please verify your order details before confirming
-				your purchase.</p>
+			<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Checkout: Review</h1>
+			<p class="font-normal text-base text-slate-600 mt-2">
+				<span v-if="pending">Loading your order…</span>
+				<span v-else>Verify your basket and shipping details before confirming.</span>
+			</p>
+			<p v-if="error_message" class="text-sm text-red-600 mt-2">{{ error_message }}</p>
 		</div>
-		<div class="grid grid-cols-1 lg:grid-cols-12 gap-grid_gutter">
-			<!-- Left Column: Order Details -->
+
+		<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">
+			Loading…
+		</div>
+
+		<div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-grid_gutter">
 			<div class="lg:col-span-8 space-y-grid_gutter">
-				<!-- Section: Shipping & Billing -->
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-grid_gutter">
-					<!-- Shipping Address Card -->
 					<div class="bg-white border border-slate-400 p-4">
 						<div class="flex items-center justify-between mb-2">
-							<h2 class="font-semibold text-sm uppercase text-slate-600">Shipping Address</h2>
-							<button
-								class="text-slate-700 hover:underline font-medium text-xs">Edit</button>
+							<h2 class="font-semibold text-sm uppercase text-slate-600">Shipping address</h2>
+							<NuxtLink to="/checkout" class="text-slate-700 hover:underline font-medium text-xs">Change</NuxtLink>
 						</div>
-						<div class="font-normal text-base text-slate-900">
-							<p class="font-bold">Jonathan Sterling</p>
-							<p>1248 Luxury Drive, Suite 400</p>
-							<p>Beverly Hills, CA 90210</p>
-							<p>United States</p>
-							<p class="mt-3 text-slate-600 text-sm italic">Standard Shipping (3-5 business days)</p>
+						<div v-if="shipping_address" class="font-normal text-base text-slate-900">
+							<p class="font-bold">{{ customer_name }}</p>
+							<p class="whitespace-pre-line">{{ format_address(shipping_address) }}</p>
+							<p class="mt-3 text-slate-600 text-sm">Standard shipping — fulfilment times vary by seller.</p>
 						</div>
+						<p v-else class="text-slate-600 text-sm">No address selected. Go back to shipping to choose one.</p>
 					</div>
-					<!-- Billing Address Card -->
+
 					<div class="bg-white border border-slate-400 p-4">
 						<div class="flex items-center justify-between mb-2">
-							<h2 class="font-semibold text-sm uppercase text-slate-600">Billing Address</h2>
-							<button
-								class="text-slate-700 hover:underline font-medium text-xs">Edit</button>
+							<h2 class="font-semibold text-sm uppercase text-slate-600">Billing address</h2>
+							<NuxtLink to="/checkout" class="text-slate-700 hover:underline font-medium text-xs">Change</NuxtLink>
 						</div>
-						<div class="font-normal text-base text-slate-900">
-							<p class="font-bold">Jonathan Sterling</p>
-							<p>1248 Luxury Drive, Suite 400</p>
-							<p>Beverly Hills, CA 90210</p>
-							<p>United States</p>
+						<div v-if="shipping_address" class="font-normal text-base text-slate-900">
+							<p class="font-bold">{{ customer_name }}</p>
+							<p class="whitespace-pre-line">{{ format_address(shipping_address) }}</p>
 						</div>
 					</div>
 				</div>
-				<!-- Section: Payment Method -->
+
 				<div class="bg-white border border-slate-400 p-4">
 					<div class="flex items-center justify-between mb-2">
-						<h2 class="font-semibold text-sm uppercase text-slate-600">Payment Method</h2>
-						<button
-							class="text-slate-700 hover:underline font-medium text-xs">Change</button>
+						<h2 class="font-semibold text-sm uppercase text-slate-600">Payment</h2>
 					</div>
-					<div class="flex items-center gap-2">
-						<div class="w-12 h-8 bg-slate-100 rounded-sm flex items-center justify-center">
-							<span class="material-symbols-outlined text-slate-600">credit_card</span>
+					<div class="flex items-start gap-3">
+						<div class="w-12 h-8 bg-slate-100 rounded-sm flex items-center justify-center shrink-0">
+							<span class="material-symbols-outlined text-slate-600">payments</span>
 						</div>
 						<div class="font-normal text-base text-slate-900">
-							<span class="font-bold">Visa ending in 8892</span>
-							<p class="text-xs text-slate-600">Expires 12/2026</p>
+							<p class="font-semibold">Pay with your seller</p>
+							<p class="text-sm text-slate-600 mt-1">
+								Orders are created as <strong>pending payment</strong>. Card capture and settlement are handled
+								outside this demo storefront when you integrate a PSP with each merchant.
+							</p>
 						</div>
 					</div>
 				</div>
-				<!-- Section: Items Breakdown -->
+
 				<div class="bg-white border border-slate-400 overflow-hidden">
 					<div class="p-4 border-b border-slate-400">
-						<h2 class="font-semibold text-sm uppercase text-slate-600">Your Basket (3 items)</h2>
+						<h2 class="font-semibold text-sm uppercase text-slate-600">
+							Your basket ({{ item_count }} {{ item_count === 1 ? 'item' : 'items' }})
+						</h2>
 					</div>
 					<div class="divide-y divide-slate-300">
-						<!-- Item 1 -->
-						<div class="p-4 flex items-start gap-4">
-							<div class="w-24 h-32 bg-slate-100 shrink-0">
-								<img class="size-full object-cover"
-									data-alt="A premium, structured black tailored coat photographed against a clean, light grey studio background. The lighting is crisp and editorial, highlighting the high-quality wool texture and sharp lapel details. The aesthetic is modern corporate luxury, using a minimalist composition to emphasize craftsmanship and material integrity."
-									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPkttIguTQjXUadmNtS_BMeFn6de0M6SMFkcQYsa9fOyZN3oWDrmH4f3Mj7TU53-DqbitIjFJmPlTvtMHrGc7y12UDXYJRXtGVZbJIZvVwgxnnJyyCpa1iexNWVx_NRppCtaC7CcSp-aqScYSweC-zX6LcVWaQ6sdT3hM2M6LsRhQkQZTYd7iF7GlKmi_CM8aQYTetDl3om3pHOwTVJ5qn6Vi-m3RzPCMIYsEQpyxsSzXXKcAo-Xe7uiUxFIaffQ9VHGmi9Q9GFYZP" />
+						<div v-for="line in lines" :key="line.product_id" class="p-4 flex items-start gap-4">
+							<div class="w-24 h-32 bg-slate-100 shrink-0 overflow-hidden">
+								<img
+									:alt="line.product_name"
+									class="size-full object-cover"
+									:src="line.thumbnail || placeholder_image"
+								/>
 							</div>
-							<div class="grow">
-								<div class="flex justify-between items-start">
-									<div>
-										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Sculpted Wool Overcoat
+							<div class="grow min-w-0">
+								<div class="flex justify-between items-start gap-4">
+									<div class="min-w-0">
+										<h3 class="font-semibold tracking-tight text-lg text-slate-900 truncate">
+											{{ line.product_name }}
 										</h3>
-										<p class="font-normal text-xs text-slate-600 mt-1">Midnight Black | Size
-											42</p>
+										<p class="font-normal text-xs text-slate-600 mt-1">{{ format_money(line.price_in_gbp) }} each</p>
 									</div>
-									<span class="text-lg font-bold text-slate-900">$850.00</span>
+									<span class="text-lg font-bold text-slate-900 shrink-0">{{ format_money(line.line_total) }}</span>
 								</div>
-								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
-							</div>
-						</div>
-						<!-- Item 2 -->
-						<div class="p-4 flex items-start gap-4">
-							<div class="w-24 h-32 bg-slate-100 shrink-0">
-								<img class="size-full object-cover"
-									data-alt="Modern athletic footwear with a sleek, aerodynamic silhouette in a sophisticated tonal grey and white palette. The shoes are presented in a high-key studio setting with soft, diffused shadows, creating an atmosphere of technical precision and effortless efficiency. Every stitching detail and texture transition is clearly visible."
-									src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFZSd6JRxMHXAOheLJFvLOsh0znbX-opDdqMzt4r_B_1Jz97Jl0_ASyxVRidL-tJJCQytx7amktPb1IeG5MizuyV4XervngD4cF3OKKWNs4dgd9peoWwI5Sby0EWTy45AzXdCssFOOzmv-y5jIqy-ZEUuzaq2Ar4ZWnDBKWgUIAsD_Ky0OO6VlMfO6zMwOpxdzTsjzZYgzQP897pVNvEjpgXGMedIBQkh2a_hwJYTzbjYn5oCsPfnC7UxMQk5jZIOkBzAkSUbbZAPA" />
-							</div>
-							<div class="grow">
-								<div class="flex justify-between items-start">
-									<div>
-										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Aerodynamic Runner v2</h3>
-										<p class="font-normal text-xs text-slate-600 mt-1">Cloud White | Size 10
-										</p>
-									</div>
-									<span class="text-lg font-bold text-slate-900">$210.00</span>
-								</div>
-								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
-							</div>
-						</div>
-						<!-- Item 3 -->
-						<div class="p-4 flex items-start gap-4">
-							<div class="w-24 h-32 bg-slate-100 shrink-0">
-								<img class="size-full object-cover"
-									data-alt="A luxury pebble-grain leather tote bag in a deep charcoal color, standing elegantly on a marble surface. The lighting is natural and bright, conveying a sense of reliability and structural integrity. The leather's rich texture and the metallic hardware accents are captured with high definition, reflecting a premium e-commerce visual style."
-									src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_V3D3Hsq7hBIZ8oQaGSp6sEADJLRDbAhAxYLxT8RVJxOB4DkVj-0-2C0L8_l_ZsJ9bvk3E-8sWt6pPcMh7nHqSa9bgjZ_ppsFz-PnhTWQmE48-eeMcf0G7C-wEfG9krscVPoQb9gMK2qeFO38EDtlnm-aWqND-CgeMn-7ijjP0p67fAS5Ap1Y6TvKekPgMGEHstN4T29zUUw-bqNSSGNgZMWWbo8MRQB1Iucp5Z1METoB1b6ZkLeCsSKp49q_Oh62V9qs4AT-5VNi" />
-							</div>
-							<div class="grow">
-								<div class="flex justify-between items-start">
-									<div>
-										<h3 class="font-semibold tracking-tight text-lg text-slate-900">Signature Leather Tote
-										</h3>
-										<p class="font-normal text-xs text-slate-600 mt-1">Charcoal Grey | One
-											Size</p>
-									</div>
-									<span class="text-lg font-bold text-slate-900">$495.00</span>
-								</div>
-								<p class="mt-2 font-medium text-xs text-slate-600">Qty: 1</p>
+								<p class="mt-2 font-medium text-xs text-slate-600">Qty: {{ line.quantity }}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Right Column: Order Summary & CTA -->
+
 			<div class="lg:col-span-4">
 				<div class="sticky top-24 space-y-md">
 					<div class="bg-slate-200 border border-slate-400 p-4">
-						<h2 class="font-semibold tracking-tight text-xl leading-snug mb-4">Order Summary</h2>
+						<h2 class="font-semibold tracking-tight text-xl leading-snug mb-4">Order summary</h2>
 						<div class="space-y-sm">
 							<div class="flex justify-between font-normal text-base text-slate-600">
 								<span>Subtotal</span>
-								<span>$1,555.00</span>
+								<span>{{ format_money(subtotal) }}</span>
 							</div>
 							<div class="flex justify-between font-normal text-base text-slate-600">
 								<span>Shipping</span>
 								<span class="text-slate-700 font-medium">Free</span>
 							</div>
-							<div class="flex justify-between font-normal text-base text-slate-600">
-								<span>Estimated Tax</span>
-								<span>$124.40</span>
-							</div>
 							<div
-								class="pt-2 border-t border-slate-400 mt-2 flex justify-between font-bold tracking-tight text-[24px] text-slate-900">
+								class="pt-2 border-t border-slate-400 mt-2 flex justify-between font-bold tracking-tight text-[24px] text-slate-900"
+							>
 								<span>Total</span>
-								<span>$1,679.40</span>
+								<span>{{ format_money(subtotal) }}</span>
 							</div>
 						</div>
 						<div class="mt-4">
 							<button
-								class="w-full bg-slate-900 text-white py-4 font-semibold text-sm uppercase tracking-widest hover:bg-slate-800 transition-all active:scale-[0.98] duration-200">
-								Confirm &amp; Pay
+								type="button"
+								:disabled="submitting || !can_submit"
+								class="w-full bg-slate-900 text-white py-4 font-semibold text-sm uppercase tracking-widest hover:bg-slate-800 transition-all active:scale-[0.98] duration-200 disabled:opacity-50 disabled:pointer-events-none"
+								@click="confirm_checkout"
+							>
+								{{ submitting ? 'Placing order…' : 'Confirm order' }}
 							</button>
 						</div>
 						<p class="mt-4 font-medium text-xs text-slate-600 text-center">
-							By placing this order, you agree to LuxCommerce's <a class="underline" href="#">Terms of
-								Service</a> and <a class="underline" href="#">Privacy Policy</a>.
+							By placing this order you agree to our terms of sale with each participating store.
 						</p>
 					</div>
-					<!-- Trust Indicators -->
 					<div class="flex flex-col gap-2 px-3">
 						<div class="flex items-center gap-3 text-slate-600">
 							<span class="material-symbols-outlined text-xl">shield</span>
-							<span class="font-medium text-xs">Secure Encrypted Checkout</span>
-						</div>
-						<div class="flex items-center gap-3 text-slate-600">
-							<span class="material-symbols-outlined text-xl">package_2</span>
-							<span class="font-medium text-xs">Sustainability Certified Packaging</span>
+							<span class="font-medium text-xs">Your session is protected with HTTPS.</span>
 						</div>
 					</div>
 				</div>
@@ -176,3 +136,122 @@
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+import type { BasketLine, BasketResponse } from '~/types/basket';
+import type { CustomerAddress } from '~/types/customer';
+import { getPoundAndPenceFormat } from '~/utils/money';
+
+definePageMeta({
+	middleware: ['role-customer'],
+});
+
+type CheckoutOrdersPayload = {
+	orders: Array<{
+		id: number;
+		store_id: number;
+		status: string;
+		price_total: number;
+		order_datetime: string;
+	}>;
+};
+
+const LAST_CHECKOUT_STORAGE_KEY = 'last_checkout_orders';
+
+const api = useApi();
+const { user, refresh_me } = useAuth();
+const { refresh_basket_item_count } = useBasketItemCount();
+
+const checkout_selected_address_id = useState<number | null>('checkout_selected_address_id', () => null);
+
+const pending = ref(true);
+const submitting = ref(false);
+const error_message = ref<string | null>(null);
+const basket = ref<BasketResponse | null>(null);
+const addresses = ref<CustomerAddress[]>([]);
+
+const placeholder_image = '/images/category-placeholder.svg';
+
+const lines = computed<BasketLine[]>(() => basket.value?.items ?? []);
+const subtotal = computed(() => basket.value?.price_total ?? 0);
+const item_count = computed(() => lines.value.reduce((sum, l) => sum + l.quantity, 0));
+
+const shipping_address = computed(() => {
+	const id = checkout_selected_address_id.value;
+	if (id == null) {
+		return null;
+	}
+	return addresses.value.find((a) => a.id === id) ?? null;
+});
+
+const customer_name = computed(() => user.value?.full_name ?? 'Customer');
+
+const can_submit = computed(() => lines.value.length > 0 && shipping_address.value != null);
+
+function format_money(n: number) {
+	return getPoundAndPenceFormat(n);
+}
+
+function format_address(a: CustomerAddress) {
+	const line1 = `${a.building_number} ${a.street_name}`.trim();
+	const parts = [line1, a.city, a.region, a.post_code, a.country].filter(Boolean);
+	return parts.join('\n');
+}
+
+async function load() {
+	error_message.value = null;
+	pending.value = true;
+	try {
+		if (!user.value) {
+			await refresh_me();
+		}
+		const [b, addr_list] = await Promise.all([
+			api.get<BasketResponse>('/basket'),
+			api.get<CustomerAddress[]>('/customer/addresses'),
+		]);
+		basket.value = b;
+		addresses.value = addr_list;
+
+		const sel = checkout_selected_address_id.value;
+		if (sel != null && !addr_list.some((a) => a.id === sel)) {
+			checkout_selected_address_id.value = addr_list[0]?.id ?? null;
+		}
+		if (checkout_selected_address_id.value == null && addr_list.length > 0) {
+			checkout_selected_address_id.value = addr_list[0]!.id;
+		}
+	} catch (e: unknown) {
+		const msg =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to load checkout';
+		error_message.value = msg;
+	} finally {
+		pending.value = false;
+	}
+}
+
+async function confirm_checkout() {
+	if (!can_submit.value) {
+		return;
+	}
+	submitting.value = true;
+	error_message.value = null;
+	try {
+		const res = await api.post<CheckoutOrdersPayload>('/checkout');
+		if (typeof sessionStorage !== 'undefined') {
+			sessionStorage.setItem(LAST_CHECKOUT_STORAGE_KEY, JSON.stringify(res.orders));
+		}
+		await refresh_basket_item_count();
+		const ids = res.orders.map((o) => String(o.id)).join(',');
+		await navigateTo({ path: '/checkout/success', query: { ids } });
+	} catch (e: unknown) {
+		const msg =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Checkout failed';
+		error_message.value = msg;
+	} finally {
+		submitting.value = false;
+	}
+}
+
+onMounted(() => {
+	load();
+});
+</script>

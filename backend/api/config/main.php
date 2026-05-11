@@ -76,6 +76,7 @@ return [
                 'POST api/v1/basket/add' => 'customer/basket-add',
                 'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
                 'POST api/v1/checkout' => 'customer/checkout',
+                'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view',
                 'GET api/v1/customer/orders' => 'customer/orders',
                 'GET api/v1/customer/addresses' => 'customer/addresses',
 

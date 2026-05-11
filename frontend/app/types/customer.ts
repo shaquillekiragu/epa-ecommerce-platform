@@ -8,6 +8,24 @@ export type CustomerOrder = {
 	item_count?: number;
 };
 
+export type CustomerOrderLine = {
+	product_id: number;
+	product_name: string;
+	thumbnail?: string;
+	price_at_purchase_in_gbp: number;
+	quantity: number;
+	line_total: number;
+};
+
+export type CustomerOrderDetail = {
+	id: number;
+	store_id: number;
+	price_total: number;
+	order_datetime: string;
+	status: string;
+	items: CustomerOrderLine[];
+};
+
 export type CustomerAddress = {
 	id: number;
 	address_id: number;

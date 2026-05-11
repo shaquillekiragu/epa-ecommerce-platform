@@ -20,8 +20,8 @@
 				<div
 					class="w-full bg-slate-50 rounded-xl p-4 border border-slate-400 mb-6 text-left">
 					<div class="flex justify-between items-center mb-3">
-						<span class="font-semibold text-slate-600 uppercase tracking-wider">Order ID</span>
-						<span class="text-slate-900 font-bold">#AC-98231-PF</span>
+						<span class="font-semibold text-slate-600 uppercase tracking-wider">Reference</span>
+						<span class="text-slate-900 font-bold">{{ order_ref }}</span>
 					</div>
 					<div class="h-px bg-slate-300 w-full my-2"></div>
 					<div class="flex items-start gap-2">
@@ -36,14 +36,18 @@
 				</div>
 				<!-- Actions -->
 				<div class="w-full flex flex-col gap-2">
-					<button
-						class="w-full py-4 px-6 bg-slate-900 text-white font-semibold rounded-xl hover:opacity-90 active:scale-95 transition-all duration-150">
-						Retry Payment
-					</button>
-					<button
-						class="w-full py-4 px-6 border border-slate-300 text-slate-900 font-semibold rounded-xl hover:bg-slate-50 active:scale-95 transition-all duration-150">
-						Cancel Order
-					</button>
+					<NuxtLink
+						to="/checkout/review"
+						class="w-full py-4 px-6 bg-slate-900 text-white font-semibold rounded-xl hover:opacity-90 active:scale-95 transition-all duration-150 text-center"
+					>
+						Return to review
+					</NuxtLink>
+					<NuxtLink
+						to="/basket"
+						class="w-full py-4 px-6 border border-slate-300 text-slate-900 font-semibold rounded-xl hover:bg-slate-50 active:scale-95 transition-all duration-150 text-center"
+					>
+						Back to basket
+					</NuxtLink>
 				</div>
 				<!-- Support Link -->
 				<div class="mt-6 flex items-center gap-1">
@@ -67,3 +71,20 @@
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+definePageMeta({
+	middleware: ['role-customer'],
+});
+
+const route = useRoute();
+
+const order_ref = computed(() => {
+	const q = route.query.order_id;
+	if (typeof q === 'string' && q.length > 0) {
+		return `#${q}`;
+	}
+	return 'Not specified';
+});
+</script>
+

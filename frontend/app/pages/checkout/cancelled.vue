@@ -37,14 +37,18 @@
 				</div>
 				<!-- Actions -->
 				<div class="w-full flex flex-col gap-2">
-					<button
-						class="w-full py-4 px-6 bg-slate-900 text-white font-semibold rounded-xl hover:opacity-90 active:scale-95 transition-all duration-150">
+					<NuxtLink
+						to="/checkout"
+						class="w-full py-4 px-6 bg-slate-900 text-white font-semibold rounded-xl hover:opacity-90 active:scale-95 transition-all duration-150 text-center"
+					>
 						Return to checkout
-					</button>
-					<button
-						class="w-full py-4 px-6 border border-slate-300 text-slate-900 font-semibold rounded-xl hover:bg-slate-50 active:scale-95 transition-all duration-150">
+					</NuxtLink>
+					<NuxtLink
+						to="/products"
+						class="w-full py-4 px-6 border border-slate-300 text-slate-900 font-semibold rounded-xl hover:bg-slate-50 active:scale-95 transition-all duration-150 text-center"
+					>
 						Continue shopping
-					</button>
+					</NuxtLink>
 				</div>
 				<!-- Support Link -->
 				<div class="mt-6 flex items-center gap-1">
@@ -69,3 +73,10 @@
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+definePageMeta({
+	middleware: ['role-customer'],
+});
+</script>
+

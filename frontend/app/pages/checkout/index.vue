@@ -1,214 +1,164 @@
 <template>
 	<main class="grow pt-24 pb-12 px-6 max-w-7xl mx-auto w-full">
-		<!-- Page Title -->
 		<div class="mb-8">
-			<h1 class="font-bold text-3xl leading-tight text-slate-900 tracking-tight">Checkout: Shipping &amp; Billing
+			<h1 class="font-bold text-3xl leading-tight text-slate-900 tracking-tight">
+				Checkout: Shipping
 			</h1>
+			<p class="font-normal text-base text-slate-600 mt-2">
+				<span v-if="pending">Loading checkout…</span>
+				<span v-else>Choose where we should send your order.</span>
+			</p>
+			<p v-if="error_message" class="text-sm text-red-600 mt-2">{{ error_message }}</p>
 		</div>
-		<!-- Progress Stepper -->
+
 		<div class="mb-12 w-full max-w-3xl mx-auto">
 			<div class="flex items-center justify-between relative">
-				<!-- Line background -->
 				<div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 -translate-y-1/2 z-0"></div>
-				<!-- Line active -->
-				<div class="absolute top-1/2 left-0 w-1/4 h-0.5 bg-slate-900 -translate-y-1/2 z-0"></div>
-				<!-- Steps -->
+				<div class="absolute top-1/2 left-0 w-1/3 h-0.5 bg-slate-900 -translate-y-1/2 z-0"></div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="size-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm ring-4 ring-background">
-						1</div>
+						class="size-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm ring-4 ring-background"
+					>
+						1
+					</div>
 					<span class="mt-2 font-medium text-xs text-slate-900">Shipping</span>
 				</div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
-						2</div>
-					<span class="mt-2 font-medium text-xs text-slate-600">Payment</span>
-				</div>
-				<div class="relative z-10 flex flex-col items-center">
-					<div
-						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
-						3</div>
+						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background"
+					>
+						2
+					</div>
 					<span class="mt-2 font-medium text-xs text-slate-600">Review</span>
 				</div>
 				<div class="relative z-10 flex flex-col items-center">
 					<div
-						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background">
-						4</div>
+						class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm ring-4 ring-background"
+					>
+						3
+					</div>
 					<span class="mt-2 font-medium text-xs text-slate-600">Done</span>
 				</div>
 			</div>
 		</div>
-		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-			<!-- Left Column: Shipping Form -->
+
+		<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">
+			Loading…
+		</div>
+
+		<div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 			<div class="lg:col-span-8 space-y-8">
-				<!-- Saved Addresses Section -->
 				<section class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
 					<div class="flex items-center justify-between mb-6">
-						<h2 class="font-semibold tracking-tight text-xl leading-snug text-slate-900">Shipping Address</h2>
-						<button class="flex items-center text-slate-700 font-semibold hover:underline">
-							<span class="material-symbols-outlined mr-1 text-xl">add_location</span>
-							Use new address
-						</button>
+						<h2 class="font-semibold tracking-tight text-xl leading-snug text-slate-900">Shipping address</h2>
+						<NuxtLink
+							to="/account/addresses"
+							class="flex items-center text-slate-700 font-semibold hover:underline text-sm"
+						>
+							<span class="material-symbols-outlined mr-1 text-xl">edit_location</span>
+							Manage addresses
+						</NuxtLink>
 					</div>
-					<!-- Bento Grid for Saved Addresses -->
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-						<label class="relative cursor-pointer group">
-							<input checked class="peer sr-only" name="address" type="radio" value="1" />
-							<div
-								class="p-6 border-2 border-slate-100 rounded-xl bg-slate-50 transition-all peer-checked:border-slate-900 peer-checked:bg-white group-hover:bg-white h-full">
-								<div class="flex justify-between items-start mb-2">
-									<span class="font-semibold text-slate-900">Home (Primary)</span>
-									<span class="material-symbols-outlined text-slate-900 invisible peer-checked:visible"
-										style="font-variation-settings: 'FILL' 1;">check_circle</span>
-								</div>
-								<p class="text-base font-normal text-slate-600">1248 Luxury Lane, Penthouse
-									A<br />Manhattan, NY 10001<br />United States</p>
-								<p class="mt-4 text-xs font-medium text-slate-400">+1 (555) 012-3456</p>
-							</div>
-						</label>
-						<label class="relative cursor-pointer group">
-							<input class="peer sr-only" name="address" type="radio" value="2" />
-							<div
-								class="p-6 border-2 border-slate-100 rounded-xl bg-slate-50 transition-all peer-checked:border-slate-900 peer-checked:bg-white group-hover:bg-white h-full">
-								<div class="flex justify-between items-start mb-2">
-									<span class="font-semibold text-slate-900">Office</span>
-									<span class="material-symbols-outlined text-slate-900 invisible peer-checked:visible"
-										style="font-variation-settings: 'FILL' 1;">check_circle</span>
-								</div>
-								<p class="text-base font-normal text-slate-600">770 Innovation Blvd, Suite
-									400<br />Austin, TX 78701<br />United States</p>
-								<p class="mt-4 text-xs font-medium text-slate-400">+1 (555) 987-6543</p>
-							</div>
-						</label>
+
+					<div v-if="addresses.length === 0" class="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+						<p class="text-slate-700 font-medium mb-2">No saved addresses yet</p>
+						<p class="text-slate-600 text-sm mb-4">Add an address in your account before you can complete checkout.</p>
+						<NuxtLink
+							to="/account/addresses"
+							class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-800 transition-colors"
+						>
+							Go to addresses
+						</NuxtLink>
 					</div>
-					<!-- Address Form Fields -->
-					<div class="space-y-6 pt-6 border-t border-slate-100">
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<div class="space-y-2">
-								<label class="font-medium text-slate-700">First Name</label>
-								<input
-									class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none"
-									placeholder="e.g. Julian" type="text" />
-							</div>
-							<div class="space-y-2">
-								<label class="font-medium text-slate-700">Last Name</label>
-								<input
-									class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none"
-									placeholder="e.g. Sterling" type="text" />
-							</div>
-						</div>
-						<div class="space-y-2">
-							<label class="font-medium text-slate-700">Street Address</label>
+
+					<div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<label
+							v-for="addr in addresses"
+							:key="addr.id"
+							class="relative cursor-pointer group"
+						>
 							<input
-								class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none"
-								placeholder="House number and street name" type="text" />
-						</div>
-						<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-							<div class="space-y-2">
-								<label class="font-medium text-slate-700">City</label>
-								<input
-									class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none"
-									type="text" />
+								v-model="selected_address_id"
+								class="peer sr-only"
+								name="checkout_address"
+								type="radio"
+								:value="addr.id"
+							/>
+							<div
+								class="p-6 border-2 border-slate-100 rounded-xl bg-slate-50 transition-all peer-checked:border-slate-900 peer-checked:bg-white group-hover:bg-white h-full"
+							>
+								<div class="flex justify-between items-start mb-2">
+									<span class="font-semibold text-slate-900">{{ addr.address_type }}</span>
+									<span
+										class="material-symbols-outlined text-slate-900 invisible peer-checked:visible"
+										style="font-variation-settings: 'FILL' 1"
+									>
+										check_circle
+									</span>
+								</div>
+								<p class="text-base font-normal text-slate-600 whitespace-pre-line">{{ format_address(addr) }}</p>
 							</div>
-							<div class="space-y-2">
-								<label class="font-medium text-slate-700">State / Province</label>
-								<select
-									class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none">
-									<option>Select State</option>
-									<option>New York</option>
-									<option>California</option>
-									<option>Texas</option>
-								</select>
-							</div>
-							<div class="space-y-2">
-								<label class="font-medium text-slate-700">Postal Code</label>
-								<input
-									class="w-full bg-white border border-slate-200 rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-slate-900 transition-all font-normal outline-none"
-									type="text" />
-							</div>
-						</div>
-					</div>
-					<!-- Billing Checkbox -->
-					<div class="mt-8 pt-8 border-t border-slate-100">
-						<label class="flex items-center space-x-3 cursor-pointer">
-							<input checked class="size-5 rounded border-slate-300 text-slate-900 focus:ring-primary"
-								type="checkbox" />
-							<span class="font-normal text-slate-900">Use this as my billing address</span>
 						</label>
 					</div>
+
+					<p class="mt-6 text-sm text-slate-600">
+						Billing will match your shipping address unless your payment provider asks for something different at
+						future checkout steps.
+					</p>
 				</section>
+
 				<div class="flex justify-end">
 					<button
-						class="bg-slate-900 text-white font-semibold px-12 py-4 rounded-xl hover:bg-slate-800 transition-all flex items-center space-x-2 active:scale-95">
-						<span>Continue to Payment</span>
+						type="button"
+						:disabled="!can_continue"
+						class="bg-slate-900 text-white font-semibold px-12 py-4 rounded-xl hover:bg-slate-800 transition-all flex items-center space-x-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+						@click="continue_to_review"
+					>
+						<span>Continue to review</span>
 						<span class="material-symbols-outlined">arrow_forward</span>
 					</button>
 				</div>
 			</div>
-			<!-- Right Column: Summary Sidebar -->
+
 			<aside class="lg:col-span-4">
 				<div class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm sticky top-28">
-					<h3 class="font-semibold tracking-tight text-xl leading-snug text-slate-900 mb-6">Order Summary</h3>
-					<!-- Item List -->
-					<div class="space-y-6 mb-8">
-						<div class="flex space-x-4">
+					<h3 class="font-semibold tracking-tight text-xl leading-snug text-slate-900 mb-6">Order summary</h3>
+
+					<div v-if="lines.length === 0" class="text-slate-600 text-sm mb-8">Your basket is empty.</div>
+
+					<div v-else class="space-y-6 mb-8">
+						<div v-for="line in lines" :key="line.product_id" class="flex space-x-4">
 							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
-								<img class="size-full object-cover"
-									data-alt="A high-end, professionally photographed product shot of a premium crimson leather sneaker against a clean, minimalist white background. The lighting is soft and architectural, emphasizing the texture of the grain and the artisanal stitching. The mood is sophisticated and contemporary, aligning with a luxury e-commerce aesthetic using sharp focus and neutral surroundings."
-									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgztCKRcYBpTn-6rUd5hmFiddFdqzCvEh-5neJLFGJcr9Cop3xtHK-VOxxpDn_hCs78DOhC2ZVoA_ml4RVOU5CAppS6gyYUEKczddiKK4em9nFRgBqz350EIsYzt2VG25tRcEZxA2JYTNkV4nxoQHxEvocwA4MY4lrNPolkfV5pOvTazWi-G_TXxLkwRvK-bv8Oo69HNvNRGgEkHOwePbci3F913JrZxRK66eLxNtICoRQuqYA-hWTts__v-0aAXgx1egdt3OjLFaX" />
+								<img
+									:alt="line.product_name"
+									class="size-full object-cover"
+									:src="line.thumbnail || placeholder_image"
+								/>
 							</div>
-							<div class="flex flex-col justify-between">
+							<div class="flex flex-col justify-between min-w-0">
 								<div>
-									<h4 class="font-semibold text-slate-900">Elite Performance Runner</h4>
-									<p class="text-xs text-slate-500">Size: 42 | Color: Crimson</p>
+									<h4 class="font-semibold text-slate-900 truncate">{{ line.product_name }}</h4>
+									<p class="text-xs text-slate-500">Qty {{ line.quantity }}</p>
 								</div>
-								<span class="font-normal text-slate-900">$295.00</span>
-							</div>
-						</div>
-						<div class="flex space-x-4">
-							<div class="w-20 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
-								<img class="size-full object-cover"
-									data-alt="A minimalist studio photograph of a structured designer handbag in charcoal gray, displayed on a sleek obsidian pedestal. The scene is illuminated by dramatic, high-contrast lighting that creates deep shadows and bright highlights, emphasizing its modern architectural silhouette. The overall aesthetic is one of quiet luxury and structural integrity, using a cool-toned slate color palette."
-									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCyKOFXi6VKg0c_zdB-u1ZLnOZWHR4MZjld5fuxZfCmhkGXW48AItm-HvAFPS5B1_YNMdylohgiW6KbOyoWhsSfX-DTiLYS9XVOkcmgEMarQyqao7oLhKIws4ycPhW3SI_clfK6GnzKHfiFFxcV7MCyNlZHymMu1RliJyvDVPqiJ-kg_T5FMPiKEuyHstIzEHwVK9v5dHQECrGL8JkbK2roNDClfrQdnAC_AKL2_j9IRvHsdd3epHdnjXJWzg45-2QYxxxpjFhjmzP" />
-							</div>
-							<div class="flex flex-col justify-between">
-								<div>
-									<h4 class="font-semibold text-slate-900">Architectural Tote Bag</h4>
-									<p class="text-xs text-slate-500">Size: Medium | Color: Slate</p>
-								</div>
-								<span class="font-normal text-slate-900">$1,450.00</span>
+								<span class="font-normal text-slate-900">{{ format_money(line.line_total) }}</span>
 							</div>
 						</div>
 					</div>
-					<!-- Totals -->
+
 					<div class="border-t border-slate-100 pt-6 space-y-4">
 						<div class="flex justify-between font-normal text-slate-600">
 							<span>Subtotal</span>
-							<span>$1,745.00</span>
+							<span>{{ format_money(subtotal) }}</span>
 						</div>
 						<div class="flex justify-between font-normal text-slate-600">
 							<span>Shipping</span>
 							<span class="text-slate-700">Free</span>
 						</div>
-						<div class="flex justify-between font-normal text-slate-600">
-							<span>Estimated Tax</span>
-							<span>$144.20</span>
-						</div>
 						<div class="flex justify-between border-t border-slate-100 pt-6">
 							<span class="font-semibold tracking-tight text-xl leading-snug text-slate-900">Total</span>
-							<span class="font-semibold tracking-tight text-xl leading-snug text-slate-900">$1,889.20</span>
-						</div>
-					</div>
-					<!-- Promo Code -->
-					<div class="mt-8">
-						<label class="font-medium text-slate-700 block mb-2">Promo Code</label>
-						<div class="flex space-x-2">
-							<input
-								class="grow bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:bg-white focus:ring-1 focus:ring-primary"
-								placeholder="Enter code" type="text" />
-							<button
-								class="bg-slate-900 text-white font-semibold px-4 py-2 rounded-lg hover:bg-black transition-colors">Apply</button>
+							<span class="font-semibold tracking-tight text-xl leading-snug text-slate-900">{{
+								format_money(subtotal)
+							}}</span>
 						</div>
 					</div>
 				</div>
@@ -216,3 +166,87 @@
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+import type { BasketLine, BasketResponse } from '~/types/basket';
+import type { CustomerAddress } from '~/types/customer';
+import { getPoundAndPenceFormat } from '~/utils/money';
+
+definePageMeta({
+	middleware: ['role-customer'],
+});
+
+const api = useApi();
+const { apply_from_basket } = useBasketItemCount();
+
+const checkout_selected_address_id = useState<number | null>('checkout_selected_address_id', () => null);
+
+const pending = ref(true);
+const error_message = ref<string | null>(null);
+const basket = ref<BasketResponse | null>(null);
+const addresses = ref<CustomerAddress[]>([]);
+const selected_address_id = ref<number | null>(null);
+
+const placeholder_image = '/images/category-placeholder.svg';
+
+const lines = computed<BasketLine[]>(() => basket.value?.items ?? []);
+const subtotal = computed(() => basket.value?.price_total ?? 0);
+
+const can_continue = computed(
+	() => !pending.value && addresses.value.length > 0 && selected_address_id.value != null && lines.value.length > 0,
+);
+
+function format_money(n: number) {
+	return getPoundAndPenceFormat(n);
+}
+
+function format_address(a: CustomerAddress) {
+	const line1 = `${a.building_number} ${a.street_name}`.trim();
+	const parts = [line1, a.city, a.region, a.post_code, a.country].filter(Boolean);
+	return parts.join('\n');
+}
+
+async function load() {
+	error_message.value = null;
+	pending.value = true;
+	try {
+		const [b, addr_list] = await Promise.all([
+			api.get<BasketResponse>('/basket'),
+			api.get<CustomerAddress[]>('/customer/addresses'),
+		]);
+		basket.value = b;
+		apply_from_basket(b);
+		addresses.value = addr_list;
+
+		const preferred = checkout_selected_address_id.value;
+		if (preferred != null && addr_list.some((a) => a.id === preferred)) {
+			selected_address_id.value = preferred;
+		} else if (addr_list.length > 0) {
+			selected_address_id.value = addr_list[0]!.id;
+		} else {
+			selected_address_id.value = null;
+		}
+	} catch (e: unknown) {
+		const msg =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to load checkout';
+		error_message.value = msg;
+		basket.value = null;
+		addresses.value = [];
+		apply_from_basket(null);
+	} finally {
+		pending.value = false;
+	}
+}
+
+function continue_to_review() {
+	if (!can_continue.value || selected_address_id.value == null) {
+		return;
+	}
+	checkout_selected_address_id.value = selected_address_id.value;
+	return navigateTo('/checkout/review');
+}
+
+onMounted(() => {
+	load();
+});
+</script>
