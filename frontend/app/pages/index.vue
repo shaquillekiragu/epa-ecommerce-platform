@@ -1,5 +1,5 @@
 <template>
-	<main class="w-screen flex flex-col flex-1 items-center overflow-x-hidden">
+	<main class="flex w-screen flex-1 flex-col items-center overflow-x-hidden py-16">
 		<HomeCollectionSectionComponent />
 		<HomeCategoriesSectionComponent />
 		<HomeTrendingSectionComponent />

@@ -1,5 +1,5 @@
 <template>
-	<main class="w-screen flex p-16 pr-4">
+	<main class="flex w-screen pl-16 pr-4 py-16">
 		<section class="lg:grid-cols-12 w-full grid grid-cols-1 gap-8">
 			<div class="w-full flex flex-col lg:col-span-7">
 				<div

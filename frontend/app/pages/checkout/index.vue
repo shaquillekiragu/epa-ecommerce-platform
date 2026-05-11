@@ -1,5 +1,5 @@
 <template>
-	<main class="grow pt-24 pb-12 px-6 max-w-7xl mx-auto w-full">
+	<main class="mx-auto w-full max-w-7xl grow px-6 py-16">
 		<div class="mb-8">
 			<h1 class="font-bold text-3xl leading-tight text-slate-900 tracking-tight">
 				Checkout: Shipping

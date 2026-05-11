@@ -1,5 +1,5 @@
 <template>
-    <main class="w-screen flex flex-col flex-1 items-center gap-6 px-45 py-16">
+    <main class="flex w-screen flex-1 flex-col items-center gap-6 px-45 py-16">
         <article class="w-full flex flex-col gap-3 items-start text-left">
             <h2 class="text-5xl font-medium">All Categories</h2>
 

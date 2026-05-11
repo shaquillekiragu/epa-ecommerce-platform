@@ -1,5 +1,5 @@
 <template>
-	<main class="pt-24 pb-8 px-6 max-w-7xl mx-auto min-h-screen">
+	<main class="mx-auto min-h-screen max-w-7xl px-6 py-16">
 		<div class="mb-6">
 			<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Checkout: Review</h1>
 			<p class="font-normal text-base text-slate-600 mt-2">

@@ -1,5 +1,5 @@
 <template>
-	<main class="min-h-screen w-full flex-1 overflow-y-auto bg-slate-50 p-4 pb-24 pt-24 lg:p-6">
+	<main class="min-h-screen w-full flex-1 overflow-y-auto bg-slate-50 px-4 py-16 lg:px-6">
 		<div v-if="invalid_ids" class="mx-auto max-w-6xl rounded-xl border border-slate-200 bg-white p-10 text-center">
 			<p class="font-medium text-slate-800">Invalid product link</p>
 			<NuxtLink to="/merchant/stores" class="mt-4 inline-block font-semibold text-slate-900 underline">Back to stores</NuxtLink>

@@ -1,5 +1,5 @@
 <template>
-	<main class="grow pt-24 pb-16 px-4 md:px-6 max-w-4xl mx-auto w-full">
+	<main class="mx-auto w-full max-w-4xl grow px-4 py-16 md:px-6">
 		<div v-if="invalid_id" class="rounded-xl border border-slate-200 bg-white p-10 text-center">
 			<p class="text-slate-700 font-medium mb-4">Invalid order link</p>
 			<NuxtLink to="/orders" class="font-semibold text-slate-900 underline">Back to my orders</NuxtLink>

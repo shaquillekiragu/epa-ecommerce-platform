@@ -1,5 +1,5 @@
 <template>
-	<main class="grow pt-24 pb-16 px-4 md:px-6 max-w-6xl mx-auto w-full">
+	<main class="mx-auto w-full max-w-6xl grow px-4 py-16 md:px-6">
 		<div class="mb-8">
 			<BreadcrumbsComponent
 				class="mb-3"

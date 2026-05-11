@@ -1,5 +1,5 @@
 <template>
-	<main class="grow flex items-center justify-center px-6 py-8">
+	<main class="flex grow items-center justify-center px-6 py-16">
 		<div class="max-w-[480px] w-full">
 			<div
 				class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col items-center text-center">

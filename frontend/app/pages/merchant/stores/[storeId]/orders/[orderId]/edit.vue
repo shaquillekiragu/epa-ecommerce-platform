@@ -1,5 +1,5 @@
 <template>
-	<main class="min-h-screen w-full flex-1 pb-16 pt-24">
+	<main class="min-h-screen w-full flex-1 py-16">
         <!-- TopAppBar (Authority: JSON) -->
         <header
             class="bg-white border-b border-slate-200 flex justify-between items-center h-16 px-6 w-full sticky top-0 z-40">

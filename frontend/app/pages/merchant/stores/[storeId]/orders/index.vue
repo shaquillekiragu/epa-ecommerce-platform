@@ -1,5 +1,5 @@
 <template>
-	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
+	<main class="min-h-screen w-full flex-1 bg-slate-50 px-6 py-16 md:px-10">
 		<div class="mx-auto max-w-6xl">
 			<BreadcrumbsComponent class="mb-4" :items="store_orders_crumbs" />
 

@@ -1,5 +1,5 @@
 <template>
-	<main class="flex-1 md:ml-64 bg-slate-50 p-6 md:p-12 overflow-y-auto">
+	<main class="flex-1 overflow-y-auto bg-slate-50 px-6 py-16 md:ml-64 md:px-12">
 		<div class="max-w-5xl mx-auto">
 			<header class="mb-12">
 				<BreadcrumbsComponent

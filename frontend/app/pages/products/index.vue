@@ -1,5 +1,5 @@
 <template>
-	<main class="w-screen flex px-24 py-16">
+	<main class="flex w-screen px-24 py-16">
 		<FilterSidePanelComponent v-model="list_filters" />
 
 		<section class="grow flex flex-col items-center gap-10 px-12">

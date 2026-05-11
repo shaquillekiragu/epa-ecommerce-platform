@@ -1,5 +1,5 @@
 <template>
-	<main class="grow pt-20 md:py-25 md:pb-20 px-4 max-w-7xl mx-auto w-full">
+	<main class="mx-auto w-full max-w-7xl grow px-4 py-16">
 		<div class="mb-6">
 			<h1 class="font-bold tracking-tight text-4xl leading-tight text-slate-900">Your Basket</h1>
 			<p class="font-normal text-base text-slate-600 mt-2">

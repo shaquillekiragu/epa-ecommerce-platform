@@ -1,5 +1,5 @@
 <template>
-	<main class="grow pt-16 pb-24 px-6">
+	<main class="grow px-6 py-16">
 		<div class="max-w-4xl mx-auto">
 			<div v-if="pending" class="text-center text-slate-600 py-16">Loading your order…</div>
 
