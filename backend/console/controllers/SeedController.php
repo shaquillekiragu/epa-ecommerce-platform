@@ -35,6 +35,26 @@ class SeedController extends Controller
     }
 
     /**
+     * Deletes all `order_product` and `basket_product` rows, deletes all `product` rows, then inserts the
+     * canonical catalog seed products (same dataset as seed/catalog products) using existing stores and categories.
+     *
+     * php yii seed/reset-products 1
+     *
+     * Default count is 40 (full built-in catalog). Pass a smaller count to insert only the first N products.
+     */
+    public function actionResetProducts(int $force = 0, int $debug = 1, int $count = 40, $seed = null): void
+    {
+        if ($force !== 1) {
+            Console::output('Refusing to wipe products without force=1.');
+            Console::output('Run: php yii seed/reset-products 1');
+            return;
+        }
+
+        $seeder = new CatalogSeeder(Yii::$app->db, $seed !== null ? (int) $seed : null);
+        $seeder->replaceAllProductsWithSeedCatalog($debug, $count);
+    }
+
+    /**
      * Inserts extra products via {@see CatalogSeeder::seedExtraProductsUsingExistingCatalog()}.
      *
      * php yii seed/extra-products [debug] [count] [seed]
