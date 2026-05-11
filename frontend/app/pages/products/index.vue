@@ -3,18 +3,22 @@
 		<FilterSidePanelComponent v-model="list_filters" />
 
 		<section class="grow flex flex-col items-center gap-10 px-12">
-			<article class="w-full flex flex-col items-stretch sm:flex-row sm:justify-between sm:items-center gap-4">
-				<h1 class="text-4xl font-medium">Premium Collection</h1>
+			<article class="w-full flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-end">
+				<h1 class="text-4xl font-medium shrink-0">Premium Collection</h1>
 
-				<select
-					v-model="sort_key"
-					class="border focus:ring-0 cursor-pointer hidden sm:block w-1/3"
-				>
-					<option value="recommended">Recommended</option>
-					<option value="price_asc">Price: Low to High</option>
-					<option value="price_desc">Price: High to Low</option>
-					<option value="newest">Newest Arrivals</option>
-				</select>
+				<div class="flex w-full flex-col gap-1.5 sm:w-auto sm:min-w-56 sm:max-w-xs">
+					<label for="catalog-sort" class="text-sm font-medium text-slate-700">Sort by</label>
+					<select
+						id="catalog-sort"
+						v-model="sort_key"
+						class="w-full cursor-pointer rounded-md border border-slate-200 bg-white px-3 py-2 text-base text-slate-900 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/15"
+					>
+						<option value="default">Default</option>
+						<option value="price_asc">Price: Low to High</option>
+						<option value="price_desc">Price: High to Low</option>
+						<option value="newest">Newest Arrivals</option>
+					</select>
+				</div>
 			</article>
 
 			<p v-if="pending" class="text-slate-600 w-full text-center">Loading products…</p>
@@ -33,6 +37,28 @@
 import { useProducts, type ProductsQuery } from '~/composables/useProducts';
 import type { ProductListFilters } from '~/types/product-list-filters';
 
+const SORT_KEYS = ['default', 'price_asc', 'price_desc', 'newest'] as const;
+type SortKey = (typeof SORT_KEYS)[number];
+
+function normalizeSortQueryParam(raw: unknown): string | undefined {
+	if (raw === undefined || raw === null) return undefined;
+	if (Array.isArray(raw)) return typeof raw[0] === 'string' ? raw[0] : undefined;
+	return typeof raw === 'string' ? raw : undefined;
+}
+
+function isSortKey(value: string): value is SortKey {
+	return (SORT_KEYS as readonly string[]).includes(value);
+}
+
+const route = useRoute();
+const router = useRouter();
+
+function sortFromRouteQuery(): SortKey {
+	const raw = normalizeSortQueryParam(route.query.sort);
+	if (raw !== undefined && isSortKey(raw)) return raw;
+	return 'default';
+}
+
 const list_filters = ref<ProductListFilters>({
 	categoryIds: [],
 	priceMin: '',
@@ -40,7 +66,7 @@ const list_filters = ref<ProductListFilters>({
 	stock: 'all',
 });
 
-const sort_key = ref<'recommended' | 'price_asc' | 'price_desc' | 'newest'>('recommended');
+const sort_key = ref<SortKey>(sortFromRouteQuery());
 
 const { product_cards, refresh, pending, error } = useProducts({}, { disableAutoload: true, stateKey: 'catalog' });
 
@@ -77,8 +103,8 @@ function buildProductsQuery(): ProductsQuery {
 		q.stock = list_filters.value.stock;
 	}
 
-	const sortMap: Record<typeof sort_key.value, string> = {
-		recommended: '',
+	const sortMap: Record<SortKey, string> = {
+		default: '',
 		price_asc: 'price_in_gbp',
 		price_desc: '-price_in_gbp',
 		newest: '-created_at',
@@ -101,7 +127,27 @@ function resetPageAndLoad(): void {
 }
 
 watch(list_filters, resetPageAndLoad, { deep: true });
-watch(sort_key, resetPageAndLoad);
+
+watch(sort_key, (value) => {
+	const next_query = { ...route.query } as Record<string, string | string[] | undefined>;
+	if (value === 'default') {
+		delete next_query.sort;
+	} else {
+		next_query.sort = value;
+	}
+	void router.replace({ query: next_query });
+	page.value = 1;
+	loadProducts().catch(() => {});
+});
+
+watch(
+	() => route.query.sort,
+	() => {
+		const next = sortFromRouteQuery();
+		if (next === sort_key.value) return;
+		sort_key.value = next;
+	},
+);
 
 onMounted(() => {
 	loadProducts().catch(() => {});
