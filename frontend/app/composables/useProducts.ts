@@ -123,30 +123,27 @@ export function getProductCards(): ProductCard[] {
 	return product_cards.value;
 }
 
-/** Fetch a single active catalogue product by slug (used on product detail route). */
-export async function fetchProductBySlug(slug: string): Promise<Product | null> {
-	const trimmed = (slug ?? '').trim();
-	if (trimmed === '') {
+/** Storefront product URL: `/products/:id/:slug` — load by id; slug is for readable URLs / SEO. */
+export function productDetailRoute(id: number, slug: string): string {
+	const s = (slug ?? '').trim() || 'product';
+	return `/products/${id}/${encodeURIComponent(s)}`;
+}
+
+/** Fetch a single active catalogue product by primary key (detail page). */
+export async function fetchProductById(id: number): Promise<Product | null> {
+	if (!Number.isFinite(id) || id <= 0) {
 		return null;
 	}
 
 	const api = useApi();
-	const res = await api.get<unknown>(
-		`/products?slug=${encodeURIComponent(trimmed)}&per-page=1`,
-	);
-
-	let rows: ApiProduct[] = [];
-	if (Array.isArray(res)) {
-		rows = res as ApiProduct[];
-	} else if (res && typeof res === 'object' && 'items' in (res as Record<string, unknown>)) {
-		const items = (res as { items?: unknown }).items;
-		if (Array.isArray(items)) rows = items as ApiProduct[];
-	}
-
-	const first = rows[0];
-	if (!first) {
+	try {
+		const res = await api.get<unknown>(`/products/${id}`);
+		if (!res || typeof res !== 'object' || !('id' in (res as object))) {
+			return null;
+		}
+		return mapProduct(res as ApiProduct);
+	} catch {
 		return null;
 	}
-
-	return mapProduct(first);
 }
+

@@ -44,15 +44,11 @@
 						<div class="flex justify-between items-start w-full">
 							<div>
 								<NuxtLink
-									v-if="line.product_slug"
-									:to="`/products/${line.product_slug}`"
+									:to="productDetailRoute(line.product_id, line.product_slug ?? '')"
 									class="font-semibold tracking-tight text-xl leading-snug text-slate-900 hover:underline"
 								>
 									{{ line.product_name }}
 								</NuxtLink>
-								<h3 v-else class="font-semibold tracking-tight text-xl leading-snug text-slate-900">
-									{{ line.product_name }}
-								</h3>
 							</div>
 							<span class="text-lg font-bold text-slate-900 ml-4 whitespace-nowrap">{{
 								format_money(line.line_total)
@@ -140,6 +136,7 @@
 
 <script setup lang="ts">
 import type { BasketLine, BasketResponse } from '~/types/basket';
+import { productDetailRoute } from '~/composables/useProducts';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({

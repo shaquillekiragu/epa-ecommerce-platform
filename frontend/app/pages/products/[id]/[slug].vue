@@ -91,14 +91,18 @@
 
 <script setup lang="ts">
 import type { Product } from '~/types/product';
-import { fetchProductBySlug } from '~/composables/useProducts';
+import { fetchProductById } from '~/composables/useProducts';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 const route = useRoute();
 const api = useApi();
 const { refresh_basket_item_count } = useBasketItemCount();
 
-const slug = computed(() => String(route.params.slug ?? ''));
+const product_id_param = computed(() => {
+	const raw = route.params.id;
+	const n = typeof raw === 'string' ? parseInt(raw, 10) : Array.isArray(raw) ? parseInt(raw[0] ?? '', 10) : NaN;
+	return Number.isFinite(n) && n > 0 ? n : NaN;
+});
 
 const pending = ref(true);
 const product = ref<Product | null>(null);
@@ -114,7 +118,11 @@ async function load_product() {
 	pending.value = true;
 	error_message.value = null;
 	try {
-		const p = await fetchProductBySlug(slug.value);
+		const id = product_id_param.value;
+		if (!Number.isFinite(id)) {
+			throw createError({ statusCode: 404, statusMessage: 'Product not found' });
+		}
+		const p = await fetchProductById(id);
 		product.value = p;
 		qty.value = 1;
 		if (!p) {
@@ -131,7 +139,7 @@ async function load_product() {
 	}
 }
 
-watch(slug, () => load_product(), { immediate: true });
+watch(product_id_param, () => load_product(), { immediate: true });
 
 async function add_to_basket() {
 	const p = product.value;

@@ -93,6 +93,7 @@ import type { PropType } from 'vue'
 import type { CardLayout, CardVariant } from '~/types/card-component';
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
+import { productDetailRoute } from '~/composables/useProducts'
 
 type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 
@@ -148,11 +149,23 @@ const has_border = computed(() =>
 )
 
 const resolved_url = computed(() => {
-	if ('slug' in card) {
-		return `/products/${card.slug}`
+	const card_id = 'id' in card ? (card as { id?: number }).id : undefined
+	const slug =
+		'slug' in card && typeof (card as { slug?: string }).slug === 'string'
+			? (card as { slug: string }).slug.trim()
+			: ''
+
+	// Catalogue product: disambiguate with id in the path; slug is the second segment for readable URLs.
+	if (
+		'price_in_gbp' in card &&
+		typeof card_id === 'number' &&
+		card_id > 0 &&
+		slug !== ''
+	) {
+		return productDetailRoute(card_id, slug)
 	}
 
-	return `/products?category=${card.name}`
+	return `/products?category=${encodeURIComponent(card.name)}`
 })
 
 const wrapper_class = computed(() => {
