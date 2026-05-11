@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use yii\data\ActiveDataProvider;
+use yii\rest\IndexAction;
 use yii\web\BadRequestHttpException;
 use api\models\Product;
 
@@ -16,16 +17,22 @@ class ProductController extends _ApiController
 
         unset($actions['create'], $actions['update'], $actions['delete']);
 
+        /** @see IndexAction::$prepareDataProvider — without this, list filters are never applied. */
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
         return $actions;
     }
 
-    public function prepareDataProvider()
+    /**
+     * @param mixed $filter built by {@see IndexAction::$dataFilter} when configured; unused here.
+     */
+    public function prepareDataProvider(IndexAction $action, $filter = null): ActiveDataProvider
     {
         $query = Product::activeCatalogQuery();
 
-        Product::applyListFilters($query, \Yii::$app->request->get());
+        Product::applyListFilters($query, \Yii::$app->request->getQueryParams());
 
-        $sort = (string) \Yii::$app->request->get('sort', '');
+        $sort = (string) (\Yii::$app->request->getQueryParams()['sort'] ?? '');
         if ($sort !== '') {
             $direction = SORT_ASC;
             $field = $sort;

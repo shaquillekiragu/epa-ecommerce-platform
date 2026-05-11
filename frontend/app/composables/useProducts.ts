@@ -61,23 +61,42 @@ function toCard(p: Product): ProductCard {
 
 export type ProductsQuery = {
 	category?: number | string | null;
+	categories?: string | null;
 	search?: string | null;
 	sort?: string | null;
+	price_min?: number | null;
+	price_max?: number | null;
+	stock?: 'in' | 'out' | null;
 };
 
-export function useProducts(query: ProductsQuery = {}) {
+export type UseProductsOptions = {
+	/** When true, skip the default onMounted fetch (parent drives `refresh`). */
+	disableAutoload?: boolean;
+	/**
+	 * Isolated `useState` namespace (e.g. `'catalog'` for the browse page) so filtered lists
+	 * do not overwrite the default `'products'` cache used on the home page.
+	 */
+	stateKey?: string;
+};
+
+export function useProducts(query: ProductsQuery = {}, options?: UseProductsOptions) {
 	const api = useApi();
 
-	const products = useState<Product[]>('products', () => []);
-	const pending = useState<boolean>('products_pending', () => false);
-	const error = useState<unknown>('products_error', () => null);
-	const did_autoload = useState<boolean>('products_did_autoload', () => false);
+	const sk = options?.stateKey ? `:${options.stateKey}` : '';
+	const products = useState<Product[]>(`products${sk}`, () => []);
+	const pending = useState<boolean>(`products_pending${sk}`, () => false);
+	const error = useState<unknown>(`products_error${sk}`, () => null);
+	const did_autoload = useState<boolean>(`products_did_autoload${sk}`, () => false);
 
 	function buildQueryString(q: ProductsQuery): string {
 		const params = new URLSearchParams();
 		if (q.category !== undefined && q.category !== null && String(q.category).trim() !== '') params.set('category', String(q.category));
+		if (q.categories !== undefined && q.categories !== null && q.categories.trim() !== '') params.set('categories', q.categories.trim());
 		if (q.search !== undefined && q.search !== null && q.search.trim() !== '') params.set('search', q.search.trim());
 		if (q.sort !== undefined && q.sort !== null && q.sort.trim() !== '') params.set('sort', q.sort.trim());
+		if (q.price_min !== undefined && q.price_min !== null && Number.isFinite(Number(q.price_min))) params.set('price_min', String(q.price_min));
+		if (q.price_max !== undefined && q.price_max !== null && Number.isFinite(Number(q.price_max))) params.set('price_max', String(q.price_max));
+		if (q.stock === 'in' || q.stock === 'out') params.set('stock', q.stock);
 		const s = params.toString();
 		return s ? `?${s}` : '';
 	}
@@ -102,6 +121,9 @@ export function useProducts(query: ProductsQuery = {}) {
 	const product_cards = computed<ProductCard[]>(() => products.value.map(toCard));
 
 	onMounted(() => {
+		if (options?.disableAutoload) {
+			return;
+		}
 		if (!did_autoload.value && products.value.length === 0 && !pending.value) {
 			did_autoload.value = true;
 			refresh().catch(() => {});
@@ -123,13 +145,11 @@ export function getProductCards(): ProductCard[] {
 	return product_cards.value;
 }
 
-/** Storefront product URL: `/products/:id/:slug` — load by id; slug is for readable URLs / SEO. */
 export function productDetailRoute(id: number, slug: string): string {
 	const s = (slug ?? '').trim() || 'product';
 	return `/products/${id}/${encodeURIComponent(s)}`;
 }
 
-/** Fetch a single active catalogue product by primary key (detail page). */
 export async function fetchProductById(id: number): Promise<Product | null> {
 	if (!Number.isFinite(id) || id <= 0) {
 		return null;

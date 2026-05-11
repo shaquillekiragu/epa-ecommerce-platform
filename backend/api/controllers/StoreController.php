@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use yii\data\ActiveDataProvider;
+use yii\rest\IndexAction;
 use api\models\Store;
 
 class StoreController extends _ApiController
@@ -15,14 +16,16 @@ class StoreController extends _ApiController
 
         unset($actions['create'], $actions['update'], $actions['delete']);
 
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
         return $actions;
     }
 
-    public function prepareDataProvider()
+    public function prepareDataProvider(IndexAction $action, $filter = null): ActiveDataProvider
     {
         $query = Store::find();
 
-        Store::applyListFilters($query, \Yii::$app->request->get());
+        Store::applyListFilters($query, \Yii::$app->request->getQueryParams());
 
         return new ActiveDataProvider([
             'query' => $query,

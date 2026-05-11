@@ -39,6 +39,9 @@ class Product extends CommonProduct
      * - `product_category_name` — substring match on related category name
      * - `store_name` — substring match on related store name
      * - `slug` — exact match on product slug (detail pages)
+     * - `categories` — comma-separated category ids (OR); takes precedence over `category` when non-empty
+     * - `price_min` / `price_max` — inclusive bounds on `price_in_gbp` (numeric)
+     * - `stock` — `in` (stock &gt; 0) or `out` (stock &lt;= 0); omit for all
      *
      * @param array<string, mixed> $params
      */
@@ -51,9 +54,20 @@ class Product extends CommonProduct
             $query->andWhere([$t . '.slug' => $slug]);
         }
 
-        $categoryId = $params['category'] ?? $params['product_category_id'] ?? null;
-        if ($categoryId !== null && $categoryId !== '' && (int) $categoryId > 0) {
-            $query->andWhere([$t . '.product_category_id' => (int) $categoryId]);
+        $categoriesCsv = trim((string) ($params['categories'] ?? ''));
+        if ($categoriesCsv !== '') {
+            $ids = array_values(array_filter(
+                array_map(static fn (string $v): int => (int) trim($v), explode(',', $categoriesCsv)),
+                static fn (int $id): bool => $id > 0
+            ));
+            if (count($ids) > 0) {
+                $query->andWhere(['in', $t . '.product_category_id', $ids]);
+            }
+        } else {
+            $categoryId = $params['category'] ?? $params['product_category_id'] ?? null;
+            if ($categoryId !== null && $categoryId !== '' && (int) $categoryId > 0) {
+                $query->andWhere([$t . '.product_category_id' => (int) $categoryId]);
+            }
         }
 
         if (($storeId = $params['store_id'] ?? null) !== null && $storeId !== '' && (int) $storeId > 0) {
@@ -79,6 +93,23 @@ class Product extends CommonProduct
         if ($storeName !== '') {
             $query->joinWith(['store'])
                 ->andWhere(['like', CommonStore::tableName() . '.name', $storeName]);
+        }
+
+        $priceMin = $params['price_min'] ?? $params['min_price'] ?? null;
+        if ($priceMin !== null && $priceMin !== '' && is_numeric($priceMin)) {
+            $query->andWhere(['>=', $t . '.price_in_gbp', (float) $priceMin]);
+        }
+
+        $priceMax = $params['price_max'] ?? $params['max_price'] ?? null;
+        if ($priceMax !== null && $priceMax !== '' && is_numeric($priceMax)) {
+            $query->andWhere(['<=', $t . '.price_in_gbp', (float) $priceMax]);
+        }
+
+        $stock = trim((string) ($params['stock'] ?? ''));
+        if ($stock === 'in') {
+            $query->andWhere(['>', $t . '.number_in_stock', 0]);
+        } elseif ($stock === 'out') {
+            $query->andWhere(['<=', $t . '.number_in_stock', 0]);
         }
     }
 }
