@@ -186,7 +186,7 @@ function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
 }
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) return String((e as any).message);
 	return 'Request failed';
 }
@@ -215,7 +215,7 @@ async function load() {
 		if (status === 404) {
 			not_found.value = true;
 		} else {
-			error_message.value = parse_api_error(e);
+			error_message.value = parseApiError(e);
 		}
 	} finally {
 		pending.value = false;
@@ -232,7 +232,7 @@ async function toggle_live() {
 		});
 		product.value = updated;
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		toggling_live.value = false;
 	}

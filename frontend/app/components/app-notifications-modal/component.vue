@@ -78,7 +78,7 @@ import type { OrderNotification, OrderNotificationTone } from '~/types/notificat
 const props = defineProps<{ open: boolean }>();
 const emit = defineEmits<{ (e: 'update:open', value: boolean): void }>();
 
-const { notifications, pending, error_message, refresh, mark_all_seen } = useOrderNotifications();
+const { notifications, pending, error_message, refresh, markAllSeen } = useOrderNotifications();
 
 const panel_ref = ref<HTMLElement | null>(null);
 
@@ -128,7 +128,7 @@ watch(
 	async (is_open) => {
 		if (!is_open) return;
 		await refresh();
-		mark_all_seen();
+		markAllSeen();
 		nextTick(() => {
 			panel_ref.value?.querySelector<HTMLElement>('button[aria-label="Close"]')?.focus();
 		});

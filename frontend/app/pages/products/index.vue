@@ -118,17 +118,17 @@ function buildProductsQuery(): ProductsQuery {
 		q.categories = list_filters.value.categoryIds.join(',');
 	}
 
-	const minRaw = list_filters.value.priceMin.trim();
-	if (minRaw !== '') {
-		const min = Number.parseFloat(minRaw);
+	const min_raw = list_filters.value.priceMin.trim();
+	if (min_raw !== '') {
+		const min = Number.parseFloat(min_raw);
 		if (Number.isFinite(min)) {
 			q.price_min = min;
 		}
 	}
 
-	const maxRaw = list_filters.value.priceMax.trim();
-	if (maxRaw !== '') {
-		const max = Number.parseFloat(maxRaw);
+	const max_raw = list_filters.value.priceMax.trim();
+	if (max_raw !== '') {
+		const max = Number.parseFloat(max_raw);
 		if (Number.isFinite(max)) {
 			q.price_max = max;
 		}
@@ -138,13 +138,13 @@ function buildProductsQuery(): ProductsQuery {
 		q.stock = list_filters.value.stock;
 	}
 
-	const sortMap: Record<SortKey, string> = {
+	const sort_map: Record<SortKey, string> = {
 		default: '',
 		price_asc: 'price_in_gbp',
 		price_desc: '-price_in_gbp',
 		newest: '-created_at',
 	};
-	const sort = sortMap[sort_key.value];
+	const sort = sort_map[sort_key.value];
 	if (sort) {
 		q.sort = sort;
 	}

@@ -315,15 +315,15 @@ const form = reactive({
 const preview_title = computed(() => (form.seo_title.trim() || form.name.trim() || 'Product title'));
 const preview_description = computed(() => (form.description.trim() || '—'));
 
-function description_from_product(p: MerchantProduct) {
+function descriptionFromProduct(p: MerchantProduct) {
 	const raw = (p as { description?: unknown }).description;
 	if (raw == null) return '';
 	return typeof raw === 'string' ? raw : String(raw);
 }
 
-function set_form_from_product(p: MerchantProduct) {
+function setFormFromProduct(p: MerchantProduct) {
 	form.name = String(p.name ?? '');
-	form.description = description_from_product(p);
+	form.description = descriptionFromProduct(p);
 	form.sku_code = String(p.sku_code ?? '');
 	form.product_category_id = Number(p.product_category_id ?? 0);
 	form.price_in_gbp = String(p.price_in_gbp ?? '');
@@ -334,7 +334,7 @@ function set_form_from_product(p: MerchantProduct) {
 	form.is_active = Boolean(p.is_active ?? true);
 }
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) return String((e as any).message);
 	return 'Request failed';
 }
@@ -358,13 +358,13 @@ async function load() {
 			return;
 		}
 		product.value = p;
-		set_form_from_product(p);
+		setFormFromProduct(p);
 	} catch (e: unknown) {
 		const status = e && typeof e === 'object' && 'status' in e ? (e as { status?: number }).status : undefined;
 		if (status === 404) {
 			not_found.value = true;
 		} else {
-			error_message.value = parse_api_error(e);
+			error_message.value = parseApiError(e);
 		}
 	} finally {
 		pending.value = false;
@@ -402,7 +402,7 @@ async function on_save() {
 		});
 		await navigateTo(`/merchant/stores/${store_id.value}/products/${product_id.value}`);
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		saving.value = false;
 	}
@@ -417,7 +417,7 @@ async function on_delete() {
 		await merchantDeleteProduct(product_id.value);
 		await navigateTo(`/merchant/stores/${store_id.value}/products`);
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		deleting.value = false;
 	}

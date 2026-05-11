@@ -103,13 +103,13 @@ export function useProducts(query: ProductsQuery = {}, options?: UseProductsOpti
 		return s ? `?${s}` : '';
 	}
 
-	async function refresh(nextQuery: ProductsQuery = query) {
+	async function refresh(next_query: ProductsQuery = query) {
 		pending.value = true;
 		error.value = null;
 		try {
-			const res = await api.get<unknown>(`/products${buildQueryString(nextQuery)}`);
-			const apiProducts = unwrapCollection<ApiProduct>(res);
-			products.value = apiProducts.map(mapProduct);
+			const res = await api.get<unknown>(`/products${buildQueryString(next_query)}`);
+			const api_products = unwrapCollection<ApiProduct>(res);
+			products.value = api_products.map(mapProduct);
 			return products.value;
 		} catch (e) {
 			error.value = e;
@@ -168,4 +168,3 @@ export async function fetchProductById(id: number): Promise<Product | null> {
 		return null;
 	}
 }
-

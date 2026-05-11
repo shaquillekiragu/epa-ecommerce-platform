@@ -6,19 +6,22 @@ export async function merchantFetchStores(): Promise<MerchantStore[]> {
 	return api.get<MerchantStore[]>('/merchant/stores');
 }
 
-export async function merchantFetchStore(storeId: number): Promise<MerchantStore> {
+export async function merchantFetchStore(store_id: number): Promise<MerchantStore> {
 	const api = useApi();
-	return api.get<MerchantStore>(`/merchant/store?id=${storeId}`);
+	return api.get<MerchantStore>(`/merchant/store?id=${store_id}`);
 }
 
-export async function merchantUpdateStore(storeId: number, payload: Partial<Pick<MerchantStore, 'name' | 'description'>>): Promise<MerchantStore> {
+export async function merchantUpdateStore(
+	store_id: number,
+	payload: Partial<Pick<MerchantStore, 'name' | 'description'>>,
+): Promise<MerchantStore> {
 	const api = useApi();
-	return api.patch<MerchantStore>(`/merchant/stores/${storeId}`, payload);
+	return api.patch<MerchantStore>(`/merchant/stores/${store_id}`, payload);
 }
 
-export async function merchantFetchOrders(storeId: number): Promise<MerchantOrderRow[]> {
+export async function merchantFetchOrders(store_id: number): Promise<MerchantOrderRow[]> {
 	const api = useApi();
-	return api.get<MerchantOrderRow[]>(`/merchant/orders?store=${storeId}`);
+	return api.get<MerchantOrderRow[]>(`/merchant/orders?store=${store_id}`);
 }
 
 export async function merchantFetchAllOrders(): Promise<MerchantOrderRow[]> {
@@ -26,37 +29,42 @@ export async function merchantFetchAllOrders(): Promise<MerchantOrderRow[]> {
 	return api.get<MerchantOrderRow[]>('/merchant/orders-all');
 }
 
-export async function merchantFetchOrder(orderId: number): Promise<MerchantOrderDetail> {
+export async function merchantFetchOrder(order_id: number): Promise<MerchantOrderDetail> {
 	const api = useApi();
-	return api.get<MerchantOrderDetail>(`/merchant/orders/${orderId}`);
+	return api.get<MerchantOrderDetail>(`/merchant/orders/${order_id}`);
 }
 
-export async function merchantMarkOrderShipped(orderId: number): Promise<void> {
+export async function merchantMarkOrderShipped(order_id: number): Promise<void> {
 	const api = useApi();
-	await api.patch(`/merchant/orders/${orderId}/status`, { status: 'shipped' });
+	await api.patch(`/merchant/orders/${order_id}/status`, { status: 'shipped' });
 }
 
-export async function merchantFetchStoreProducts(storeId: number): Promise<MerchantProduct[]> {
+export async function merchantFetchStoreProducts(store_id: number): Promise<MerchantProduct[]> {
 	const api = useApi();
-	return api.get<MerchantProduct[]>(`/merchant/products?store=${storeId}`);
+	return api.get<MerchantProduct[]>(`/merchant/products?store=${store_id}`);
 }
 
-export async function merchantFetchProduct(productId: number): Promise<MerchantProduct> {
+export async function merchantFetchProduct(product_id: number): Promise<MerchantProduct> {
 	const api = useApi();
-	return api.get<MerchantProduct>(`/merchant/products/${productId}`);
+	return api.get<MerchantProduct>(`/merchant/products/${product_id}`);
 }
 
-export async function merchantCreateProduct(payload: Partial<MerchantProduct> & { store_id: number }): Promise<MerchantProduct> {
+export async function merchantCreateProduct(
+	payload: Partial<MerchantProduct> & { store_id: number },
+): Promise<MerchantProduct> {
 	const api = useApi();
 	return api.post<MerchantProduct>('/merchant/products', payload);
 }
 
-export async function merchantUpdateProduct(productId: number, payload: Partial<MerchantProduct>): Promise<MerchantProduct> {
+export async function merchantUpdateProduct(
+	product_id: number,
+	payload: Partial<MerchantProduct>,
+): Promise<MerchantProduct> {
 	const api = useApi();
-	return api.patch<MerchantProduct>(`/merchant/products/${productId}`, payload);
+	return api.patch<MerchantProduct>(`/merchant/products/${product_id}`, payload);
 }
 
-export async function merchantDeleteProduct(productId: number): Promise<void> {
+export async function merchantDeleteProduct(product_id: number): Promise<void> {
 	const api = useApi();
-	await api.del(`/merchant/products/${productId}`);
+	await api.del(`/merchant/products/${product_id}`);
 }

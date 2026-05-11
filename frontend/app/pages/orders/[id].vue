@@ -89,7 +89,7 @@
 							</div>
 							<div class="grow min-w-0">
 								<NuxtLink
-									:to="productDetailRoute(line.product_id, slug_from_name(line.product_name))"
+									:to="productDetailRoute(line.product_id, slugFromName(line.product_name))"
 									class="font-semibold text-slate-900 hover:underline line-clamp-2"
 								>
 									{{ line.product_name }}
@@ -161,7 +161,7 @@ const order_id = computed(() => {
 
 const invalid_id = computed(() => order_id.value === null);
 
-function slug_from_name(name: string) {
+function slugFromName(name: string) {
 	const s = slugify(name);
 	return s || 'product';
 }
@@ -178,7 +178,7 @@ function go_pay() {
 	return navigateTo('/checkout/pay');
 }
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) {
 		const raw = String((e as { message?: string }).message);
 		try {
@@ -212,7 +212,7 @@ async function confirm_cancel_order() {
 		await load();
 		refresh_order_notifications();
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		cancelling.value = false;
 	}

@@ -37,8 +37,8 @@ export function useCategories() {
 		error.value = null;
 		try {
 			const res = await api.get<unknown>('/categories');
-			const apiCategories = unwrapCollection<ApiCategory>(res);
-			categories.value = apiCategories.map(mapCategory);
+			const api_categories = unwrapCollection<ApiCategory>(res);
+			categories.value = api_categories.map(mapCategory);
 			return categories.value;
 		} catch (e) {
 			error.value = e;

@@ -98,7 +98,7 @@ const edit_store_crumbs = computed<BreadcrumbItem[]>(() => {
 	];
 });
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) {
 		return String((e as { message?: string }).message);
 	}
@@ -118,7 +118,7 @@ async function load() {
 		form.name = store.value.name ?? '';
 		form.description = (store.value.description ?? '') as string;
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 		store.value = null;
 	} finally {
 		pending.value = false;
@@ -144,7 +144,7 @@ async function on_save() {
 		store.value = updated;
 		await navigateTo(`/merchant/stores/${store_id.value}`);
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		saving.value = false;
 	}

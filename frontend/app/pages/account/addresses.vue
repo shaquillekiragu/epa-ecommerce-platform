@@ -274,7 +274,7 @@ function scroll_to_add_form() {
 	add_form_section.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) {
 		const raw = String((e as { message?: string }).message);
 		try {
@@ -297,7 +297,7 @@ async function load_addresses() {
 	try {
 		addresses.value = await api.get<CustomerAddress[]>('/customer/addresses');
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 		addresses.value = [];
 	} finally {
 		pending.value = false;
@@ -325,7 +325,7 @@ async function submit_new_address() {
 			form_success.value = null;
 		}, 4000);
 	} catch (e: unknown) {
-		form_error.value = parse_api_error(e);
+		form_error.value = parseApiError(e);
 	} finally {
 		submitting.value = false;
 	}

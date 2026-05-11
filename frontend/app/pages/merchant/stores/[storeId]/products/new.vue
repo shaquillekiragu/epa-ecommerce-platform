@@ -116,7 +116,7 @@ const form = reactive({
 	is_active: true,
 });
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) return String((e as any).message);
 	return 'Request failed';
 }
@@ -153,7 +153,7 @@ async function on_submit() {
 
 		await navigateTo(`/merchant/stores/${store_id.value}/products/${created.id}/edit`);
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		submitting.value = false;
 	}

@@ -93,7 +93,8 @@ import type { PropType } from 'vue'
 import type { CardLayout, CardVariant } from '~/types/card-component';
 import type { ProductCard } from '~/types/product'
 import type { ProductCategory } from '~/types/product-category'
-import { productDetailRoute } from '~/composables/useProducts'
+import { productDetailRoute } from '~/composables/useProducts';
+import { getPoundAndPenceFormat } from '~/utils/money';
 
 type CardItem = ProductCard | ProductCategory; // will also take stores in the future
 

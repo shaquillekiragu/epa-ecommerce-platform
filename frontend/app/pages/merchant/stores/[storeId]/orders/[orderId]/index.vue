@@ -157,7 +157,7 @@ function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
 }
 
-function parse_api_error(e: unknown): string {
+function parseApiError(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) {
 		return String((e as { message?: string }).message);
 	}
@@ -172,7 +172,7 @@ async function mark_shipped() {
 		await merchantMarkOrderShipped(order_id.value);
 		await load();
 	} catch (e: unknown) {
-		error_message.value = parse_api_error(e);
+		error_message.value = parseApiError(e);
 	} finally {
 		shipping.value = false;
 	}
@@ -202,7 +202,7 @@ async function load() {
 		if (status === 404) {
 			not_found.value = true;
 		} else {
-			error_message.value = parse_api_error(e);
+			error_message.value = parseApiError(e);
 		}
 	} finally {
 		pending.value = false;

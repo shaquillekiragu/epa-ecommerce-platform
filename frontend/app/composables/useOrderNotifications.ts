@@ -194,7 +194,7 @@ export function useOrderNotifications() {
 		return notifications.value.filter((n) => !seen.has(n.seen_key)).length;
 	});
 
-	function mark_all_seen() {
+	function markAllSeen() {
 		if (!import.meta.client) return;
 		const seen = readSeenKeys();
 		for (const n of notifications.value) {
@@ -283,6 +283,6 @@ export function useOrderNotifications() {
 		pending,
 		error_message,
 		refresh,
-		mark_all_seen,
+		markAllSeen,
 	};
 }
