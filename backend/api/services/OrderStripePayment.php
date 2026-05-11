@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use api\models\Order;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
+use Stripe\Refund;
 use Stripe\StripeClient;
 
 final class OrderStripePayment
@@ -201,20 +202,23 @@ final class OrderStripePayment
 
     /**
      * Refund this order's total against its linked PaymentIntent (partial refund when the intent covered multiple orders).
-     * No-op when Stripe is not configured or the order has no {@see Order::$stripe_payment_intent_id} (e.g. seeded data).
+     *
+     * @return 'not_applicable' No Stripe refund was created (no secret, no intent, intent not succeeded, or zero amount).
+     * @return 'succeeded' Refund was created and Stripe reports {@see Refund::STATUS_SUCCEEDED}.
+     * @return 'pending' Refund was created and Stripe reports {@see Refund::STATUS_PENDING} or {@see Refund::STATUS_REQUIRES_ACTION}.
      *
      * @throws BadRequestHttpException when Stripe is configured but refund cannot be completed
      */
-    public static function refundForPaidOrderIfApplicable(Order $order): void
+    public static function refundForPaidOrderIfApplicable(Order $order): string
     {
         $secret = self::getSecret();
         if ($secret === '') {
-            return;
+            return 'not_applicable';
         }
 
         $piId = trim((string) ($order->stripe_payment_intent_id ?? ''));
         if ($piId === '') {
-            return;
+            return 'not_applicable';
         }
 
         $stripe = new StripeClient($secret);
@@ -226,16 +230,17 @@ final class OrderStripePayment
         }
 
         if ($pi->status !== 'succeeded') {
-            return;
+            return 'not_applicable';
         }
 
         $amountPence = (int) round(round((float) $order->price_total, 2) * 100);
         if ($amountPence <= 0) {
-            return;
+            return 'not_applicable';
         }
 
         try {
-            $stripe->refunds->create([
+            /** @var Refund $refund */
+            $refund = $stripe->refunds->create([
                 'payment_intent' => $piId,
                 'amount' => $amountPence,
                 'metadata' => [
@@ -246,6 +251,16 @@ final class OrderStripePayment
         } catch (ApiErrorException $e) {
             throw new BadRequestHttpException('Refund failed: ' . $e->getMessage());
         }
+
+        $status = (string) ($refund->status ?? '');
+        if (in_array($status, [Refund::STATUS_PENDING, Refund::STATUS_REQUIRES_ACTION], true)) {
+            return 'pending';
+        }
+        if ($status === Refund::STATUS_SUCCEEDED) {
+            return 'succeeded';
+        }
+
+        throw new BadRequestHttpException('Refund could not be completed (status: ' . $status . ').');
     }
 
     /**

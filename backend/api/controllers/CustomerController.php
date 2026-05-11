@@ -317,10 +317,14 @@ class CustomerController extends _ApiController
             );
         }
 
-        OrderStripePayment::refundForPaidOrderIfApplicable($order);
+        $refund_outcome = OrderStripePayment::refundForPaidOrderIfApplicable($order);
 
-        if (!$order->cancel(true)) {
-            throw new BadRequestHttpException(json_encode($order->errors) ?: 'Could not cancel order.');
+        $saved = $refund_outcome === 'pending'
+            ? $order->cancel(true)
+            : $order->refund(true);
+
+        if (!$saved) {
+            throw new BadRequestHttpException(json_encode($order->errors) ?: 'Could not update order after refund.');
         }
 
         $order->refresh();
