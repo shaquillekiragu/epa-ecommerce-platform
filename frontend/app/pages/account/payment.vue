@@ -56,7 +56,7 @@
 								<span class="material-symbols-outlined text-slate-600 shrink-0">shopping_bag</span>
 								<div class="min-w-0">
 									<p class="font-semibold text-sm text-slate-900 truncate">Order #{{ o.id }}</p>
-									<p class="text-xs text-slate-600">{{ format_datetime(o.order_datetime) }} · {{ status_label(o.status) }}</p>
+									<p class="text-xs text-slate-600">{{ format_datetime(o.placed_at) }} · {{ status_label(o.status) }}</p>
 								</div>
 							</div>
 							<p class="font-bold text-slate-900 shrink-0">{{ format_money(o.price_total) }}</p>
@@ -99,8 +99,8 @@ function format_money(n: number) {
 
 function format_datetime(iso: string) {
 	try {
-		const d = new Date(iso);
-		return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+		const date = new Date(iso);
+		return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 	} catch {
 		return iso;
 	}
@@ -116,9 +116,9 @@ async function load() {
 	try {
 		const list = await api.get<CustomerOrder[]>('/customer/orders');
 		orders.value = Array.isArray(list) ? list.slice(0, 12) : [];
-	} catch (e: unknown) {
+	} catch (err: unknown) {
 		const msg =
-			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Could not load orders';
+			err && typeof err === 'object' && 'message' in err ? String((err as { message?: string }).message) : 'Could not load orders';
 		error_message.value = msg;
 		orders.value = [];
 	} finally {

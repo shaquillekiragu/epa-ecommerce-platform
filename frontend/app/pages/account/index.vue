@@ -100,7 +100,7 @@
 							<tbody class="divide-y divide-slate-200">
 								<tr v-for="order in orders_preview" :key="order.id" class="hover:bg-slate-50 transition-colors">
 									<td class="p-4 font-semibold text-sm text-slate-900">#{{ order.id }}</td>
-									<td class="p-4 font-normal text-base text-slate-600">{{ format_order_date(order.order_datetime) }}</td>
+									<td class="p-4 font-normal text-base text-slate-600">{{ format_order_date(order.placed_at) }}</td>
 									<td class="p-4 font-normal text-base text-slate-600">
 										{{ order.item_count ?? '—' }}
 									</td>

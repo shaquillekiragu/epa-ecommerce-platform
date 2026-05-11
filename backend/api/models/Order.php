@@ -13,7 +13,7 @@ class Order extends CommonOrder
             'customer_id',
             'store_id',
             'price_total',
-            'order_datetime',
+            'placed_at',
             'status',
             'allow_update',
             'allow_delete',

@@ -152,7 +152,7 @@ class CustomerController extends _ApiController
                 $order->customer_id = $user_id;
                 $order->store_id = (int) $store_id;
                 $order->price_total = $order_total;
-                $order->order_datetime = date('Y-m-d H:i:s');
+                $order->placed_at = date('Y-m-d H:i:s');
                 $order->status = 'pending_payment';
                 $order->allow_update = true;
                 $order->allow_delete = true;

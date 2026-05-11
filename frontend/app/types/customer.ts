@@ -3,7 +3,7 @@ export type CustomerOrder = {
 	customer_id?: number;
 	store_id: number;
 	price_total: number;
-	order_datetime: string;
+	placed_at: string;
 	status: string;
 	item_count?: number;
 };
@@ -21,7 +21,7 @@ export type CustomerOrderDetail = {
 	id: number;
 	store_id: number;
 	price_total: number;
-	order_datetime: string;
+	placed_at: string;
 	status: string;
 	items: CustomerOrderLine[];
 };

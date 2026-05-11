@@ -55,7 +55,7 @@ class MerchantController extends _ApiController
 
         return Order::find()
             ->where(['store_id' => $store_id])
-            ->orderBy(['order_datetime' => SORT_DESC])
+            ->orderBy(['placed_at' => SORT_DESC])
             ->all();
     }
 
