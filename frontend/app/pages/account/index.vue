@@ -2,6 +2,13 @@
 	<main class="flex-1 md:ml-64 bg-slate-50 p-6 md:p-12 overflow-y-auto">
 		<div class="max-w-5xl mx-auto">
 			<header class="mb-12">
+				<BreadcrumbsComponent
+					class="mb-6"
+					:items="[
+						{ label: 'Home', to: '/' },
+						{ label: 'Account' },
+					]"
+				/>
 				<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 mb-2">
 					Welcome back<span v-if="display_first_name">, {{ display_first_name }}</span>
 				</h1>

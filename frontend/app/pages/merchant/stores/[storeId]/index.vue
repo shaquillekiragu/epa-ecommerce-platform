@@ -7,13 +7,7 @@
 			</div>
 
 			<template v-else>
-				<nav class="flex flex-wrap items-center gap-2 text-xs text-slate-600">
-					<NuxtLink class="hover:text-slate-900" to="/merchant">Overview</NuxtLink>
-					<span class="material-symbols-outlined text-sm">chevron_right</span>
-					<NuxtLink class="hover:text-slate-900" to="/merchant/stores">My stores</NuxtLink>
-					<span class="material-symbols-outlined text-sm">chevron_right</span>
-					<span class="font-semibold text-slate-900">{{ store?.name ?? 'Store' }}</span>
-				</nav>
+				<BreadcrumbsComponent class="mb-1" :items="store_hub_crumbs" />
 
 				<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">Loading…</div>
 
@@ -95,6 +89,7 @@
 </template>
 
 <script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantOrderRow, MerchantStore } from '~/types/merchant';
 import { merchantFetchOrders, merchantFetchStore } from '~/composables/useMerchant';
 import { getPoundAndPenceFormat } from '~/utils/money';
@@ -122,6 +117,17 @@ const orders = ref<MerchantOrderRow[]>([]);
 
 const order_count = computed(() => orders.value.length);
 const preview_orders = computed(() => orders.value.slice(0, 6));
+
+const store_hub_crumbs = computed<BreadcrumbItem[]>(() => {
+	const id = store_numeric_id.value;
+	if (id == null) return [];
+	const label = store.value?.name?.trim() ? store.value.name : 'Store';
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label },
+	];
+});
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);

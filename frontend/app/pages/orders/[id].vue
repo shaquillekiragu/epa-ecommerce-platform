@@ -6,11 +6,14 @@
 		</div>
 
 		<template v-else>
-			<nav class="flex items-center gap-2 text-xs text-slate-600 mb-4">
-				<NuxtLink class="hover:text-slate-900" to="/orders">My orders</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="text-slate-900 font-semibold">Order #{{ order_id }}</span>
-			</nav>
+			<BreadcrumbsComponent
+				class="mb-4"
+				:items="[
+					{ label: 'Home', to: '/' },
+					{ label: 'My orders', to: '/orders' },
+					{ label: `Order #${order_id}` },
+				]"
+			/>
 
 			<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">
 				Loading order…

@@ -1,15 +1,7 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
 		<div class="mx-auto max-w-6xl">
-			<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-				<NuxtLink to="/merchant">Overview</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<NuxtLink to="/merchant/stores">My stores</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<NuxtLink v-if="store_id" :to="`/merchant/stores/${store_id}`">{{ store_name }}</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="font-semibold text-slate-900">Products</span>
-			</nav>
+			<BreadcrumbsComponent class="mb-4" :items="products_crumbs" />
 
 			<div v-if="invalid_id" class="rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-700">Invalid store.</div>
 
@@ -99,8 +91,8 @@
 </template>
 
 <script setup lang="ts">
-import type { MerchantStore } from '~/types/merchant';
-import type { MerchantProduct } from '~/types/merchant';
+import type { BreadcrumbItem } from '~/types/breadcrumb';
+import type { MerchantProduct, MerchantStore } from '~/types/merchant';
 import { merchantFetchStore, merchantFetchStoreProducts } from '~/composables/useMerchant';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
@@ -124,6 +116,17 @@ const error_message = ref<string | null>(null);
 
 const products = ref<MerchantProduct[]>([]);
 const pending = ref(true);
+
+const products_crumbs = computed<BreadcrumbItem[]>(() => {
+	const id = store_id.value;
+	if (id == null) return [];
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: store_name.value, to: `/merchant/stores/${id}` },
+		{ label: 'Products' },
+	];
+});
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);

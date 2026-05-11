@@ -1,10 +1,6 @@
 <template>
 	<main class="mx-auto min-h-screen w-full max-w-5xl flex-1 p-4 pb-16 pt-24">
-		<nav class="mb-6 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-			<NuxtLink class="hover:text-slate-900" to="/merchant/stores">My stores</NuxtLink>
-			<span class="material-symbols-outlined text-sm">chevron_right</span>
-			<span class="font-semibold text-slate-900">Edit store</span>
-		</nav>
+		<BreadcrumbsComponent class="mb-6" :items="edit_store_crumbs" />
 
 		<header class="mb-8">
 			<h1 class="text-3xl font-bold tracking-tight text-slate-900">Store settings</h1>
@@ -66,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantStore } from '~/types/merchant';
 import { merchantFetchStore, merchantUpdateStore } from '~/composables/useMerchant';
 
@@ -88,6 +85,18 @@ const error_message = ref<string | null>(null);
 
 const store = ref<MerchantStore | null>(null);
 const form = reactive<{ name: string; description: string }>({ name: '', description: '' });
+
+const edit_store_crumbs = computed<BreadcrumbItem[]>(() => {
+	const id = store_id.value;
+	if (id == null) return [];
+	const hub = store.value?.name?.trim() ? store.value.name : 'Store';
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: hub, to: `/merchant/stores/${id}` },
+		{ label: 'Edit store' },
+	];
+});
 
 function parse_api_error(e: unknown): string {
 	if (e && typeof e === 'object' && 'message' in e) {

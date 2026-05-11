@@ -1,11 +1,7 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
 		<div class="mx-auto max-w-6xl">
-			<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-				<NuxtLink class="hover:text-slate-900" :to="`/merchant/stores/${store_id}/products`">Products</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="font-semibold text-slate-900">Product</span>
-			</nav>
+			<BreadcrumbsComponent class="mb-4" :items="product_view_crumbs" />
 
 			<div v-if="invalid_ids" class="rounded-xl border border-slate-200 bg-white p-10 text-center">
 				<p class="font-medium text-slate-800">Invalid product link</p>
@@ -137,8 +133,9 @@
 </template>
 
 <script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantProduct } from '~/types/merchant';
-import { merchantFetchProduct, merchantUpdateProduct } from '~/composables/useMerchant';
+import { merchantFetchProduct, merchantFetchStore, merchantUpdateProduct } from '~/composables/useMerchant';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({ middleware: ['role-merchant'] });
@@ -167,6 +164,21 @@ const not_found = ref(false);
 const wrong_store = ref(false);
 const error_message = ref<string | null>(null);
 const product = ref<MerchantProduct | null>(null);
+const store_name = ref('Store');
+
+const product_view_crumbs = computed<BreadcrumbItem[]>(() => {
+	const sid = store_id.value;
+	const pid = product_id.value;
+	if (sid == null || pid == null) return [];
+	const product_label = product.value?.name?.trim() ? product.value.name : 'Product';
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: store_name.value, to: `/merchant/stores/${sid}` },
+		{ label: 'Products', to: `/merchant/stores/${sid}/products` },
+		{ label: product_label },
+	];
+});
 
 const placeholder_image = '/images/product-placeholder.svg';
 
@@ -190,6 +202,8 @@ async function load() {
 	error_message.value = null;
 	product.value = null;
 	try {
+		const st = await merchantFetchStore(store_id.value!);
+		store_name.value = st.name?.trim() ? st.name : 'Store';
 		const p = await merchantFetchProduct(product_id.value!);
 		if (p.store_id !== store_id.value) {
 			wrong_store.value = true;

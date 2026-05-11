@@ -1,14 +1,14 @@
 <template>
 	<main class="min-h-screen w-full flex-1 p-4 pb-16 pt-24 lg:p-6">
 		<div class="max-w-4xl mx-auto">
-			<!-- Breadcrumbs -->
-			<nav class="flex items-center gap-2 mb-2 text-slate-500">
-				<span class="font-medium text-xs">Dashboard</span>
-				<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
-				<span class="font-medium text-xs">My Stores</span>
-				<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
-				<span class="font-medium text-xs text-slate-900">Create New Store</span>
-			</nav>
+			<BreadcrumbsComponent
+				class="mb-2 text-slate-600"
+				:items="[
+					{ label: 'Overview', to: '/merchant' },
+					{ label: 'My stores', to: '/merchant/stores' },
+					{ label: 'Create store' },
+				]"
+			/>
 			<div class="mb-6">
 				<h2 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 mb-2">Build Your Presence</h2>
 				<p class="font-normal text-base text-slate-600 max-w-2xl">

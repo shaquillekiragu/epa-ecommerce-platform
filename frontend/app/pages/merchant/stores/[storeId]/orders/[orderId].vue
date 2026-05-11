@@ -9,11 +9,7 @@
 			</div>
 
 			<template v-else>
-				<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-					<NuxtLink class="hover:text-slate-900" :to="`/merchant/stores/${store_id}/orders`">Store orders</NuxtLink>
-					<span class="material-symbols-outlined text-sm">chevron_right</span>
-					<span class="font-semibold text-slate-900">Order #{{ order_id }}</span>
-				</nav>
+				<BreadcrumbsComponent class="mb-4" :items="order_detail_crumbs" />
 
 				<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">Loading order…</div>
 
@@ -108,8 +104,9 @@
 </template>
 
 <script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantOrderDetail } from '~/types/merchant';
-import { merchantFetchOrder, merchantMarkOrderShipped } from '~/composables/useMerchant';
+import { merchantFetchOrder, merchantFetchStore, merchantMarkOrderShipped } from '~/composables/useMerchant';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -140,6 +137,20 @@ const not_found = ref(false);
 const wrong_store = ref(false);
 const error_message = ref<string | null>(null);
 const order = ref<MerchantOrderDetail | null>(null);
+const store_name = ref('Store');
+
+const order_detail_crumbs = computed<BreadcrumbItem[]>(() => {
+	const sid = store_id.value;
+	const oid = order_id.value;
+	if (sid == null || oid == null) return [];
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: store_name.value, to: `/merchant/stores/${sid}` },
+		{ label: 'Orders', to: `/merchant/stores/${sid}/orders` },
+		{ label: `Order #${oid}` },
+	];
+});
 
 const placeholder_image = '/images/product-placeholder.svg';
 
@@ -193,6 +204,8 @@ async function load() {
 	error_message.value = null;
 	order.value = null;
 	try {
+		const st = await merchantFetchStore(store_id.value!);
+		store_name.value = st.name?.trim() ? st.name : 'Store';
 		const o = await merchantFetchOrder(order_id.value!);
 		if (o.store_id !== store_id.value) {
 			wrong_store.value = true;

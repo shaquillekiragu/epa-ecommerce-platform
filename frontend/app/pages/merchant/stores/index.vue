@@ -1,19 +1,30 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
 		<div class="mx-auto max-w-4xl">
-			<nav class="mb-4 flex items-center gap-2 text-xs text-slate-600">
-				<NuxtLink class="hover:text-slate-900" to="/merchant">Overview</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="font-semibold text-slate-900">My stores</span>
-			</nav>
+			<BreadcrumbsComponent
+				class="mb-4"
+				:items="[
+					{ label: 'Overview', to: '/merchant' },
+					{ label: 'My stores' },
+				]"
+			/>
 
-			<header class="mb-8">
-				<h1 class="text-3xl font-bold tracking-tight text-slate-900">My stores</h1>
-				<p class="mt-2 text-base text-slate-600">
-					<span v-if="pending">Loading your stores…</span>
-					<span v-else>{{ stores.length }} {{ stores.length === 1 ? 'store' : 'stores' }} on your account.</span>
-				</p>
-				<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
+			<header class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+				<div class="min-w-0">
+					<h1 class="text-3xl font-bold tracking-tight text-slate-900">My stores</h1>
+					<p class="mt-2 text-base text-slate-600">
+						<span v-if="pending">Loading your stores…</span>
+						<span v-else>{{ stores.length }} {{ stores.length === 1 ? 'store' : 'stores' }} on your account.</span>
+					</p>
+					<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
+				</div>
+
+				<NuxtLink
+					to="/merchant/stores/new"
+					class="inline-flex shrink-0 items-center justify-center self-start rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 sm:self-auto"
+				>
+					Create store
+				</NuxtLink>
 			</header>
 
 			<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">Loading…</div>

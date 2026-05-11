@@ -24,11 +24,7 @@
         <section class="max-w-4xl mx-auto py-12 px-6">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <nav class="flex items-center gap-2 text-sm text-slate-500 mb-2">
-                        <a class="hover:text-slate-900" href="#">Orders</a>
-                        <span class="material-symbols-outlined text-xs">chevron_right</span>
-                        <span class="text-slate-900 font-medium">Order #LX-98231</span>
-                    </nav>
+                    <BreadcrumbsComponent class="mb-2 text-sm text-slate-600" :items="order_edit_crumbs" />
                     <h2 class="text-3xl leading-tight font-bold tracking-tight text-slate-900">Manage Order Status</h2>
                 </div>
                 <div
@@ -181,3 +177,39 @@
         </section>
     </main>
 </template>
+
+<script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
+
+definePageMeta({ middleware: ['role-merchant'] });
+
+const route = useRoute();
+
+const store_id = computed(() => {
+	const raw = route.params.storeId;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	const n = typeof s === 'string' ? Number.parseInt(s, 10) : Number.NaN;
+	return Number.isFinite(n) && n > 0 ? n : null;
+});
+
+const order_id = computed(() => {
+	const raw = route.params.orderId;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	const n = typeof s === 'string' ? Number.parseInt(s, 10) : Number.NaN;
+	return Number.isFinite(n) && n > 0 ? n : null;
+});
+
+const order_edit_crumbs = computed<BreadcrumbItem[]>(() => {
+	const sid = store_id.value;
+	const oid = order_id.value;
+	if (sid == null || oid == null) return [];
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: 'Store', to: `/merchant/stores/${sid}` },
+		{ label: 'Orders', to: `/merchant/stores/${sid}/orders` },
+		{ label: `Order #${oid}`, to: `/merchant/stores/${sid}/orders/${oid}` },
+		{ label: 'Edit status' },
+	];
+});
+</script>

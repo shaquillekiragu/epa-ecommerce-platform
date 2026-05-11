@@ -1,11 +1,13 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
 		<div class="mx-auto max-w-6xl">
-			<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-				<NuxtLink class="hover:text-slate-900" to="/merchant">Overview</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="font-semibold text-slate-900">All orders</span>
-			</nav>
+			<BreadcrumbsComponent
+				class="mb-4"
+				:items="[
+					{ label: 'Overview', to: '/merchant' },
+					{ label: 'All orders' },
+				]"
+			/>
 
 			<header class="mb-8">
 				<h1 class="text-3xl font-bold tracking-tight text-slate-900">All orders</h1>

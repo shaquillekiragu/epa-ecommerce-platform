@@ -1,11 +1,7 @@
 <template>
 	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
 		<div class="mx-auto max-w-4xl">
-			<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-				<NuxtLink class="hover:text-slate-900" :to="`/merchant/stores/${store_id}/products`">Products</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="font-semibold text-slate-900">New product</span>
-			</nav>
+			<BreadcrumbsComponent class="mb-4" :items="new_product_crumbs" />
 
 			<header class="mb-8">
 				<h1 class="text-3xl font-bold tracking-tight text-slate-900">Create product</h1>
@@ -76,7 +72,8 @@
 </template>
 
 <script setup lang="ts">
-import { merchantCreateProduct } from '~/composables/useMerchant';
+import type { BreadcrumbItem } from '~/types/breadcrumb';
+import { merchantCreateProduct, merchantFetchStore } from '~/composables/useMerchant';
 import { useCategories } from '~/composables/useCategories';
 
 definePageMeta({ middleware: ['role-merchant'] });
@@ -92,8 +89,21 @@ const store_id = computed(() => {
 
 const { categories, pending: categories_pending } = useCategories();
 
+const store_name = ref('Store');
 const submitting = ref(false);
 const error_message = ref<string | null>(null);
+
+const new_product_crumbs = computed<BreadcrumbItem[]>(() => {
+	const id = store_id.value;
+	if (id == null) return [];
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: store_name.value, to: `/merchant/stores/${id}` },
+		{ label: 'Products', to: `/merchant/stores/${id}/products` },
+		{ label: 'New product' },
+	];
+});
 
 const form = reactive({
 	name: '',
@@ -148,4 +158,18 @@ async function on_submit() {
 		submitting.value = false;
 	}
 }
+
+async function load_store_name() {
+	if (store_id.value == null) return;
+	try {
+		const s = await merchantFetchStore(store_id.value);
+		store_name.value = s.name?.trim() ? s.name : 'Store';
+	} catch {
+		store_name.value = 'Store';
+	}
+}
+
+onMounted(() => {
+	load_store_name();
+});
 </script>

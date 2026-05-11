@@ -3,11 +3,13 @@
 		<div class="max-w-5xl mx-auto">
 			<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
 				<div>
-					<nav class="flex items-center gap-2 text-xs text-slate-700 mb-4">
-						<NuxtLink class="hover:text-slate-900" to="/account">Account</NuxtLink>
-						<span class="material-symbols-outlined text-sm">chevron_right</span>
-						<span class="text-slate-900 font-bold">Addresses</span>
-					</nav>
+					<BreadcrumbsComponent
+						class="mb-4"
+						:items="[
+							{ label: 'Account', to: '/account' },
+							{ label: 'Addresses' },
+						]"
+					/>
 					<h1 class="font-bold text-slate-900 tracking-tight">Saved Addresses</h1>
 					<p class="font-normal text-slate-600 mt-2">
 						Manage your default shipping and billing information for faster checkout.

@@ -2,11 +2,13 @@
 	<main class="flex-1 md:ml-64 p-6 md:p-12">
 		<div class="max-w-4xl mx-auto">
 			<header class="mb-10">
-				<nav class="flex items-center gap-2 text-xs text-slate-700 mb-4">
-					<NuxtLink class="hover:text-slate-900" to="/account">Account</NuxtLink>
-					<span class="material-symbols-outlined text-sm">chevron_right</span>
-					<span class="text-slate-900 font-bold">Payment</span>
-				</nav>
+				<BreadcrumbsComponent
+					class="mb-4"
+					:items="[
+						{ label: 'Account', to: '/account' },
+						{ label: 'Payment' },
+					]"
+				/>
 				<h1 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 mb-2">Payment &amp; billing</h1>
 				<p class="font-normal text-base text-slate-600">
 					Saved cards are not stored by this demo. Your real purchase history appears below from completed checkouts.

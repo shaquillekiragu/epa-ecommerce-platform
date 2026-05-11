@@ -9,13 +9,7 @@
 			<div class="mx-auto mb-6 max-w-6xl">
 				<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
 					<div>
-						<div class="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500">
-							<NuxtLink class="transition-colors hover:text-slate-900" :to="`/merchant/stores/${store_id}/products`">Products</NuxtLink>
-							<span class="material-symbols-outlined text-[12px]">chevron_right</span>
-							<NuxtLink class="transition-colors hover:text-slate-900" :to="`/merchant/stores/${store_id}/products/${product_id}`">Product</NuxtLink>
-							<span class="material-symbols-outlined text-[12px]">chevron_right</span>
-							<span class="text-slate-900">Edit</span>
-						</div>
+						<BreadcrumbsComponent class="mb-3" :items="edit_product_crumbs" />
 						<h2 class="text-3xl font-bold leading-tight tracking-tight text-slate-900">
 							{{ pending ? 'Edit product' : product?.name ?? 'Edit product' }}
 						</h2>
@@ -254,8 +248,9 @@
 </template>
 
 <script setup lang="ts">
+import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantProduct } from '~/types/merchant';
-import { merchantDeleteProduct, merchantFetchProduct, merchantUpdateProduct } from '~/composables/useMerchant';
+import { merchantDeleteProduct, merchantFetchProduct, merchantFetchStore, merchantUpdateProduct } from '~/composables/useMerchant';
 import { useCategories } from '~/composables/useCategories';
 
 definePageMeta({ middleware: ['role-merchant'] });
@@ -287,6 +282,22 @@ const not_found = ref(false);
 const wrong_store = ref(false);
 const error_message = ref<string | null>(null);
 const product = ref<MerchantProduct | null>(null);
+const store_name = ref('Store');
+
+const edit_product_crumbs = computed<BreadcrumbItem[]>(() => {
+	const sid = store_id.value;
+	const pid = product_id.value;
+	if (sid == null || pid == null) return [];
+	const product_label = product.value?.name?.trim() ? product.value.name : 'Product';
+	return [
+		{ label: 'Overview', to: '/merchant' },
+		{ label: 'My stores', to: '/merchant/stores' },
+		{ label: store_name.value, to: `/merchant/stores/${sid}` },
+		{ label: 'Products', to: `/merchant/stores/${sid}/products` },
+		{ label: product_label, to: `/merchant/stores/${sid}/products/${pid}` },
+		{ label: 'Edit' },
+	];
+});
 
 const form = reactive({
 	name: '',
@@ -339,6 +350,8 @@ async function load() {
 	error_message.value = null;
 	product.value = null;
 	try {
+		const st = await merchantFetchStore(store_id.value!);
+		store_name.value = st.name?.trim() ? st.name : 'Store';
 		const p = await merchantFetchProduct(product_id.value!);
 		if (p.store_id !== store_id.value) {
 			wrong_store.value = true;

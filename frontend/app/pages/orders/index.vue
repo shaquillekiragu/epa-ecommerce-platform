@@ -1,11 +1,13 @@
 <template>
 	<main class="grow pt-24 pb-16 px-4 md:px-6 max-w-6xl mx-auto w-full">
 		<div class="mb-8">
-			<nav class="flex items-center gap-2 text-xs text-slate-600 mb-3">
-				<NuxtLink class="hover:text-slate-900" to="/">Home</NuxtLink>
-				<span class="material-symbols-outlined text-sm">chevron_right</span>
-				<span class="text-slate-900 font-semibold">My orders</span>
-			</nav>
+			<BreadcrumbsComponent
+				class="mb-3"
+				:items="[
+					{ label: 'Home', to: '/' },
+					{ label: 'My orders' },
+				]"
+			/>
 			<h1 class="font-bold tracking-tight text-3xl md:text-4xl text-slate-900">My orders</h1>
 			<p class="font-normal text-base text-slate-600 mt-2">
 				<span v-if="pending">Loading your orders…</span>

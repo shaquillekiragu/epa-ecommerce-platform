@@ -4,6 +4,13 @@
 			<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-8 text-slate-600">Loading…</div>
 
 			<template v-else>
+				<BreadcrumbsComponent
+					class="mb-6"
+					:items="[
+						{ label: 'Overview', to: '/merchant' },
+						{ label: 'Account' },
+					]"
+				/>
 				<header class="mb-10">
 					<h2 class="text-3xl font-bold tracking-tight text-slate-900">
 						Welcome back<span v-if="display_first_name">, {{ display_first_name }}</span>
