@@ -116,6 +116,7 @@ const nav_links = computed<NavLink[]>(() => {
 		{ text: 'Home', url: '/', is_primary: false },
 		{ text: 'Shop', url: '/products', is_primary: false },
 		{ text: 'Categories', url: '/categories', is_primary: false },
+		{ text: 'My Orders', url: '/orders', is_primary: false },
 	];
 
 	const merchant_links: NavLink[] = [
