@@ -76,8 +76,21 @@ const page = ref(1);
 
 const items_per_page = 5;
 
+function store_id_from_route(): number | null {
+	const raw = route.query.store_id;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	if (typeof s !== 'string') return null;
+	const n = Number.parseInt(s, 10);
+	return Number.isFinite(n) && n > 0 ? n : null;
+}
+
 function buildProductsQuery(): ProductsQuery {
 	const q: ProductsQuery = {};
+
+	const sid = store_id_from_route();
+	if (sid !== null) {
+		q.store_id = sid;
+	}
 
 	if (list_filters.value.categoryIds.length > 0) {
 		q.categories = list_filters.value.categoryIds.join(',');
@@ -146,6 +159,13 @@ watch(
 		const next = sortFromRouteQuery();
 		if (next === sort_key.value) return;
 		sort_key.value = next;
+	},
+);
+
+watch(
+	() => route.query.store_id,
+	() => {
+		resetPageAndLoad();
 	},
 );
 

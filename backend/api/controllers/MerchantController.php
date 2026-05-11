@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use api\models\Order;
+use api\models\Orderproduct;
 use api\models\Product;
 use api\models\Store;
 
@@ -18,6 +19,17 @@ class MerchantController extends _ApiController
     public function actions()
     {
         return [];
+    }
+
+    public function actionStores()
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        return Store::find()
+            ->where(['merchant_id' => $merchant_id])
+            ->orderBy(['id' => SORT_ASC])
+            ->all();
     }
 
     public function actionStore()
@@ -38,6 +50,31 @@ class MerchantController extends _ApiController
         return $store;
     }
 
+    private function buildOrderLineItems(Order $order): array
+    {
+        $lines = Orderproduct::find()->where(['order_id' => $order->id])->all();
+        $items = [];
+        foreach ($lines as $line) {
+            /** @var Orderproduct $line */
+            $product = Product::findOne((int) $line->product_id);
+            if ($product === null) {
+                continue;
+            }
+            $unit = (float) $line->price_at_purchase_in_gbp;
+            $qty = (int) $line->quantity;
+            $items[] = [
+                'product_id' => $product->id,
+                'product_name' => $product->name,
+                'thumbnail' => (string) ($product->thumbnail ?? ''),
+                'price_at_purchase_in_gbp' => $unit,
+                'quantity' => $qty,
+                'line_total' => $unit * $qty,
+            ];
+        }
+
+        return $items;
+    }
+
     public function actionOrders()
     {
         $this->requireRole('merchant');
@@ -53,10 +90,58 @@ class MerchantController extends _ApiController
             throw new ForbiddenHttpException('Not your store.');
         }
 
-        return Order::find()
+        $orders = Order::find()
             ->where(['store_id' => $store_id])
+            ->with('customer')
             ->orderBy(['placed_at' => SORT_DESC])
             ->all();
+
+        $out = [];
+        foreach ($orders as $order) {
+            /** @var Order $order */
+            $row = $order->toArray();
+            $row['item_count'] = (int) Orderproduct::find()
+                ->where(['order_id' => $order->id])
+                ->sum('quantity');
+            $row['customer_display_name'] = $order->getCustomerName() ?? '';
+            $row['customer_email'] = $order->getCustomerEmail() ?? '';
+            $out[] = $row;
+        }
+
+        return $out;
+    }
+
+    public function actionOrderView($id)
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $order = Order::find()
+            ->where(['id' => (int) $id])
+            ->with('customer')
+            ->one();
+        if ($order === null) {
+            throw new NotFoundHttpException('Order not found.');
+        }
+
+        $store = Store::findOne(['id' => $order->store_id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new ForbiddenHttpException('Not your order.');
+        }
+
+        $items = $this->buildOrderLineItems($order);
+
+        return [
+            'id' => $order->id,
+            'store_id' => $order->store_id,
+            'customer_id' => $order->customer_id,
+            'status' => $order->status,
+            'price_total' => (float) $order->price_total,
+            'placed_at' => $order->placed_at,
+            'items' => $items,
+            'customer_display_name' => $order->getCustomerName() ?? '',
+            'customer_email' => $order->getCustomerEmail() ?? '',
+        ];
     }
 
     public function actionOrderStatus($id)
@@ -80,7 +165,11 @@ class MerchantController extends _ApiController
             throw new BadRequestHttpException("Only status='shipped' is supported here.");
         }
 
-        $order->status = 'shipped';
+        if ($order->status !== Order::STATUS_PAID) {
+            throw new BadRequestHttpException('Only paid orders can be marked as shipped.');
+        }
+
+        $order->status = Order::STATUS_SHIPPED;
         if (!$order->save()) {
             throw new BadRequestHttpException(json_encode($order->errors));
         }

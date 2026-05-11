@@ -62,6 +62,7 @@ function toCard(p: Product): ProductCard {
 export type ProductsQuery = {
 	category?: number | string | null;
 	categories?: string | null;
+	store_id?: number | string | null;
 	search?: string | null;
 	sort?: string | null;
 	price_min?: number | null;
@@ -92,6 +93,7 @@ export function useProducts(query: ProductsQuery = {}, options?: UseProductsOpti
 		const params = new URLSearchParams();
 		if (q.category !== undefined && q.category !== null && String(q.category).trim() !== '') params.set('category', String(q.category));
 		if (q.categories !== undefined && q.categories !== null && q.categories.trim() !== '') params.set('categories', q.categories.trim());
+		if (q.store_id !== undefined && q.store_id !== null && String(q.store_id).trim() !== '') params.set('store_id', String(q.store_id).trim());
 		if (q.search !== undefined && q.search !== null && q.search.trim() !== '') params.set('search', q.search.trim());
 		if (q.sort !== undefined && q.sort !== null && q.sort.trim() !== '') params.set('sort', q.sort.trim());
 		if (q.price_min !== undefined && q.price_min !== null && Number.isFinite(Number(q.price_min))) params.set('price_min', String(q.price_min));

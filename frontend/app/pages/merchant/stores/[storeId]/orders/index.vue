@@ -1,200 +1,184 @@
 <template>
-	<MerchantSidePanelComponent />
+	<main class="min-h-screen w-full flex-1 bg-slate-50 p-6 pb-16 pt-24 md:p-10">
+		<div class="mx-auto max-w-6xl">
+			<nav class="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-600">
+				<NuxtLink class="hover:text-slate-900" to="/merchant">Overview</NuxtLink>
+				<span class="material-symbols-outlined text-sm">chevron_right</span>
+				<NuxtLink class="hover:text-slate-900" to="/merchant/stores">My stores</NuxtLink>
+				<span class="material-symbols-outlined text-sm">chevron_right</span>
+				<NuxtLink v-if="store_id" class="hover:text-slate-900" :to="`/merchant/stores/${store_id}`">{{ store_name }}</NuxtLink>
+				<span class="material-symbols-outlined text-sm">chevron_right</span>
+				<span class="font-semibold text-slate-900">Orders</span>
+			</nav>
 
-	<main class="flex-1 lg:ml-64 p-6 md:p-8 bg-white">
-		<div class="max-w-[1200px] mx-auto space-y-8">
-			<!-- Page Header -->
-			<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-				<div>
-					<h1 class="font-bold tracking-tight text-4xl leading-tight text-slate-900">Orders</h1>
-					<p class="font-normal text-base text-slate-600">Manage and fulfill your store
-						transactions efficiently.</p>
-				</div>
-				<div class="flex items-center gap-3">
-					<button
-						class="flex items-center gap-2 border border-slate-300 px-4 py-2 rounded-lg font-semibold text-sm text-slate-600 hover:bg-slate-100 transition-colors">
-						<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
-						Export CSV
-					</button>
-				</div>
+			<div v-if="invalid_id" class="rounded-xl border border-slate-200 bg-white p-10 text-center">
+				<p class="text-slate-700">Invalid store.</p>
+				<NuxtLink to="/merchant/stores" class="mt-4 inline-block font-semibold underline">Back to my stores</NuxtLink>
 			</div>
-			<!-- Metric Cards -->
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-				<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm transition-all hover:shadow-md">
-					<div class="flex items-center justify-between mb-4">
-						<span
-							class="font-semibold text-sm text-slate-600 uppercase tracking-wider">Pending
-							Fulfillment</span>
-						<span class="material-symbols-outlined text-slate-600"
-							data-icon="pending_actions">pending_actions</span>
-					</div>
-					<div class="flex items-baseline gap-2">
-						<span class="font-bold tracking-tight text-4xl leading-tight text-slate-900">24</span>
-						<span class="text-red-600 font-medium text-xs flex items-center gap-1">
-							<span class="material-symbols-outlined text-sm"
-								data-icon="trending_up">trending_up</span>
-							+12%
-						</span>
-					</div>
-				</div>
-				<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm transition-all hover:shadow-md">
-					<div class="flex items-center justify-between mb-4">
-						<span class="font-semibold text-sm text-slate-600 uppercase tracking-wider">Total
-							Revenue (Today)</span>
-						<span class="material-symbols-outlined text-slate-600" data-icon="payments">payments</span>
-					</div>
-					<div class="flex items-baseline gap-2">
-						<span class="font-bold tracking-tight text-4xl leading-tight text-slate-900">$12,840</span>
-						<span class="text-slate-700 font-medium text-xs flex items-center gap-1">
-							<span class="material-symbols-outlined text-sm"
-								data-icon="trending_up">trending_up</span>
-							+4.5%
-						</span>
-					</div>
-				</div>
-				<div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm transition-all hover:shadow-md">
-					<div class="flex items-center justify-between mb-4">
-						<span
-							class="font-semibold text-sm text-slate-600 uppercase tracking-wider">Average
-							Order Value</span>
-						<span class="material-symbols-outlined text-slate-600"
-							data-icon="shopping_basket">shopping_basket</span>
-					</div>
-					<div class="flex items-baseline gap-2">
-						<span class="font-bold tracking-tight text-4xl leading-tight text-slate-900">$535.00</span>
-						<span class="text-slate-600 font-medium text-xs">Steady</span>
-					</div>
-				</div>
-			</div>
-			<!-- Table Section -->
-			<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-				<!-- Filters -->
+
+			<template v-else>
+				<header class="mb-8">
+					<h1 class="text-3xl font-bold tracking-tight text-slate-900">Store orders</h1>
+					<p class="mt-2 text-base text-slate-600">
+						<span v-if="pending">Loading orders…</span>
+						<span v-else>{{ orders.length }} {{ orders.length === 1 ? 'order' : 'orders' }} for {{ store_name }}.</span>
+					</p>
+					<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
+				</header>
+
+				<div v-if="pending" class="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">Loading…</div>
+
 				<div
-					class="p-6 border-b border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-center bg-slate-50/50">
-					<div class="flex gap-3 w-full md:w-auto">
-						<select
-							class="flex-1 md:w-40 border border-slate-400 rounded-lg px-3 py-2 font-semibold text-sm focus:ring-2 focus:ring-primary outline-none bg-white">
-							<option>All Statuses</option>
-							<option>Paid</option>
-							<option>Shipped</option>
-							<option>Delivered</option>
-						</select>
-						<button
-							class="flex items-center gap-2 border border-slate-400 px-4 py-2 rounded-lg font-semibold text-sm bg-white hover:bg-slate-100">
-							<span class="material-symbols-outlined text-xl"
-								data-icon="calendar_month">calendar_month</span>
-							Date Range
-						</button>
+					v-else-if="orders.length === 0"
+					class="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center"
+				>
+					<p class="font-medium text-slate-800">No orders yet</p>
+					<p class="mt-2 text-sm text-slate-600">When customers check out from this store, orders appear here (same journey as “My orders” for customers).</p>
+					<NuxtLink
+						v-if="store_id"
+						:to="`/merchant/stores/${store_id}`"
+						class="mt-6 inline-flex rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+					>
+						Back to store
+					</NuxtLink>
+				</div>
+
+				<div v-else>
+					<div class="flex flex-col gap-4 md:hidden">
+						<NuxtLink
+							v-for="order in orders"
+							:key="order.id"
+							:to="`/merchant/stores/${store_id}/orders/${order.id}`"
+							class="block rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:border-slate-900"
+						>
+							<div class="mb-2 flex justify-between gap-2">
+								<span class="font-semibold text-slate-900">#{{ order.id }}</span>
+								<span class="shrink-0 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+									{{ humanize_status(order.status) }}
+								</span>
+							</div>
+							<p class="text-sm text-slate-600">{{ order.customer_display_name || '—' }}</p>
+							<p class="mt-1 text-sm text-slate-600">{{ format_order_date(order.placed_at) }}</p>
+							<p class="mt-3 text-lg font-bold text-slate-900">{{ format_money(order.price_total) }}</p>
+						</NuxtLink>
+					</div>
+
+					<div class="hidden overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm md:block">
+						<div class="overflow-x-auto">
+							<table class="w-full min-w-[720px] border-collapse text-left">
+								<thead>
+									<tr class="border-b border-slate-200 bg-slate-50">
+										<th class="p-4 text-sm font-semibold text-slate-600">Order</th>
+										<th class="p-4 text-sm font-semibold text-slate-600">Customer</th>
+										<th class="p-4 text-sm font-semibold text-slate-600">Date</th>
+										<th class="p-4 text-sm font-semibold text-slate-600">Items</th>
+										<th class="p-4 text-sm font-semibold text-slate-600">Total</th>
+										<th class="p-4 text-sm font-semibold text-slate-600">Status</th>
+										<th class="w-24 p-4 text-sm font-semibold text-slate-600"></th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-slate-100">
+									<tr v-for="order in orders" :key="order.id" class="hover:bg-slate-50/80">
+										<td class="p-4 text-sm font-semibold text-slate-900">#{{ order.id }}</td>
+										<td class="p-4 text-sm text-slate-600">{{ order.customer_display_name || '—' }}</td>
+										<td class="p-4 text-sm text-slate-600">{{ format_order_date(order.placed_at) }}</td>
+										<td class="p-4 text-sm text-slate-600">{{ order.item_count ?? '—' }}</td>
+										<td class="p-4 text-sm font-bold text-slate-900">{{ format_money(order.price_total) }}</td>
+										<td class="p-4">
+											<span class="inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+												{{ humanize_status(order.status) }}
+											</span>
+										</td>
+										<td class="p-4">
+											<NuxtLink
+												:to="`/merchant/stores/${store_id}/orders/${order.id}`"
+												class="text-sm font-semibold text-slate-900 hover:underline"
+											>
+												View
+											</NuxtLink>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-				<!-- Data Table -->
-				<div class="overflow-x-auto">
-					<table class="w-full text-left border-collapse">
-						<thead>
-							<tr class="bg-slate-50">
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider">
-									Order ID</th>
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider">
-									Date &amp; Time</th>
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider">
-									Customer</th>
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider">
-									Total</th>
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider">
-									Status</th>
-								<th
-									class="px-6 py-4 font-semibold text-sm text-slate-600 uppercase tracking-wider text-right">
-									Actions</th>
-							</tr>
-						</thead>
-						<tbody class="divide-y divide-slate-100">
-							<tr class="hover:bg-slate-50/80 transition-colors group">
-								<td class="px-6 py-5 font-semibold text-sm text-slate-900 font-bold">#ORD-7402</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-600">Oct 24, 2023 •
-									14:20</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-900">Alexander Pierce</td>
-								<td class="px-6 py-5 font-normal text-lg font-bold text-slate-900">$1,240.00</td>
-								<td class="px-6 py-5">
-									<span
-										class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
-										Paid
-									</span>
-								</td>
-								<td class="px-6 py-5 text-right">
-									<button
-										class="bg-slate-900 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all">Review</button>
-								</td>
-							</tr>
-							<tr class="hover:bg-slate-50/80 transition-colors group">
-								<td class="px-6 py-5 font-semibold text-sm text-slate-900 font-bold">#ORD-7401</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-600">Oct 24, 2023 •
-									13:45</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-900">Sarah Jenkins</td>
-								<td class="px-6 py-5 font-normal text-lg font-bold text-slate-900">$850.50</td>
-								<td class="px-6 py-5">
-									<span
-										class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-700">
-										Shipped
-									</span>
-								</td>
-								<td class="px-6 py-5 text-right">
-									<button
-										class="bg-slate-900 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all">Review</button>
-								</td>
-							</tr>
-							<tr class="hover:bg-slate-50/80 transition-colors group">
-								<td class="px-6 py-5 font-semibold text-sm text-slate-900 font-bold">#ORD-7399</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-600">Oct 23, 2023 •
-									11:10</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-900">Marcus Sterling</td>
-								<td class="px-6 py-5 font-normal text-lg font-bold text-slate-900">$2,100.00</td>
-								<td class="px-6 py-5">
-									<span
-										class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-600">
-										Delivered
-									</span>
-								</td>
-								<td class="px-6 py-5 text-right">
-									<button
-										class="bg-slate-900 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all">Review</button>
-								</td>
-							</tr>
-							<tr class="hover:bg-slate-50/80 transition-colors group">
-								<td class="px-6 py-5 font-semibold text-sm text-slate-900 font-bold">#ORD-7395</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-600">Oct 23, 2023 •
-									09:30</td>
-								<td class="px-6 py-5 font-normal text-base text-slate-900">Elara Vance</td>
-								<td class="px-6 py-5 font-normal text-lg font-bold text-slate-900">$435.00</td>
-								<td class="px-6 py-5">
-									<span
-										class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
-										Paid
-									</span>
-								</td>
-								<td class="px-6 py-5 text-right">
-									<button
-										class="bg-slate-900 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all">Review</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<!-- Pagination -->
-				<div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-					<span class="font-medium text-xs text-slate-600">Showing 4 of 128 orders</span>
-					<div class="flex gap-2">
-						<button class="material-symbols-outlined p-1 rounded hover:bg-slate-200"
-							data-icon="chevron_left">chevron_left</button>
-						<button class="material-symbols-outlined p-1 rounded hover:bg-slate-200"
-							data-icon="chevron_right">chevron_right</button>
-					</div>
-				</div>
-			</div>
+			</template>
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+import type { MerchantOrderRow, MerchantStore } from '~/types/merchant';
+import { merchantFetchOrders, merchantFetchStore } from '~/composables/useMerchant';
+import { getPoundAndPenceFormat } from '~/utils/money';
+
+definePageMeta({
+	middleware: ['role-merchant'],
+});
+
+const route = useRoute();
+
+const store_id = computed(() => {
+	const raw = route.params.storeId;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	const n = typeof s === 'string' ? Number.parseInt(s, 10) : Number.NaN;
+	return Number.isFinite(n) && n > 0 ? n : null;
+});
+
+const invalid_id = computed(() => store_id.value === null);
+
+const pending = ref(true);
+const error_message = ref<string | null>(null);
+const orders = ref<MerchantOrderRow[]>([]);
+const store_name = ref('Store');
+
+function format_money(n: number) {
+	return getPoundAndPenceFormat(n);
+}
+
+function format_order_date(raw: string) {
+	try {
+		const d = new Date(raw);
+		if (Number.isNaN(d.getTime())) return raw;
+		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short' }).format(d);
+	} catch {
+		return raw;
+	}
+}
+
+function humanize_status(s: string) {
+	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+async function load() {
+	if (store_id.value == null) {
+		pending.value = false;
+		return;
+	}
+	pending.value = true;
+	error_message.value = null;
+	try {
+		const store: MerchantStore = await merchantFetchStore(store_id.value);
+		store_name.value = store.name;
+		orders.value = await merchantFetchOrders(store_id.value);
+	} catch (e: unknown) {
+		error_message.value =
+			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to load';
+		orders.value = [];
+	} finally {
+		pending.value = false;
+	}
+}
+
+watch(
+	() => route.params.storeId,
+	() => {
+		load();
+	},
+);
+
+onMounted(() => {
+	load();
+});
+</script>
