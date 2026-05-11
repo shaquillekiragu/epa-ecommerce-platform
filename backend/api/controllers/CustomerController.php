@@ -271,25 +271,104 @@ class CustomerController extends _ApiController
 
         foreach ($links as $link) {
             /** @var Useraddress $link */
-            $addr = Address::findOne((int) $link->address_id);
-            if ($addr === null) {
-                continue;
+            $row = $this->serializeCustomerAddressRow($link);
+            if ($row !== null) {
+                $out[] = $row;
             }
-
-            $out[] = [
-                'id' => (int) $link->id,
-                'address_id' => (int) $addr->id,
-                'address_type' => $addr->address_type,
-                'building_number' => $addr->building_number,
-                'street_name' => $addr->street_name,
-                'city' => $addr->city,
-                'region' => $addr->region,
-                'post_code' => $addr->post_code,
-                'country' => $addr->country,
-            ];
         }
 
         return $out;
+    }
+
+    public function actionAddressesCreate()
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+        $body = Yii::$app->request->getBodyParams();
+
+        $address_type = (string) ($body['address_type'] ?? '');
+        if (!in_array($address_type, ['shipping', 'billing', 'both'], true)) {
+            throw new BadRequestHttpException('address_type must be shipping, billing, or both.');
+        }
+
+        $building_number = (string) ($body['building_number'] ?? '');
+        $street_name = (string) ($body['street_name'] ?? '');
+        $city = (string) ($body['city'] ?? '');
+        $country = (string) ($body['country'] ?? '');
+        $post_code = (string) ($body['post_code'] ?? '');
+        $region_raw = trim((string) ($body['region'] ?? ''));
+        $region = $region_raw === '' ? null : $region_raw;
+
+        if ($building_number === '' || $street_name === '' || $city === '' || $country === '' || $post_code === '') {
+            throw new BadRequestHttpException('building_number, street_name, city, country, and post_code are required.');
+        }
+
+        $db = Yii::$app->db;
+        $tx = null;
+        $link = null;
+        try {
+            $tx = $db->beginTransaction(Transaction::SERIALIZABLE);
+            $addr = new Address();
+            $addr->address_type = $address_type;
+            $addr->building_number = $building_number;
+            $addr->street_name = $street_name;
+            $addr->city = $city;
+            $addr->region = $region;
+            $addr->country = $country;
+            $addr->post_code = $post_code;
+            $addr->allow_update = true;
+            $addr->allow_delete = true;
+
+            if (!$addr->save()) {
+                throw new BadRequestHttpException(json_encode($addr->errors));
+            }
+
+            $link = new Useraddress();
+            $link->user_id = $user_id;
+            $link->address_id = (int) $addr->id;
+
+            if (!$link->save()) {
+                throw new BadRequestHttpException(json_encode($link->errors));
+            }
+
+            $tx->commit();
+        } catch (\Throwable $e) {
+            if ($tx !== null) {
+                $tx->rollBack();
+            }
+            throw $e;
+        }
+
+        /** @var Useraddress $link */
+        $row = $this->serializeCustomerAddressRow($link);
+        if ($row === null) {
+            throw new BadRequestHttpException('Address could not be loaded after save.');
+        }
+
+        return $row;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function serializeCustomerAddressRow(Useraddress $link): ?array
+    {
+        $addr = Address::findOne((int) $link->address_id);
+        if ($addr === null) {
+            return null;
+        }
+
+        return [
+            'id' => (int) $link->id,
+            'address_id' => (int) $addr->id,
+            'address_type' => $addr->address_type,
+            'building_number' => $addr->building_number,
+            'street_name' => $addr->street_name,
+            'city' => $addr->city,
+            'region' => $addr->region,
+            'post_code' => $addr->post_code,
+            'country' => $addr->country,
+        ];
     }
 
     private function getOrCreateBasket(int $customer_id): Basket

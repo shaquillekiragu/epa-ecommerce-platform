@@ -12,8 +12,6 @@ class Useraddress extends CommonUseraddress
             'id',
             'user_id',
             'address_id',
-            'allow_update',
-            'allow_delete',
             'created_at',
             'last_updated_at',
         ];

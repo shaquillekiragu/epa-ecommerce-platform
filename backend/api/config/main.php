@@ -78,6 +78,7 @@ return [
                 'POST api/v1/checkout' => 'customer/checkout',
                 'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view',
                 'GET api/v1/customer/orders' => 'customer/orders',
+                'POST api/v1/customer/addresses' => 'customer/addresses-create',
                 'GET api/v1/customer/addresses' => 'customer/addresses',
 
                 // Merchant (bearer token + role=merchant + store ownership)
