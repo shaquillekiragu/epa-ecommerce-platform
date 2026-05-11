@@ -44,6 +44,24 @@
 					<span class="material-symbols-outlined"
 						style="font-variation-settings: 'FILL' 0">notifications</span>
 				</NuxtLink>
+				<button
+					v-else
+					type="button"
+					class="relative hover:text-slate-900 dark:hover:text-white hover:cursor-pointer transition active:scale-95 p-0 border-0 bg-transparent text-inherit"
+					aria-label="Open notifications"
+					@click="notifications_modal_open = true"
+				>
+					<span class="material-symbols-outlined"
+						style="font-variation-settings: 'FILL' 0">notifications</span>
+					<span
+						v-if="notification_badge_label !== null"
+						class="absolute -top-1 -right-1 min-w-4 h-4 min-h-4 px-0.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-[10px] font-bold rounded-full flex items-center justify-center leading-none"
+					>
+						{{ notification_badge_label }}
+					</span>
+				</button>
+
+				<AppNotificationsModalComponent v-model:open="notifications_modal_open" />
 
 				<NuxtLink
 					class="hover:text-slate-900 dark:hover:text-white transition active:scale-95"
@@ -71,6 +89,16 @@ import type { NavLink } from '~/types/miscellaneous';
 
 const { is_logged_in, role, logout } = useAuth();
 const { basket_item_count, refresh_basket_item_count } = useBasketItemCount();
+const { unread_count, refresh: refresh_order_notifications } = useOrderNotifications();
+
+const notifications_modal_open = ref(false);
+
+const notification_badge_label = computed(() => {
+	const n = unread_count.value;
+	if (n <= 0) return null;
+	if (n > 99) return '99+';
+	return String(n);
+});
 
 const show_basket_count_badge = computed(
 	() => is_logged_in.value && role.value === 'customer' && basket_item_count.value > 0,
@@ -117,8 +145,11 @@ async function on_logout() {
 
 watch(
 	() => [is_logged_in.value, role.value] as const,
-	() => {
+	([logged, r]) => {
 		refresh_basket_item_count();
+		if (logged && (r === 'customer' || r === 'merchant')) {
+			refresh_order_notifications();
+		}
 	},
 	{ immediate: true },
 );
