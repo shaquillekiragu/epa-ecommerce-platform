@@ -13,13 +13,7 @@
 			Loading payment…
 		</div>
 
-		<div v-else-if="!stripe_ready" class="rounded-xl border border-amber-200 bg-amber-50 p-6 text-amber-900 text-sm">
-			Stripe is not configured. Set <code class="font-mono">NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> in
-			<code class="font-mono">frontend/.env</code> and add <code class="font-mono">stripe.secretKey</code> in
-			<code class="font-mono">backend/api/config/params-local.php</code>.
-		</div>
-
-		<div v-else class="space-y-6">
+		<div v-else-if="stripe_ready" class="space-y-6">
 			<div class="bg-white border border-slate-400 rounded-xl p-4">
 				<p class="text-sm text-slate-600 mb-1">Total</p>
 				<p class="text-2xl font-bold text-slate-900">{{ format_money(total_gbp) }}</p>
@@ -40,6 +34,20 @@
 			<NuxtLink to="/account/payment" class="block text-center text-sm text-slate-600 hover:underline">
 				Skip to account (order stays pending until paid)
 			</NuxtLink>
+		</div>
+
+		<div
+			v-else-if="!error_message"
+			class="rounded-xl border border-amber-200 bg-amber-50 p-6 text-amber-900 text-sm"
+		>
+			Stripe is not configured. Set <code class="font-mono">NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> in
+			<code class="font-mono">frontend/.env</code> and add <code class="font-mono">stripe.secretKey</code> in
+			<code class="font-mono">backend/api/config/params-local.php</code>.
+		</div>
+
+		<div v-else class="rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-600 text-sm">
+			<p class="mb-4">Payment could not be started.</p>
+			<NuxtLink to="/checkout/review" class="font-semibold text-slate-900 underline">Back to review</NuxtLink>
 		</div>
 	</main>
 </template>
@@ -100,17 +108,21 @@ function load_pending_ids(): number[] | null {
 	}
 }
 
-async function mount_stripe(client_secret: string, amount_pence: number) {
+/**
+ * Mount Payment Element after the template branch that contains `#payment-element` is visible.
+ * While `pending` is true, only the loading block is rendered — mounting earlier hits a missing node.
+ */
+async function mount_payment_element(client_secret: string, amount_pence: number) {
 	stripe = await useStripeClient();
-	if (!stripe) {
-		stripe_ready.value = false;
-		return;
-	}
-
-	stripe_ready.value = true;
+	stripe_ready.value = Boolean(stripe);
 	total_gbp.value = amount_pence / 100;
 
+	pending.value = false;
 	await nextTick();
+
+	if (!stripe) {
+		return;
+	}
 
 	elements = stripe.elements({ clientSecret: client_secret, appearance: { theme: 'stripe' } });
 	payment_element = elements.create('payment');
@@ -164,7 +176,6 @@ onMounted(async () => {
 
 	const ids = load_pending_ids();
 	if (!ids || ids.length === 0) {
-		pending.value = false;
 		await navigateTo('/checkout/review');
 		return;
 	}
@@ -175,15 +186,11 @@ onMounted(async () => {
 		const intent = await api.post<CreateIntentResponse>('/customer/payments/create-intent', {
 			order_ids: ids,
 		});
-		await mount_stripe(intent.client_secret, intent.amount_pence);
-		if (!stripe_ready.value) {
-			error_message.value = 'Missing Stripe publishable key (frontend) or secret key (backend).';
-		}
+		await mount_payment_element(intent.client_secret, intent.amount_pence);
 	} catch (e: unknown) {
 		const msg =
 			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Could not start payment';
 		error_message.value = msg;
-	} finally {
 		pending.value = false;
 	}
 });
