@@ -122,6 +122,7 @@ const nav_links = computed<NavLink[]>(() => {
 	const merchant_links: NavLink[] = [
 		{ text: 'Dashboard', url: '/merchant', is_primary: false },
 		{ text: 'Stores', url: '/merchant/stores', is_primary: false },
+		{ text: 'Orders', url: '/merchant/orders', is_primary: false },
 	];
 
 	if (role.value === 'merchant') {
