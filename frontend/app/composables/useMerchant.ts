@@ -1,4 +1,5 @@
 import type { MerchantOrderDetail, MerchantOrderRow, MerchantStore } from '~/types/merchant';
+import type { MerchantProduct } from '~/types/merchant';
 
 export async function merchantFetchStores(): Promise<MerchantStore[]> {
 	const api = useApi();
@@ -33,4 +34,29 @@ export async function merchantFetchOrder(orderId: number): Promise<MerchantOrder
 export async function merchantMarkOrderShipped(orderId: number): Promise<void> {
 	const api = useApi();
 	await api.patch(`/merchant/orders/${orderId}/status`, { status: 'shipped' });
+}
+
+export async function merchantFetchStoreProducts(storeId: number): Promise<MerchantProduct[]> {
+	const api = useApi();
+	return api.get<MerchantProduct[]>(`/merchant/products?store=${storeId}`);
+}
+
+export async function merchantFetchProduct(productId: number): Promise<MerchantProduct> {
+	const api = useApi();
+	return api.get<MerchantProduct>(`/merchant/products/${productId}`);
+}
+
+export async function merchantCreateProduct(payload: Partial<MerchantProduct> & { store_id: number }): Promise<MerchantProduct> {
+	const api = useApi();
+	return api.post<MerchantProduct>('/merchant/products', payload);
+}
+
+export async function merchantUpdateProduct(productId: number, payload: Partial<MerchantProduct>): Promise<MerchantProduct> {
+	const api = useApi();
+	return api.patch<MerchantProduct>(`/merchant/products/${productId}`, payload);
+}
+
+export async function merchantDeleteProduct(productId: number): Promise<void> {
+	const api = useApi();
+	await api.del(`/merchant/products/${productId}`);
 }

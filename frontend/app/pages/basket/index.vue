@@ -151,7 +151,7 @@ const error_message = ref<string | null>(null);
 const basket = ref<BasketResponse | null>(null);
 const updating_id = ref<number | null>(null);
 
-const placeholder_image = '/images/category-placeholder.svg';
+const placeholder_image = '/images/product-placeholder.svg';
 
 const lines = computed<BasketLine[]>(() => basket.value?.items ?? []);
 

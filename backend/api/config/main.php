@@ -94,7 +94,10 @@ return [
                 'GET api/v1/merchant/orders-all' => 'merchant/orders-all',
                 'GET api/v1/merchant/orders/<id:\\d+>' => 'merchant/order-view',
                 'PATCH api/v1/merchant/orders/<id:\\d+>/status' => 'merchant/order-status',
+                'GET api/v1/merchant/products' => 'merchant/products-list',
                 'POST api/v1/merchant/products' => 'merchant/products',
+                'GET api/v1/merchant/products/<id:\\d+>' => 'merchant/product-view',
+                'PATCH api/v1/merchant/products/<id:\\d+>' => 'merchant/product-update',
                 'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/delete-product',
 
                 // Only public catalogue/store discovery via REST. Sensitive models are exposed via

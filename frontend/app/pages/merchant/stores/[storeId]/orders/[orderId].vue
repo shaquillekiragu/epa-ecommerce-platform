@@ -141,7 +141,7 @@ const wrong_store = ref(false);
 const error_message = ref<string | null>(null);
 const order = ref<MerchantOrderDetail | null>(null);
 
-const placeholder_image = '/images/category-placeholder.svg';
+const placeholder_image = '/images/product-placeholder.svg';
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);

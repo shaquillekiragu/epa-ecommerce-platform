@@ -150,7 +150,7 @@ const order = ref<CustomerOrderDetail | null>(null);
 
 const { refresh: refresh_order_notifications } = useOrderNotifications();
 
-const placeholder_image = '/images/category-placeholder.svg';
+const placeholder_image = '/images/product-placeholder.svg';
 
 const order_id = computed(() => {
 	const raw = route.params.id;

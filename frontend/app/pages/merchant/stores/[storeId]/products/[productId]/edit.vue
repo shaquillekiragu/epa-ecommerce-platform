@@ -1,193 +1,419 @@
 <template>
-	<main class="min-h-screen w-full flex-1 overflow-y-auto p-4 pb-16 pt-24 lg:p-6">
-		<!-- Header Section -->
-		<div class="max-w-6xl mx-auto mb-6">
-			<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-				<div>
-					<div
-						class="flex items-center gap-2 text-slate-50 text-xs mb-3 uppercase tracking-widest">
-						<a class="hover:text-slate-900 transition-colors" href="#">Products</a>
-						<span class="material-symbols-outlined text-[12px]">chevron_right</span>
-						<span>Edit Product</span>
-					</div>
-					<h2 class="font-bold tracking-tight text-3xl leading-tight text-slate-900">Artisan Leather Weekender</h2>
-				</div>
-				<div class="flex items-center gap-2">
-					<button
-						class="px-4 py-2 border border-slate-300 text-slate-900 font-semibold rounded hover:bg-slate-50 transition-colors">
-						Cancel
-					</button>
-					<button
-						class="px-4 py-2 bg-slate-900 text-white font-semibold rounded hover:opacity-90 transition-opacity">
-						Update Product
-					</button>
-				</div>
-			</div>
+	<main class="min-h-screen w-full flex-1 overflow-y-auto bg-slate-50 p-4 pb-24 pt-24 lg:p-6">
+		<div v-if="invalid_ids" class="mx-auto max-w-6xl rounded-xl border border-slate-200 bg-white p-10 text-center">
+			<p class="font-medium text-slate-800">Invalid product link</p>
+			<NuxtLink to="/merchant/stores" class="mt-4 inline-block font-semibold text-slate-900 underline">Back to stores</NuxtLink>
 		</div>
-		<!-- Edit Form Grid -->
-		<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-grid_gutter">
-			<!-- Left Column: Primary Details -->
-			<div class="lg:col-span-8 space-y-grid_gutter">
-				<!-- Basic Information Section -->
-				<section class="bg-white p-4 border border-slate-400 rounded shadow-sm">
-					<h3 class="font-semibold tracking-tight text-xl leading-snug mb-4">General Information</h3>
-					<div class="space-y-md">
-						<div class="space-y-xs">
-							<label class="font-semibold text-sm text-slate-600">Product Name</label>
-							<input
-								class="w-full bg-white border border-slate-400 p-2 rounded font-normal text-base focus:border-slate-900"
-								type="text" value="Artisan Leather Weekender Bag" />
+
+		<template v-else>
+			<div class="mx-auto mb-6 max-w-6xl">
+				<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+					<div>
+						<div class="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500">
+							<NuxtLink class="transition-colors hover:text-slate-900" :to="`/merchant/stores/${store_id}/products`">Products</NuxtLink>
+							<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+							<NuxtLink class="transition-colors hover:text-slate-900" :to="`/merchant/stores/${store_id}/products/${product_id}`">Product</NuxtLink>
+							<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+							<span class="text-slate-900">Edit</span>
 						</div>
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<div class="space-y-xs">
-								<label class="font-semibold text-sm text-slate-600">SKU Code</label>
-								<input
-									class="w-full bg-white border border-slate-400 p-2 rounded font-normal text-base"
-									type="text" value="ALW-2024-BRWN" />
-							</div>
-							<div class="space-y-xs">
-								<label class="font-semibold text-sm text-slate-600">Weight
-									(grams)</label>
-								<input
-									class="w-full bg-white border border-slate-400 p-2 rounded font-normal text-base"
-									type="number" value="1250" />
-							</div>
-						</div>
+						<h2 class="text-3xl font-bold leading-tight tracking-tight text-slate-900">
+							{{ pending ? 'Edit product' : product?.name ?? 'Edit product' }}
+						</h2>
+						<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
 					</div>
-				</section>
-				<!-- Pricing & Inventory -->
-				<section class="bg-white p-4 border border-slate-400 rounded shadow-sm">
-					<h3 class="font-semibold tracking-tight text-xl leading-snug mb-4">Pricing &amp; Inventory</h3>
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-						<div class="space-y-xs">
-							<label class="font-semibold text-sm text-slate-600">Price (GBP)</label>
-							<div class="relative">
-								<span
-									class="absolute left-sm top-1/2 -translate-y-1/2 font-semibold text-slate-600">£</span>
-								<input
-									class="w-full bg-white border border-slate-400 py-2 pl-4 pr-2 rounded font-normal text-base"
-									type="text" value="349.00" />
-							</div>
-						</div>
-						<div class="space-y-xs">
-							<label class="font-semibold text-sm text-slate-600">Stock Quantity</label>
-							<input
-								class="w-full bg-white border border-slate-400 p-2 rounded font-normal text-base"
-								type="number" value="12" />
-						</div>
+					<div class="flex flex-wrap items-center gap-2">
+						<NuxtLink
+							:to="`/merchant/stores/${store_id}/products/${product_id}`"
+							class="rounded border border-slate-300 px-4 py-2 font-semibold text-slate-900 transition-colors hover:bg-slate-50"
+						>
+							Cancel
+						</NuxtLink>
+						<button
+							type="button"
+							class="rounded bg-slate-900 px-4 py-2 font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+							:disabled="saving || pending || !product"
+							@click="on_save"
+						>
+							{{ saving ? 'Saving…' : 'Save changes' }}
+						</button>
 					</div>
-				</section>
-				<!-- SEO Section -->
-				<section class="bg-white p-4 border border-slate-400 rounded shadow-sm">
-					<div class="flex items-center gap-2 mb-4">
-						<span class="material-symbols-outlined text-slate-600" data-icon="search">search</span>
-						<h3 class="font-semibold tracking-tight text-xl leading-snug">Search Engine Optimization</h3>
-					</div>
-					<div class="space-y-md">
-						<div class="space-y-xs">
-							<label class="font-semibold text-sm text-slate-600">SEO Title</label>
-							<input
-								class="w-full bg-white border border-slate-400 p-2 rounded font-normal text-base"
-								type="text" value="Artisan Leather Weekender Bag - Handcrafted Travel Essential" />
-							<p class="text-xs text-slate-400">Characters: 62/70</p>
-						</div>
-						<div class="p-2 bg-slate-50 border border-dashed border-slate-400 rounded">
-							<p class="text-xs text-slate-700 mb-1">Google Preview</p>
-							<h4 class="text-blue-700 font-medium text-base hover:underline cursor-pointer">Artisan
-								Leather Weekender Bag - Handcrafted Travel Essential</h4>
-							<p class="text-green-700 text-xs">MerchFlow.com/products/artisan-leather-weekender
-							</p>
-							<p class="text-slate-600 text-xs mt-1">Expertly crafted with full-grain
-								Italian leather, our weekender bag combines timeless style with modern durability for
-								the sophisticated traveler...</p>
-						</div>
-					</div>
-				</section>
+				</div>
 			</div>
-			<!-- Right Column: Sidebar Actions -->
-			<div class="lg:col-span-4 space-y-grid_gutter">
-				<!-- Organization & Status -->
-				<section class="bg-white p-4 border border-slate-400 rounded shadow-sm">
-					<h3 class="font-semibold text-sm text-slate-600 uppercase tracking-wider mb-4">Status &amp;
-						Organization</h3>
-					<div class="space-y-md">
-						<!-- Toggle -->
-						<div class="flex items-center justify-between p-2 bg-slate-50 rounded">
-							<div class="flex flex-col">
-								<span class="font-semibold text-slate-900">Is Live</span>
-								<span class="text-xs text-slate-600">Visible in storefront</span>
+
+			<div v-if="pending" class="mx-auto max-w-6xl rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-600">Loading…</div>
+
+			<div v-else-if="not_found" class="mx-auto max-w-6xl rounded-xl border border-slate-200 bg-white p-10 text-center">
+				<p class="font-medium text-slate-800">Product not found</p>
+				<NuxtLink :to="`/merchant/stores/${store_id}/products`" class="mt-4 inline-block font-semibold text-slate-900 underline">Back to products</NuxtLink>
+			</div>
+
+			<div v-else-if="wrong_store" class="mx-auto max-w-6xl rounded-xl border border-slate-200 bg-white p-10 text-center">
+				<p class="font-medium text-slate-800">This product does not belong to this store.</p>
+				<NuxtLink :to="`/merchant/stores/${store_id}/products`" class="mt-4 inline-block font-semibold text-slate-900 underline">Back to products</NuxtLink>
+			</div>
+
+			<div v-else-if="product" class="mx-auto grid max-w-6xl grid-cols-1 gap-grid_gutter lg:grid-cols-12">
+				<div class="space-y-grid_gutter lg:col-span-8">
+					<section class="rounded border border-slate-400 bg-white p-4 shadow-sm">
+						<h3 class="mb-4 text-xl font-semibold leading-snug tracking-tight">General information</h3>
+						<div class="space-y-md">
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-name">Product name</label>
+								<input
+									id="edit-name"
+									v-model="form.name"
+									:disabled="saving"
+									class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal focus:border-slate-900"
+									type="text"
+								/>
 							</div>
-							<div class="relative inline-flex items-center cursor-pointer">
-								<input checked class="sr-only peer" type="checkbox" />
-								<div
-									class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-slate-900">
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" :for="`edit-desc-${product_id}`">Description</label>
+								<textarea
+									:id="`edit-desc-${product_id}`"
+									:key="`edit-desc-${product_id}`"
+									v-model="form.description"
+									:disabled="saving"
+									rows="5"
+									class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal focus:border-slate-900"
+								></textarea>
+							</div>
+							<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+								<div class="space-y-xs">
+									<label class="text-sm font-semibold text-slate-600" for="edit-sku">SKU code</label>
+									<input
+										id="edit-sku"
+										v-model="form.sku_code"
+										:disabled="saving"
+										class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal"
+										type="text"
+									/>
+								</div>
+								<div class="space-y-xs">
+									<label class="text-sm font-semibold text-slate-600" for="edit-weight">Weight (grams)</label>
+									<input
+										id="edit-weight"
+										v-model="form.weight_in_grams"
+										:disabled="saving"
+										class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal"
+										inputmode="numeric"
+										type="text"
+									/>
 								</div>
 							</div>
 						</div>
-						<!-- Category Dropdown -->
-						<div class="space-y-xs">
-							<label class="font-semibold text-sm text-slate-600">Category</label>
-							<div class="relative">
-								<select
-									class="w-full bg-white border border-slate-400 p-2 pr-6 rounded font-normal text-base appearance-none">
-									<option>Travel Bags</option>
-									<option>Backpacks</option>
-									<option>Accessories</option>
-									<option>Footwear</option>
-								</select>
-								<span
-									class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+					</section>
+
+					<section class="rounded border border-slate-400 bg-white p-4 shadow-sm">
+						<h3 class="mb-4 text-xl font-semibold leading-snug tracking-tight">Pricing &amp; inventory</h3>
+						<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-price">Price (GBP)</label>
+								<div class="relative">
+									<span class="absolute left-3 top-1/2 -translate-y-1/2 font-semibold text-slate-600">£</span>
+									<input
+										id="edit-price"
+										v-model="form.price_in_gbp"
+										:disabled="saving"
+										class="w-full rounded border border-slate-400 bg-white py-2 pl-7 pr-2 text-base font-normal"
+										inputmode="decimal"
+										type="text"
+									/>
+								</div>
+							</div>
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-stock">Stock quantity</label>
+								<input
+									id="edit-stock"
+									v-model="form.number_in_stock"
+									:disabled="saving"
+									class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal"
+									inputmode="numeric"
+									type="text"
+								/>
 							</div>
 						</div>
-					</div>
-				</section>
-				<!-- Image Section -->
-				<section class="bg-white p-4 border border-slate-400 rounded shadow-sm">
-					<div class="flex items-center justify-between mb-4">
-						<h3 class="font-semibold text-sm text-slate-600 uppercase tracking-wider">Product
-							Thumbnail</h3>
-						<button class="text-slate-700 text-xs hover:underline">Edit</button>
-					</div>
-					<div class="space-y-md">
-						<div
-							class="aspect-square w-full rounded border border-slate-400 overflow-hidden group relative">
-							<img alt="Leather Weekender Bag" class="size-full object-cover"
-								data-alt="A luxurious, cognac-colored full-grain leather weekender bag sitting on a minimalist concrete plinth. The lighting is cinematic with deep shadows and soft highlights that reveal the rich texture and stitching of the leather. The environment is a clean, modern studio with a neutral background, conveying a sense of premium craftsmanship and timeless design. High-resolution product photography for a top-tier e-commerce platform."
-								src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7vYmK39cpanEbP9F_pl6TIhEBm-aND7rHyKQq24df7sbqColT6VBVsEgNYOiVINfMgUX0ZFkaIoNm5PBMXdd_tP0BrMBdiakyJ6nBf-hyiE4bzAWM6NhA4cKS41tqCxsvMtru2Fy2iRgkmsa2wxz7XNpsyNNfvD5nI6unJ0pCgcLZCc8ambrAyCvaQh7dexb5tftSo3UM7jQvdvGTKY6ZVHod1I8h8ehbwfLFZ07852Vk9DdmaZhKQmSKtfRKoLBqsgDO1wbHy2O" />
-							<div
-								class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-								<button class="bg-white px-4 py-2 rounded font-semibold flex items-center gap-1">
-									<span class="material-symbols-outlined text-lg">photo_camera</span>
-									Change Image
-								</button>
+					</section>
+
+					<section class="rounded border border-slate-400 bg-white p-4 shadow-sm">
+						<div class="mb-4 flex items-center gap-2">
+							<span class="material-symbols-outlined text-slate-600">search</span>
+							<h3 class="text-xl font-semibold leading-snug tracking-tight">Search engine optimization</h3>
+						</div>
+						<div class="space-y-md">
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-seo">SEO title</label>
+								<input
+									id="edit-seo"
+									v-model="form.seo_title"
+									:disabled="saving"
+									class="w-full rounded border border-slate-400 bg-white p-2 text-base font-normal"
+									type="text"
+								/>
+								<p class="text-xs text-slate-400">Characters: {{ form.seo_title.length }}/255</p>
+								<p class="text-xs text-slate-500">The API may normalise SEO title from the product name when saving.</p>
+							</div>
+							<div class="rounded border border-dashed border-slate-400 bg-slate-50 p-2">
+								<p class="mb-1 text-xs text-slate-700">Preview</p>
+								<h4 class="cursor-pointer text-base font-medium text-blue-700 hover:underline">{{ preview_title }}</h4>
+								<p class="text-xs text-green-700">/products/{{ product.slug }}</p>
+								<p class="mt-1 line-clamp-3 text-xs text-slate-600">{{ preview_description }}</p>
 							</div>
 						</div>
-						<div
-							class="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-400 rounded bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group">
-							<span
-								class="material-symbols-outlined text-slate-400 group-hover:text-slate-900 transition-colors text-3xl"
-								data-icon="cloud_upload">cloud_upload</span>
-							<p class="font-semibold text-slate-600 mt-2">Upload more photos</p>
-							<p class="text-xs text-slate-400">Drag and drop or click to browse</p>
+					</section>
+				</div>
+
+				<div class="space-y-grid_gutter lg:col-span-4">
+					<section class="rounded border border-slate-400 bg-white p-4 shadow-sm">
+						<h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-600">Status &amp; organization</h3>
+						<div class="space-y-md">
+							<div class="flex items-center justify-between rounded bg-slate-50 p-2">
+								<div class="flex flex-col">
+									<span class="font-semibold text-slate-900">Is live</span>
+									<span class="text-xs text-slate-600">Visible in storefront</span>
+								</div>
+								<label class="relative inline-flex cursor-pointer items-center">
+									<input v-model="form.is_active" :disabled="saving" class="peer sr-only" type="checkbox" />
+									<div
+										class="peer h-6 w-11 rounded-full bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-900 peer-checked:after:translate-x-full peer-checked:after:border-white"
+									></div>
+								</label>
+							</div>
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-cat">Category</label>
+								<div class="relative">
+									<select
+										id="edit-cat"
+										v-model.number="form.product_category_id"
+										:disabled="saving || categories_pending"
+										class="w-full appearance-none rounded border border-slate-400 bg-white p-2 pr-8 text-base font-normal"
+									>
+										<option :value="0">Select a category…</option>
+										<option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+									</select>
+									<span class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400">expand_more</span>
+								</div>
+							</div>
 						</div>
-					</div>
-				</section>
-				<!-- Danger Zone -->
-				<section class="p-4 border border-red-100 bg-red-50/30 rounded">
-					<h3 class="font-semibold text-red-600 text-sm uppercase tracking-wider mb-2">Danger Zone</h3>
-					<p class="text-xs text-slate-600 mb-4">Once deleted, this product cannot be
-						recovered from the catalog.</p>
-					<button
-						class="w-full py-2 border border-red-600 text-red-600 font-semibold rounded hover:bg-red-600 hover:text-white transition-all">
-						Delete Product
-					</button>
-				</section>
+					</section>
+
+					<section class="rounded border border-slate-400 bg-white p-4 shadow-sm">
+						<div class="mb-4 flex items-center justify-between">
+							<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-600">Product thumbnail</h3>
+						</div>
+						<div class="space-y-md">
+							<div class="relative aspect-square w-full overflow-hidden rounded border border-slate-400">
+								<img :alt="product.name" class="size-full object-cover" :src="form.thumbnail || '/images/product-placeholder.svg'" />
+							</div>
+							<div class="space-y-xs">
+								<label class="text-sm font-semibold text-slate-600" for="edit-thumb">Thumbnail URL or path</label>
+								<input
+									id="edit-thumb"
+									v-model="form.thumbnail"
+									:disabled="saving"
+									class="w-full rounded border border-slate-400 bg-white p-2 text-sm font-normal"
+									type="text"
+								/>
+							</div>
+						</div>
+					</section>
+
+					<section class="rounded border border-red-100 bg-red-50/30 p-4">
+						<h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-600">Danger zone</h3>
+						<p class="mb-4 text-xs text-slate-600">Once deleted, this product cannot be recovered from the catalog.</p>
+						<button
+							type="button"
+							class="w-full rounded border border-red-600 py-2 font-semibold text-red-600 transition-all hover:bg-red-600 hover:text-white disabled:opacity-50"
+							:disabled="deleting || saving"
+							@click="on_delete"
+						>
+							{{ deleting ? 'Deleting…' : 'Delete product' }}
+						</button>
+					</section>
+				</div>
 			</div>
-		</div>
-		<!-- Mobile Action Bar -->
-		<div class="md:hidden sticky bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-400 flex gap-2">
-			<button class="flex-1 py-3 border border-slate-300 text-slate-900 font-semibold rounded">Cancel</button>
-			<button class="flex-2 py-3 bg-slate-900 text-white font-semibold rounded px-6">Update</button>
+		</template>
+
+		<div class="sticky bottom-0 left-0 right-0 flex gap-2 border-t border-slate-400 bg-white p-4 md:hidden">
+			<NuxtLink
+				:to="`/merchant/stores/${store_id}/products/${product_id}`"
+				class="flex-1 rounded border border-slate-300 py-3 text-center font-semibold text-slate-900"
+			>
+				Cancel
+			</NuxtLink>
+			<button
+				type="button"
+				class="flex-2 rounded bg-slate-900 px-6 py-3 font-semibold text-white disabled:opacity-50"
+				:disabled="saving || pending || !product"
+				@click="on_save"
+			>
+				{{ saving ? 'Saving…' : 'Update' }}
+			</button>
 		</div>
 	</main>
 </template>
+
+<script setup lang="ts">
+import type { MerchantProduct } from '~/types/merchant';
+import { merchantDeleteProduct, merchantFetchProduct, merchantUpdateProduct } from '~/composables/useMerchant';
+import { useCategories } from '~/composables/useCategories';
+
+definePageMeta({ middleware: ['role-merchant'] });
+
+const route = useRoute();
+
+const store_id = computed(() => {
+	const raw = route.params.storeId;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	const n = typeof s === 'string' ? Number.parseInt(s, 10) : Number.NaN;
+	return Number.isFinite(n) && n > 0 ? n : null;
+});
+
+const product_id = computed(() => {
+	const raw = route.params.productId;
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	const n = typeof s === 'string' ? Number.parseInt(s, 10) : Number.NaN;
+	return Number.isFinite(n) && n > 0 ? n : null;
+});
+
+const invalid_ids = computed(() => store_id.value === null || product_id.value === null);
+
+const { categories, pending: categories_pending } = useCategories();
+
+const pending = ref(true);
+const saving = ref(false);
+const deleting = ref(false);
+const not_found = ref(false);
+const wrong_store = ref(false);
+const error_message = ref<string | null>(null);
+const product = ref<MerchantProduct | null>(null);
+
+const form = reactive({
+	name: '',
+	description: '',
+	sku_code: '',
+	product_category_id: 0,
+	price_in_gbp: '',
+	number_in_stock: '',
+	weight_in_grams: '',
+	thumbnail: '',
+	seo_title: '',
+	is_active: true,
+});
+
+const preview_title = computed(() => (form.seo_title.trim() || form.name.trim() || 'Product title'));
+const preview_description = computed(() => (form.description.trim() || '—'));
+
+function description_from_product(p: MerchantProduct) {
+	const raw = (p as { description?: unknown }).description;
+	if (raw == null) return '';
+	return typeof raw === 'string' ? raw : String(raw);
+}
+
+function set_form_from_product(p: MerchantProduct) {
+	form.name = String(p.name ?? '');
+	form.description = description_from_product(p);
+	form.sku_code = String(p.sku_code ?? '');
+	form.product_category_id = Number(p.product_category_id ?? 0);
+	form.price_in_gbp = String(p.price_in_gbp ?? '');
+	form.number_in_stock = String(p.number_in_stock ?? '');
+	form.weight_in_grams = String(p.weight_in_grams ?? '');
+	form.thumbnail = String(p.thumbnail ?? '').trim() || '/images/product-placeholder.svg';
+	form.seo_title = String(p.seo_title ?? '');
+	form.is_active = Boolean(p.is_active ?? true);
+}
+
+function parse_api_error(e: unknown): string {
+	if (e && typeof e === 'object' && 'message' in e) return String((e as any).message);
+	return 'Request failed';
+}
+
+async function load() {
+	if (invalid_ids.value) {
+		pending.value = false;
+		return;
+	}
+	pending.value = true;
+	not_found.value = false;
+	wrong_store.value = false;
+	error_message.value = null;
+	product.value = null;
+	try {
+		const p = await merchantFetchProduct(product_id.value!);
+		if (p.store_id !== store_id.value) {
+			wrong_store.value = true;
+			return;
+		}
+		product.value = p;
+		set_form_from_product(p);
+	} catch (e: unknown) {
+		const status = e && typeof e === 'object' && 'status' in e ? (e as { status?: number }).status : undefined;
+		if (status === 404) {
+			not_found.value = true;
+		} else {
+			error_message.value = parse_api_error(e);
+		}
+	} finally {
+		pending.value = false;
+	}
+}
+
+async function on_save() {
+	if (product_id.value == null || saving.value || !product.value) return;
+	error_message.value = null;
+
+	const price = Number.parseFloat(form.price_in_gbp);
+	const stock = Number.parseInt(form.number_in_stock, 10);
+	const weight = Number.parseInt(form.weight_in_grams, 10);
+
+	if (form.name.trim() === '') return (error_message.value = 'Name is required.');
+	if (form.sku_code.trim() === '') return (error_message.value = 'SKU is required.');
+	if (!Number.isFinite(form.product_category_id) || form.product_category_id <= 0) return (error_message.value = 'Category is required.');
+	if (!Number.isFinite(price)) return (error_message.value = 'Valid price is required.');
+	if (!Number.isFinite(stock)) return (error_message.value = 'Valid stock quantity is required.');
+	if (!Number.isFinite(weight)) return (error_message.value = 'Valid weight (grams) is required.');
+
+	saving.value = true;
+	try {
+		await merchantUpdateProduct(product_id.value, {
+			name: form.name.trim(),
+			description: form.description.trim(),
+			sku_code: form.sku_code.trim(),
+			product_category_id: form.product_category_id,
+			price_in_gbp: price,
+			number_in_stock: stock,
+			weight_in_grams: weight,
+			thumbnail: form.thumbnail.trim() || '/images/product-placeholder.svg',
+			seo_title: form.seo_title.trim(),
+			is_active: form.is_active,
+		});
+		await navigateTo(`/merchant/stores/${store_id.value}/products/${product_id.value}`);
+	} catch (e: unknown) {
+		error_message.value = parse_api_error(e);
+	} finally {
+		saving.value = false;
+	}
+}
+
+async function on_delete() {
+	if (product_id.value == null || deleting.value) return;
+	if (!confirm('Delete this product? This cannot be undone.')) return;
+	deleting.value = true;
+	error_message.value = null;
+	try {
+		await merchantDeleteProduct(product_id.value);
+		await navigateTo(`/merchant/stores/${store_id.value}/products`);
+	} catch (e: unknown) {
+		error_message.value = parse_api_error(e);
+	} finally {
+		deleting.value = false;
+	}
+}
+
+watch(
+	() => [route.params.storeId, route.params.productId],
+	() => load(),
+);
+
+onMounted(() => load());
+</script>

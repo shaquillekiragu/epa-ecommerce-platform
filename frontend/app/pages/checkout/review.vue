@@ -170,7 +170,7 @@ const error_message = ref<string | null>(null);
 const basket = ref<BasketResponse | null>(null);
 const addresses = ref<CustomerAddress[]>([]);
 
-const placeholder_image = '/images/category-placeholder.svg';
+const placeholder_image = '/images/product-placeholder.svg';
 
 const lines = computed<BasketLine[]>(() => basket.value?.items ?? []);
 const subtotal = computed(() => basket.value?.price_total ?? 0);

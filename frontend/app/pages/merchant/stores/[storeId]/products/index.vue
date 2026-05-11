@@ -62,16 +62,19 @@
 							<tbody class="divide-y divide-slate-100">
 								<tr v-for="p in products" :key="p.id" class="hover:bg-slate-50/80">
 									<td class="p-4">
-										<div class="flex items-center gap-3">
+										<NuxtLink
+											:to="`/merchant/stores/${store_id}/products/${p.id}`"
+											class="flex items-center gap-3 hover:underline"
+										>
 											<div class="size-12 shrink-0 overflow-hidden rounded-md border border-slate-200 bg-slate-100">
 												<img
 													:alt="p.name"
 													class="size-full object-cover"
-													:src="p.thumbnail || '/images/category-placeholder.svg'"
+													:src="p.thumbnail || '/images/product-placeholder.svg'"
 												/>
 											</div>
 											<span class="font-semibold text-slate-900">{{ p.name }}</span>
-										</div>
+										</NuxtLink>
 									</td>
 									<td class="p-4 text-sm text-slate-600">{{ p.sku_code }}</td>
 									<td class="p-4 text-sm text-slate-600">{{ p.product_category_name }}</td>
@@ -97,8 +100,8 @@
 
 <script setup lang="ts">
 import type { MerchantStore } from '~/types/merchant';
-import { merchantFetchStore } from '~/composables/useMerchant';
-import { useProducts } from '~/composables/useProducts';
+import type { MerchantProduct } from '~/types/merchant';
+import { merchantFetchStore, merchantFetchStoreProducts } from '~/composables/useMerchant';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -119,7 +122,8 @@ const invalid_id = computed(() => store_id.value === null);
 const store_name = ref('Store');
 const error_message = ref<string | null>(null);
 
-const { products, refresh, pending } = useProducts({}, { disableAutoload: true, stateKey: 'merchant-catalog' });
+const products = ref<MerchantProduct[]>([]);
+const pending = ref(true);
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
@@ -131,10 +135,14 @@ async function load() {
 	try {
 		const s: MerchantStore = await merchantFetchStore(store_id.value);
 		store_name.value = s.name;
-		await refresh({ store_id: store_id.value });
+		pending.value = true;
+		products.value = await merchantFetchStoreProducts(store_id.value);
 	} catch (e: unknown) {
 		error_message.value =
 			e && typeof e === 'object' && 'message' in e ? String((e as { message?: string }).message) : 'Failed to load';
+		products.value = [];
+	} finally {
+		pending.value = false;
 	}
 }
 

@@ -30,20 +30,13 @@
 							<h2 class="text-3xl font-bold tracking-tight text-slate-900">{{ store.name }}</h2>
 							<p v-if="store.description" class="mt-2 max-w-2xl text-slate-600">{{ store.description }}</p>
 						</div>
-						<div class="flex flex-wrap gap-3">
-							<NuxtLink
-								:to="`/products?store_id=${store.id}`"
-								class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-white"
-							>
-								View catalogue (store)
-							</NuxtLink>
-							<NuxtLink
-								:to="`/merchant/stores/${store.id}/edit`"
-								class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-							>
-								Edit store
-							</NuxtLink>
-						</div>
+
+						<NuxtLink
+							:to="`/merchant/stores/${store.id}/edit`"
+							class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+						>
+							Edit store
+						</NuxtLink>
 					</div>
 
 					<div class="grid gap-4 sm:grid-cols-3">

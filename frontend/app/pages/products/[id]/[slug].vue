@@ -15,7 +15,7 @@
 						v-else
 						class="size-full object-contain p-12 opacity-60"
 						alt=""
-						src="/images/category-placeholder.svg"
+						src="/images/product-placeholder.svg"
 					/>
 				</div>
 			</div>

@@ -65,6 +65,11 @@ class Product extends BaseModel
                     'string',
                     'max' => 65535
                 ],
+                [
+                    ['description'],
+                    'string',
+                    'max' => 255,
+                ],
                 [['name', 'sku_code', 'thumbnail'], 'trim'],
                 [
                     ['thumbnail'],

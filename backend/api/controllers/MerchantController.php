@@ -270,6 +270,84 @@ class MerchantController extends _ApiController
         $product->store_id = $store_id;
         $product->allow_update = true;
         $product->allow_delete = true;
+        if ($product->thumbnail === null || trim((string) $product->thumbnail) === '') {
+            $product->thumbnail = '/images/product-placeholder.svg';
+        }
+        if ($product->is_active === null) {
+            $product->is_active = true;
+        }
+
+        if (!$product->save()) {
+            throw new BadRequestHttpException(json_encode($product->errors));
+        }
+
+        return $product;
+    }
+
+    public function actionProductsList()
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $store_id = (int) Yii::$app->request->get('store', 0);
+        if ($store_id <= 0) {
+            throw new BadRequestHttpException('store query param is required.');
+        }
+
+        $store = Store::findOne(['id' => $store_id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new ForbiddenHttpException('Not your store.');
+        }
+
+        return Product::find()
+            ->where(['store_id' => $store_id])
+            ->orderBy(['id' => SORT_DESC])
+            ->all();
+    }
+
+    public function actionProductView($id)
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $product = Product::findOne(['id' => (int) $id]);
+        if ($product === null) {
+            throw new NotFoundHttpException('Product not found.');
+        }
+
+        $store = Store::findOne(['id' => $product->store_id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new ForbiddenHttpException('Not your product.');
+        }
+
+        return $product;
+    }
+
+    public function actionProductUpdate($id)
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $product = Product::findOne(['id' => (int) $id]);
+        if ($product === null) {
+            throw new NotFoundHttpException('Product not found.');
+        }
+
+        $store = Store::findOne(['id' => $product->store_id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new ForbiddenHttpException('Not your product.');
+        }
+
+        $body = Yii::$app->request->getBodyParams();
+        $product->load($body, '');
+        $product->allow_update = true;
+        $product->allow_delete = true;
+        if ($product->thumbnail === null || trim((string) $product->thumbnail) === '') {
+            $product->thumbnail = '/images/product-placeholder.svg';
+        }
+        if ($product->is_active === null) {
+            $product->is_active = true;
+        }
 
         if (!$product->save()) {
             throw new BadRequestHttpException(json_encode($product->errors));

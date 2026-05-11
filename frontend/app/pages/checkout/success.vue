@@ -151,7 +151,7 @@ const pending = ref(true);
 const load_error = ref<string | null>(null);
 const order_details = ref<CustomerOrderDetail[]>([]);
 
-const placeholder_image = '/images/category-placeholder.svg';
+const placeholder_image = '/images/product-placeholder.svg';
 
 const order_ids_display = computed(() => order_details.value.map((o) => o.id));
 
