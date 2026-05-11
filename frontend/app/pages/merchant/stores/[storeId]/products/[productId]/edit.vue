@@ -95,7 +95,7 @@
 							<p class="text-xs text-slate-700 mb-1">Google Preview</p>
 							<h4 class="text-blue-700 font-medium text-base hover:underline cursor-pointer">Artisan
 								Leather Weekender Bag - Handcrafted Travel Essential</h4>
-							<p class="text-green-700 text-xs">luxcommerce.com/products/artisan-leather-weekender
+							<p class="text-green-700 text-xs">MerchFlow.com/products/artisan-leather-weekender
 							</p>
 							<p class="text-slate-600 text-xs mt-1">Expertly crafted with full-grain
 								Italian leather, our weekender bag combines timeless style with modern durability for

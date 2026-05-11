@@ -13,7 +13,7 @@
 				<h2 class="font-bold tracking-tight text-3xl leading-tight text-slate-900 mb-2">Build Your Presence</h2>
 				<p class="font-normal text-base text-slate-600 max-w-2xl">
 					Launch your digital storefront in seconds. Provide the essential details below to begin your
-					merchant journey on LuxCommerce.
+					merchant journey on MerchFlow.
 				</p>
 			</div>
 			<!-- Asymmetric Bento-style Form Layout -->
@@ -37,7 +37,7 @@
 									<p
 										class="font-medium text-xs text-slate-700 leading-relaxed">
 										The store name is used to generate your permanent URL slug (e.g.,
-										luxcommerce.com/stores/your-store-name). Choose a name that is concise and
+										merchflow.com/stores/your-store-name). Choose a name that is concise and
 										professional.
 									</p>
 								</div>
@@ -92,7 +92,7 @@
 					<div class="bg-slate-100 border border-slate-400 p-4 rounded-xl">
 						<h4 class="font-semibold text-sm text-slate-900 mb-4 flex items-center gap-2">
 							<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
-							Why LuxCommerce?
+							Why MerchFlow?
 						</h4>
 						<ul class="space-y-4">
 							<li class="flex items-start gap-3">

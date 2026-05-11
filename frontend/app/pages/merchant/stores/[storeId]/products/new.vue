@@ -129,9 +129,9 @@
 						</div>
 						<div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
 							<p class="text-xs font-bold text-sky-400 mb-1">Search Preview</p>
-							<h4 class="text-blue-400 text-lg hover:underline cursor-pointer">LuxCommerce | Your Meta
+							<h4 class="text-blue-400 text-lg hover:underline cursor-pointer">MerchFlow | Your Meta
 								Title Will Appear Here</h4>
-							<p class="text-green-500 text-sm">https://luxcommerce.com/products/leather-bag</p>
+							<p class="text-green-500 text-sm">https://merchflow.com/products/leather-bag</p>
 						</div>
 					</div>
 				</div>

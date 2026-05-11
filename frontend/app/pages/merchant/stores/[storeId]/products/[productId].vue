@@ -6,7 +6,7 @@
 			<div class="flex items-center gap-4">
 				<span class="material-symbols-outlined text-slate-500 cursor-pointer"
 					data-icon="arrow_back">arrow_back</span>
-				<div class="text-xl font-bold text-slate-900 tracking-tight">LuxCommerce</div>
+				<div class="text-xl font-bold text-slate-900 tracking-tight">MerchFlow</div>
 			</div>
 			<div class="flex items-center gap-4">
 				<span
@@ -86,7 +86,7 @@
 								<label class="block font-semibold text-sm text-slate-500 mb-2">Meta Title</label>
 								<div
 									class="p-3 bg-slate-50 rounded border border-slate-100 font-normal text-slate-800">
-									Aura Studio Headphones | High-Fidelity Wireless Audio | LuxCommerce
+									Aura Studio Headphones | High-Fidelity Wireless Audio | MerchFlow
 								</div>
 							</div>
 							<div>
@@ -95,7 +95,7 @@
 								<div
 									class="p-3 bg-slate-50 rounded border border-slate-100 font-normal text-slate-600">
 									Experience pure sound with the Aura Studio Headphones. Featuring 40mm drivers,
-									active noise cancellation, and 40-hour battery life. Shop now at LuxCommerce.
+									active noise cancellation, and 40-hour battery life. Shop now at MerchFlow.
 								</div>
 							</div>
 							<div class="flex gap-4">

@@ -47,7 +47,7 @@
 								<div
 									class="size-24 bg-slate-100 rounded-lg border border-dashed border-slate-400 flex items-center justify-center relative overflow-hidden group">
 									<img class="size-full object-cover"
-										data-alt="A minimalist logo design featuring clean, high-contrast typography in black and white. The aesthetic is extremely modern and sophisticated, reflecting a luxury boutique identity. The logo is displayed in a brightly lit studio setting with soft shadows, fitting perfectly within the LuxCommerce design system."
+										data-alt="A minimalist logo design featuring clean, high-contrast typography in black and white. The aesthetic is extremely modern and sophisticated, reflecting a luxury boutique identity. The logo is displayed in a brightly lit studio setting with soft shadows, fitting perfectly within the MerchFlow design system."
 										src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpXaEN_vEmKiC9EvKlAgBmIDrUtWlNZg6AA0MYXTBaDyoQ4SSDoyudPCLEj2Ia_IQP0UdECSt5Oa3mK-IqQ2Qj6jI1dpVeLF_4EHi9wjDw6DmTO_MmuXFLF5xF1jPca5w8inbTF3pc6vOx8toDpwiCezLGLE8JLpH4Tn1_kBqAvtS3EhbP7r7MNNRN8xogJtJHRCvLeESaIqsWSDSRi5RLpXjCCCuksNa0HQnG68bnvdXQxGe827YqRB3hPz0Ck2jkqof1CZnT49fV" />
 									<div
 										class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">

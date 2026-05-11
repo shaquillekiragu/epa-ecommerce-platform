@@ -4,7 +4,7 @@
         <header
             class="bg-white border-b border-slate-200 flex justify-between items-center h-16 px-6 w-full sticky top-0 z-40">
             <div class="flex items-center gap-4">
-                <span class="text-xl font-bold text-slate-900 tracking-tight">LuxCommerce</span>
+                <span class="text-xl font-bold text-slate-900 tracking-tight">MerchFlow</span>
             </div>
             <div class="flex items-center gap-4">
                 <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
