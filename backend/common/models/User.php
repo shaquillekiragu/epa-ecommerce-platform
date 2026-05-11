@@ -286,7 +286,6 @@ class User extends BaseModel implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        // Virtual plaintext must not linger in memory or survive a second save() in the same request.
         $this->password = null;
     }
 
