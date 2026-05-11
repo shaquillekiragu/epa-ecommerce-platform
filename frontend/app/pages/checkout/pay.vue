@@ -63,6 +63,9 @@ definePageMeta({
 
 const CHECKOUT_PENDING_KEY = 'checkout_pending_order_ids';
 
+const route = useRoute();
+const router = useRouter();
+
 type CreateIntentResponse = {
 	client_secret: string;
 	payment_intent_id: string;
@@ -106,6 +109,20 @@ function load_pending_ids(): number[] | null {
 	} catch {
 		return null;
 	}
+}
+
+/** e.g. notification link `/checkout/pay?order_ids=12` or `12,34` */
+function parse_order_ids_query(raw: unknown): number[] | null {
+	if (raw == null) {
+		return null;
+	}
+	const s = Array.isArray(raw) ? raw[0] : raw;
+	if (typeof s !== 'string' || !s.trim()) {
+		return null;
+	}
+	const parts = s.split(',').map((p) => Number.parseInt(p.trim(), 10));
+	const ids = parts.filter((n) => Number.isFinite(n) && n > 0);
+	return ids.length > 0 ? ids : null;
 }
 
 /**
@@ -174,7 +191,18 @@ onMounted(async () => {
 	pending.value = true;
 	error_message.value = null;
 
-	const ids = load_pending_ids();
+	let ids = load_pending_ids();
+	if (!ids || ids.length === 0) {
+		const from_query = parse_order_ids_query(route.query.order_ids);
+		if (from_query?.length) {
+			ids = from_query;
+			if (typeof sessionStorage !== 'undefined') {
+				sessionStorage.setItem(CHECKOUT_PENDING_KEY, JSON.stringify(ids));
+			}
+			await router.replace({ path: '/checkout/pay' });
+		}
+	}
+
 	if (!ids || ids.length === 0) {
 		await navigateTo('/checkout/review');
 		return;

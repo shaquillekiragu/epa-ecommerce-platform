@@ -92,6 +92,9 @@ function mapCustomerNotification(o: OrderRow): OrderNotification {
 			break;
 	}
 
+	const href =
+		o.status === 'pending_payment' ? `/checkout/pay?order_ids=${encodeURIComponent(String(id))}` : '/account';
+
 	return {
 		seen_key: `customer:${id}:${o.status}`,
 		order_id: id,
@@ -102,7 +105,7 @@ function mapCustomerNotification(o: OrderRow): OrderNotification {
 		tone,
 		placed_at: o.placed_at,
 		perspective: 'customer',
-		href: '/account',
+		href,
 	};
 }
 
