@@ -107,17 +107,13 @@
 							<tbody class="divide-y divide-slate-200">
 								<tr v-for="order in orders_preview" :key="order.id" class="hover:bg-slate-50 transition-colors">
 									<td class="p-4 font-semibold text-sm text-slate-900">#{{ order.id }}</td>
-									<td class="p-4 font-normal text-base text-slate-600">{{ format_order_date(order.placed_at) }}</td>
+									<td class="p-4 font-normal text-base text-slate-600">{{ formatOrderPlacedAt(order.placed_at, 'account_date') }}</td>
 									<td class="p-4 font-normal text-base text-slate-600">
 										{{ order.item_count ?? '—' }}
 									</td>
 									<td class="p-4 text-base font-bold text-slate-900">{{ format_money(order.price_total) }}</td>
 									<td class="p-4">
-										<span
-											class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700"
-										>
-											{{ humanize_status(order.status) }}
-										</span>
+										<OrdersStatusBadgeComponent :status="order.status" />
 									</td>
 								</tr>
 							</tbody>
@@ -186,6 +182,7 @@
 
 <script setup lang="ts">
 import type { CustomerAddress, CustomerOrder } from '~/types/customer';
+import { formatOrderPlacedAt } from '~/utils/order-display';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -220,20 +217,6 @@ const orders_preview = computed(() => orders.value.slice(0, 5));
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
-}
-
-function format_order_date(raw: string) {
-	try {
-		const d = new Date(raw);
-		if (Number.isNaN(d.getTime())) return raw;
-		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium' }).format(d);
-	} catch {
-		return raw;
-	}
-}
-
-function humanize_status(s: string) {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 async function load_orders() {

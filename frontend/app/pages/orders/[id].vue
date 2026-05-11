@@ -35,15 +35,11 @@
 					<div>
 						<h1 class="font-bold tracking-tight text-3xl text-slate-900">Order #{{ order.id }}</h1>
 						<p class="text-slate-600 text-sm mt-2">
-							Placed {{ format_order_date(order.placed_at) }} · Store {{ order.store_id }}
+							Placed {{ formatOrderPlacedAt(order.placed_at, 'detail') }} · Store {{ order.store_id }}
 						</p>
 					</div>
 					<div class="flex flex-wrap items-center gap-2">
-						<span
-							class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800"
-						>
-							{{ humanize_status(order.status) }}
-						</span>
+						<OrdersStatusBadgeComponent variant="header" :status="order.status" />
 						<button
 							v-if="order.status === 'pending_payment'"
 							type="button"
@@ -134,6 +130,7 @@
 import type { CustomerOrderDetail } from '~/types/customer';
 import { productDetailRoute } from '~/composables/useProducts';
 import { slugify } from '~/utils/strings';
+import { formatOrderPlacedAt } from '~/utils/order-display';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -171,20 +168,6 @@ function slug_from_name(name: string) {
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
-}
-
-function format_order_date(raw: string) {
-	try {
-		const d = new Date(raw);
-		if (Number.isNaN(d.getTime())) return raw;
-		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'short' }).format(d);
-	} catch {
-		return raw;
-	}
-}
-
-function humanize_status(s: string) {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function go_pay() {

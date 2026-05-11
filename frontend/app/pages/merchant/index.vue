@@ -82,14 +82,10 @@
 								<tr v-for="o in recent_orders" :key="o.id" class="hover:bg-slate-50/80">
 									<td class="p-4 text-sm font-semibold text-slate-900">#{{ o.id }}</td>
 									<td class="p-4 text-sm text-slate-600">{{ o.customer_display_name || '—' }}</td>
-									<td class="p-4 text-sm text-slate-600">{{ format_order_date(o.placed_at) }}</td>
+									<td class="p-4 text-sm text-slate-600">{{ formatOrderPlacedAt(o.placed_at, 'list') }}</td>
 									<td class="p-4 text-sm font-bold text-slate-900">{{ format_money(o.price_total) }}</td>
 									<td class="p-4">
-										<span
-											class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700"
-										>
-											{{ humanize_status(o.status) }}
-										</span>
+										<OrdersStatusBadgeComponent :status="o.status" />
 									</td>
 									<td class="p-4">
 										<NuxtLink
@@ -113,6 +109,7 @@
 <script setup lang="ts">
 import type { MerchantOrderRow, MerchantStore } from '~/types/merchant';
 import { merchantFetchOrders, merchantFetchStores } from '~/composables/useMerchant';
+import { formatOrderPlacedAt } from '~/utils/order-display';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -131,20 +128,6 @@ const first_name = computed(() => (user.value?.first_name ?? '').trim());
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
-}
-
-function format_order_date(raw: string) {
-	try {
-		const d = new Date(raw);
-		if (Number.isNaN(d.getTime())) return raw;
-		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short' }).format(d);
-	} catch {
-		return raw;
-	}
-}
-
-function humanize_status(s: string) {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 onMounted(async () => {

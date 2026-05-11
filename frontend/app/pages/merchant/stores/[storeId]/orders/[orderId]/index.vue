@@ -33,14 +33,12 @@
 						<div>
 							<h1 class="text-3xl font-bold text-slate-900">Order #{{ order.id }}</h1>
 							<p class="mt-2 text-sm text-slate-600">
-								Placed {{ format_order_date(order.placed_at) }} · {{ order.customer_display_name || 'Customer' }}
+								Placed {{ formatOrderPlacedAt(order.placed_at, 'detail') }} · {{ order.customer_display_name || 'Customer' }}
 							</p>
 							<p v-if="order.customer_email" class="text-sm text-slate-500">{{ order.customer_email }}</p>
 						</div>
 						<div class="flex flex-wrap items-center gap-2">
-							<span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800">
-								{{ humanize_status(order.status) }}
-							</span>
+							<OrdersStatusBadgeComponent variant="header" :status="order.status" />
 							<button
 								v-if="order.status === 'paid'"
 								type="button"
@@ -107,6 +105,7 @@
 import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantOrderDetail } from '~/types/merchant';
 import { merchantFetchOrder, merchantFetchStore, merchantMarkOrderShipped } from '~/composables/useMerchant';
+import { formatOrderPlacedAt } from '~/utils/order-display';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -156,20 +155,6 @@ const placeholder_image = '/images/product-placeholder.svg';
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
-}
-
-function format_order_date(raw: string) {
-	try {
-		const d = new Date(raw);
-		if (Number.isNaN(d.getTime())) return raw;
-		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'short' }).format(d);
-	} catch {
-		return raw;
-	}
-}
-
-function humanize_status(s: string) {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function parse_api_error(e: unknown): string {

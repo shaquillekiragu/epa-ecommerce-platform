@@ -44,13 +44,9 @@
 				>
 					<div class="flex justify-between items-start gap-3 mb-2">
 						<span class="font-semibold text-slate-900">#{{ order.id }}</span>
-						<span
-							class="shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700"
-						>
-							{{ humanize_status(order.status) }}
-						</span>
+						<OrdersStatusBadgeComponent :status="order.status" />
 					</div>
-					<p class="text-sm text-slate-600">{{ format_order_date(order.placed_at) }}</p>
+					<p class="text-sm text-slate-600">{{ formatOrderPlacedAt(order.placed_at, 'list') }}</p>
 					<p class="text-sm text-slate-600 mt-1">
 						{{ order.item_count ?? '—' }} {{ (order.item_count ?? 0) === 1 ? 'item' : 'items' }} · Store
 						{{ order.store_id }}
@@ -76,16 +72,12 @@
 					<tbody class="divide-y divide-slate-100">
 						<tr v-for="order in orders" :key="order.id" class="hover:bg-slate-50/80 transition-colors">
 							<td class="p-4 font-semibold text-sm text-slate-900">#{{ order.id }}</td>
-							<td class="p-4 text-sm text-slate-600">{{ format_order_date(order.placed_at) }}</td>
+							<td class="p-4 text-sm text-slate-600">{{ formatOrderPlacedAt(order.placed_at, 'list') }}</td>
 							<td class="p-4 text-sm text-slate-600">{{ order.store_id }}</td>
 							<td class="p-4 text-sm text-slate-600">{{ order.item_count ?? '—' }}</td>
 							<td class="p-4 text-sm font-bold text-slate-900">{{ format_money(order.price_total) }}</td>
 							<td class="p-4">
-								<span
-									class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700"
-								>
-									{{ humanize_status(order.status) }}
-								</span>
+								<OrdersStatusBadgeComponent :status="order.status" />
 							</td>
 							<td class="p-4">
 								<NuxtLink
@@ -106,6 +98,7 @@
 
 <script setup lang="ts">
 import type { CustomerOrder } from '~/types/customer';
+import { formatOrderPlacedAt } from '~/utils/order-display';
 import { getPoundAndPenceFormat } from '~/utils/money';
 
 definePageMeta({
@@ -120,20 +113,6 @@ const orders = ref<CustomerOrder[]>([]);
 
 function format_money(n: number) {
 	return getPoundAndPenceFormat(n);
-}
-
-function format_order_date(raw: string) {
-	try {
-		const d = new Date(raw);
-		if (Number.isNaN(d.getTime())) return raw;
-		return new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeStyle: 'short' }).format(d);
-	} catch {
-		return raw;
-	}
-}
-
-function humanize_status(s: string) {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 async function load() {
