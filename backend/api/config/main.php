@@ -79,6 +79,7 @@ return [
                 'POST api/v1/checkout' => 'customer/checkout',
                 'POST api/v1/customer/payments/create-intent' => 'customer/create-payment-intent',
                 'POST api/v1/customer/payments/sync' => 'customer/sync-payment',
+                'POST api/v1/customer/orders/<id:\\d+>/cancel' => 'customer/order-cancel',
                 'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view',
                 'GET api/v1/customer/orders' => 'customer/orders',
                 'POST api/v1/customer/addresses' => 'customer/addresses-create',

@@ -200,6 +200,55 @@ final class OrderStripePayment
     }
 
     /**
+     * Refund this order's total against its linked PaymentIntent (partial refund when the intent covered multiple orders).
+     * No-op when Stripe is not configured or the order has no {@see Order::$stripe_payment_intent_id} (e.g. seeded data).
+     *
+     * @throws BadRequestHttpException when Stripe is configured but refund cannot be completed
+     */
+    public static function refundForPaidOrderIfApplicable(Order $order): void
+    {
+        $secret = self::getSecret();
+        if ($secret === '') {
+            return;
+        }
+
+        $piId = trim((string) ($order->stripe_payment_intent_id ?? ''));
+        if ($piId === '') {
+            return;
+        }
+
+        $stripe = new StripeClient($secret);
+        try {
+            /** @var PaymentIntent $pi */
+            $pi = $stripe->paymentIntents->retrieve($piId);
+        } catch (ApiErrorException $e) {
+            throw new BadRequestHttpException('Could not verify payment with Stripe: ' . $e->getMessage());
+        }
+
+        if ($pi->status !== 'succeeded') {
+            return;
+        }
+
+        $amountPence = (int) round(round((float) $order->price_total, 2) * 100);
+        if ($amountPence <= 0) {
+            return;
+        }
+
+        try {
+            $stripe->refunds->create([
+                'payment_intent' => $piId,
+                'amount' => $amountPence,
+                'metadata' => [
+                    'order_id' => (string) $order->id,
+                    'reason' => 'customer_cancelled',
+                ],
+            ]);
+        } catch (ApiErrorException $e) {
+            throw new BadRequestHttpException('Refund failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * @return list<int>
      */
     private static function parseOrderIdsFromMetadata(mixed $raw): array

@@ -302,6 +302,38 @@ class CustomerController extends _ApiController
         ];
     }
 
+    public function actionOrderCancel($id)
+    {
+        $this->requireRole('customer');
+        $user_id = (int) Yii::$app->user->id;
+        $order = Order::findOne(['id' => (int) $id, 'customer_id' => $user_id]);
+        if ($order === null) {
+            throw new NotFoundHttpException('Order not found.');
+        }
+
+        if ($order->status !== Order::STATUS_PAID) {
+            throw new BadRequestHttpException(
+                'Only paid orders that have not yet shipped can be cancelled. Contact the store if you need help.'
+            );
+        }
+
+        OrderStripePayment::refundForPaidOrderIfApplicable($order);
+
+        if (!$order->cancel(true)) {
+            throw new BadRequestHttpException(json_encode($order->errors) ?: 'Could not cancel order.');
+        }
+
+        $order->refresh();
+
+        return [
+            'id' => $order->id,
+            'store_id' => $order->store_id,
+            'status' => $order->status,
+            'price_total' => (float) $order->price_total,
+            'placed_at' => $order->placed_at,
+        ];
+    }
+
     public function actionAddresses()
     {
         $this->requireRole('customer');

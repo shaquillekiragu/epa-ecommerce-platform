@@ -49,8 +49,25 @@
 						>
 							Pay now
 						</button>
+						<button
+							v-if="order.status === 'paid'"
+							type="button"
+							:disabled="cancelling"
+							class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50 disabled:pointer-events-none"
+							@click="confirm_cancel_order"
+						>
+							{{ cancelling ? 'Cancelling…' : 'Cancel order' }}
+						</button>
 					</div>
 				</div>
+
+				<p
+					v-if="order.status === 'paid'"
+					class="text-sm text-slate-600 mb-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3"
+				>
+					You can cancel before the store ships. If you paid by card, we will refund this order’s total to your
+					payment method (allow a few days for your bank to show it).
+				</p>
 
 				<p v-if="error_message" class="text-sm text-red-600 mb-4">{{ error_message }}</p>
 
@@ -126,9 +143,12 @@ const route = useRoute();
 const api = useApi();
 
 const pending = ref(true);
+const cancelling = ref(false);
 const not_found = ref(false);
 const error_message = ref<string | null>(null);
 const order = ref<CustomerOrderDetail | null>(null);
+
+const { refresh: refresh_order_notifications } = useOrderNotifications();
 
 const placeholder_image = '/images/category-placeholder.svg';
 
@@ -170,6 +190,46 @@ function go_pay() {
 	}
 	sessionStorage.setItem(CHECKOUT_PENDING_KEY, JSON.stringify([order.value.id]));
 	return navigateTo('/checkout/pay');
+}
+
+function parse_api_error(e: unknown): string {
+	if (e && typeof e === 'object' && 'message' in e) {
+		const raw = String((e as { message?: string }).message);
+		try {
+			const parsed = JSON.parse(raw) as Record<string, string[]>;
+			const first = Object.values(parsed)[0];
+			if (Array.isArray(first) && first[0]) {
+				return first[0]!;
+			}
+		} catch {
+			return raw;
+		}
+		return raw;
+	}
+	return 'Request failed';
+}
+
+async function confirm_cancel_order() {
+	if (!order.value || order_id.value == null || cancelling.value) {
+		return;
+	}
+	const ok = window.confirm(
+		'Cancel this order? If you paid by card, the order total will be refunded. This cannot be undone.',
+	);
+	if (!ok) {
+		return;
+	}
+	cancelling.value = true;
+	error_message.value = null;
+	try {
+		await api.post(`/customer/orders/${order_id.value}/cancel`);
+		await load();
+		refresh_order_notifications();
+	} catch (e: unknown) {
+		error_message.value = parse_api_error(e);
+	} finally {
+		cancelling.value = false;
+	}
 }
 
 async function load() {
