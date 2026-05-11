@@ -1,11 +1,5 @@
 <template>
 	<main class="flex min-h-screen w-full flex-1 flex-col bg-slate-50 pt-24 pb-16">
-		<header
-			class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6"
-		>
-			<h1 class="text-xl font-semibold tracking-tight text-slate-900">Overview</h1>
-		</header>
-
 		<div class="mx-auto w-full max-w-5xl flex-1 space-y-8 p-6">
 			<div>
 				<h2 class="text-3xl font-bold tracking-tight text-slate-900">
