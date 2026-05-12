@@ -14,6 +14,7 @@ class Product extends CommonProduct
         return [
             'id',
             'store_id',
+            'store_name' => static fn (self $model) => $model->storeName,
             'name',
             'slug',
             'product_category_id',

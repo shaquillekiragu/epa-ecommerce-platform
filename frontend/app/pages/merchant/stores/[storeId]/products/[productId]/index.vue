@@ -23,7 +23,9 @@
 
 				<template v-else-if="product">
 					<header class="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-						<div class="min-w-0">
+						<div class="flex flex-col gap-2">
+							<p class="text-2xl font-bold underline mb-1">{{ store_name }}</p>
+
 							<div class="flex flex-wrap items-center gap-3">
 								<h1 class="truncate text-3xl font-bold tracking-tight text-slate-900">{{ product.name }}</h1>
 								<span
@@ -34,13 +36,16 @@
 									{{ product.is_active ? 'Live' : 'Hidden' }}
 								</span>
 							</div>
-							<p class="mt-2 text-slate-600">
-								{{ product.product_category_name }} · SKU {{ product.sku_code }}
-							</p>
+
+							<div class="flex gap-[25vw] mt-2">
+								<p class="text-lg font-medium text-slate-800">{{ product.product_category_name }}</p>
+								<p class="text-slate-400">SKU: {{ product.sku_code }}</p>
+							</div>
+
 							<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
 						</div>
 
-						<div class="flex flex-wrap gap-3">
+						<div class="flex gap-3 ">
 							<button
 								type="button"
 								:disabled="toggling_live"
@@ -109,7 +114,8 @@
 									</div>
 									<div>
 										<p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Store</p>
-										<p class="mt-1 text-sm font-semibold text-slate-900">#{{ product.store_id }}</p>
+										<p class="mt-1 text-sm font-semibold text-slate-900">{{ store_name }}</p>
+										<p class="mt-0.5 text-xs text-slate-500">ID {{ product.store_id }}</p>
 									</div>
 								</div>
 							</div>

@@ -34,9 +34,18 @@ class Product extends BaseModel
                     ],
                     'number'
                 ],
-                [['price_in_gbp'], 'compare', 'compareValue' => 0, 'operator' => '>='],
                 [
-                    ['price_in_gbp'],
+                    [
+                        'price_in_gbp'
+                    ],
+                    'compare',
+                    'compareValue' => 0,
+                    'operator' => '>='
+                ],
+                [
+                    [
+                        'price_in_gbp'
+                    ],
                     'compare',
                     'compareValue' => 1000000,
                     'operator' => '<=',
@@ -66,24 +75,39 @@ class Product extends BaseModel
                     'max' => 65535
                 ],
                 [
-                    ['description'],
+                    [
+                        'description'
+                    ],
                     'string',
                     'max' => 255,
                 ],
-                [['name', 'sku_code', 'thumbnail'], 'trim'],
                 [
-                    ['thumbnail'],
+                    [
+                        'name',
+                        'sku_code',
+                        'thumbnail'
+                    ],
+                    'trim'
+                ],
+                [
+                    [
+                        'thumbnail'
+                    ],
                     ThumbnailValidator::class,
                     'skipOnEmpty' => true,
                 ],
                 [
-                    ['name'],
+                    [
+                        'name'
+                    ],
                     'match',
                     'pattern' => '/[A-Za-z]/',
                     'message' => 'Product name must contain letters.'
                 ],
                 [
-                    ['sku_code'],
+                    [
+                        'sku_code'
+                    ],
                     'string',
                     'max' => 64,
                     'min' => 1,
@@ -104,23 +128,38 @@ class Product extends BaseModel
                     ],
                     'required'
                 ],
-                [['number_in_stock', 'weight_in_grams'], 'compare', 'compareValue' => 0, 'operator' => '>='],
                 [
-                    ['store_id'],
+                    [
+                        'number_in_stock',
+                        'weight_in_grams'
+                    ],
+                    'compare',
+                    'compareValue' => 0,
+                    'operator' => '>='
+                ],
+                [
+                    [
+                        'store_id'
+                    ],
                     'exist',
                     'skipOnError' => true,
                     'targetClass' => Store::class,
                     'targetAttribute' => ['store_id' => 'id']
                 ],
                 [
-                    ['product_category_id'],
+                    [
+                        'product_category_id'
+                    ],
                     'exist',
                     'skipOnError' => true,
                     'targetClass' => Productcategory::class,
                     'targetAttribute' => ['product_category_id' => 'id']
                 ],
                 [
-                    ['store_id', 'sku_code'],
+                    [
+                        'store_id',
+                        'sku_code'
+                    ],
                     'unique',
                     'targetAttribute' => ['store_id', 'sku_code'],
                     'message' => 'SKU must be unique within this store.',
@@ -170,6 +209,7 @@ class Product extends BaseModel
                 'slug' => 'Slug',
                 'product_category_id' => 'Product Category ID',
                 'productCategoryName' => 'Product Category',
+                'storeName' => 'Store Name',
                 'description' => 'Description',
                 'price_in_gbp' => 'Price (GBP)',
                 'number_in_stock' => 'Stock Quantity',
@@ -192,6 +232,11 @@ class Product extends BaseModel
     public function getStore(): ActiveQuery
     {
         return $this->hasOne(Store::class, ['id' => 'store_id']);
+    }
+
+    public function getStoreName(): string
+    {
+        return $this->store->name;
     }
 
     public function getProductCategoryName(): string

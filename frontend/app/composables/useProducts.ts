@@ -8,6 +8,7 @@ function getSlug(name: string, sku_code: string): string {
 type ApiProduct = {
 	id: number;
 	store_id: number;
+	store_name: string;
 	name: string;
 	slug: string;
 	product_category_name: string;
@@ -45,6 +46,7 @@ function mapProduct(p: ApiProduct): Product {
 		thumbnail: p.thumbnail ?? '',
 		product_url: '',
 		store_id: p.store_id,
+		store_name: p.store_name ?? '',
 		description: p.description ?? '',
 		number_in_stock: Number(p.number_in_stock),
 		sku_code: p.sku_code,
@@ -55,7 +57,7 @@ function mapProduct(p: ApiProduct): Product {
 }
 
 function toCard(p: Product): ProductCard {
-	const { store_id, description, number_in_stock, sku_code, weight_in_grams, seo_title, is_live, ...card } = p;
+	const { store_id, store_name, description, number_in_stock, sku_code, weight_in_grams, seo_title, is_live, ...card } = p;
 	return card;
 }
 

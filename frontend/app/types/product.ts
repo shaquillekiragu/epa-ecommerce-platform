@@ -10,6 +10,7 @@ export interface ProductCard {
 
 export interface Product extends ProductCard {
     store_id: number;
+    store_name: string;
     description: string;
     number_in_stock: number;
     sku_code: string;

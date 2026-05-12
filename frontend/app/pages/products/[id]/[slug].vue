@@ -24,6 +24,7 @@
 				<p v-if="pending" class="text-slate-600">Loading product…</p>
 				<template v-else-if="product">
 					<h1 class="text-5xl font-bold">{{ product.name }}</h1>
+					<p class="text-sm font-medium text-slate-600 mt-1">{{ product.store_name }}</p>
 
 					<div class="flex flex-wrap items-center gap-3 mt-4">
 						<span class="text-slate-900 text-xl font-semibold">{{ format_money(product.price_in_gbp) }}</span>
