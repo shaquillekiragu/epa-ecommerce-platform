@@ -8,46 +8,13 @@
 */
 
 :root {
-	/* Color Palette */
+	/* Colours */
 	--color-surface: #f7f9fb;
-	--color-surface-dim: #d8dadc;
-	--color-surface-bright: #f7f9fb;
-	--color-surface-container-lowest: #ffffff;
-	--color-surface-container-low: #f2f4f6;
-	--color-surface-container: #eceef0;
-	--color-surface-container-high: #e6e8ea;
-	--color-surface-container-highest: #e0e2e4;
-
 	--color-primary: #0f172a;
-	/* Slate 900 */
-	--color-on-primary: #ffffff;
-	--color-primary-container: #1e293b;
-	--color-on-primary-container: #f1f5f9;
-
-	--color-secondary: #475569;
-	/* Slate 600 */
-	--color-on-secondary: #ffffff;
-
-	--color-outline: #cbd5e1;
-	--color-outline-variant: #94a3b8;
-
-	--color-error: #b91c1c;
-	--color-success: #15803d;
 
 	/* Typography */
 	--font-family: 'Manrope', sans-serif;
 	--font-size-base: 16px;
-	/* --font-size-sm: 0.875rem; */
-	--font-size-xs: 0.75rem;
-	/* --font-size-lg: 1.125rem; */
-	/* --font-size-xl: 1.25rem; */
-	/* --font-size-2xl: 1.5rem; */
-
-	/* Spacing & Borders */
-	--radius-sm: 4px;
-	--radius-md: 8px;
-	--radius-lg: 12px;
-	--spacing-unit: 4px;
 }
 
 body {
@@ -70,25 +37,6 @@ h6 {
 	letter-spacing: -0.025em;
 	margin-top: 0;
 }
-
-/* @layer base {
-	:where(
-			button:not(:disabled),
-			[type='button']:not(:disabled),
-			[type='submit']:not(:disabled),
-			[type='reset']:not(:disabled),
-			[role='button']:not([aria-disabled='true']),
-			summary,
-			label[for],
-			select:not(:disabled)
-		) {
-		@apply hover:cursor-pointer;
-	}
-
-	:where(a[href]) {
-		@apply hover:cursor-pointer;
-	}
-} */
 
 .material-symbols-outlined {
 	font-family: 'Material Symbols Outlined';
