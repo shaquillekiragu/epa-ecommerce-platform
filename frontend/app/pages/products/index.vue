@@ -21,6 +21,8 @@
 				</div>
 			</article>
 
+			<SearchBarComponent v-model="search_input" @apply="on_search_apply" />
+
 			<p v-if="pending" class="w-full text-center text-slate-600">Loading products…</p>
 			<p v-else-if="fetch_error" class="w-full text-center text-red-600">Could not load products.</p>
 
@@ -31,7 +33,8 @@
 				<p class="font-medium text-slate-800">No products found</p>
 				<p class="mt-2 text-sm text-slate-600">
 					<span v-if="has_store_filter">This store has nothing in the catalogue yet, or nothing matches your filters.</span>
-					<span v-else>Nothing matches your search or filters yet. Try widening price or category, or check back later.</span>
+					<span v-else-if="has_search">Nothing matches that search. Try different keywords or clear the search bar.</span>
+					<span v-else>Nothing matches your filters yet. Try widening price or category, or check back later.</span>
 				</p>
 			</div>
 
@@ -88,6 +91,14 @@ const list_filters = ref<ProductListFilters>({
 
 const sort_key = ref<SortKey>(sortFromRouteQuery());
 
+function initial_search_from_route(): string {
+	const raw = route.query.search;
+	if (Array.isArray(raw)) return typeof raw[0] === 'string' ? raw[0].trim() : '';
+	return typeof raw === 'string' ? raw.trim() : '';
+}
+
+const search_input = ref(initial_search_from_route());
+
 const { product_cards, refresh, pending, error } = useProducts({}, { disableAutoload: true, stateKey: 'catalog' });
 
 const products = computed(() => product_cards.value);
@@ -105,6 +116,7 @@ function store_id_from_route(): number | null {
 }
 
 const has_store_filter = computed(() => store_id_from_route() !== null);
+const has_search = computed(() => search_input.value.trim() !== '');
 
 function buildProductsQuery(): ProductsQuery {
 	const q: ProductsQuery = {};
@@ -149,6 +161,11 @@ function buildProductsQuery(): ProductsQuery {
 		q.sort = sort;
 	}
 
+	const term = search_input.value.trim();
+	if (term !== '') {
+		q.search = term;
+	}
+
 	return q;
 }
 
@@ -157,6 +174,11 @@ async function loadProducts(): Promise<void> {
 }
 
 function resetPageAndLoad(): void {
+	page.value = 1;
+	loadProducts().catch(() => {});
+}
+
+function on_search_apply(): void {
 	page.value = 1;
 	loadProducts().catch(() => {});
 }
