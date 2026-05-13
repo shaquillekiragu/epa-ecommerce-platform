@@ -25,13 +25,25 @@
 							<p v-if="store.description" class="mt-2 max-w-2xl text-slate-600">{{ store.description }}</p>
 						</div>
 
-						<NuxtLink
-							:to="`/merchant/stores/${store.id}/edit`"
-							class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800"
-						>
-							Edit store
-						</NuxtLink>
+						<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+							<NuxtLink
+								:to="`/merchant/stores/${store.id}/edit`"
+								class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+							>
+								Edit store
+							</NuxtLink>
+							<button
+								type="button"
+								class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-6 py-3 text-sm font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
+								:disabled="deleting"
+								@click="on_delete_store"
+							>
+								{{ deleting ? 'Deleting…' : 'Delete store' }}
+							</button>
+						</div>
 					</div>
+
+					<p v-if="delete_error" class="text-sm text-red-600">{{ delete_error }}</p>
 
 					<MerchantStoreHubStatLinksComponent :store_id="store.id" :order_count="order_count" />
 
@@ -49,7 +61,7 @@
 <script setup lang="ts">
 import type { BreadcrumbItem } from '~/types/breadcrumb';
 import type { MerchantOrderRow, MerchantStore } from '~/types/merchant';
-import { merchantFetchOrders, merchantFetchStore } from '~/composables/useMerchant';
+import { merchantDeleteStore, merchantFetchOrders, merchantFetchStore } from '~/composables/useMerchant';
 
 definePageMeta({
 	middleware: ['role-merchant'],
@@ -71,6 +83,8 @@ const orders_pending = ref(false);
 const not_found = ref(false);
 const store = ref<MerchantStore | null>(null);
 const orders = ref<MerchantOrderRow[]>([]);
+const deleting = ref(false);
+const delete_error = ref<string | null>(null);
 
 const order_count = computed(() => orders.value.length);
 const preview_orders = computed(() => orders.value.slice(0, 6));
@@ -93,6 +107,7 @@ async function load() {
 	}
 	pending.value = true;
 	not_found.value = false;
+	delete_error.value = null;
 	store.value = null;
 	try {
 		store.value = await merchantFetchStore(store_numeric_id.value!);
@@ -123,4 +138,30 @@ watch(
 onMounted(() => {
 	load();
 });
+
+function parseApiError(e: unknown): string {
+	if (e && typeof e === 'object' && 'message' in e) return String((e as { message?: unknown }).message);
+	return 'Request failed';
+}
+
+async function on_delete_store() {
+	if (store.value == null || deleting.value) return;
+	if (
+		!confirm(
+			'Delete this store? This cannot be undone. If the store still has products or past orders, deletion will be blocked until those are handled.',
+		)
+	) {
+		return;
+	}
+	deleting.value = true;
+	delete_error.value = null;
+	try {
+		await merchantDeleteStore(store.value.id);
+		await navigateTo('/merchant/stores');
+	} catch (e: unknown) {
+		delete_error.value = parseApiError(e);
+	} finally {
+		deleting.value = false;
+	}
+}
 </script>

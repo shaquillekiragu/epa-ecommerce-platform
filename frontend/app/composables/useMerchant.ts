@@ -19,6 +19,11 @@ export async function merchantUpdateStore(
 	return api.patch<MerchantStore>(`/merchant/stores/${store_id}`, payload);
 }
 
+export async function merchantDeleteStore(store_id: number): Promise<void> {
+	const api = useApi();
+	await api.del(`/merchant/stores/${store_id}`);
+}
+
 export async function merchantFetchOrders(store_id: number): Promise<MerchantOrderRow[]> {
 	const api = useApi();
 	return api.get<MerchantOrderRow[]>(`/merchant/orders?store=${store_id}`);

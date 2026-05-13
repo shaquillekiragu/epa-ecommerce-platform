@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use Yii;
+use yii\base\UserException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -72,6 +73,25 @@ class MerchantController extends _ApiController
         }
 
         return $store;
+    }
+
+    public function actionStoresDelete($id)
+    {
+        $this->requireRole('merchant');
+        $merchant_id = (int) Yii::$app->user->id;
+
+        $store = Store::findOne(['id' => (int) $id, 'merchant_id' => $merchant_id]);
+        if ($store === null) {
+            throw new NotFoundHttpException('Store not found.');
+        }
+
+        try {
+            $store->delete();
+        } catch (UserException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        return ['ok' => true];
     }
 
     public function actionStore()

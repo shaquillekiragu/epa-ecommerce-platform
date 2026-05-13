@@ -90,6 +90,7 @@ return [
                 'GET api/v1/merchant/stores' => 'merchant/stores',
                 'POST api/v1/merchant/stores' => 'merchant/stores-create',
                 'PATCH api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-update',
+                'DELETE api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-delete',
                 'GET api/v1/merchant/orders' => 'merchant/orders',
                 'GET api/v1/merchant/orders-all' => 'merchant/orders-all',
                 'GET api/v1/merchant/orders/<id:\\d+>' => 'merchant/order-view',
