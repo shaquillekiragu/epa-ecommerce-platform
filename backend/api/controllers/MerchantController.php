@@ -376,7 +376,7 @@ class MerchantController extends _ApiController
         return $product;
     }
 
-    public function actionDeleteProduct($id)
+    public function actionProductDelete($id)
     {
         $this->requireRole('merchant');
         $merchant_id = (int) Yii::$app->user->id;

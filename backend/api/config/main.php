@@ -99,7 +99,7 @@ return [
                 'POST api/v1/merchant/products' => 'merchant/products',
                 'GET api/v1/merchant/products/<id:\\d+>' => 'merchant/product-view',
                 'PATCH api/v1/merchant/products/<id:\\d+>' => 'merchant/product-update',
-                'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/delete-product',
+                'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/product-delete',
 
                 // Only public catalogue/store discovery via REST. Sensitive models are exposed via
                 // scoped customer/* and merchant/* routes with role checks — not generic ActiveController lists.
