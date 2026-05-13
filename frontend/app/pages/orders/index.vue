@@ -5,10 +5,10 @@
 				class="mb-3"
 				:items="[
 					{ label: 'Home', to: '/' },
-					{ label: 'My orders' },
+					{ label: 'Order History' },
 				]"
 			/>
-			<h1 class="font-bold tracking-tight text-3xl md:text-4xl text-slate-900">My orders</h1>
+			<h1 class="font-bold tracking-tight text-3xl md:text-4xl text-slate-900">Order History</h1>
 			<p class="font-normal text-base text-slate-600 mt-2">
 				<span v-if="pending">Loading your orders…</span>
 				<span v-else>{{ orders.length }} {{ orders.length === 1 ? 'order' : 'orders' }} on your account.</span>

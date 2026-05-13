@@ -25,7 +25,7 @@
 					class="rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center"
 				>
 					<p class="font-medium text-slate-800">No orders yet</p>
-					<p class="mt-2 text-sm text-slate-600">When customers check out from this store, orders appear here (same journey as “My orders” for customers).</p>
+					<p class="mt-2 text-sm text-slate-600">When customers check out from this store, orders appear here (same journey as “Order History” for customers).</p>
 					<NuxtLink
 						v-if="store_id"
 						:to="`/merchant/stores/${store_id}`"

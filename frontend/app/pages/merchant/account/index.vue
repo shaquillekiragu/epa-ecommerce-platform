@@ -51,7 +51,7 @@
 					<div class="rounded-xl border border-slate-800 bg-slate-800 p-6 text-slate-50 shadow-sm">
 						<span class="mb-2 block text-sm font-semibold uppercase tracking-wider text-slate-300">Tip</span>
 						<h3 class="text-lg font-semibold text-white">Orders &amp; fulfilment</h3>
-						<p class="mt-2 text-sm text-slate-300">Pick a store, open Orders, then an order — same list → detail flow customers use under “My orders”.</p>
+						<p class="mt-2 text-sm text-slate-300">Pick a store, open Orders, then an order — same list → detail flow customers use under “Order History”.</p>
 					</div>
 				</div>
 

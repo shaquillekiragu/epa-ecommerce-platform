@@ -2,7 +2,7 @@
 	<main class="mx-auto w-full max-w-4xl grow px-4 py-16 md:px-6">
 		<div v-if="invalid_id" class="rounded-xl border border-slate-200 bg-white p-10 text-center">
 			<p class="text-slate-700 font-medium mb-4">Invalid order link</p>
-			<NuxtLink to="/orders" class="font-semibold text-slate-900 underline">Back to my orders</NuxtLink>
+			<NuxtLink to="/orders" class="font-semibold text-slate-900 underline">Back to Order History</NuxtLink>
 		</div>
 
 		<template v-else>
@@ -10,7 +10,7 @@
 				class="mb-4"
 				:items="[
 					{ label: 'Home', to: '/' },
-					{ label: 'My orders', to: '/orders' },
+					{ label: 'Order History', to: '/orders' },
 					{ label: `Order #${order_id}` },
 				]"
 			/>
@@ -26,7 +26,7 @@
 					to="/orders"
 					class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-800 transition-colors"
 				>
-					Back to my orders
+					Back to order history
 				</NuxtLink>
 			</div>
 
