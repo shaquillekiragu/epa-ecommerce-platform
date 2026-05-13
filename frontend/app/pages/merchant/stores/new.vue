@@ -12,7 +12,7 @@
 
 			<header class="mb-8">
 				<h1 class="text-3xl font-bold tracking-tight text-slate-900">Create store</h1>
-				<p class="mt-2 text-base text-slate-600">Add a name and optional description. You can change these later.</p>
+				<p class="mt-2 text-base text-slate-600">Add a name and description. You can change these later.</p>
 				<p v-if="error_message" class="mt-2 text-sm text-red-600">{{ error_message }}</p>
 			</header>
 
@@ -38,7 +38,7 @@
 								:disabled="submitting"
 								rows="5"
 								class="w-full rounded-md border border-slate-300 bg-white p-2 text-base text-slate-900 focus:border-slate-900 focus:ring-0 disabled:opacity-60"
-								placeholder="Optional — what you sell or what makes your store unique"
+								placeholder="What you sell or what makes your store unique"
 							></textarea>
 							<p class="mt-2 text-xs text-slate-600">Shown on your store page when you add one.</p>
 						</div>
