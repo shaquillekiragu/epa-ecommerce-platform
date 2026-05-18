@@ -1,6 +1,6 @@
 <template>
 	<main class="flex w-screen pl-16 pr-4 py-16">
-		<section class="lg:grid-cols-12 w-full grid grid-cols-1 gap-8">
+		<section class="lg:grid-cols-12 w-full grid grid-cols-1 gap-8 mx-10">
 			<div class="w-full flex flex-col lg:col-span-7">
 				<div
 					class="aspect-square rounded-xl overflow-hidden relative border flex items-center justify-center bg-slate-100"

@@ -37,7 +37,7 @@
 								</span>
 							</div>
 
-							<div class="flex gap-[25vw] mt-2">
+							<div class="flex gap-[20vw] mt-2">
 								<p class="text-lg font-medium text-slate-800">{{ product.product_category_name }}</p>
 								<p class="text-slate-400">SKU: {{ product.sku_code }}</p>
 							</div>
