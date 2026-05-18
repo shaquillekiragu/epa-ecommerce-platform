@@ -1,9 +1,9 @@
 <template>
-	<span :class="span_class">{{ humanizeOrderStatus(status) }}</span>
+	<span :class="span_class">{{ humanizeSnakeCase(status) }}</span>
 </template>
 
 <script setup lang="ts">
-import { humanizeOrderStatus } from '~/utils/order-display';
+import { humanizeSnakeCase } from '~/utils/humanise-text';
 
 const props = withDefaults(
 	defineProps<{

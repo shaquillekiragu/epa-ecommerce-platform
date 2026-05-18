@@ -56,6 +56,7 @@
 import type { Stripe, StripeElements, StripePaymentElement } from '@stripe/stripe-js';
 import { useStripeClient } from '~/composables/useStripeClient';
 import { getPoundAndPenceFormat } from '~/utils/money';
+import { parseOrderIdsFromQuery } from '~/utils/order-ids';
 
 definePageMeta({
 	middleware: ['role-customer'],
@@ -109,20 +110,6 @@ function load_pending_ids(): number[] | null {
 	} catch {
 		return null;
 	}
-}
-
-/** e.g. notification link `/checkout/pay?order_ids=12` or `12,34` */
-function parse_order_ids_query(raw: unknown): number[] | null {
-	if (raw == null) {
-		return null;
-	}
-	const s = Array.isArray(raw) ? raw[0] : raw;
-	if (typeof s !== 'string' || !s.trim()) {
-		return null;
-	}
-	const parts = s.split(',').map((p) => Number.parseInt(p.trim(), 10));
-	const ids = parts.filter((n) => Number.isFinite(n) && n > 0);
-	return ids.length > 0 ? ids : null;
 }
 
 /**
@@ -193,7 +180,8 @@ onMounted(async () => {
 
 	let ids = load_pending_ids();
 	if (!ids || ids.length === 0) {
-		const from_query = parse_order_ids_query(route.query.order_ids);
+		const from_query = parseOrderIdsFromQuery(route.query.order_ids);
+		
 		if (from_query?.length) {
 			ids = from_query;
 			if (typeof sessionStorage !== 'undefined') {

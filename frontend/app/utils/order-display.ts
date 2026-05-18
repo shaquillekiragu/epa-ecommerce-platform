@@ -1,4 +1,3 @@
-/** en-GB formatted order placed timestamp */
 export function formatOrderPlacedAt(raw: string, preset: 'list' | 'detail' | 'account_date'): string {
 	try {
 		const d = new Date(raw);
@@ -15,8 +14,4 @@ export function formatOrderPlacedAt(raw: string, preset: 'list' | 'detail' | 'ac
 	} catch {
 		return raw;
 	}
-}
-
-export function humanizeOrderStatus(s: string): string {
-	return s.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
