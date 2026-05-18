@@ -5,6 +5,9 @@ export default defineConfig({
 	test: {
 		environment: 'node',
 		include: ['app/**/*.test.ts'],
+		env: {
+			TZ: 'UTC',
+		},
 	},
 	resolve: {
 		alias: {
