@@ -71,35 +71,35 @@ return [
                 'GET api/v1/categories' => 'productcategory/index',
 
                 // Customer (bearer token + role=customer)
-                'GET api/v1/user' => 'customer/user',
-                'GET api/v1/me' => 'me/index',
-                'GET api/v1/basket' => 'customer/basket',
-                'POST api/v1/basket/add' => 'customer/basket-add',
-                'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item',
-                'POST api/v1/checkout' => 'customer/checkout',
-                'POST api/v1/customer/payments/create-intent' => 'customer/create-payment-intent',
-                'POST api/v1/customer/payments/sync' => 'customer/sync-payment',
-                'POST api/v1/customer/orders/<id:\\d+>/cancel' => 'customer/order-cancel',
-                'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view',
-                'GET api/v1/customer/orders' => 'customer/orders',
-                'POST api/v1/customer/addresses' => 'customer/addresses-create',
-                'GET api/v1/customer/addresses' => 'customer/addresses',
+                'GET api/v1/user' => 'customer/user', // Authenticated customer's profile (customer role).
+                'GET api/v1/me' => 'me/index', // Lightweight "who am I" for any authenticated user.
+                'GET api/v1/basket' => 'customer/basket', // Current basket with line items.
+                'POST api/v1/basket/add' => 'customer/basket-add', // Add a product line to the basket.
+                'PATCH api/v1/basket/item/<id:\\d+>' => 'customer/basket-item', // Set line qty or remove line (id = product id).
+                'POST api/v1/checkout' => 'customer/checkout', // Turn basket into pending orders for an address.
+                'POST api/v1/customer/payments/create-intent' => 'customer/create-payment-intent', // Stripe PaymentIntent for pending orders.
+                'POST api/v1/customer/payments/sync' => 'customer/sync-payment', // Mark orders paid from a succeeded intent (client-side sync).
+                'POST api/v1/customer/orders/<id:\\d+>/cancel' => 'customer/order-cancel', // Cancel a pending order (refund if already paid).
+                'GET api/v1/customer/orders/<id:\\d+>' => 'customer/order-view', // Single order detail for the customer.
+                'GET api/v1/customer/orders' => 'customer/orders', // List the customer's orders.
+                'POST api/v1/customer/addresses' => 'customer/addresses-create', // Save a new delivery address.
+                'GET api/v1/customer/addresses' => 'customer/addresses', // List saved addresses.
 
                 // Merchant (bearer token + role=merchant + store ownership)
-                'GET api/v1/merchant/store' => 'merchant/store',
-                'GET api/v1/merchant/stores' => 'merchant/stores',
-                'POST api/v1/merchant/stores' => 'merchant/stores-create',
-                'PATCH api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-update',
-                'DELETE api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-delete',
-                'GET api/v1/merchant/orders' => 'merchant/orders',
-                'GET api/v1/merchant/orders-all' => 'merchant/orders-all',
-                'GET api/v1/merchant/orders/<id:\\d+>' => 'merchant/order-view',
-                'PATCH api/v1/merchant/orders/<id:\\d+>/status' => 'merchant/order-status',
-                'GET api/v1/merchant/products' => 'merchant/products-list',
-                'POST api/v1/merchant/products' => 'merchant/products',
-                'GET api/v1/merchant/products/<id:\\d+>' => 'merchant/product-view',
-                'PATCH api/v1/merchant/products/<id:\\d+>' => 'merchant/product-update',
-                'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/product-delete',
+                'GET api/v1/merchant/store' => 'merchant/store', // Single store by id (must belong to merchant).
+                'GET api/v1/merchant/stores' => 'merchant/stores', // List all stores for this merchant.
+                'POST api/v1/merchant/stores' => 'merchant/stores-create', // Create a new store.
+                'PATCH api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-update', // Update store name/description.
+                'DELETE api/v1/merchant/stores/<id:\\d+>' => 'merchant/stores-delete', // Delete an empty store (no products/orders).
+                'GET api/v1/merchant/orders' => 'merchant/orders', // Orders for one store (?store=id).
+                'GET api/v1/merchant/orders-all' => 'merchant/orders-all', // Orders across all merchant stores.
+                'GET api/v1/merchant/orders/<id:\\d+>' => 'merchant/order-view', // Single order with line items.
+                'PATCH api/v1/merchant/orders/<id:\\d+>/status' => 'merchant/order-status', // Mark a paid order as shipped.
+                'GET api/v1/merchant/products' => 'merchant/products-list', // Products for one store (?store=id).
+                'POST api/v1/merchant/products' => 'merchant/products', // Create a product in a store.
+                'GET api/v1/merchant/products/<id:\\d+>' => 'merchant/product-view', // Single product (merchant's store).
+                'PATCH api/v1/merchant/products/<id:\\d+>' => 'merchant/product-update', // Update product fields.
+                'DELETE api/v1/merchant/products/<id:\\d+>' => 'merchant/product-delete', // Remove a product from the store.
 
                 // Only public catalogue/store discovery via REST. Sensitive models are exposed via
                 // scoped customer/* and merchant/* routes with role checks — not generic ActiveController lists.
