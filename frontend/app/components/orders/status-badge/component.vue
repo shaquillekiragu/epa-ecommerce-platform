@@ -1,9 +1,9 @@
 <template>
-	<span :class="span_class">{{ humanizeSnakeCase(status) }}</span>
+	<span :class="span_class">{{ humaniseSnakeCase(status) }}</span>
 </template>
 
 <script setup lang="ts">
-import { humanizeSnakeCase } from '~/utils/humanise-text';
+import { humaniseSnakeCase } from '~/utils/humanise-text';
 
 const props = withDefaults(
 	defineProps<{
