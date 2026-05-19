@@ -17,7 +17,7 @@ Further EPA write‑up and evidence notes live under [`epa-report/`](epa-report/
 
 ## Deployed frontend
 
-**Production / staging URL:** _Add your deployed Nuxt site URL here (for example `https://app.example.com`)._
+**Production / staging URL:** https://www.merchflow.org
 
 This repository does not pin a single canonical public URL. After you deploy the Nuxt build, update this section so reviewers and teammates know where to click.
 
