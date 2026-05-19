@@ -1,6 +1,7 @@
 # Nuxt dev/build outputs
 .output
 .amplify-hosting
+amplify-hosting-deploy.zip
 .data
 .nuxt
 .nitro

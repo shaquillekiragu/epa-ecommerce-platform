@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
@@ -8,10 +10,10 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			// Should include /api/v1 (e.g. https://api.example.com/api/v1).
-			// Override with NUXT_PUBLIC_API_BASE_URL — Nuxt merges it automatically.
-			apiBaseUrl: '',
-			// Stripe publishable key only (pk_test_… / pk_live_…). Set NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in .env
-			stripePublishableKey: '',
+			// Set NUXT_PUBLIC_API_BASE_URL in .env or the build environment (Amplify, CI).
+			apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL ?? '',
+			// Stripe publishable key only (pk_test_… / pk_live_…).
+			stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '',
 		},
 	},
 	vite: {

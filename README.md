@@ -34,7 +34,9 @@ NUXT_PUBLIC_API_BASE_URL=https://api.merchflow.org/api/v1
 NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…   # publishable key only
 ```
 
-**Amplify CI:** `amplify.yml` at the repo root sets `NUXT_PUBLIC_API_BASE_URL` for hosted builds. Add `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` in the Amplify console (Environment variables) if checkout should work in production.
+**Amplify CI:** `amplify.yml` at the repo root sets `NUXT_PUBLIC_API_BASE_URL` for hosted builds. Add `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` in the Amplify console (Environment variables) if checkout should work in production. After pushing to `main`, open the Amplify app → **Deployments** and confirm a new build succeeded.
+
+**Manual Amplify deploy** (if CI is not wired up): from `frontend/`, run the production build commands above, then zip the contents of `.amplify-hosting/` and upload it in the Amplify console under **Hosting** → **Deploy updates** → **Deploy without Git provider**.
 
 **Manual build** (from `frontend/`):
 
