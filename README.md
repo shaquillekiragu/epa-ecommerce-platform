@@ -11,8 +11,6 @@ MerchFlow is a multi‑store e‑commerce platform built for a UK Level 4 Softwa
 
 The **frontend** is [Nuxt 4](https://nuxt.com/) with [Nuxt UI](https://ui.nuxt.com/) and Tailwind CSS. The **backend** is [Yii 2](https://www.yiiframework.com/) with MySQL, RBAC, and [Stripe](https://stripe.com/) for payments.
 
-Further EPA write‑up and evidence notes live under [`epa-report/`](epa-report/).
-
 ---
 
 ## Deployed frontend
