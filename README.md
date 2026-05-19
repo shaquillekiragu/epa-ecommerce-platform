@@ -15,9 +15,37 @@ The **frontend** is [Nuxt 4](https://nuxt.com/) with [Nuxt UI](https://ui.nuxt.c
 
 ## Deployed frontend
 
-**Production / staging URL:** https://www.merchflow.org
+| App          | URL |
+| ------------ | --- |
+| Storefront   | https://www.merchflow.org |
+| REST API     | https://api.merchflow.org/api/v1 |
+| Superadmin   | https://admin.merchflow.org |
 
-This repository does not pin a single canonical public URL. After you deploy the Nuxt build, update this section so reviewers and teammates know where to click.
+The storefront is hosted on **AWS Amplify** (CloudFront). The API and superadmin run on EC2 behind nginx (Docker Compose).
+
+### Production build (required)
+
+`NUXT_PUBLIC_*` values are embedded at **build time**. If `NUXT_PUBLIC_API_BASE_URL` is missing, the client falls back to `http://localhost:21080/api/v1`, which browsers block from `https://www.merchflow.org` (Private Network Access / loopback).
+
+Before `npm run build`, set (see `frontend/.env.example`):
+
+```bash
+NUXT_PUBLIC_API_BASE_URL=https://api.merchflow.org/api/v1
+NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…   # publishable key only
+```
+
+**Amplify CI:** `amplify.yml` at the repo root sets `NUXT_PUBLIC_API_BASE_URL` for hosted builds. Add `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` in the Amplify console (Environment variables) if checkout should work in production.
+
+**Manual build** (from `frontend/`):
+
+```bash
+export NUXT_PUBLIC_API_BASE_URL=https://api.merchflow.org/api/v1
+export NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…
+NITRO_PRESET=aws-amplify npm run build
+# Deploy artefact: .amplify-hosting/ (Amplify) or follow your hosting docs
+```
+
+### Local URLs (development)
 
 | App          | Typical local URL                          |
 | ------------ | ------------------------------------------ |
@@ -79,9 +107,25 @@ Use the **customer** account for the storefront and checkout; use the **merchant
 
 Treat seeded passwords as **non‑secret** if this repository is public. Do not reuse them elsewhere.
 
-### Deployed / shared QA
+### Deployed (production API database)
 
-If you maintain separate demo logins on staging or production (not created by this repo’s seeders), document them in your deployment notes or update this section when you set a canonical public URL.
+Same password **`Password123!`** as local seeds. Emails use the same `seed_YYYYMMDD_HHMMSS_` prefix pattern; the prefix on production may differ from your laptop.
+
+Example customer (production, May 2026 seed run):
+
+| Role     | Email |
+| -------- | ----- |
+| Customer | `seed_20260428_153805_amina.diallo+seed1@example.com` |
+
+List current users on the server:
+
+```bash
+cd backend
+docker compose exec mysql mysql -uecom_platform -psecret ecom_platform_db \
+  -e "SELECT id, role, email FROM user WHERE role='customer' ORDER BY id"
+```
+
+Use a **customer** row for https://www.merchflow.org — not the unprefixed `amina.diallo+seed1@example.com` from the table above.
 
 ---
 
