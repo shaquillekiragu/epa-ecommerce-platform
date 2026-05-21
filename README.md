@@ -1,6 +1,6 @@
 # MerchFlow (EPA E‑Commerce Platform)
 
-## Project description
+## Project Description
 
 MerchFlow is a multi‑store e‑commerce platform built for a UK Level 4 Software Development Apprenticeship **End‑Point Assessment (EPA)**. It includes:
 
@@ -13,7 +13,7 @@ The **frontend** is [Nuxt 4](https://nuxt.com/) with [Nuxt UI](https://ui.nuxt.c
 
 ---
 
-## Deployed frontend
+## Deployed Platform Links
 
 | App          | URL |
 | ------------ | --- |
@@ -23,7 +23,7 @@ The **frontend** is [Nuxt 4](https://nuxt.com/) with [Nuxt UI](https://ui.nuxt.c
 
 The storefront is hosted on **AWS Amplify** (CloudFront). The API and superadmin run on EC2 behind nginx (Docker Compose).
 
-### Production build (required)
+### Production Build (required)
 
 `NUXT_PUBLIC_*` values are embedded at **build time**. If `NUXT_PUBLIC_API_BASE_URL` is missing, the client falls back to `http://localhost:21080/api/v1`, which browsers block from `https://www.merchflow.org` (Private Network Access / loopback).
 
@@ -38,7 +38,7 @@ NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…   # publishable key only
 
 **Manual Amplify deploy** (if CI is not wired up): from `frontend/`, run the production build commands above, then zip the contents of `.amplify-hosting/` and upload it in the Amplify console under **Hosting** → **Deploy updates** → **Deploy without Git provider**.
 
-**Manual build** (from `frontend/`):
+**Manual Build** (from `frontend/`):
 
 ```bash
 export NUXT_PUBLIC_API_BASE_URL=https://api.merchflow.org/api/v1
@@ -47,7 +47,7 @@ NITRO_PRESET=aws-amplify npm run build
 # Deploy artefact: .amplify-hosting/ (Amplify) or follow your hosting docs
 ```
 
-### Local URLs (development)
+### Local URLs (development environment)
 
 | App          | Typical local URL                          |
 | ------------ | ------------------------------------------ |
@@ -57,7 +57,7 @@ NITRO_PRESET=aws-amplify npm run build
 
 ---
 
-## Quick start (first time, local)
+## Quick Start (first time, local environment)
 
 From the repository root:
 
@@ -86,7 +86,7 @@ During **migrate**, a one‑off superadmin user may be created; the console prin
 
 ---
 
-## Demo / test accounts
+## Demo/Test Accounts
 
 ### Local (after `php yii seed/all`)
 
@@ -146,7 +146,7 @@ docker compose exec superadmin bash
 
 ---
 
-## Local development
+## Local Development
 
 ### Prerequisites
 
@@ -191,7 +191,7 @@ docker compose exec api bash -lc "composer install"
 docker compose exec api bash -lc "php yii migrate --interactive=0"
 ```
 
-#### Seed demo data
+#### Seed Demo Data
 
 Populate users, addresses, stores, products, baskets, and sample orders:
 
@@ -209,7 +209,7 @@ Other seed commands (see `backend/console/controllers/SeedController.php`):
 | `php yii seed/orders` | Orders and line items |
 | `php yii seed/clear-all 1` | Truncate seeded domain tables (destructive) |
 
-#### Database configuration (`main-local.php`)
+#### Database Configuration (`main-local.php`)
 
 `backend/common/config/main-local.php` is **not** committed (see `backend/common/config/.gitignore`). After `php init`, edit it so the API and console can reach MySQL.
 
@@ -276,7 +276,7 @@ npm run build
 npm run preview
 ```
 
-### 3. Tests and formatting
+### 3. Tests and Formatting
 
 **Frontend unit tests** (Vitest), from `frontend`:
 
@@ -302,7 +302,7 @@ npx prettier . --write
 
 ---
 
-## Repository layout (high level)
+## Repository Layout (high level)
 
 | Path                         | Description                                      |
 | ---------------------------- | ------------------------------------------------ |
